@@ -554,18 +554,45 @@
             "type": "Self"
           }
         ],
-        "AnimationJointControls": null,
+        "AnimationJointControls": {
+          "_Type_": "AnimationJointControl",
+          "variables": [
+            {
+              "_Pointer_": "ptr:1",
+              "_Type_": "AnimationFloatVariable",
+              "name": "flt_MissileAnim",
+              "range": {
+                "_Type_": "Range",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "defaultValue": 0,
+              "defaultInterpolation": {
+                "_Type_": "AnimationVariableInterpolation",
+                "timeRange": 1,
+                "type": "Linear"
+              }
+            }
+          ],
+          "movements": [],
+          "animations": [
+            {
+              "_Type_": "AnimationMovement",
+              "variable": "_PointsTo_:ptr:1",
+              "animationName": "aegs_missile_launcher_mechanism_deploy",
+              "layerId": 25
+            }
+          ]
+        },
         "AnimationControlActorIKs": [],
         "AnimationTasks": [
           {
-            "_Pointer_": "ptr:5",
             "_Type_": "SSequencerAnimationTaskParams",
             "fragmentId": "MissileDoor",
             "fragTag": "Deploy",
             "looping": false
           },
           {
-            "_Pointer_": "ptr:6",
             "_Type_": "SSequencerAnimationTaskParams",
             "fragmentId": "MissileDoor",
             "fragTag": "Retract",
@@ -581,20 +608,27 @@
             "_Type_": "SInteractionStateType",
             "StateTypeName": "MissileDoor",
             "bindingsMethod": "None",
-            "DefaultState": "_PointsTo_:ptr:1",
+            "DefaultState": "_PointsTo_:ptr:2",
             "asopReset": false,
             "networkAuthority": "Server",
             "States": [
               {
-                "_Pointer_": "ptr:4",
+                "_Pointer_": "ptr:2",
                 "_Type_": "SInteractionState",
                 "StateName": "MissileDeploy",
                 "EnterStateEffectGroup": "",
                 "ExitStateEffectGroup": "",
                 "enterStateEffectTags": [],
                 "exitStateEffectTags": [],
-                "EnterEventDispatchers": [],
-                "EnterStatePlaySequence": "_PointsTo_:ptr:2",
+                "EnterEventDispatchers": [
+                  {
+                    "_Type_": "AnimationSetVariable",
+                    "variable": "_PointsTo_:ptr:1",
+                    "value": 1,
+                    "overrideInterpolation": null
+                  }
+                ],
+                "EnterStatePlaySequence": null,
                 "ExitStatePlaySequence": null,
                 "StateAutoChange": null,
                 "Interactions": [],
@@ -610,15 +644,21 @@
                 }
               },
               {
-                "_Pointer_": "ptr:1",
                 "_Type_": "SInteractionState",
                 "StateName": "MissileRetract",
                 "EnterStateEffectGroup": "",
                 "ExitStateEffectGroup": "",
                 "enterStateEffectTags": [],
                 "exitStateEffectTags": [],
-                "EnterEventDispatchers": [],
-                "EnterStatePlaySequence": "_PointsTo_:ptr:3",
+                "EnterEventDispatchers": [
+                  {
+                    "_Type_": "AnimationSetVariable",
+                    "variable": "_PointsTo_:ptr:1",
+                    "value": 0,
+                    "overrideInterpolation": null
+                  }
+                ],
+                "EnterStatePlaySequence": null,
                 "ExitStatePlaySequence": null,
                 "StateAutoChange": null,
                 "Interactions": [],
@@ -634,50 +674,13 @@
                 }
               }
             ],
-            "StateModifiers": [
-              {
-                "_Type_": "SEntityOnlineStateModifier",
-                "onEntityOnlineState": "_PointsTo_:ptr:4",
-                "onEntityOfflineState": "_PointsTo_:ptr:1"
-              }
-            ]
+            "StateModifiers": []
           }
         ]
       },
       {
         "_Type_": "SEntityComponentSequencerParams",
-        "sequences": [
-          {
-            "_Pointer_": "ptr:2",
-            "_Type_": "SSequencerDefSequenceParams",
-            "name": "Deploy",
-            "interaction": null,
-            "taskEntries": [
-              {
-                "_Type_": "SSequencerSequenceTaskEntryParams",
-                "task": "_PointsTo_:ptr:5",
-                "postDelay": 0,
-                "dependentTasks": [],
-                "haltOnFailure": true
-              }
-            ]
-          },
-          {
-            "_Pointer_": "ptr:3",
-            "_Type_": "SSequencerDefSequenceParams",
-            "name": "Retract",
-            "interaction": null,
-            "taskEntries": [
-              {
-                "_Type_": "SSequencerSequenceTaskEntryParams",
-                "task": "_PointsTo_:ptr:6",
-                "postDelay": 0,
-                "dependentTasks": [],
-                "haltOnFailure": true
-              }
-            ]
-          }
-        ],
+        "sequences": [],
         "resetSequence": null
       },
       {
