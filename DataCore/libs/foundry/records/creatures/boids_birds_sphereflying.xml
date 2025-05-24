@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityClassDefinition.Boids_Birds_SphereFlying RecordId="adf38333-4d8d-4ea4-84ac-2884b9c4f3f9" Type="EntityClassDefinition">
+  <Category>Creatures</Category>
+  <Icon>Default.bmp</Icon>
+  <Invisible>False</Invisible>
+  <BBoxSelection>False</BBoxSelection>
+  <entityDensityClass />
+  <tags Type="Tag" Count="0" />
+  <StaticEntityClassData Type="EntityClassStaticDataParams" Count="1">
+    <EntityUIDisplayParams Type="EntityUIDisplayParams">
+      <displayName>@Name_PotentialMarokLocation</displayName>
+      <displayDescription>@LOC_UNINITIALIZED</displayDescription>
+      <displayThumbnail />
+      <displayImage />
+      <displayIcon />
+      <sortString />
+      <trackerProperties Type="SObjectDataBankEntryTrackerParams" />
+    </EntityUIDisplayParams>
+  </StaticEntityClassData>
+  <Components Type="DataForgeComponentParams" Count="1">
+    <BoidsComponentParams Type="BoidsComponentParams">
+      <boidsGroups Type="BoidsGroupComposition" Count="1">
+        <BoidsGroupComposition Type="BoidsGroupComposition">
+          <boidsEntityClasses Type="EntityClassDefinition" Count="1">
+            <EntityClassDefinition />
+          </boidsEntityClasses>
+          <amountOfEntities>5</amountOfEntities>
+          <amountOfEntitiesVariation>0</amountOfEntitiesVariation>
+          <sizeVariation>0</sizeVariation>
+          <name>Gilly</name>
+          <spawnOnNavmesh>False</spawnOnNavmesh>
+        </BoidsGroupComposition>
+      </boidsGroups>
+      <groupInfluenceRange>2</groupInfluenceRange>
+      <boidStates Type="BoidState" Count="3">
+        <BoidState Pointer="ptr:2" Type="BoidState">
+          <stateName>glide</stateName>
+          <rules Type="BoidsBehaviorRuleContainer" Count="7">
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsAlignmentRule">
+                <velocityScale>0.04</velocityScale>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsCohesionRule">
+                <velocityScale>0.2</velocityScale>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsSeparationRule">
+                <velocityScale>0.4</velocityScale>
+                <decayCoefficient>2</decayCoefficient>
+                <maxAcceleration>1.5</maxAcceleration>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsSphericalLimiterRule">
+                <velocityScale>0.1</velocityScale>
+                <radius>130</radius>
+                <effectDistance>120</effectDistance>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsTerrainSurfaceRepelRule">
+                <velocityScale>0.3</velocityScale>
+                <effectDistance>4</effectDistance>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsOceanSurfaceRepelRule">
+                <velocityScale>0.3</velocityScale>
+                <effectDistance>3</effectDistance>
+                <belowOcean>False</belowOcean>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsVehicleRepelRule">
+                <velocityScale>0.3</velocityScale>
+                <effectDistance>3</effectDistance>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+          </rules>
+          <shouldBeOnNavmesh>False</shouldBeOnNavmesh>
+          <deterministic>True</deterministic>
+          <boidTransitions Type="BoidTransition" Count="1">
+            <BoidRandomTransition Type="BoidRandomTransition">
+              <animationTag>landing</animationTag>
+              <fragmentTag>MotionMovement</fragmentTag>
+              <transition PointsTo="ptr:1" />
+              <instantTransition>False</instantTransition>
+              <allowWhileTransitioning>False</allowWhileTransitioning>
+              <interval>3</interval>
+              <chance>0.8</chance>
+            </BoidRandomTransition>
+          </boidTransitions>
+          <animationTag>glide</animationTag>
+          <fragmentTag>MotionMovement</fragmentTag>
+          <maxLinearSpeed>5</maxLinearSpeed>
+        </BoidState>
+        <BoidState Pointer="ptr:1" Type="BoidState">
+          <stateName>idle</stateName>
+          <rules Type="BoidsBehaviorRuleContainer" Count="0" />
+          <shouldBeOnNavmesh>True</shouldBeOnNavmesh>
+          <deterministic>True</deterministic>
+          <boidTransitions Type="BoidTransition" Count="4">
+            <BoidRandomTransition Type="BoidRandomTransition">
+              <animationTag>takeoff</animationTag>
+              <fragmentTag>MotionMovement</fragmentTag>
+              <transition PointsTo="ptr:2" />
+              <instantTransition>False</instantTransition>
+              <allowWhileTransitioning>False</allowWhileTransitioning>
+              <interval>10</interval>
+              <chance>0.2</chance>
+            </BoidRandomTransition>
+            <BoidAlertedTransition Type="BoidAlertedTransition">
+              <animationTag>alertedTakeoff</animationTag>
+              <fragmentTag>MotionMovement</fragmentTag>
+              <transition PointsTo="ptr:2" />
+              <instantTransition>False</instantTransition>
+              <allowWhileTransitioning>True</allowWhileTransitioning>
+            </BoidAlertedTransition>
+            <BoidRandomTransition Type="BoidRandomTransition">
+              <animationTag />
+              <fragmentTag />
+              <transition PointsTo="ptr:3" />
+              <instantTransition>True</instantTransition>
+              <allowWhileTransitioning>False</allowWhileTransitioning>
+              <interval>2.5</interval>
+              <chance>0.7</chance>
+            </BoidRandomTransition>
+            <BoidActorProximityTransition Type="BoidActorProximityTransition">
+              <animationTag>alertedTakeoff</animationTag>
+              <fragmentTag>MotionMovement</fragmentTag>
+              <transition PointsTo="ptr:2" />
+              <instantTransition>False</instantTransition>
+              <allowWhileTransitioning>True</allowWhileTransitioning>
+              <distance>5</distance>
+            </BoidActorProximityTransition>
+          </boidTransitions>
+          <animationTag>Idle</animationTag>
+          <fragmentTag>MotionIdle</fragmentTag>
+          <maxLinearSpeed>0</maxLinearSpeed>
+        </BoidState>
+        <BoidState Pointer="ptr:3" Type="BoidState">
+          <stateName>walk</stateName>
+          <rules Type="BoidsBehaviorRuleContainer" Count="3">
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsSeparationRule">
+                <velocityScale>0.1</velocityScale>
+                <decayCoefficient>0.5</decayCoefficient>
+                <maxAcceleration>1</maxAcceleration>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsNavmeshEdgeRepelRule">
+                <velocityScale>3</velocityScale>
+                <effectDistance>2</effectDistance>
+                <decayCoefficient>2</decayCoefficient>
+                <maxAcceleration>5</maxAcceleration>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+            <BoidsBehaviorRuleContainer Type="BoidsBehaviorRuleContainer">
+              <enabled>True</enabled>
+              <rule Type="BoidsActorRepelRule">
+                <velocityScale>0.4</velocityScale>
+                <effectDistance>2</effectDistance>
+              </rule>
+            </BoidsBehaviorRuleContainer>
+          </rules>
+          <shouldBeOnNavmesh>True</shouldBeOnNavmesh>
+          <deterministic>False</deterministic>
+          <boidTransitions Type="BoidTransition" Count="3">
+            <BoidRandomTransition Type="BoidRandomTransition">
+              <animationTag />
+              <fragmentTag />
+              <transition PointsTo="ptr:1" />
+              <instantTransition>True</instantTransition>
+              <allowWhileTransitioning>False</allowWhileTransitioning>
+              <interval>2.5</interval>
+              <chance>0.7</chance>
+            </BoidRandomTransition>
+            <BoidAlertedTransition Type="BoidAlertedTransition">
+              <animationTag>alertedTakeoff</animationTag>
+              <fragmentTag>MotionMovement</fragmentTag>
+              <transition PointsTo="ptr:2" />
+              <instantTransition>False</instantTransition>
+              <allowWhileTransitioning>True</allowWhileTransitioning>
+            </BoidAlertedTransition>
+            <BoidActorProximityTransition Type="BoidActorProximityTransition">
+              <animationTag>alertedTakeoff</animationTag>
+              <fragmentTag>MotionMovement</fragmentTag>
+              <transition PointsTo="ptr:2" />
+              <instantTransition>False</instantTransition>
+              <allowWhileTransitioning>True</allowWhileTransitioning>
+              <distance>5</distance>
+            </BoidActorProximityTransition>
+          </boidTransitions>
+          <animationTag>walk</animationTag>
+          <fragmentTag>MotionMovement</fragmentTag>
+          <maxLinearSpeed>1</maxLinearSpeed>
+        </BoidState>
+      </boidStates>
+      <querySphereRadius>150</querySphereRadius>
+    </BoidsComponentParams>
+  </Components>
+</EntityClassDefinition.Boids_Birds_SphereFlying>
