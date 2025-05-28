@@ -7,7 +7,7 @@
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="10">
+  <Components Type="DataForgeComponentParams" Count="12">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>ExternalFuelTank</Type>
@@ -53,13 +53,13 @@
           <z>10.6829</z>
         </inventoryOccupancyDimensions>
         <inventoryOccupancyLocalBoundsMin Type="Vec3">
-          <x>0.15</x>
-          <y>-0.15</y>
+          <x>0</x>
+          <y>0</y>
           <z>0</z>
         </inventoryOccupancyLocalBoundsMin>
         <inventoryOccupancyLocalBoundsMax Type="Vec3">
-          <x>0.15</x>
-          <y>-0.15</y>
+          <x>0</x>
+          <y>0</y>
           <z>0</z>
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
@@ -441,8 +441,8 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathInterrupt" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathInterrupt" Count="0" />
+        <PhysFlagsOverride Type="AudioBreathStyleSuite" Count="0" />
+        <PhysFlagsColliderOverride Type="AudioBreathStyleSuite" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -659,5 +659,146 @@
       <description>@LOC_EMPTY</description>
       <scaleCapDistance>10</scaleCapDistance>
     </SARDataComponentParams>
+    <ItemResourceComponentParams Type="ItemResourceComponentParams">
+      <isResourceNetworked>True</isResourceNetworked>
+      <isRelay>False</isRelay>
+      <filterParams />
+      <isConnectedToRoom>False</isConnectedToRoom>
+      <wirelessConnection>False</wirelessConnection>
+      <states Type="ItemResourceState" Count="3">
+        <ItemResourceState Type="ItemResourceState">
+          <name>Closed</name>
+          <deltas Type="ItemResourceDeltaBase" Count="0" />
+          <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="1">
+            <ResourceLinkedInteractionState Type="ResourceLinkedInteractionState">
+              <linkedInteractionState PointsTo="ptr:2" />
+              <changeInteractionState>False</changeInteractionState>
+            </ResourceLinkedInteractionState>
+          </linkedInteractionStates>
+          <signatureParams Type="ItemResourceSignatureParams">
+            <EMSignature Type="ItemResourceSignatureEntry">
+              <nominalSignature>0</nominalSignature>
+              <decayRate>0.15</decayRate>
+              <functionalityCurve />
+            </EMSignature>
+            <IRSignature Type="ItemResourceSignatureEntry">
+              <nominalSignature>0</nominalSignature>
+              <decayRate>0.15</decayRate>
+              <functionalityCurve />
+            </IRSignature>
+          </signatureParams>
+          <rangeParams Type="ResourceRangeParams" Count="0" />
+        </ItemResourceState>
+        <ItemResourceState Type="ItemResourceState">
+          <name>Open</name>
+          <deltas Type="ItemResourceDeltaBase" Count="1">
+            <ItemResourceDeltaStorage Type="ItemResourceDeltaStorage">
+              <consumption Type="ItemResourceDeltaAmount">
+                <resource>Fuel</resource>
+                <resourceAmountPerSecond Type="SStandardResourceUnit">
+                  <standardResourceUnits>0</standardResourceUnits>
+                </resourceAmountPerSecond>
+              </consumption>
+              <generation Type="ItemResourceDeltaAmount">
+                <resource>Fuel</resource>
+                <resourceAmountPerSecond Type="SStandardResourceUnit">
+                  <standardResourceUnits>1.15</standardResourceUnits>
+                </resourceAmountPerSecond>
+              </generation>
+              <discharge>True</discharge>
+              <consumptionComposition Type="ItemResourceComposition">
+                <values Type="ItemResourceCompositionValue" Count="0" />
+              </consumptionComposition>
+              <dynamicResourceOverride Type="ItemResourceDynamicResourceFuelTank" />
+              <transferModifiers />
+            </ItemResourceDeltaStorage>
+          </deltas>
+          <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="1">
+            <ResourceLinkedInteractionState Type="ResourceLinkedInteractionState">
+              <linkedInteractionState PointsTo="ptr:1" />
+              <changeInteractionState>False</changeInteractionState>
+            </ResourceLinkedInteractionState>
+          </linkedInteractionStates>
+          <signatureParams Type="ItemResourceSignatureParams">
+            <EMSignature Type="ItemResourceSignatureEntry">
+              <nominalSignature>0</nominalSignature>
+              <decayRate>0.15</decayRate>
+              <functionalityCurve />
+            </EMSignature>
+            <IRSignature Type="ItemResourceSignatureEntry">
+              <nominalSignature>0</nominalSignature>
+              <decayRate>0.15</decayRate>
+              <functionalityCurve />
+            </IRSignature>
+          </signatureParams>
+          <rangeParams Type="ResourceRangeParams" Count="0" />
+        </ItemResourceState>
+        <ItemResourceState Type="ItemResourceState">
+          <name>Pumping</name>
+          <deltas Type="ItemResourceDeltaBase" Count="1">
+            <ItemResourceDeltaStorage Type="ItemResourceDeltaStorage">
+              <consumption Type="ItemResourceDeltaAmount">
+                <resource>Fuel</resource>
+                <resourceAmountPerSecond Type="SStandardResourceUnit">
+                  <standardResourceUnits>1.15</standardResourceUnits>
+                </resourceAmountPerSecond>
+              </consumption>
+              <generation Type="ItemResourceDeltaAmount">
+                <resource>Fuel</resource>
+                <resourceAmountPerSecond Type="SStandardResourceUnit">
+                  <standardResourceUnits>0</standardResourceUnits>
+                </resourceAmountPerSecond>
+              </generation>
+              <discharge>False</discharge>
+              <consumptionComposition Type="ItemResourceComposition">
+                <values Type="ItemResourceCompositionValue" Count="0" />
+              </consumptionComposition>
+              <dynamicResourceOverride Type="ItemResourceDynamicResourceFuelTank" />
+              <transferModifiers />
+            </ItemResourceDeltaStorage>
+          </deltas>
+          <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="1">
+            <ResourceLinkedInteractionState Type="ResourceLinkedInteractionState">
+              <linkedInteractionState PointsTo="ptr:3" />
+              <changeInteractionState>False</changeInteractionState>
+            </ResourceLinkedInteractionState>
+          </linkedInteractionStates>
+          <signatureParams Type="ItemResourceSignatureParams">
+            <EMSignature Type="ItemResourceSignatureEntry">
+              <nominalSignature>0</nominalSignature>
+              <decayRate>0.15</decayRate>
+              <functionalityCurve />
+            </EMSignature>
+            <IRSignature Type="ItemResourceSignatureEntry">
+              <nominalSignature>0</nominalSignature>
+              <decayRate>0.15</decayRate>
+              <functionalityCurve />
+            </IRSignature>
+          </signatureParams>
+          <rangeParams Type="ResourceRangeParams" Count="0" />
+        </ItemResourceState>
+      </states>
+      <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
+      <controlBlocks Type="ItemResourceControlBlock" Count="0" />
+      <defaultPriority>50</defaultPriority>
+      <functionalityModifiers />
+      <powerPlantOverride />
+    </ItemResourceComponentParams>
+    <ResourceContainer Type="ResourceContainer">
+      <capacity Type="SStandardCargoUnit">
+        <standardCargoUnits>60</standardCargoUnits>
+      </capacity>
+      <mass>0</mass>
+      <immutable>False</immutable>
+      <inclusiveResources Type="ResourceType" Count="2">
+        <ResourceType RecordReference="file://./../../../../../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.PlasmaFuel" RecordId="de9f4d03-6b60-429d-9b26-9f2308bae973" />
+        <ResourceType RecordReference="file://./../../../../../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.QuantumFuel" RecordId="f4846780-182f-49d1-a711-f08c0172735e" />
+      </inclusiveResources>
+      <exclusiveResources Type="ResourceType" Count="0" />
+      <inclusiveGroups Type="ResourceTypeGroup" Count="0" />
+      <exclusiveGroups Type="ResourceTypeGroup" Count="0" />
+      <defaultComposition Type="ResourceContainerDefaultCompositionEntry" Count="0" />
+      <defaultCompositionFillFactor>1</defaultCompositionFillFactor>
+    </ResourceContainer>
   </Components>
 </EntityClassDefinition.FuelPod_MISC_Fast>

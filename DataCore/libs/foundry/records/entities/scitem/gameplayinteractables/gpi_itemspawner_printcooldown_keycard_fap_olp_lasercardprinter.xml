@@ -72,12 +72,12 @@
     </SGeometryResourceParams>
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
-        <Mass>1</Mass>
+        <Mass>0</Mass>
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathInterrupt" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathInterrupt" Count="0" />
+        <PhysFlagsOverride Type="AudioBreathStyleSuite" Count="0" />
+        <PhysFlagsColliderOverride Type="AudioBreathStyleSuite" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -131,7 +131,7 @@
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
       <Ports Type="SItemPortDef" Count="1">
-        <SItemPortDef Pointer="ptr:14" Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:9" Type="SItemPortDef">
           <Name>$slot_subitem_001</Name>
           <DisplayName />
           <PortTags>spawner</PortTags>
@@ -172,11 +172,11 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="DriftingConsciousnessConfig" Count="0" />
+              <SubTypes Type="ActorStatusEffect" Count="0" />
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cargo</Type>
-              <SubTypes Type="DriftingConsciousnessConfig" Count="0" />
+              <SubTypes Type="ActorStatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -452,7 +452,7 @@
     </SEntityInteractableParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="4">
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:12" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:15" Type="SReplicatedSequencerDefSequenceParams">
           <name>OpenHatch</name>
           <interaction PointsTo="ptr:2" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
@@ -464,7 +464,7 @@
             </SSequencerSequenceTaskEntryParams>
           </taskEntries>
         </SReplicatedSequencerDefSequenceParams>
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:13" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:16" Type="SReplicatedSequencerDefSequenceParams">
           <name>CloseHatch</name>
           <interaction PointsTo="ptr:4" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
@@ -476,7 +476,7 @@
             </SSequencerSequenceTaskEntryParams>
           </taskEntries>
         </SReplicatedSequencerDefSequenceParams>
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:9" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:12" Type="SReplicatedSequencerDefSequenceParams">
           <name>ExtendButton</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
@@ -488,7 +488,7 @@
             </SSequencerSequenceTaskEntryParams>
           </taskEntries>
         </SReplicatedSequencerDefSequenceParams>
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:17" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:19" Type="SReplicatedSequencerDefSequenceParams">
           <name>RetractButton</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
@@ -504,15 +504,78 @@
       <resetSequence />
     </SEntityComponentSequencerParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="2">
+      <StateTypes Type="SInteractionStateType" Count="3">
         <SInteractionStateType Type="SInteractionStateType">
-          <StateTypeName>SpawnStage</StateTypeName>
+          <StateTypeName>Object</StateTypeName>
           <bindingsMethod>States</bindingsMethod>
           <DefaultState PointsTo="ptr:8" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+              <StateName>Slot01_Attached</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="1">
+                <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
+              </enterStateEffectTags>
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+              <StateName>Slot01_Detached</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="1">
+                <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
+              </enterStateEffectTags>
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <SItemPortStateModifier Type="SItemPortStateModifier">
+              <itemPort PointsTo="ptr:9" />
+              <onEntityAttachedState PointsTo="ptr:10" />
+              <onEntityDetachedState PointsTo="ptr:8" />
+              <onPortDestroyedState PointsTo="ptr:8" />
+              <itemTypes Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+              <itemSubTypes Type="ActorStatusEffect" Count="0" />
+            </SItemPortStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>SpawnStage</StateTypeName>
+          <bindingsMethod>States</bindingsMethod>
+          <DefaultState PointsTo="ptr:11" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="5">
-            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
               <StateName>ReadyToPrint</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -521,13 +584,13 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:9" />
+              <EnterStatePlaySequence PointsTo="ptr:12" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
                   <Interaction PointsTo="ptr:1" />
-                  <NextState PointsTo="ptr:10" />
+                  <NextState PointsTo="ptr:13" />
                 </SInteractionStateTransition>
               </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
@@ -541,7 +604,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
               <StateName>Printing</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -554,7 +617,7 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:11" />
+                <NextState PointsTo="ptr:14" />
                 <Delay>3</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
@@ -570,7 +633,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:14" Type="SInteractionState">
               <StateName>CanLoot</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -580,7 +643,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:12" />
+              <EnterStatePlaySequence PointsTo="ptr:15" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="2">
@@ -604,17 +667,17 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:17" Type="SInteractionState">
               <StateName>Looted</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:13" />
+              <EnterStatePlaySequence PointsTo="ptr:16" />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:8" />
+                <NextState PointsTo="ptr:11" />
                 <Delay>1</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
@@ -628,7 +691,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
               <StateName>ResetCooldown</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -658,23 +721,23 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
-              <itemPort PointsTo="ptr:14" />
+              <itemPort PointsTo="ptr:9" />
               <onEntityAttachedState />
-              <onEntityDetachedState PointsTo="ptr:15" />
-              <onPortDestroyedState PointsTo="ptr:15" />
-              <itemTypes Type="ArmsLockConfig" Count="0" />
-              <itemSubTypes Type="DriftingConsciousnessConfig" Count="0" />
+              <onEntityDetachedState PointsTo="ptr:17" />
+              <onPortDestroyedState PointsTo="ptr:17" />
+              <itemTypes Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+              <itemSubTypes Type="ActorStatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>ButtonState</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:16" />
+          <DefaultState PointsTo="ptr:18" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:21" Type="SInteractionState">
               <StateName>ButtonIdle</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -687,7 +750,7 @@
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
                   <Interaction PointsTo="ptr:1" />
-                  <NextState PointsTo="ptr:16" />
+                  <NextState PointsTo="ptr:18" />
                 </SInteractionStateTransition>
               </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
@@ -699,14 +762,14 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:16" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
               <StateName>ButtonRetract</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:17" />
+              <EnterStatePlaySequence PointsTo="ptr:19" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="0" />
@@ -744,7 +807,7 @@
         <portRefillData Type="PortRefillData" Count="0" />
       </portRefillData>
       <prerequisite Type="SpawnerPrerequisite_InteractionState">
-        <state PointsTo="ptr:10" />
+        <state PointsTo="ptr:13" />
       </prerequisite>
       <entitiesToSpawn Type="SSpawnEntity" Count="1">
         <SSpawnEntity Type="SSpawnEntity">
@@ -1604,12 +1667,12 @@
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="3">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:11" />
+          <targetState PointsTo="ptr:14" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SSetInteractionStateInItemportedGameplayTrigger Type="SSetInteractionStateInItemportedGameplayTrigger">
-              <bApplyToAllChildren>True</bApplyToAllChildren>
+              <bApplyToAllChildren>False</bApplyToAllChildren>
               <itemPorts Type="SItemPortDef" Count="1">
-                <SItemPortDef PointsTo="ptr:14" />
+                <SItemPortDef PointsTo="ptr:9" />
               </itemPorts>
               <stateTypeName>EnabledState</stateTypeName>
               <stateName>Enabled</stateName>
@@ -1622,7 +1685,7 @@
             <SSetInteractionStateInItemportedGameplayTrigger Type="SSetInteractionStateInItemportedGameplayTrigger">
               <bApplyToAllChildren>True</bApplyToAllChildren>
               <itemPorts Type="SItemPortDef" Count="1">
-                <SItemPortDef PointsTo="ptr:14" />
+                <SItemPortDef PointsTo="ptr:9" />
               </itemPorts>
               <stateTypeName>EnabledState</stateTypeName>
               <stateName>Disabled</stateName>
@@ -1630,10 +1693,10 @@
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:18" />
+          <targetState PointsTo="ptr:20" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SChangeInteractionStateGameplayTrigger Type="SChangeInteractionStateGameplayTrigger">
-              <targetState PointsTo="ptr:19" />
+              <targetState PointsTo="ptr:21" />
             </SChangeInteractionStateGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>

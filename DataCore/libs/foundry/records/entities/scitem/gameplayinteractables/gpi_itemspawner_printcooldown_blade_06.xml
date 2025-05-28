@@ -72,12 +72,12 @@
     </SGeometryResourceParams>
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
-        <Mass>1</Mass>
+        <Mass>0</Mass>
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathInterrupt" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathInterrupt" Count="0" />
+        <PhysFlagsOverride Type="AudioBreathStyleSuite" Count="0" />
+        <PhysFlagsColliderOverride Type="AudioBreathStyleSuite" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -131,7 +131,7 @@
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
       <Ports Type="SItemPortDef" Count="2">
-        <SItemPortDef Pointer="ptr:14" Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:8" Type="SItemPortDef">
           <Name>$slot_spawn_01</Name>
           <DisplayName />
           <PortTags>spawner</PortTags>
@@ -172,11 +172,11 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="DriftingConsciousnessConfig" Count="0" />
+              <SubTypes Type="ActorStatusEffect" Count="0" />
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cargo</Type>
-              <SubTypes Type="DriftingConsciousnessConfig" Count="0" />
+              <SubTypes Type="ActorStatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -410,7 +410,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:9" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:11" Type="SSharedInteractionParams">
             <Name>Print</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -528,7 +528,7 @@
     </SEntityInteractableParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="5">
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:12" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:14" Type="SReplicatedSequencerDefSequenceParams">
           <name>OpenHatch</name>
           <interaction PointsTo="ptr:1" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="2">
@@ -624,7 +624,7 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Type="SInteractionState">
+            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
               <StateName>Slot01_Attached</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -669,16 +669,25 @@
               </entityTags>
             </SInteractionState>
           </States>
-          <StateModifiers Type="SStateModifier" Count="0" />
+          <StateModifiers Type="SStateModifier" Count="1">
+            <SItemPortStateModifier Type="SItemPortStateModifier">
+              <itemPort PointsTo="ptr:8" />
+              <onEntityAttachedState PointsTo="ptr:9" />
+              <onEntityDetachedState PointsTo="ptr:7" />
+              <onPortDestroyedState PointsTo="ptr:7" />
+              <itemTypes Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+              <itemSubTypes Type="ActorStatusEffect" Count="0" />
+            </SItemPortStateModifier>
+          </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>SpawnStage</StateTypeName>
           <bindingsMethod>States</bindingsMethod>
-          <DefaultState PointsTo="ptr:8" />
+          <DefaultState PointsTo="ptr:10" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="5">
-            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
               <StateName>ReadyToPrint</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -692,8 +701,8 @@
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
-                  <Interaction PointsTo="ptr:9" />
-                  <NextState PointsTo="ptr:10" />
+                  <Interaction PointsTo="ptr:11" />
+                  <NextState PointsTo="ptr:12" />
                 </SInteractionStateTransition>
               </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
@@ -705,7 +714,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
               <StateName>Printing</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -718,7 +727,7 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:11" />
+                <NextState PointsTo="ptr:13" />
                 <Delay>10</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
@@ -732,7 +741,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
               <StateName>CanLoot</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -742,7 +751,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:12" />
+              <EnterStatePlaySequence PointsTo="ptr:14" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
@@ -760,7 +769,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:16" Type="SInteractionState">
               <StateName>Looted</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -770,7 +779,7 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:13" />
+                <NextState PointsTo="ptr:15" />
                 <Delay>1</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
@@ -784,7 +793,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
               <StateName>ResetCooldown</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -796,7 +805,7 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:8" />
+                <NextState PointsTo="ptr:10" />
                 <Delay>1800</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
@@ -813,12 +822,12 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
-              <itemPort PointsTo="ptr:14" />
+              <itemPort PointsTo="ptr:8" />
               <onEntityAttachedState />
-              <onEntityDetachedState PointsTo="ptr:15" />
-              <onPortDestroyedState PointsTo="ptr:15" />
-              <itemTypes Type="ArmsLockConfig" Count="0" />
-              <itemSubTypes Type="DriftingConsciousnessConfig" Count="0" />
+              <onEntityDetachedState PointsTo="ptr:16" />
+              <onPortDestroyedState PointsTo="ptr:16" />
+              <itemTypes Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+              <itemSubTypes Type="ActorStatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -844,7 +853,7 @@
         <portRefillData Type="PortRefillData" Count="0" />
       </portRefillData>
       <prerequisite Type="SpawnerPrerequisite_InteractionState">
-        <state PointsTo="ptr:10" />
+        <state PointsTo="ptr:12" />
       </prerequisite>
       <entitiesToSpawn Type="SSpawnEntity" Count="1">
         <SSpawnEntity Type="SSpawnEntity">
