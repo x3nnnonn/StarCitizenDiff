@@ -18,8 +18,8 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathStyleSuite" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyleSuite" Count="0" />
+        <PhysFlagsOverride Type="AudioBreathDefinition" Count="0" />
+        <PhysFlagsColliderOverride Type="AudioBreathDefinition" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -921,7 +921,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
               <StateName>Rotten</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -944,7 +944,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
               <StateName>Destroyed</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -970,7 +970,7 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="2">
             <SHealthStateModifier Type="SHealthStateModifier">
-              <stateRanges Type="SRangeStateLevel" Count="3">
+              <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
                   <state PointsTo="ptr:9" />
                   <min>0.11</min>
@@ -978,11 +978,6 @@
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
                   <state PointsTo="ptr:10" />
-                  <min>0.01</min>
-                  <max>0.1</max>
-                </SRangeStateLevel>
-                <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:11" />
                   <min>0</min>
                   <max>0</max>
                 </SRangeStateLevel>
@@ -992,7 +987,7 @@
             <SDegradationStateModifier Type="SDegradationStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="0" />
               <accumulator>Wear</accumulator>
-              <expiredState PointsTo="ptr:10" />
+              <expiredState PointsTo="ptr:11" />
             </SDegradationStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -1056,13 +1051,13 @@
               <aggregateStateParams Type="AggregateStateParams" Count="2">
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="1">
-                    <SInteractionState PointsTo="ptr:10" />
+                    <SInteractionState PointsTo="ptr:11" />
                   </aggregateStates>
                   <state PointsTo="ptr:12" />
                 </AggregateStateParams>
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="1">
-                    <SInteractionState PointsTo="ptr:11" />
+                    <SInteractionState PointsTo="ptr:10" />
                   </aggregateStates>
                   <state PointsTo="ptr:12" />
                 </AggregateStateParams>
@@ -1106,7 +1101,7 @@
             </SRadiationEmitterGameplayTrigger>
             <DegradationGameplayTrigger Type="DegradationGameplayTrigger">
               <degradationAction Type="EnableAccumulator">
-                <accumulator Type="SActorProceduralAimRecoilCurveModifiersDef" Count="1">
+                <accumulator Type="SActorProceduralAimRecoilModifiers" Count="1">
                   <EnumChoice>Wear</EnumChoice>
                 </accumulator>
                 <enable>False</enable>
@@ -1122,7 +1117,7 @@
             </SRadiationEmitterGameplayTrigger>
             <DegradationGameplayTrigger Type="DegradationGameplayTrigger">
               <degradationAction Type="EnableAccumulator">
-                <accumulator Type="SActorProceduralAimRecoilCurveModifiersDef" Count="1">
+                <accumulator Type="SActorProceduralAimRecoilModifiers" Count="1">
                   <EnumChoice>Wear</EnumChoice>
                 </accumulator>
                 <enable>True</enable>
@@ -1153,7 +1148,7 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
             <DegradationGameplayTrigger Type="DegradationGameplayTrigger">
               <degradationAction Type="EnableAccumulator">
-                <accumulator Type="SActorProceduralAimRecoilCurveModifiersDef" Count="1">
+                <accumulator Type="SActorProceduralAimRecoilModifiers" Count="1">
                   <EnumChoice>Wear</EnumChoice>
                 </accumulator>
                 <enable>False</enable>
@@ -1922,7 +1917,7 @@
       </loadout>
     </SEntityComponentDefaultLoadoutParams>
     <SHealthComponentParams Type="SHealthComponentParams">
-      <Health>100</Health>
+      <Health>15000</Health>
       <DamageResistances Type="DamageResistance">
         <IgnoreMeleeDamage>False</IgnoreMeleeDamage>
         <PhysicalResistance Type="DamageResistanceEntry">
@@ -2445,7 +2440,15 @@
                 </offset>
                 <offsetParameter />
               </attachmentSettings>
-              <propertyLinks Type="EntityEffectSystem_LightPropertyLink" Count="0" />
+              <propertyLinks Type="EntityEffectSystem_LightPropertyLink" Count="1">
+                <EntityEffectSystem_LightPropertyLink Type="EntityEffectSystem_LightPropertyLink">
+                  <modifiers Type="SEntityEffectSystem_PropertyModifier" Count="1">
+                    <SEntityEffectSystem_SInverseValueModifier Type="SEntityEffectSystem_SInverseValueModifier" />
+                  </modifiers>
+                  <parameterName RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.1d3c77cf-31ff-42d1-911c-ddf83f326d57" RecordId="1d3c77cf-31ff-42d1-911c-ddf83f326d57" />
+                  <lightProperty>Intensity</lightProperty>
+                </EntityEffectSystem_LightPropertyLink>
+              </propertyLinks>
               <tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
             </EntityEffectSystem_LightTagEffect>
             <EntityEffectSystem_LightTagEffect Type="EntityEffectSystem_LightTagEffect">
@@ -2503,7 +2506,15 @@
                 </offset>
                 <offsetParameter />
               </attachmentSettings>
-              <propertyLinks Type="EntityEffectSystem_LightPropertyLink" Count="0" />
+              <propertyLinks Type="EntityEffectSystem_LightPropertyLink" Count="1">
+                <EntityEffectSystem_LightPropertyLink Type="EntityEffectSystem_LightPropertyLink">
+                  <modifiers Type="SEntityEffectSystem_PropertyModifier" Count="1">
+                    <SEntityEffectSystem_SInverseValueModifier Type="SEntityEffectSystem_SInverseValueModifier" />
+                  </modifiers>
+                  <parameterName RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.1d3c77cf-31ff-42d1-911c-ddf83f326d57" RecordId="1d3c77cf-31ff-42d1-911c-ddf83f326d57" />
+                  <lightProperty>Intensity</lightProperty>
+                </EntityEffectSystem_LightPropertyLink>
+              </propertyLinks>
               <tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
             </EntityEffectSystem_LightTagEffect>
             <EntityEffectSystem_LightTagEffect Type="EntityEffectSystem_LightTagEffect">
@@ -2564,7 +2575,15 @@
                 </offset>
                 <offsetParameter />
               </attachmentSettings>
-              <propertyLinks Type="EntityEffectSystem_LightPropertyLink" Count="0" />
+              <propertyLinks Type="EntityEffectSystem_LightPropertyLink" Count="1">
+                <EntityEffectSystem_LightPropertyLink Type="EntityEffectSystem_LightPropertyLink">
+                  <modifiers Type="SEntityEffectSystem_PropertyModifier" Count="1">
+                    <SEntityEffectSystem_SInverseValueModifier Type="SEntityEffectSystem_SInverseValueModifier" />
+                  </modifiers>
+                  <parameterName RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.1d3c77cf-31ff-42d1-911c-ddf83f326d57" RecordId="1d3c77cf-31ff-42d1-911c-ddf83f326d57" />
+                  <lightProperty>Intensity</lightProperty>
+                </EntityEffectSystem_LightPropertyLink>
+              </propertyLinks>
               <tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
             </EntityEffectSystem_LightTagEffect>
             <EntityEffectSystem_LightTagEffect Type="EntityEffectSystem_LightTagEffect">
@@ -2919,7 +2938,7 @@
           <AccumulationEventThreshold>1</AccumulationEventThreshold>
           <PortTags />
           <RequiredPortTags />
-          <MaxLifetimeHours>0.5</MaxLifetimeHours>
+          <MaxLifetimeHours>0.25</MaxLifetimeHours>
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
