@@ -136,8 +136,8 @@
         <compoundingAllowed>False</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathDefinition" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathDefinition" Count="0" />
+        <PhysFlagsOverride Type="ActorBreathingStyleStartup" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorBreathingStyleStartup" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -251,7 +251,7 @@
             </Primitive>
             <PlayerAnimatedInteractionParams />
             <HighlightBehaviors Type="SHighlightBehaviorNode" Count="0" />
-            <AdditionalCollisionBones Type="AIPerceptionMeterThresholds" Count="0" />
+            <AdditionalCollisionBones Type="ActivityBehaviorRequestCondition" Count="0" />
             <InteractionPointModifiers Type="SInteractionPointModifier" Count="0" />
             <InteractionPointInternalSettingTemplateRef />
             <FirstInteractionPrimary>True</FirstInteractionPrimary>
@@ -339,7 +339,7 @@
               <EnterEventDispatchers Type="EventDispatcher" Count="1">
                 <SetItemportActiveEvent Type="SetItemportActiveEvent">
                   <enable>True</enable>
-                  <itemPorts Type="AIPerceptionMeterThresholds" Count="1">
+                  <itemPorts Type="ActivityBehaviorRequestCondition" Count="1">
                     <String>EggPort</String>
                   </itemPorts>
                 </SetItemportActiveEvent>
@@ -497,7 +497,7 @@
               <EnterEventDispatchers Type="EventDispatcher" Count="1">
                 <SetItemportActiveEvent Type="SetItemportActiveEvent">
                   <enable>False</enable>
-                  <itemPorts Type="AIPerceptionMeterThresholds" Count="1">
+                  <itemPorts Type="ActivityBehaviorRequestCondition" Count="1">
                     <String>EggPort</String>
                   </itemPorts>
                 </SetItemportActiveEvent>
@@ -583,8 +583,8 @@
               <onEntityAttachedState PointsTo="ptr:6" />
               <onEntityDetachedState PointsTo="ptr:10" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusEffect" Count="0" />
-              <itemSubTypes Type="ArmsLockSingleAbility" Count="0" />
+              <itemTypes Type="StatusEffectAbilityLock" Count="0" />
+              <itemSubTypes Type="ActorStatusStatModifier" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -658,7 +658,7 @@
     <SAnimationControllerParams Type="SAnimationControllerParams">
       <AnimationDatabase />
       <AnimationController />
-      <Tags Type="AIPerceptionMeterThresholds" Count="0" />
+      <Tags Type="ActivityBehaviorRequestCondition" Count="0" />
       <ScopeContexts Type="SAnimationScopeContext" Count="0" />
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
@@ -728,7 +728,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ArmsLockSingleAbility" Count="1">
+              <SubTypes Type="ActorStatusStatModifier" Count="1">
                 <EnumChoice>Harvestable</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -947,7 +947,7 @@
       <namespace />
     </UIBindingsVendorEntityComponentParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
-      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="4">
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="5">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:4" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
@@ -961,13 +961,16 @@
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:18" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
             <SDestroyAttachedItemGameplayTrigger Type="SDestroyAttachedItemGameplayTrigger">
               <itemPort PointsTo="ptr:9" />
-              <itemTypes Type="ActorStatusEffect" Count="0" />
-              <itemSubTypes Type="ArmsLockSingleAbility" Count="0" />
+              <itemTypes Type="StatusEffectAbilityLock" Count="0" />
+              <itemSubTypes Type="ActorStatusStatModifier" Count="0" />
               <damageAttachedItem>False</damageAttachedItem>
             </SDestroyAttachedItemGameplayTrigger>
+            <SBaseAnalyticsEventGameplayTrigger Type="SBaseAnalyticsEventGameplayTrigger">
+              <analyticsEvent RecordReference="file://./../../../../libs/foundry/records/analytics/databases/analyticseventdatabase.xml" RecordName="SAnalyticsEvent.StormPylon" RecordId="96431397-ab52-4a18-9ecc-a2917b02bcbb" />
+            </SBaseAnalyticsEventGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
@@ -975,8 +978,8 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDestroyAttachedItemGameplayTrigger Type="SDestroyAttachedItemGameplayTrigger">
               <itemPort PointsTo="ptr:9" />
-              <itemTypes Type="ActorStatusEffect" Count="0" />
-              <itemSubTypes Type="ArmsLockSingleAbility" Count="0" />
+              <itemTypes Type="StatusEffectAbilityLock" Count="0" />
+              <itemSubTypes Type="ActorStatusStatModifier" Count="0" />
               <damageAttachedItem>False</damageAttachedItem>
             </SDestroyAttachedItemGameplayTrigger>
           </gameplayTriggers>
@@ -993,6 +996,23 @@
                 <CommunicationMessage Type="InteractionTrigger">
                   <interactionPointName />
                   <interactionName>StopRadiation</interactionName>
+                </CommunicationMessage>
+              </CommunicationTarget>
+            </SItemportEntityCommunicationGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:6" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <SItemportEntityCommunicationGameplayTrigger Type="SItemportEntityCommunicationGameplayTrigger">
+              <CommunicationTarget Type="SChildPort">
+                <bApplyToAllChildren>True</bApplyToAllChildren>
+                <itemPorts Type="SItemPortDef" Count="1">
+                  <SItemPortDef PointsTo="ptr:9" />
+                </itemPorts>
+                <CommunicationMessage Type="STargetStateChange">
+                  <stateTypeName>InteractableState</stateTypeName>
+                  <stateName>IP_Disabled</stateName>
                 </CommunicationMessage>
               </CommunicationTarget>
             </SItemportEntityCommunicationGameplayTrigger>
@@ -1019,8 +1039,8 @@
       </onInteractionSuccessTriggers>
       <onInteractionFailedTriggers Type="SOnInteractionTriggers" Count="0" />
     </SCInteractionStateGameplayTriggerComponentParams>
-    <SubsumptionMissionLinkComponentParams Type="SubsumptionMissionLinkComponentParams" />
     <SAudioProxyParams Type="SAudioProxyParams" />
+    <SubsumptionMissionLinkComponentParams Type="SubsumptionMissionLinkComponentParams" />
     <SEntityComponentEffects Type="SEntityComponentEffects">
       <entityEffects Type="SEntitityEffectSystem_System">
         <particleEffects />

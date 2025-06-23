@@ -7,7 +7,7 @@
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="16">
+  <Components Type="DataForgeComponentParams" Count="17">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>ControlPanel</Type>
@@ -20,7 +20,7 @@
         <RequiredTags />
         <DisplayType />
         <Localization Type="SCItemLocalization">
-          <Name>@LOC_EMPTY</Name>
+          <Name>@item_s42_lever</Name>
           <ShortName>@LOC_EMPTY</ShortName>
           <Description>@LOC_EMPTY</Description>
           <displayFeatures Type="SCExtendedLocalizationLevelParams">
@@ -133,8 +133,8 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathDefinition" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathDefinition" Count="0" />
+        <PhysFlagsOverride Type="ActorBreathingStyleStartup" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorBreathingStyleStartup" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -215,7 +215,17 @@
             <available>True</available>
             <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
             <conditionList />
-            <playerAnimatedInteractionBase />
+            <playerAnimatedInteractionBase Type="PlayerAnimatedInteractionCustom">
+              <playerAnimatedInteraction Type="PlayerAnimatedInteraction">
+                <supportWalkToAlign>True</supportWalkToAlign>
+                <type>Instantaneous</type>
+                <fragTags Type="ActivityBehaviorRequestCondition" Count="1">
+                  <String>finger</String>
+                </fragTags>
+                <CDIKTargetName>button</CDIKTargetName>
+                <handModeParams />
+              </playerAnimatedInteraction>
+            </playerAnimatedInteractionBase>
           </SSharedInteractionParams>
           <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
             <Name>Off</Name>
@@ -236,7 +246,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:11" Type="SSharedInteractionParams">
             <Name>ProcClipTriggeredLeverDown</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -255,7 +265,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:7" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:13" Type="SSharedInteractionParams">
             <Name>ProcClipTriggeredLeverUp</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -300,7 +310,7 @@
             <UsableTag />
             <LinkingTag />
             <DisplayName>@usable_use</DisplayName>
-            <DisplayType>Show</DisplayType>
+            <DisplayType>Hide</DisplayType>
             <GenericCursor>SingleAction</GenericCursor>
             <FocusModeOnly>False</FocusModeOnly>
             <Sendable>False</Sendable>
@@ -333,7 +343,7 @@
           </SSharedInteractionParams>
         </SharedInteractions>
         <InteractionPoints Type="SInteractionPointParams" Count="1">
-          <SInteractionPointParams Pointer="ptr:10" Type="SInteractionPointParams">
+          <SInteractionPointParams Pointer="ptr:5" Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="2">
               <SInteractionParams Type="SInteractionParams">
                 <Interaction PointsTo="ptr:1" />
@@ -348,23 +358,30 @@
             </Interactions>
             <HelperName>$IP_handle</HelperName>
             <Tags Type="Tag" Count="0" />
-            <Primitive />
+            <Primitive Type="SInteractionPointSpherePrimitiveParams">
+              <Center Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Center>
+              <Radius>0.2</Radius>
+            </Primitive>
             <PlayerAnimatedInteractionParams />
             <HighlightBehaviors Type="SHighlightBehaviorNode" Count="1">
               <SHighlightBehaviorNode Type="SHighlightBehaviorNode">
                 <HighlightBehaviorNodeParams Type="SBonesHighlightNode">
-                  <boneNames Type="AIPerceptionMeterThresholds" Count="1">
+                  <boneNames Type="ActivityBehaviorRequestCondition" Count="1">
                     <String>handle_mesh</String>
                   </boneNames>
                 </HighlightBehaviorNodeParams>
                 <nextNodes Type="SHighlightBehaviorNode" Count="0" />
               </SHighlightBehaviorNode>
             </HighlightBehaviors>
-            <AdditionalCollisionBones Type="AIPerceptionMeterThresholds" Count="0" />
+            <AdditionalCollisionBones Type="ActivityBehaviorRequestCondition" Count="0" />
             <InteractionPointModifiers Type="SInteractionPointModifier" Count="0" />
             <InteractionPointInternalSettingTemplateRef />
             <FirstInteractionPrimary>True</FirstInteractionPrimary>
-            <UseHelperLocation>False</UseHelperLocation>
+            <UseHelperLocation>True</UseHelperLocation>
             <ApplyToEntireSkeleton>False</ApplyToEntireSkeleton>
             <longRangeIP>False</longRangeIP>
             <Radius>1.6</Radius>
@@ -384,7 +401,7 @@
             </Offset>
             <TextJustification>Middle</TextJustification>
             <TextOrientation>RotateToPlayer</TextOrientation>
-            <TextScale>1</TextScale>
+            <TextScale>2</TextScale>
             <ShowInteractionTextAtCursorPos>False</ShowInteractionTextAtCursorPos>
             <ScalePromptOffsetWithEntity>False</ScalePromptOffsetWithEntity>
             <InteractionPromptOffset Type="QuatT">
@@ -429,14 +446,14 @@
       </Interactable>
     </SEntityInteractableParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="1">
+      <StateTypes Type="SInteractionStateType" Count="2">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Lever</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
           <DefaultState PointsTo="ptr:3" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
-          <States Type="SInteractionState" Count="2">
+          <States Type="SInteractionState" Count="3">
             <SInteractionState Pointer="ptr:3" Type="SInteractionState">
               <StateName>Up</StateName>
               <EnterStateEffectGroup />
@@ -453,7 +470,9 @@
                   <NextState PointsTo="ptr:4" />
                 </SInteractionStateTransition>
               </Interactions>
-              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="1">
+                <SInteractionPointParams PointsTo="ptr:5" />
+              </interactionPoints>
               <stateTags Type="TagList">
                 <tags Type="Tag" Count="0" />
               </stateTags>
@@ -478,6 +497,28 @@
                   <NextState PointsTo="ptr:3" />
                 </SInteractionStateTransition>
               </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="1">
+                <SInteractionPointParams PointsTo="ptr:5" />
+              </interactionPoints>
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Type="SInteractionState">
+              <StateName>InputHidden_ScriptControlled</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <stateTags Type="TagList">
                 <tags Type="Tag" Count="0" />
@@ -490,16 +531,114 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="0" />
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>UsableUseChannel_ToggleOn</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:6" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="4">
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+              <StateName>Dormant_NoActorUsing</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+              <StateName>StartUsing</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
+              <StateName>Idle_InUseable</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+              <StateName>ExitingUsable</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <UsableStateModifier Type="UsableStateModifier">
+              <useChannel PointsTo="ptr:7" />
+              <onStartUsing PointsTo="ptr:8" />
+              <onIdle PointsTo="ptr:9" />
+              <onStopUsing PointsTo="ptr:10" />
+              <onDormant PointsTo="ptr:6" />
+            </UsableStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="2">
         <SSequencerDefSequenceParams Type="SSequencerDefSequenceParams">
           <name>LowerLever</name>
-          <interaction PointsTo="ptr:5" />
+          <interaction PointsTo="ptr:11" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:6" />
+              <task PointsTo="ptr:12" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -507,11 +646,11 @@
           </taskEntries>
         </SSequencerDefSequenceParams>
         <SSequencerDefSequenceParams Type="SSequencerDefSequenceParams">
-          <name>UpperLever</name>
-          <interaction PointsTo="ptr:7" />
+          <name>RaiseLever</name>
+          <interaction PointsTo="ptr:13" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:8" />
+              <task PointsTo="ptr:14" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -523,14 +662,9 @@
     </SEntityComponentSequencerParams>
     <SAnimationControllerParams Type="SAnimationControllerParams">
       <AnimationDatabase>SCItems\Levers\SCItem_Lever_PullSwitch_Anims.adb</AnimationDatabase>
-      <AnimationController>SCItems\Levers\SCItem_Lever_PullSwitch_ControllerDefs.xml</AnimationController>
-      <Tags Type="AIPerceptionMeterThresholds" Count="0" />
-      <ScopeContexts Type="SAnimationScopeContext" Count="1">
-        <SAnimationScopeContext Type="SAnimationScopeContext">
-          <scopeContext>SCItemLeverPullSwitch</scopeContext>
-          <type>Self</type>
-        </SAnimationScopeContext>
-      </ScopeContexts>
+      <AnimationController>SCItems\Usables\SCItemUsableControllerDefs.xml</AnimationController>
+      <Tags Type="ActivityBehaviorRequestCondition" Count="0" />
+      <ScopeContexts Type="SAnimationScopeContext" Count="0" />
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="1">
         <AnimationControlActorIK Type="AnimationControlActorIK">
@@ -541,24 +675,14 @@
         </AnimationControlActorIK>
       </AnimationControlActorIKs>
       <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="2">
-        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:6" Type="SSequencerSkeletonAnimationTaskParams">
-          <animationName>down</animationName>
-          <layerId>0</layerId>
-          <looping>False</looping>
-          <playbackSpeed>1</playbackSpeed>
-          <blendIn>0</blendIn>
-          <transitionType>Linear</transitionType>
-          <normalizedStartTime>0</normalizedStartTime>
-        </SSequencerSkeletonAnimationTaskParams>
-        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:8" Type="SSequencerSkeletonAnimationTaskParams">
-          <animationName>up</animationName>
-          <layerId>0</layerId>
-          <looping>False</looping>
-          <playbackSpeed>1</playbackSpeed>
-          <blendIn>0</blendIn>
-          <transitionType>Linear</transitionType>
-          <normalizedStartTime>0</normalizedStartTime>
-        </SSequencerSkeletonAnimationTaskParams>
+        <SSequencerActorAnimationTaskParams Pointer="ptr:12" Type="SSequencerActorAnimationTaskParams">
+          <fragmentName>usable</fragmentName>
+          <fragTag>activate</fragTag>
+        </SSequencerActorAnimationTaskParams>
+        <SSequencerActorAnimationTaskParams Pointer="ptr:14" Type="SSequencerActorAnimationTaskParams">
+          <fragmentName>usable</fragmentName>
+          <fragTag>deactivate</fragTag>
+        </SSequencerActorAnimationTaskParams>
       </AnimationTasks>
       <defaultAnimation />
     </SAnimationControllerParams>
@@ -849,13 +973,13 @@
       <fragmentTag>Lever</fragmentTag>
       <useSlots Type="UsableUseSlot" Count="1">
         <UsableUseSlot Type="UsableUseSlot">
-          <name>UseLever_Lower</name>
+          <name>UseLever</name>
           <available>True</available>
           <useChannelInstances Type="UsableUseChannelInstance" Count="2">
-            <UsableUseChannelInstance Pointer="ptr:11" Type="UsableUseChannelInstance">
+            <UsableUseChannelInstance Pointer="ptr:7" Type="UsableUseChannelInstance">
               <useChannelArchetype RecordReference="file://./../../../../../../libs/foundry/records/entities/scitem/usables/usablearchetypes.xml" RecordName="UseChannelArchetype.Controls_Toggle" RecordId="032f9856-c890-48b0-908e-594c3fc8b938" />
               <alignmentSlots Type="AlignmentSlotBase" Count="1">
-                <PointAlignmentSlot PointsTo="ptr:9" />
+                <PointAlignmentSlot PointsTo="ptr:15" />
               </alignmentSlots>
               <conditionList />
               <useChannelInstancesToEnable Type="UsableUseChannelInstance" Count="0" />
@@ -874,10 +998,10 @@
               <tagsToAddOnExit Type="Tag" Count="0" />
               <tagsToRemoveOnExit Type="Tag" Count="0" />
             </UsableUseChannelInstance>
-            <UsableUseChannelInstance Pointer="ptr:12" Type="UsableUseChannelInstance">
+            <UsableUseChannelInstance Pointer="ptr:17" Type="UsableUseChannelInstance">
               <useChannelArchetype RecordReference="file://./../../../../../../libs/foundry/records/entities/scitem/usables/usablearchetypes.xml" RecordName="UseChannelArchetype.Controls_Toggle" RecordId="032f9856-c890-48b0-908e-594c3fc8b938" />
               <alignmentSlots Type="AlignmentSlotBase" Count="1">
-                <PointAlignmentSlot PointsTo="ptr:9" />
+                <PointAlignmentSlot PointsTo="ptr:15" />
               </alignmentSlots>
               <conditionList />
               <useChannelInstancesToEnable Type="UsableUseChannelInstance" Count="0" />
@@ -917,22 +1041,22 @@
           <optionalGameTags Type="Tag" Count="0" />
           <isScoochable>False</isScoochable>
           <alignWithGravity>False</alignWithGravity>
-          <syncAnimationWithUser>False</syncAnimationWithUser>
+          <syncAnimationWithUser>True</syncAnimationWithUser>
         </UsableUseSlot>
       </useSlots>
       <alignmentSlots Type="AlignmentSlotBase" Count="1">
-        <PointAlignmentSlot Pointer="ptr:9" Type="PointAlignmentSlot">
+        <PointAlignmentSlot Pointer="ptr:15" Type="PointAlignmentSlot">
           <id>a512f7b1-5154-4ba3-960f-5afa6389eab3</id>
           <name>Lever</name>
           <available>True</available>
           <canPlayerUse>True</canPlayerUse>
           <interactionPoints Type="SInteractionPointParams" Count="1">
-            <SInteractionPointParams PointsTo="ptr:10" />
+            <SInteractionPointParams PointsTo="ptr:5" />
           </interactionPoints>
           <fragmentTag />
           <optionalGameTags Type="Tag" Count="0" />
           <slottedFragmentTag />
-          <helperName>$anchor_cntrl_unit</helperName>
+          <helperName>$anchor_01</helperName>
           <relativeTransform Type="QuatT">
             <Rotation Type="Ang3">
               <x>0</x>
@@ -947,10 +1071,10 @@
           </relativeTransform>
           <entityRelativeRotation>False</entityRelativeRotation>
           <entityRelativeTranslation>False</entityRelativeTranslation>
-          <linkMode>FeetLink</linkMode>
+          <linkMode>NoLink</linkMode>
           <stance>Stand</stance>
           <useHandIK>False</useHandIK>
-          <useADIK>True</useADIK>
+          <useADIK>False</useADIK>
           <viewParams Type="SUsableViewParams">
             <viewLimitYawMin>-45</viewLimitYawMin>
             <viewLimitYawMax>45</viewLimitYawMax>
@@ -999,7 +1123,7 @@
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="0" />
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="IObservableExtender" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="0" />
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
@@ -1007,41 +1131,21 @@
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
     </SActorUsableParams>
-    <SPlayerUsableParams Type="SPlayerUsableParams">
-      <playerUsableSlots Type="PlayerUsableSlot" Count="0" />
-      <playerUseChannels Type="PlayerUsableUseChannelInstance" Count="2">
-        <PlayerUsableUseChannelInstance Type="PlayerUsableUseChannelInstance">
-          <useChannelInstance PointsTo="ptr:11" />
-          <delinkOnEnterComplete>Normal</delinkOnEnterComplete>
-          <availableActionGroups Type="UsableChannelInputActionGroup" Count="0" />
-        </PlayerUsableUseChannelInstance>
-        <PlayerUsableUseChannelInstance Type="PlayerUsableUseChannelInstance">
-          <useChannelInstance PointsTo="ptr:12" />
-          <delinkOnEnterComplete>Normal</delinkOnEnterComplete>
-          <availableActionGroups Type="UsableChannelInputActionGroup" Count="0" />
-        </PlayerUsableUseChannelInstance>
-      </playerUseChannels>
-      <sequencerTasks Type="SSequencerPlayerUsableTaskParams" Count="0" />
-      <specializedData Type="SSpecializedData">
-        <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
-      </specializedData>
-      <views Type="PlayerUsableView" Count="0" />
-    </SPlayerUsableParams>
     <SubsumptionMissionLinkComponentParams Type="SubsumptionMissionLinkComponentParams" />
     <SSCSignatureSystemParams Type="SSCSignatureSystemParams">
       <bindingURLPrefix />
       <radarProperties Type="SSCRadarContactProperites">
         <contactType RecordReference="file://./../../../../../../libs/foundry/records/radarsystem/radarcontacttypes.xml" RecordName="RadarContactTypeEntry.d7fd8fa4-1591-46c4-b2fa-e15de9b1f05b" RecordId="d7fd8fa4-1591-46c4-b2fa-e15de9b1f05b" />
         <baseSignatureParams Type="SSCSignatureSystemBaseSignatureParams">
-          <signatures Type="AIPerceptionMeterThresholds" Count="8">
+          <signatures Type="ActivityBehaviorRequestCondition" Count="8">
             <Single>0</Single>
             <Single>0</Single>
             <Single>0</Single>
             <Single>0</Single>
             <Single>0</Single>
-            <Single>7</Single>
             <Single>0</Single>
             <Single>0</Single>
+            <Single>15</Single>
           </signatures>
           <signatureCategories Type="SSignaturesCategoryEntry" Count="0" />
           <taggedSignatures Type="STaggedSignaturesEntry" Count="0" />
@@ -1065,6 +1169,47 @@
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
+    <HandholdLinkComponentParams Type="HandholdLinkComponentParams">
+      <attachmentTriggers Type="HandholdAttachmentTriggerParams" Count="1">
+        <HandholdAttachmentTriggerParams Pointer="ptr:16" Type="HandholdAttachmentTriggerParams">
+          <name>LeverGrip</name>
+          <entityLinkName>Handhold_Lever</entityLinkName>
+          <handholdName>Handhold_Lever</handholdName>
+          <attachPointChoiceParams Type="SpecificHandholdAttachSpotChoiceParams">
+            <attachSpotName>AttachSpot_Lever</attachSpotName>
+            <fallbackParams />
+          </attachPointChoiceParams>
+        </HandholdAttachmentTriggerParams>
+      </attachmentTriggers>
+      <sharedInteractionLinks Type="HandholdSharedInteractionLink" Count="0" />
+      <interactionPointLinks Type="HandholdInteractionPointLink" Count="1">
+        <HandholdInteractionPointLink Type="HandholdInteractionPointLink">
+          <ignoreInteractionOnFail>False</ignoreInteractionOnFail>
+          <attachmentTrigger PointsTo="ptr:16" />
+          <sourceInteractionPoint PointsTo="ptr:5" />
+        </HandholdInteractionPointLink>
+      </interactionPointLinks>
+    </HandholdLinkComponentParams>
     <SAudioProxyParams Type="SAudioProxyParams" />
+    <SPlayerUsableParams Type="SPlayerUsableParams">
+      <playerUsableSlots Type="PlayerUsableSlot" Count="0" />
+      <playerUseChannels Type="PlayerUsableUseChannelInstance" Count="2">
+        <PlayerUsableUseChannelInstance Type="PlayerUsableUseChannelInstance">
+          <useChannelInstance PointsTo="ptr:7" />
+          <delinkOnEnterComplete>Forced</delinkOnEnterComplete>
+          <availableActionGroups Type="UsableChannelInputActionGroup" Count="0" />
+        </PlayerUsableUseChannelInstance>
+        <PlayerUsableUseChannelInstance Type="PlayerUsableUseChannelInstance">
+          <useChannelInstance PointsTo="ptr:17" />
+          <delinkOnEnterComplete>Forced</delinkOnEnterComplete>
+          <availableActionGroups Type="UsableChannelInputActionGroup" Count="0" />
+        </PlayerUsableUseChannelInstance>
+      </playerUseChannels>
+      <sequencerTasks Type="SSequencerPlayerUsableTaskParams" Count="0" />
+      <specializedData Type="SSpecializedData">
+        <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
+      </specializedData>
+      <views Type="PlayerUsableView" Count="0" />
+    </SPlayerUsableParams>
   </Components>
 </EntityClassDefinition.Lever_PullSwitch_Angled_TEMPLATE>

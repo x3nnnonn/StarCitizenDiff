@@ -18,8 +18,8 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="AudioBreathDefinition" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathDefinition" Count="0" />
+        <PhysFlagsOverride Type="ActorBreathingStyleStartup" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorBreathingStyleStartup" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -319,7 +319,7 @@
           </SCarryableGrip>
         </grips>
       </gripData>
-      <abilityLocks Type="IObservableExtender" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
       <carryableTasks Type="SSequencerCarryableTaskParams" Count="0" />
       <throwableParams Type="SThrowableParams">
         <reticle>none</reticle>
@@ -402,6 +402,7 @@
         <yawOffset>0</yawOffset>
         <applyBoundingBoxPlacementOffset>False</applyBoundingBoxPlacementOffset>
         <combatThrowable>False</combatThrowable>
+        <knockdownThrowUpForce>0.5</knockdownThrowUpForce>
       </throwableParams>
       <equipWearableParams Type="SCEquipableParams">
         <itemPort />
@@ -488,7 +489,7 @@
             </conditionList>
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:15" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:17" Type="SSharedInteractionParams">
             <Name>StopRadiation</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -526,7 +527,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:16" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:18" Type="SSharedInteractionParams">
             <Name>Initialize</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -547,7 +548,7 @@
           </SSharedInteractionParams>
         </SharedInteractions>
         <InteractionPoints Type="SInteractionPointParams" Count="1">
-          <SInteractionPointParams Type="SInteractionPointParams">
+          <SInteractionPointParams Pointer="ptr:16" Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="3">
               <SInteractionParams Type="SInteractionParams">
                 <Interaction PointsTo="ptr:1" />
@@ -570,7 +571,7 @@
             <Primitive />
             <PlayerAnimatedInteractionParams />
             <HighlightBehaviors Type="SHighlightBehaviorNode" Count="0" />
-            <AdditionalCollisionBones Type="AIPerceptionMeterThresholds" Count="0" />
+            <AdditionalCollisionBones Type="ActivityBehaviorRequestCondition" Count="0" />
             <InteractionPointModifiers Type="SInteractionPointModifier" Count="0" />
             <InteractionPointInternalSettingTemplateRef />
             <FirstInteractionPrimary>False</FirstInteractionPrimary>
@@ -756,7 +757,7 @@
       </firstSelect>
     </SCItemInspectableParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="3">
+      <StateTypes Type="SInteractionStateType" Count="4">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>CarryableStates</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
@@ -1065,6 +1066,58 @@
             </AggregateStateModifier>
           </StateModifiers>
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>InteractableState</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:15" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
+              <StateName>IP_Enabled</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="1">
+                <SInteractionPointParams PointsTo="ptr:16" />
+              </interactionPoints>
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Type="SInteractionState">
+              <StateName>IP_Disabled</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="0" />
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <SPersistentComponentParams Type="SPersistentComponentParams" />
@@ -1101,7 +1154,7 @@
             </SRadiationEmitterGameplayTrigger>
             <DegradationGameplayTrigger Type="DegradationGameplayTrigger">
               <degradationAction Type="EnableAccumulator">
-                <accumulator Type="SActorProceduralAimRecoilModifiers" Count="1">
+                <accumulator Type="SActorProceduralHandsRecoilCurveModifiersDef" Count="1">
                   <EnumChoice>Wear</EnumChoice>
                 </accumulator>
                 <enable>False</enable>
@@ -1117,7 +1170,7 @@
             </SRadiationEmitterGameplayTrigger>
             <DegradationGameplayTrigger Type="DegradationGameplayTrigger">
               <degradationAction Type="EnableAccumulator">
-                <accumulator Type="SActorProceduralAimRecoilModifiers" Count="1">
+                <accumulator Type="SActorProceduralHandsRecoilCurveModifiersDef" Count="1">
                   <EnumChoice>Wear</EnumChoice>
                 </accumulator>
                 <enable>True</enable>
@@ -1128,7 +1181,7 @@
       </onInteractionStateChangeTriggers>
       <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="3">
         <SOnInteractionTriggers Type="SOnInteractionTriggers">
-          <targetInteraction PointsTo="ptr:15" />
+          <targetInteraction PointsTo="ptr:17" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SChangeInteractionStateGameplayTrigger Type="SChangeInteractionStateGameplayTrigger">
               <targetState PointsTo="ptr:12" />
@@ -1144,11 +1197,11 @@
           </gameplayTriggers>
         </SOnInteractionTriggers>
         <SOnInteractionTriggers Type="SOnInteractionTriggers">
-          <targetInteraction PointsTo="ptr:16" />
+          <targetInteraction PointsTo="ptr:18" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
             <DegradationGameplayTrigger Type="DegradationGameplayTrigger">
               <degradationAction Type="EnableAccumulator">
-                <accumulator Type="SActorProceduralAimRecoilModifiers" Count="1">
+                <accumulator Type="SActorProceduralHandsRecoilCurveModifiersDef" Count="1">
                   <EnumChoice>Wear</EnumChoice>
                 </accumulator>
                 <enable>False</enable>
