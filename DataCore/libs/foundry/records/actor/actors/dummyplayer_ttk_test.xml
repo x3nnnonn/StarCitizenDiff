@@ -21,7 +21,7 @@
       <trackerProperties Type="SActorEntryTrackerParams" />
     </EntityUIDisplayParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="105">
+  <Components Type="DataForgeComponentParams" Count="106">
     <SDummyPlayerComponentParams Type="SDummyPlayerComponentParams">
       <character ReferencedFile="file://./../../../../../libs/foundry/records/character/character.player.xml" />
       <isAIControlled>False</isAIControlled>
@@ -588,11 +588,11 @@
       <mastergraphStateOverrides Type="SMastergraphStateOverride" Count="0" />
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="VaultNavigationLink" Count="2">
+      <perceptionTypes Type="JumpDownNavigationLink" Count="2">
         <EnumChoice>Agent</EnumChoice>
         <EnumChoice>Player</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="LadderNavigationLink" Count="0" />
+      <excludedSenses Type="VaultNavigationLink" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
         <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Head</helperName>
@@ -625,7 +625,7 @@
     </SCommunicationUserComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="18">
+        <SharedInteractions Type="SSharedInteractionParams" Count="19">
           <SSharedInteractionParams Type="SSharedInteractionParams">
             <Name>LookAt</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -942,6 +942,25 @@
             <Sendable>True</Sendable>
             <Linkable>True</Linkable>
             <LockedByLinks>True</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:31" Type="SSharedInteractionParams">
+            <Name>ConsumeActor</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Hide</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
             <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
             <available>True</available>
             <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
@@ -2391,7 +2410,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="ActorStatusStatModifier" Count="0" />
+              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2685,6 +2704,18 @@
         </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
+    <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="0" />
+      <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
+        <SOnInteractionTriggers Type="SOnInteractionTriggers">
+          <targetInteraction PointsTo="ptr:31" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <SDestroySelfGameplayTrigger Type="SDestroySelfGameplayTrigger" />
+          </gameplayTriggers>
+        </SOnInteractionTriggers>
+      </onInteractionSuccessTriggers>
+      <onInteractionFailedTriggers Type="SOnInteractionTriggers" Count="0" />
+    </SCInteractionStateGameplayTriggerComponentParams>
     <BreathingComponentParams Type="BreathingComponentParams" />
     <StaminaComponentParams Type="StaminaComponentParams" />
     <SInventoryParams Type="SInventoryParams">
@@ -4989,7 +5020,7 @@
       <scoreboards Type="SScoreboard" Count="4">
         <SScoreboard Type="SScoreboard">
           <debugName>Objective Based Mode</debugName>
-          <validGameModes Type="StatusTriggerBase" Count="2">
+          <validGameModes Type="SStatusFortitudeLevelModifier" Count="2">
             <EnumChoice>EA_TheatersOfWar</EnumChoice>
             <EnumChoice>EA_Control</EnumChoice>
           </validGameModes>
@@ -5028,7 +5059,7 @@
         </SScoreboard>
         <SScoreboard Type="SScoreboard">
           <debugName>Racing</debugName>
-          <validGameModes Type="StatusTriggerBase" Count="2">
+          <validGameModes Type="SStatusFortitudeLevelModifier" Count="2">
             <EnumChoice>EA_ClassicRace</EnumChoice>
             <EnumChoice>EA_GravRace</EnumChoice>
           </validGameModes>
@@ -5067,7 +5098,7 @@
         </SScoreboard>
         <SScoreboard Type="SScoreboard">
           <debugName>Standard Deathmatch</debugName>
-          <validGameModes Type="StatusTriggerBase" Count="22">
+          <validGameModes Type="SStatusFortitudeLevelModifier" Count="22">
             <EnumChoice>EA_BattleRoyale</EnumChoice>
             <EnumChoice>EA_FreeFlight</EnumChoice>
             <EnumChoice>EA_VanduulSwarm</EnumChoice>
@@ -5120,7 +5151,7 @@
         </SScoreboard>
         <SScoreboard Type="SScoreboard">
           <debugName>GunGame</debugName>
-          <validGameModes Type="StatusTriggerBase" Count="1">
+          <validGameModes Type="SStatusFortitudeLevelModifier" Count="1">
             <EnumChoice>EA_FPSGunGame</EnumChoice>
           </validGameModes>
           <stats Type="SScoreboardStat" Count="5">

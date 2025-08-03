@@ -108,6 +108,7 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
+      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>True</UseDirtShaderForDamage>
@@ -127,7 +128,7 @@
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>True</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="1">
-        <EntityComponentHealth_SApplyDamageMapTask Pointer="ptr:7" Type="EntityComponentHealth_SApplyDamageMapTask">
+        <EntityComponentHealth_SApplyDamageMapTask Pointer="ptr:9" Type="EntityComponentHealth_SApplyDamageMapTask">
           <damageMapPath>Libs/DamageMaps/pipe_repair_1_col_a/Damaged_01.dm</damageMapPath>
         </EntityComponentHealth_SApplyDamageMapTask>
       </sequencerTasks>
@@ -141,8 +142,8 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="ActorBreathingStyleStartup" Count="0" />
-        <PhysFlagsColliderOverride Type="ActorBreathingStyleStartup" Count="0" />
+        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -196,7 +197,7 @@
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
         <SharedInteractions Type="SSharedInteractionParams" Count="3">
-          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:8" Type="SSharedInteractionParams">
             <Name>ApplyDamageMap</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -320,11 +321,11 @@
           </SInteractionPointParams>
         </InteractionPoints>
         <interactionTasks Type="SSequencerInteractionTask" Count="2">
-          <SSequencerInteractionTask Pointer="ptr:8" Type="SSequencerInteractionTask">
+          <SSequencerInteractionTask Pointer="ptr:10" Type="SSequencerInteractionTask">
             <interaction>OnStateRepaired</interaction>
             <triggerType>Self</triggerType>
           </SSequencerInteractionTask>
-          <SSequencerInteractionTask Pointer="ptr:9" Type="SSequencerInteractionTask">
+          <SSequencerInteractionTask Pointer="ptr:11" Type="SSequencerInteractionTask">
             <interaction>OnStateDamaged</interaction>
             <triggerType>Self</triggerType>
           </SSequencerInteractionTask>
@@ -342,8 +343,8 @@
           <DefaultState PointsTo="ptr:1" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
-          <States Type="SInteractionState" Count="3">
-            <SInteractionState Pointer="ptr:1" Type="SInteractionState">
+          <States Type="SInteractionState" Count="4">
+            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
               <StateName>NotDamaged</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -356,7 +357,9 @@
               <Interactions Type="SInteractionStateTransition" Count="0" />
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.111f5b25-c51a-4fb3-8a79-3e0d9e99d317" RecordId="111f5b25-c51a-4fb3-8a79-3e0d9e99d317" />
+                </tags>
               </stateTags>
               <enterGeometryTags />
               <entityTags Type="TagList">
@@ -379,14 +382,16 @@
               <Interactions Type="SInteractionStateTransition" Count="0" />
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.1b8c706e-6b40-4b9a-8243-b3dcbf8a31f9" RecordId="1b8c706e-6b40-4b9a-8243-b3dcbf8a31f9" />
+                </tags>
               </stateTags>
               <enterGeometryTags />
               <entityTags Type="TagList">
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Type="SInteractionState">
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
               <StateName>Pre-Damaged</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -410,19 +415,43 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
+            <SInteractionState Pointer="ptr:1" Type="SInteractionState">
+              <StateName>Uninitialized</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange Type="SStateAutoChange">
+                <NextState PointsTo="ptr:6" />
+                <Delay>10</Delay>
+                <RunWhenStreamedOut>False</RunWhenStreamedOut>
+              </StateAutoChange>
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <SDamageMapStateModifier Type="SDamageMapStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:1" />
-                  <min>0.97</min>
+                  <state PointsTo="ptr:7" />
+                  <min>0.95</min>
                   <max>1</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
                   <state PointsTo="ptr:5" />
                   <min>0</min>
-                  <max>0.97</max>
+                  <max>0.95</max>
                 </SRangeStateLevel>
               </stateRanges>
             </SDamageMapStateModifier>
@@ -434,10 +463,10 @@
       <sequences Type="SSequencerDefSequenceParams" Count="3">
         <SReplicatedSequencerDefSequenceParams Pointer="ptr:4" Type="SReplicatedSequencerDefSequenceParams">
           <name>ApplyDamageMap</name>
-          <interaction PointsTo="ptr:6" />
+          <interaction PointsTo="ptr:8" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:7" />
+              <task PointsTo="ptr:9" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -449,7 +478,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:8" />
+              <task PointsTo="ptr:10" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -461,7 +490,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:9" />
+              <task PointsTo="ptr:11" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -537,11 +566,7 @@
       <falloffCurve>EaseInCubic</falloffCurve>
       <emissionRangeHeightMinimum>0.5</emissionRangeHeightMinimum>
       <emissionRangeHeightMaximum>1.5</emissionRangeHeightMaximum>
-      <vfxParams Type="RadiationEmitterVFXParams">
-        <tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ab78a7f7-e3d8-4c5b-92fe-5f6ce7a899e0" RecordId="ab78a7f7-e3d8-4c5b-92fe-5f6ce7a899e0" />
-        <overwriteVFXStrength>True</overwriteVFXStrength>
-        <sizeMultiplier>1</sizeMultiplier>
-      </vfxParams>
+      <vfxTag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ab78a7f7-e3d8-4c5b-92fe-5f6ce7a899e0" RecordId="ab78a7f7-e3d8-4c5b-92fe-5f6ce7a899e0" />
       <lifetimeParams Type="RadiationEmitterLifetimeParams">
         <useLifetime>False</useLifetime>
         <lifetimeLength>30</lifetimeLength>
@@ -551,7 +576,7 @@
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="2">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:1" />
+          <targetState PointsTo="ptr:7" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SRadiationEmitterGameplayTrigger Type="SRadiationEmitterGameplayTrigger">
               <enableEmitter>False</enableEmitter>
@@ -569,7 +594,7 @@
       </onInteractionStateChangeTriggers>
       <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
         <SOnInteractionTriggers Type="SOnInteractionTriggers">
-          <targetInteraction PointsTo="ptr:6" />
+          <targetInteraction PointsTo="ptr:8" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SChangeInteractionStateGameplayTrigger Type="SChangeInteractionStateGameplayTrigger">
               <targetState PointsTo="ptr:5" />

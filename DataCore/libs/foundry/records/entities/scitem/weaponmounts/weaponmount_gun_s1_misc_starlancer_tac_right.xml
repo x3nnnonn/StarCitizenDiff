@@ -7,15 +7,15 @@
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="18">
+  <Components Type="DataForgeComponentParams" Count="19">
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
         <Mass>0</Mass>
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="ActorBreathingStyleStartup" Count="0" />
-        <PhysFlagsColliderOverride Type="ActorBreathingStyleStartup" Count="0" />
+        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -123,7 +123,7 @@
             <DisplayType>Show</DisplayType>
             <GenericCursor>SingleAction</GenericCursor>
             <FocusModeOnly>False</FocusModeOnly>
-            <Sendable>False</Sendable>
+            <Sendable>True</Sendable>
             <Linkable>True</Linkable>
             <LockedByLinks>False</LockedByLinks>
             <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
@@ -771,13 +771,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusStatModifier" Count="1">
+              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileLauncher</Type>
-              <SubTypes Type="ActorStatusStatModifier" Count="0" />
+              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -866,7 +866,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AmmoBox</Type>
-              <SubTypes Type="ActorStatusStatModifier" Count="1">
+              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -967,7 +967,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusStatModifier" Count="0" />
+              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1316,13 +1316,7 @@
       <resetSequence />
     </SEntityComponentSequencerParams>
     <SInteractionLinkParams Type="SInteractionLinkParams">
-      <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="1">
-        <SVehicleItemportInteractionLink Type="SVehicleItemportInteractionLink">
-          <sourceInteraction PointsTo="ptr:3" />
-          <itemPort>hardpoint_drop_door_left</itemPort>
-          <targetInteraction>Open</targetInteraction>
-        </SVehicleItemportInteractionLink>
-      </vehicleItemPortInteractionLinks>
+      <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="0" />
       <linkPlugs Type="Tag" Count="0" />
     </SInteractionLinkParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
@@ -1462,5 +1456,34 @@
         </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
+    <SEntityTraversingTreeParams Type="SEntityTraversingTreeParams">
+      <TraversingNodes Type="SEntityTraversingNodeBase" Count="1">
+        <SEntityTraversingNodeBase Type="SEntityTraversingNodeBase">
+          <name>DoorOpen</name>
+          <id />
+          <entityTraversingType Type="SEntityTraversingNodeTypeZoneHostVehicle">
+            <RootVehicle>False</RootVehicle>
+          </entityTraversingType>
+          <executeNodes Type="SEntityTraversingExecuteNodeBase" Count="0" />
+          <nextNodes Type="SEntityTraversingNodeBase" Count="1">
+            <SEntityTraversingNodeBase Type="SEntityTraversingNodeBase">
+              <name />
+              <id />
+              <entityTraversingType Type="SEntityTraversingNodeTypeItemPort">
+                <itemPortName>hardpoint_drop_door_right</itemPortName>
+              </entityTraversingType>
+              <executeNodes Type="SEntityTraversingExecuteNodeBase" Count="1">
+                <SInteractionLinkExecuteCreateInteractionLinkNode Type="SInteractionLinkExecuteCreateInteractionLinkNode">
+                  <linkedInteractionName>Open</linkedInteractionName>
+                  <localInteraction PointsTo="ptr:3" />
+                </SInteractionLinkExecuteCreateInteractionLinkNode>
+              </executeNodes>
+              <nextNodes Type="SEntityTraversingNodeBase" Count="0" />
+            </SEntityTraversingNodeBase>
+          </nextNodes>
+        </SEntityTraversingNodeBase>
+      </TraversingNodes>
+      <TraversingTargets Type="SEntityTraversingTarget" Count="0" />
+    </SEntityTraversingTreeParams>
   </Components>
 </EntityClassDefinition.WeaponMount_Gun_S1_MISC_Starlancer_TAC_Right>
