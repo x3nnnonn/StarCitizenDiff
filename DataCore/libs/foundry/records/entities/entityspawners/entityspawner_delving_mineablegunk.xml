@@ -41,6 +41,7 @@
           <vehicleSpawnDeployLandingGears>True</vehicleSpawnDeployLandingGears>
           <infiniteMissiles>False</infiniteMissiles>
           <triggerAreas>False</triggerAreas>
+          <optionalUseChannel />
         </SSpawnEntity>
       </entitiesToSpawn>
       <startActive>True</startActive>
@@ -50,18 +51,12 @@
       <spawnInMovement>False</spawnInMovement>
       <untrackOnDetach>True</untrackOnDetach>
       <wildcardPorts Type="SItemPortDef" Count="0" />
-      <spawnerTasks Type="SSequencerSpawnInItemportSpawnerTaskParams" Count="1">
-        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:12" Type="SSequencerSpawnInItemportSpawnerTaskParams">
-          <entityToSpawn ReferencedFile="file://./../../../../../libs/foundry/records/entities/mineable/mineablerock_fps_flowstone.xml" />
-          <port PointsTo="ptr:1" />
-          <destroyAttachedEntityFirst>True</destroyAttachedEntityFirst>
-        </SSequencerSpawnInItemportSpawnerTaskParams>
-      </spawnerTasks>
+      <spawnerTasks Type="SSequencerSpawnerTaskParams" Count="0" />
     </SSpawnerParams>
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
       <Ports Type="SItemPortDef" Count="1">
-        <SItemPortDef Pointer="ptr:1" Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:9" Type="SItemPortDef">
           <Name>$slot_1</Name>
           <DisplayName />
           <PortTags />
@@ -165,6 +160,7 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
+        <spawnBoxScale>0.5</spawnBoxScale>
         <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
         <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
@@ -281,11 +277,11 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>MineableSpawnStates</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:2" />
+          <DefaultState PointsTo="ptr:1" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:4" Type="SInteractionState">
               <StateName>ReadyToSpawn</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -299,8 +295,8 @@
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
-                  <Interaction PointsTo="ptr:3" />
-                  <NextState PointsTo="ptr:2" />
+                  <Interaction PointsTo="ptr:2" />
+                  <NextState PointsTo="ptr:1" />
                 </SInteractionStateTransition>
               </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
@@ -312,7 +308,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:2" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:1" Type="SInteractionState">
               <StateName>SpawningMineable</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -321,10 +317,10 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:4" />
+              <EnterStatePlaySequence PointsTo="ptr:3" />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:5" />
+                <NextState PointsTo="ptr:4" />
                 <Delay>5</Delay>
                 <RunWhenStreamedOut>False</RunWhenStreamedOut>
               </StateAutoChange>
@@ -380,7 +376,32 @@
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
-                  <Interaction PointsTo="ptr:6" />
+                  <Interaction PointsTo="ptr:5" />
+                  <NextState PointsTo="ptr:6" />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+              <StateName>Blast_1</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:5" />
                   <NextState PointsTo="ptr:7" />
                 </SInteractionStateTransition>
               </Interactions>
@@ -394,7 +415,7 @@
               </entityTags>
             </SInteractionState>
             <SInteractionState Pointer="ptr:7" Type="SInteractionState">
-              <StateName>Blast_1</StateName>
+              <StateName>Blast_2</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
@@ -405,7 +426,7 @@
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
-                  <Interaction PointsTo="ptr:6" />
+                  <Interaction PointsTo="ptr:5" />
                   <NextState PointsTo="ptr:8" />
                 </SInteractionStateTransition>
               </Interactions>
@@ -419,31 +440,6 @@
               </entityTags>
             </SInteractionState>
             <SInteractionState Pointer="ptr:8" Type="SInteractionState">
-              <StateName>Blast_2</StateName>
-              <EnterStateEffectGroup />
-              <ExitStateEffectGroup />
-              <enterStateEffectTags Type="Tag" Count="0" />
-              <exitStateEffectTags Type="Tag" Count="0" />
-              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence />
-              <ExitStatePlaySequence />
-              <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="1">
-                <SInteractionStateTransition Type="SInteractionStateTransition">
-                  <Interaction PointsTo="ptr:6" />
-                  <NextState PointsTo="ptr:9" />
-                </SInteractionStateTransition>
-              </Interactions>
-              <interactionPoints Type="SInteractionPointParams" Count="0" />
-              <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </stateTags>
-              <enterGeometryTags />
-              <entityTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </entityTags>
-            </SInteractionState>
-            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
               <StateName>Blast_3</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -466,7 +462,7 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
-              <itemPort PointsTo="ptr:1" />
+              <itemPort PointsTo="ptr:9" />
               <onEntityAttachedState PointsTo="ptr:10" />
               <onEntityDetachedState PointsTo="ptr:11" />
               <onPortDestroyedState />
@@ -480,7 +476,7 @@
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
         <SharedInteractions Type="SSharedInteractionParams" Count="2">
-          <SSharedInteractionParams Pointer="ptr:3" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
             <Name>SpawnMineable</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -499,7 +495,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
             <Name>ReactToBlast</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -528,12 +524,12 @@
     </SEntityInteractableParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="1">
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:4" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:3" Type="SReplicatedSequencerDefSequenceParams">
           <name>SpawnMineable</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:12" />
+              <task />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -596,10 +592,10 @@
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="1">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:9" />
+          <targetState PointsTo="ptr:8" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <TriggerSelfInteractionGameplayTrigger Type="TriggerSelfInteractionGameplayTrigger">
-              <targetInteraction PointsTo="ptr:3" />
+              <targetInteraction PointsTo="ptr:2" />
             </TriggerSelfInteractionGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
