@@ -888,7 +888,7 @@
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
                 <NextState PointsTo="ptr:8" />
-                <Delay>10</Delay>
+                <Delay>5</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
               <Interactions Type="SInteractionStateTransition" Count="0" />
@@ -1379,7 +1379,7 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <AggregateStateModifier Type="AggregateStateModifier">
-              <aggregateStateParams Type="AggregateStateParams" Count="3">
+              <aggregateStateParams Type="AggregateStateParams" Count="4">
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="2">
                     <SInteractionState PointsTo="ptr:28" />
@@ -1400,6 +1400,12 @@
                     <SInteractionState PointsTo="ptr:19" />
                   </aggregateStates>
                   <state PointsTo="ptr:28" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="1">
+                    <SInteractionState PointsTo="ptr:13" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:39" />
                 </AggregateStateParams>
               </aggregateStateParams>
             </AggregateStateModifier>
@@ -1760,8 +1766,24 @@
     <UserVariablesComponentParams Type="UserVariablesComponentParams">
       <AlwaysUseDefaultValues>False</AlwaysUseDefaultValues>
       <floats Type="FloatUserVariable" Count="0" />
-      <ints Type="IntUserVariable" Count="0" />
-      <bools Type="BoolUserVariable" Count="2">
+      <ints Type="IntUserVariable" Count="2">
+        <IntUserVariable Type="IntUserVariable">
+          <name>uv_popupMessageColor</name>
+          <defaultValue>1</defaultValue>
+          <tasks Type="IntUserVariableTask" Count="0" />
+        </IntUserVariable>
+        <IntUserVariable Type="IntUserVariable">
+          <name>uv_popup2MessageColor</name>
+          <defaultValue>1</defaultValue>
+          <tasks Type="IntUserVariableTask" Count="0" />
+        </IntUserVariable>
+      </ints>
+      <bools Type="BoolUserVariable" Count="5">
+        <BoolUserVariable Type="BoolUserVariable">
+          <name>uv_widePopupActive</name>
+          <defaultValue>False</defaultValue>
+          <tasks Type="BoolUserVariableTask" Count="0" />
+        </BoolUserVariable>
         <BoolUserVariable Type="BoolUserVariable">
           <name>uv_regenDataLayout</name>
           <defaultValue>False</defaultValue>
@@ -1772,16 +1794,54 @@
           <defaultValue>True</defaultValue>
           <tasks Type="BoolUserVariableTask" Count="0" />
         </BoolUserVariable>
+        <BoolUserVariable Type="BoolUserVariable">
+          <name>uv_popupActive</name>
+          <defaultValue>False</defaultValue>
+          <tasks Type="BoolUserVariableTask" Count="0" />
+        </BoolUserVariable>
+        <BoolUserVariable Type="BoolUserVariable">
+          <name>uv_popup2Active</name>
+          <defaultValue>False</defaultValue>
+          <tasks Type="BoolUserVariableTask" Count="0" />
+        </BoolUserVariable>
       </bools>
       <strings Type="StringUserVariable" Count="0" />
-      <locStrings Type="LocStringUserVariable" Count="2">
+      <locStrings Type="LocStringUserVariable" Count="9">
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_standardMessageText1</name>
+          <defaultValue>@ASD_Fabricating</defaultValue>
+        </LocStringUserVariable>
         <LocStringUserVariable Type="LocStringUserVariable">
           <name>uv_screenTitle</name>
-          <defaultValue>@ASD_DataProcessorScreenName</defaultValue>
+          <defaultValue>@ASD_EnergySensor_Title</defaultValue>
         </LocStringUserVariable>
         <LocStringUserVariable Type="LocStringUserVariable">
           <name>uv_headerTitle</name>
-          <defaultValue>@ASD_RegenSystem_HeaderTItle</defaultValue>
+          <defaultValue>@ASD_EnergySensor_HeaderTitle</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_popupLocString</name>
+          <defaultValue>@ASD_NotAuthorized</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_popup2LocString</name>
+          <defaultValue>@ASD_ExtractHardDrive</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_downloadButtonText</name>
+          <defaultValue>@ASD_CopyData</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_dataTitle</name>
+          <defaultValue>@ASD_EnergySensor_Title</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_dataSubTitle</name>
+          <defaultValue>@LOC_EMPTY</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_downloadReadoutText</name>
+          <defaultValue>@ASD_Reading</defaultValue>
         </LocStringUserVariable>
       </locStrings>
     </UserVariablesComponentParams>
@@ -1870,13 +1930,116 @@
       <dragOnly>False</dragOnly>
     </EntityPhysicalAudioParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
-      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="1">
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="4">
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:39" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="3">
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetBoolValue">
+                  <variableName>uv_popupActive</variableName>
+                  <valueToSet>False</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetBoolValue">
+                  <variableName>uv_popup2Active</variableName>
+                  <valueToSet>False</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetLocStringValue">
+                  <variableName>uv_downloadReadoutText</variableName>
+                  <valueToSet>@ASD_Reading</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:38" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
             <TriggerSelfInteractionGameplayTrigger Type="TriggerSelfInteractionGameplayTrigger">
               <targetInteraction PointsTo="ptr:9" />
             </TriggerSelfInteractionGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetLocStringValue">
+                  <variableName>uv_downloadReadoutText</variableName>
+                  <valueToSet>@ASD_CopyingData</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:40" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="4">
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetBoolValue">
+                  <variableName>uv_popupActive</variableName>
+                  <valueToSet>True</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetBoolValue">
+                  <variableName>uv_popup2Active</variableName>
+                  <valueToSet>True</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetIntValue">
+                  <variableName>uv_popupMessageColor</variableName>
+                  <valueToSet>2</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetLocStringValue">
+                  <variableName>uv_popupLocString</variableName>
+                  <valueToSet>@ASD_CopyCompleted</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:34" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="3">
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetBoolValue">
+                  <variableName>uv_popupActive</variableName>
+                  <valueToSet>True</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetLocStringValue">
+                  <variableName>uv_popupLocString</variableName>
+                  <valueToSet>@ASD_NotAuthorized</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetIntValue">
+                  <variableName>uv_popupMessageColor</variableName>
+                  <valueToSet>3</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
       </onInteractionStateChangeTriggers>
