@@ -77,8 +77,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -185,6 +185,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -344,7 +345,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:42" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:45" Type="SSharedInteractionParams">
             <Name>ProcClipLowerToEnter</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -363,7 +364,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:46" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:49" Type="SSharedInteractionParams">
             <Name>ProcClipRaiseToEnter</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -931,13 +932,13 @@
           </SInteractionPointParams>
         </InteractionPoints>
         <interactionTasks Type="SSequencerInteractionTask" Count="1">
-          <SSequencerInteractionTask Pointer="ptr:39" Type="SSequencerInteractionTask">
+          <SSequencerInteractionTask Pointer="ptr:42" Type="SSequencerInteractionTask">
             <interaction>FinishSurgery</interaction>
             <triggerType>Self</triggerType>
           </SSequencerInteractionTask>
         </interactionTasks>
         <actionHandlerTasks Type="SSequencerActorActionHandlerTask" Count="1">
-          <SSequencerActorActionHandlerTask Pointer="ptr:36" Type="SSequencerActorActionHandlerTask">
+          <SSequencerActorActionHandlerTask Pointer="ptr:39" Type="SSequencerActorActionHandlerTask">
             <actionType>Sleep</actionType>
           </SSequencerActorActionHandlerTask>
         </actionHandlerTasks>
@@ -1414,7 +1415,7 @@
       <views Type="Camera" Count="0" />
       <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="1">
-        <SSequencerUsableDelinkTask Pointer="ptr:45" Type="SSequencerUsableDelinkTask" />
+        <SSequencerUsableDelinkTask Pointer="ptr:48" Type="SSequencerUsableDelinkTask" />
       </usableSequencerTasks>
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
@@ -1439,7 +1440,7 @@
       </loadout>
     </SEntityComponentDefaultLoadoutParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="7">
+      <StateTypes Type="SInteractionStateType" Count="8">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Bed</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
@@ -1509,7 +1510,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:49" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:52" Type="SInteractionState">
               <StateName>PerformingSurgery</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -2139,6 +2140,65 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="0" />
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>canister_port</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:36" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:38" Type="SInteractionState">
+              <StateName>canister_connected</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:36" Type="SInteractionState">
+              <StateName>canister_disconnected</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <SItemPortStateModifier Type="SItemPortStateModifier">
+              <itemPort PointsTo="ptr:37" />
+              <onEntityAttachedState PointsTo="ptr:38" />
+              <onEntityDetachedState PointsTo="ptr:36" />
+              <onPortDestroyedState PointsTo="ptr:36" />
+              <itemTypes Type="ActorStatusPreset" Count="0" />
+              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+            </SItemPortStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
@@ -2148,7 +2208,7 @@
           <interaction PointsTo="ptr:8" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:36" />
+              <task PointsTo="ptr:39" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -2160,38 +2220,38 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="5">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:37" />
-              <postDelay>0</postDelay>
-              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
-              <haltOnFailure>True</haltOnFailure>
-            </SSequencerSequenceTaskEntryParams>
-            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:38" />
-              <postDelay>0</postDelay>
-              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
-              <haltOnFailure>True</haltOnFailure>
-            </SSequencerSequenceTaskEntryParams>
-            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:39" />
-              <postDelay>0</postDelay>
-              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
-                <SSequencerAnimationTaskParams PointsTo="ptr:38" />
-              </dependentTasks>
-              <haltOnFailure>True</haltOnFailure>
-            </SSequencerSequenceTaskEntryParams>
-            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
               <task PointsTo="ptr:40" />
               <postDelay>0</postDelay>
-              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
-                <SSequencerAnimationTaskParams PointsTo="ptr:38" />
-              </dependentTasks>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
             </SSequencerSequenceTaskEntryParams>
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
               <task PointsTo="ptr:41" />
               <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:42" />
+              <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="1">
-                <SSequencerAnimationTaskParams PointsTo="ptr:38" />
+                <SSequencerAnimationTaskParams PointsTo="ptr:41" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:43" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerAnimationTaskParams PointsTo="ptr:41" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:44" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerAnimationTaskParams PointsTo="ptr:41" />
               </dependentTasks>
               <haltOnFailure>True</haltOnFailure>
             </SSequencerSequenceTaskEntryParams>
@@ -2199,10 +2259,10 @@
         </SReplicatedSequencerDefSequenceParams>
         <SReplicatedSequencerDefSequenceParams Type="SReplicatedSequencerDefSequenceParams">
           <name>BedDownEmpty</name>
-          <interaction PointsTo="ptr:42" />
+          <interaction PointsTo="ptr:45" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:43" />
+              <task PointsTo="ptr:46" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -2214,21 +2274,21 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="3">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:44" />
+              <task PointsTo="ptr:47" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
             </SSequencerSequenceTaskEntryParams>
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:45" />
+              <task PointsTo="ptr:48" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="1">
-                <SSequencerAnimationTaskParams PointsTo="ptr:44" />
+                <SSequencerAnimationTaskParams PointsTo="ptr:47" />
               </dependentTasks>
               <haltOnFailure>True</haltOnFailure>
             </SSequencerSequenceTaskEntryParams>
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:37" />
+              <task PointsTo="ptr:40" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -2237,10 +2297,10 @@
         </SSequencerDefSequenceParams>
         <SReplicatedSequencerDefSequenceParams Type="SReplicatedSequencerDefSequenceParams">
           <name>BedUpEnter</name>
-          <interaction PointsTo="ptr:46" />
+          <interaction PointsTo="ptr:49" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:47" />
+              <task PointsTo="ptr:50" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -2252,7 +2312,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:48" />
+              <task PointsTo="ptr:51" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -2264,7 +2324,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:41" />
+              <task PointsTo="ptr:44" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -2276,7 +2336,7 @@
     </SEntityComponentSequencerParams>
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
-      <Ports Type="SItemPortDef" Count="5">
+      <Ports Type="SItemPortDef" Count="7">
         <SItemPortDef Type="SItemPortDef">
           <Name>Mattress</Name>
           <DisplayName />
@@ -2318,7 +2378,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Seat</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2568,8 +2628,8 @@
           <RequiredPortTags>HealingResource</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <MinSize>0</MinSize>
-          <MaxSize>0</MaxSize>
+          <MinSize>1</MinSize>
+          <MaxSize>1</MaxSize>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2602,17 +2662,39 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Container</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Medical</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
           </Types>
           <Extension />
-          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationEntity">
+            <usePhysicalAttachment>False</usePhysicalAttachment>
+            <useEntityAttachment>True</useEntityAttachment>
+            <useExteriorAttachment>False</useExteriorAttachment>
+            <usePhysicalParent>False</usePhysicalParent>
+            <useLogicalAttachment>False</useLogicalAttachment>
+            <constraintParams Type="SAttachmentConstraintParams">
+              <damping>0</damping>
+              <noSelfCollisions>True</noSelfCollisions>
+              <maxPullForce>0</maxPullForce>
+              <maxBendTorque>0</maxBendTorque>
+              <constrainToLine>False</constrainToLine>
+              <constrainToPlane>False</constrainToPlane>
+              <constrainFully>True</constrainFully>
+              <useWorldConstraintPosition>False</useWorldConstraintPosition>
+              <noRotation>True</noRotation>
+              <xMin>0</xMin>
+              <xMax>0</xMax>
+              <yzMax>0</yzMax>
+              <constraintHelper />
+              <constraintMaintainOrientation>False</constraintMaintainOrientation>
+            </constraintParams>
+            <hangarPort>False</hangarPort>
             <Helper Type="SItemPortDefHelperNode">
               <Tags />
               <Helper Type="SItemPortDefHelper">
-                <Name>$slot_canister_1</Name>
+                <Name />
                 <Offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>
@@ -2620,7 +2702,7 @@
                     <z>0</z>
                   </Rotation>
                   <Position Type="Vec3">
-                    <x>0</x>
+                    <x>2</x>
                     <y>0</y>
                     <z>0</z>
                   </Position>
@@ -2693,7 +2775,189 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Container</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+                <EnumChoice>Medical</EnumChoice>
+              </SubTypes>
+            </SItemPortDefTypes>
+          </Types>
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>$slot_canister_2</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>False</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
+        <SItemPortDef Pointer="ptr:37" Type="SItemPortDef">
+          <Name>$IP_canister_01</Name>
+          <DisplayName />
+          <PortTags />
+          <RequiredPortTags>HealingResource</RequiredPortTags>
+          <Flags />
+          <Tags Type="Tag" Count="0" />
+          <MinSize>1</MinSize>
+          <MaxSize>1</MaxSize>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="1">
+            <SItemPortDefTypes Type="SItemPortDefTypes">
+              <Type>Container</Type>
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+                <EnumChoice>Medical</EnumChoice>
+              </SubTypes>
+            </SItemPortDefTypes>
+          </Types>
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>$slot_canister_1</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>False</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
+        <SItemPortDef Type="SItemPortDef">
+          <Name>$IP_canister_02</Name>
+          <DisplayName />
+          <PortTags />
+          <RequiredPortTags>HealingResource</RequiredPortTags>
+          <Flags />
+          <Tags Type="Tag" Count="0" />
+          <MinSize>1</MinSize>
+          <MaxSize>1</MaxSize>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="1">
+            <SItemPortDefTypes Type="SItemPortDefTypes">
+              <Type>Container</Type>
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Medical</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2770,32 +3034,32 @@
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
       <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="7">
-        <SSequencerAnimationTaskParams Pointer="ptr:43" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:46" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBedMedical</fragmentId>
           <fragTag>LowerToEnter</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:44" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:47" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBedMedical</fragmentId>
           <fragTag>LowerToExit</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:47" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:50" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBedMedical</fragmentId>
           <fragTag>RaiseToEnter</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:48" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:51" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBedMedical</fragmentId>
           <fragTag>RaiseToReset</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:38" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:41" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBedMedical</fragmentId>
           <fragTag>Activate</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:41" Type="SSequencerSkeletonAnimationTaskParams">
+        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:44" Type="SSequencerSkeletonAnimationTaskParams">
           <animationName>screen_deploy</animationName>
           <layerId>2</layerId>
           <looping>False</looping>
@@ -2804,7 +3068,7 @@
           <transitionType>Linear</transitionType>
           <normalizedStartTime>0</normalizedStartTime>
         </SSequencerSkeletonAnimationTaskParams>
-        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:37" Type="SSequencerSkeletonAnimationTaskParams">
+        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:40" Type="SSequencerSkeletonAnimationTaskParams">
           <animationName>screen_retract</animationName>
           <layerId>2</layerId>
           <looping>False</looping>
@@ -2824,7 +3088,7 @@
       <respawnInteraction PointsTo="ptr:1" />
       <respawnInteractionPoint PointsTo="ptr:11" />
       <useChannelToHealActor PointsTo="ptr:24" />
-      <surgerySequenceState PointsTo="ptr:49" />
+      <surgerySequenceState PointsTo="ptr:52" />
       <respawnRange>5000</respawnRange>
       <timeToHeal>7</timeToHeal>
       <delayBeforeHeal>6</delayBeforeHeal>
@@ -2865,6 +3129,7 @@
           <deadlyInjuryName>@med_surgeryName_deadlyInjury_rightLeg</deadlyInjuryName>
         </rightLegInjuries>
       </surgeryNames>
+      <resourceRegenerationPerMinute />
     </MedBedComponentParams>
     <SEntityAudioControllerParams Type="SEntityAudioControllerParams">
       <audioControllerEntityType>None</audioControllerEntityType>
@@ -3552,7 +3817,7 @@
           <EntityEffectSystem_EnableSequencerTask Type="EntityEffectSystem_EnableSequencerTask">
             <tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.f0af6968-8116-4db4-b583-4d73b1e7968a" RecordId="f0af6968-8116-4db4-b583-4d73b1e7968a" />
           </EntityEffectSystem_EnableSequencerTask>
-          <EntityEffectSystem_DisableSequencerTask Pointer="ptr:40" Type="EntityEffectSystem_DisableSequencerTask">
+          <EntityEffectSystem_DisableSequencerTask Pointer="ptr:43" Type="EntityEffectSystem_DisableSequencerTask">
             <tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.f0af6968-8116-4db4-b583-4d73b1e7968a" RecordId="f0af6968-8116-4db4-b583-4d73b1e7968a" />
           </EntityEffectSystem_DisableSequencerTask>
         </sequencerTags>
@@ -3579,14 +3844,14 @@
           <disableEffectTags Type="Tag" Count="0" />
         </SCInteractionEffectsMapEntryParams>
         <SCInteractionEffectsMapEntryParams Type="SCInteractionEffectsMapEntryParams">
-          <Interaction PointsTo="ptr:42" />
+          <Interaction PointsTo="ptr:45" />
           <enableEffectTags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.55a1d276-3857-4280-a3f5-0e3af0a25035" RecordId="55a1d276-3857-4280-a3f5-0e3af0a25035" />
           </enableEffectTags>
           <disableEffectTags Type="Tag" Count="0" />
         </SCInteractionEffectsMapEntryParams>
         <SCInteractionEffectsMapEntryParams Type="SCInteractionEffectsMapEntryParams">
-          <Interaction PointsTo="ptr:46" />
+          <Interaction PointsTo="ptr:49" />
           <enableEffectTags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.75073b3f-85e3-46c8-9158-b69f74f5ae3a" RecordId="75073b3f-85e3-46c8-9158-b69f74f5ae3a" />
           </enableEffectTags>
@@ -3647,9 +3912,9 @@
         <BuildingBlocksLayer Type="BuildingBlocksLayer">
           <layerName>01</layerName>
           <renderTarget>All</renderTarget>
-          <defaultView PointsTo="ptr:50" />
+          <defaultView PointsTo="ptr:53" />
           <views Type="BuildingBlocksView" Count="1">
-            <BuildingBlocksView Pointer="ptr:50" Type="BuildingBlocksView">
+            <BuildingBlocksView Pointer="ptr:53" Type="BuildingBlocksView">
               <name>01</name>
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/pu/medical/i_med_medicalbed_a.xml" />
@@ -3671,7 +3936,7 @@
     </SCItemInventoryContainerComponentParams>
     <SEntityLootableContainerParams Type="SEntityLootableContainerParams">
       <initialLocalPlayerAccess>True</initialLocalPlayerAccess>
-      <radius>1.6</radius>
+      <radius>5</radius>
       <maxOffsetTranslation Type="Vec3">
         <x>0</x>
         <y>0</y>
@@ -3682,7 +3947,9 @@
         <y>0</y>
         <z>0</z>
       </maxOffsetRotation>
-      <mainInteractions Type="SSharedInteractionParams" Count="0" />
+      <mainInteractions Type="SSharedInteractionParams" Count="1">
+        <SSharedInteractionParams />
+      </mainInteractions>
       <mainInteractionAnimTarget />
       <placeOutfitRules Type="SOutfitPlacingRule" Count="0" />
       <takeExclussionRules Type="SItemPortDef" Count="0" />
@@ -3692,17 +3959,44 @@
       <infiniteLootable>False</infiniteLootable>
       <smartRefillAmmo>False</smartRefillAmmo>
       <smartRefillGrenadesAndAmmo>False</smartRefillGrenadesAndAmmo>
-      <fragmentTags />
+      <fragmentTags>i_canister_slot</fragmentTags>
       <forceFirstSelect>False</forceFirstSelect>
       <lootInventoryParams />
-      <itemPortRules Type="SLootableItemPortRuleParams" Count="0" />
+      <itemPortRules Type="SLootableItemPortRuleParams" Count="1">
+        <SLootableItemPortRuleParams Type="SLootableItemPortRuleParams">
+          <itemPort PointsTo="ptr:37" />
+          <maxOffsetTranslation Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </maxOffsetTranslation>
+          <maxOffsetRotation Type="Ang3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </maxOffsetRotation>
+          <extraFragTags>i_canister_slot</extraFragTags>
+          <itemState Type="SInteractionStateDef">
+            <stateTypeName />
+            <stateName />
+          </itemState>
+        </SLootableItemPortRuleParams>
+      </itemPortRules>
       <tagsOnAllItemPortsEmpty Type="Tag" Count="0" />
       <placeIntoPortInteraction />
-      <bespokePlace>False</bespokePlace>
-      <bespokePlaceTags Type="Tag" Count="0" />
-      <bespokeTake>False</bespokeTake>
-      <bespokeTakeTags Type="Tag" Count="0" />
-      <exactPlaceIntoPort />
+      <bespokePlace>True</bespokePlace>
+      <bespokePlaceTags Type="Tag" Count="3">
+        <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ef397d85-27d1-4670-a108-7703dc85a0ee" RecordId="ef397d85-27d1-4670-a108-7703dc85a0ee" />
+        <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.3da25018-cbbb-4c5c-8cde-1c71c7a9a954" RecordId="3da25018-cbbb-4c5c-8cde-1c71c7a9a954" />
+        <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" RecordId="4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" />
+      </bespokePlaceTags>
+      <bespokeTake>True</bespokeTake>
+      <bespokeTakeTags Type="Tag" Count="3">
+        <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ef397d85-27d1-4670-a108-7703dc85a0ee" RecordId="ef397d85-27d1-4670-a108-7703dc85a0ee" />
+        <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6022afb5-b431-439a-befe-fac0e939d576" RecordId="6022afb5-b431-439a-befe-fac0e939d576" />
+        <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" RecordId="4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" />
+      </bespokeTakeTags>
+      <exactPlaceIntoPort PointsTo="ptr:37" />
       <outfitHangerGroups Type="SOutfitHangerGroup" Count="0" />
       <coreInventoryItems Type="SCoreInventoryItem" Count="0" />
     </SEntityLootableContainerParams>

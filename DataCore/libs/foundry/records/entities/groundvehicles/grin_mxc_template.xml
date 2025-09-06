@@ -493,6 +493,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -604,8 +605,24 @@
     </SEntityComponentEffects>
     <SSCItemControllableManagerParams Type="SSCItemControllableManagerParams">
       <defaultMasterMode>SCM</defaultMasterMode>
-      <masterModeSpoolTimeToNAV>1</masterModeSpoolTimeToNAV>
-      <masterModeSpoolTimeToSCM>0.2</masterModeSpoolTimeToSCM>
+      <masterModes Type="SMasterModeParams" Count="4">
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>0.2</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+      </masterModes>
       <controllerParams />
     </SSCItemControllableManagerParams>
     <SHealthComponentParams Type="SHealthComponentParams">
@@ -667,6 +684,8 @@
       <shatterDestroyEvent />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
+      <duplicateHitToParent>False</duplicateHitToParent>
+      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SInteractionLinkParams Type="SInteractionLinkParams">
       <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="0" />
@@ -888,7 +907,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -977,7 +996,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1066,7 +1085,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1161,6 +1180,7 @@
     </EntityComponentAudioEnvironmentFeedbackParams>
     <EntityComponentVibrationParams Type="EntityComponentVibrationParams">
       <vibrationRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclebase.xml" />
+      <normalizationMassOverride>-1</normalizationMassOverride>
     </EntityComponentVibrationParams>
     <SurfaceRaindropsComponentParams Type="SurfaceRaindropsComponentParams">
       <enable>True</enable>
@@ -1187,7 +1207,6 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>10</fadeOutDuration>
-          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
         <SurfaceRaindrops_Emitter Type="SurfaceRaindrops_Emitter">
           <particleEffect Type="GlobalResourceParticle">
@@ -1203,12 +1222,12 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>35</fadeOutDuration>
-          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
       </customEmitters>
       <wipeEffect Type="GlobalResourceParticle">
         <path />
       </wipeEffect>
+      <enableCloudCondensation>False</enableCloudCondensation>
       <inactiveDuration>35</inactiveDuration>
       <maximumSpeed>50</maximumSpeed>
       <waterSprayHeightRange Type="Range">
@@ -1573,10 +1592,10 @@
       <entrancesRecord />
     </EntranceDisplayComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="JumpDownNavigationLink" Count="1">
+      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
         <EnumChoice>Vehicle</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="VaultNavigationLink" Count="0" />
+      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
       <defaultEntityObservablePoint />
       <defaultAimingObservablePoint />

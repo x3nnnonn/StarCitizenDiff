@@ -7,7 +7,7 @@
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="9">
+  <Components Type="DataForgeComponentParams" Count="11">
     <SSpawnerParams Type="SSpawnerParams">
       <spawnRules Type="SSpawnOnTimer">
         <timeBetweenSpawns>1</timeBetweenSpawns>
@@ -41,6 +41,7 @@
           <vehicleSpawnDeployLandingGears>True</vehicleSpawnDeployLandingGears>
           <infiniteMissiles>False</infiniteMissiles>
           <triggerAreas>False</triggerAreas>
+          <optionalUseChannel />
         </SSpawnEntity>
       </entitiesToSpawn>
       <startActive>True</startActive>
@@ -50,8 +51,8 @@
       <spawnInMovement>False</spawnInMovement>
       <untrackOnDetach>True</untrackOnDetach>
       <wildcardPorts Type="SItemPortDef" Count="0" />
-      <spawnerTasks Type="SSequencerSpawnInItemportSpawnerTaskParams" Count="1">
-        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:6" Type="SSequencerSpawnInItemportSpawnerTaskParams">
+      <spawnerTasks Type="SSequencerSpawnerTaskParams" Count="1">
+        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:8" Type="SSequencerSpawnInItemportSpawnerTaskParams">
           <entityToSpawn ReferencedFile="file://./../../../../../libs/foundry/records/entities/scitem/human/lt/prop/storage/canister/canister_plasma_2_a.xml" />
           <port PointsTo="ptr:1" />
           <destroyAttachedEntityFirst>True</destroyAttachedEntityFirst>
@@ -62,7 +63,7 @@
       <masterController />
       <Ports Type="SItemPortDef" Count="1">
         <SItemPortDef Pointer="ptr:1" Type="SItemPortDef">
-          <Name>$slot_1</Name>
+          <Name>$slot_ip</Name>
           <DisplayName />
           <PortTags />
           <RequiredPortTags>PlasmaContainerBIG</RequiredPortTags>
@@ -102,7 +103,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cargo</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Cargo</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -112,7 +113,7 @@
             <Helper Type="SItemPortDefHelperNode">
               <Tags />
               <Helper Type="SItemPortDefHelper">
-                <Name>$slot_1</Name>
+                <Name>$slot_ip</Name>
                 <Offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>
@@ -173,8 +174,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -232,7 +233,7 @@
         <Tags />
         <Geometry Type="SGeometryDataParams">
           <Geometry Type="GlobalResourceGeometry">
-            <path>Objects/props/helper/mission/miision_helpers_1_b.cga</path>
+            <path>Objects/buildingsets/human/utilitarian/ugf/int/power/hub/util_ugf_int_power_hub_howitzer_01_fc_loader_01.cga</path>
           </Geometry>
           <Material Type="GlobalResourceMaterial">
             <path />
@@ -285,7 +286,7 @@
       <inheritModelTagFromHost>True</inheritModelTagFromHost>
     </SGeometryResourceParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="1">
+      <StateTypes Type="SInteractionStateType" Count="2">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>CanisterSpawnStates</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
@@ -325,7 +326,7 @@
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" RecordId="cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" />
+                <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.fb5ee7d5-f5ba-4bf6-91de-15e04c9659d6" RecordId="fb5ee7d5-f5ba-4bf6-91de-15e04c9659d6" />
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
@@ -349,11 +350,75 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="0" />
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>PortState</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:6" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
+              <StateName>Filled</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+              <StateName>NotFilled</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:2" />
+                  <NextState />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <SItemPortStateModifier Type="SItemPortStateModifier">
+              <itemPort PointsTo="ptr:1" />
+              <onEntityAttachedState PointsTo="ptr:7" />
+              <onEntityDetachedState PointsTo="ptr:6" />
+              <onPortDestroyedState PointsTo="ptr:6" />
+              <itemTypes Type="ActorStatusPreset" Count="0" />
+              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+            </SItemPortStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="1">
+        <SharedInteractions Type="SSharedInteractionParams" Count="2">
           <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
             <Name>SpawnCanister</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -366,6 +431,25 @@
             <FocusModeOnly>False</FocusModeOnly>
             <Sendable>False</Sendable>
             <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:10" Type="SSharedInteractionParams">
+            <Name>CanisterDetached</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>True</Sendable>
+            <Linkable>False</Linkable>
             <LockedByLinks>False</LockedByLinks>
             <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
             <available>True</available>
@@ -386,9 +470,15 @@
         <SReplicatedSequencerDefSequenceParams Pointer="ptr:4" Type="SReplicatedSequencerDefSequenceParams">
           <name>SpawnCanister</name>
           <interaction />
-          <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
+          <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="2">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:6" />
+              <task PointsTo="ptr:8" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:9" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -414,9 +504,9 @@
               <clipToVisArea>Local</clipToVisArea>
               <gpuVisAreaCullingMode>Default</gpuVisAreaCullingMode>
               <particleEffect Type="GlobalResourceParticle">
-                <path />
+                <path>72d6172f-457e-fd6e-c453-47c4815fd739|star_citizen/missions/asd delving/asd_howitzer.conveyer-belt.plasma_canister_sparks</path>
               </particleEffect>
-              <attachmentSettings Type="SEntityEffectSystem_Attachment_EntitySlot">
+              <attachmentSettings Type="SEntityEffectSystem_Attachment_BoneAttachment">
                 <offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>
@@ -430,9 +520,11 @@
                   </Position>
                 </offset>
                 <offsetParameter />
+                <attachmentZone>Host</attachmentZone>
+                <boneAttachment>$slot_ip</boneAttachment>
               </attachmentSettings>
               <propertyLinks Type="SEntityEffectSystem_ParticlePropertyLink" Count="0" />
-              <trigger RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" RecordId="cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" />
+              <trigger RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.fb5ee7d5-f5ba-4bf6-91de-15e04c9659d6" RecordId="fb5ee7d5-f5ba-4bf6-91de-15e04c9659d6" />
             </SEntityEffectSystem_ParticleTriggerEffect>
           </triggerEffects>
         </particleEffects>
@@ -452,5 +544,39 @@
       <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="0" />
       <linkPlugs Type="Tag" Count="0" />
     </SInteractionLinkParams>
+    <SAnimationControllerParams Type="SAnimationControllerParams">
+      <AnimationDatabase />
+      <AnimationController />
+      <Tags Type="ActivityBehaviorRequestCondition" Count="0" />
+      <ScopeContexts Type="SAnimationScopeContext" Count="0" />
+      <AnimationJointControls />
+      <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
+      <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="1">
+        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:9" Type="SSequencerSkeletonAnimationTaskParams">
+          <animationName>release_cannister</animationName>
+          <layerId>0</layerId>
+          <looping>False</looping>
+          <playbackSpeed>1</playbackSpeed>
+          <blendIn>0</blendIn>
+          <transitionType>Linear</transitionType>
+          <normalizedStartTime>0</normalizedStartTime>
+        </SSequencerSkeletonAnimationTaskParams>
+      </AnimationTasks>
+      <defaultAnimation />
+    </SAnimationControllerParams>
+    <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="1">
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:6" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <TriggerSelfInteractionGameplayTrigger Type="TriggerSelfInteractionGameplayTrigger">
+              <targetInteraction PointsTo="ptr:10" />
+            </TriggerSelfInteractionGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+      </onInteractionStateChangeTriggers>
+      <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="0" />
+      <onInteractionFailedTriggers Type="SOnInteractionTriggers" Count="0" />
+    </SCInteractionStateGameplayTriggerComponentParams>
   </Components>
 </EntityClassDefinition.EntitySpawner_Delving_PlasmaCanisterHowitzer>

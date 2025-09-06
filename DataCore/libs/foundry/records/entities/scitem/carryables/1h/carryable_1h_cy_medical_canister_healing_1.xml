@@ -11,7 +11,7 @@
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4e2e55ca-678b-4c6e-b354-5cf1a66ce3e0" RecordId="4e2e55ca-678b-4c6e-b354-5cf1a66ce3e0" />
   </tags>
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="12">
+  <Components Type="DataForgeComponentParams" Count="14">
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
         <Mass>5</Mass>
@@ -19,8 +19,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -79,13 +79,13 @@
         <Grade>1</Grade>
         <Manufacturer />
         <inheritParentManufacturer>False</inheritParentManufacturer>
-        <Tags>HealingResource</Tags>
+        <Tags>HealingResource canister</Tags>
         <RequiredTags />
         <DisplayType />
         <Localization Type="SCItemLocalization">
-          <Name>@item_NameSASU_Carryable_1H_CY_medical_canister_healing_1</Name>
+          <Name>@item_NameMedical_fluid_storage_destructible</Name>
           <ShortName>@LOC_EMPTY</ShortName>
-          <Description>@item_DescSASU_Carryable_1H_CY_medical_canister_healing_1</Description>
+          <Description>@item_DescMedical_fluid_storage_destructible</Description>
           <displayFeatures Type="SCExtendedLocalizationLevelParams">
             <LogoSimplifiedWhite />
             <FrontendBackground />
@@ -103,7 +103,7 @@
           </displayFeatures>
         </Localization>
         <mannequinTags Type="SCItemMannequinTags">
-          <mannequinClassTag />
+          <mannequinClassTag>canister</mannequinClassTag>
           <mannequinTypeTag />
           <mannequinBaseTag />
         </mannequinTags>
@@ -131,6 +131,7 @@
           <z>0.75</z>
         </inventoryOccupancyDimensionsUIOverride>
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -149,6 +150,7 @@
       <flipInteraction />
       <swapAttachmentsInteraction />
       <attachToHeldItemInteraction />
+      <interactionMetadata ReferencedFile="file://./../../../../../../../libs/foundry/records/globalinteractionparams/carryableinteractionsmetadata_globaldefault.xml" />
       <carryableStatesParams Type="SCarryableStatesParams">
         <settledState PointsTo="ptr:6" />
         <carriedState PointsTo="ptr:7" />
@@ -203,9 +205,9 @@
       </interactionPointOffsets>
       <gripData Type="SGripContainer">
         <gripOverrideUsingLOS>False</gripOverrideUsingLOS>
-        <grips Type="SCarryableGrip" Count="4">
+        <grips Type="SCarryableGrip" Count="2">
           <SCarryableGrip Type="SCarryableGrip">
-            <carryStyleID>1H_Standard</carryStyleID>
+            <carryStyleID>2H_Standard</carryStyleID>
             <canBeUsedBy>All</canBeUsedBy>
             <handMode>RightHand</handMode>
             <gripAction>None</gripAction>
@@ -230,9 +232,29 @@
                 </Position>
               </offset>
             </handGrip>
-            <offHandGrip />
+            <offHandGrip Type="SGrip">
+              <gripID />
+              <optionalHelper>$grip_left_1</optionalHelper>
+              <gripShapeParameters Type="SGripShapeParams">
+                <gripShape>gs_cylinder</gripShape>
+                <dimension>7</dimension>
+                <wristRotation>0</wristRotation>
+              </gripShapeParameters>
+              <offset Type="QuatT">
+                <Rotation Type="Ang3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Rotation>
+                <Position Type="Vec3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Position>
+              </offset>
+            </offHandGrip>
             <animationParameters Type="SCarryAnimationParams">
-              <motionBase>1hr</motionBase>
+              <motionBase>2h</motionBase>
               <handTag />
             </animationParameters>
             <carryParameters Type="SCarryParams">
@@ -242,9 +264,9 @@
             </carryParameters>
           </SCarryableGrip>
           <SCarryableGrip Type="SCarryableGrip">
-            <carryStyleID>1H_Reverse</carryStyleID>
+            <carryStyleID>2H_Reverse</carryStyleID>
             <canBeUsedBy>All</canBeUsedBy>
-            <handMode>RightHand</handMode>
+            <handMode>LeftHand</handMode>
             <gripAction>None</gripAction>
             <handGrip Type="SGrip">
               <gripID />
@@ -267,28 +289,12 @@
                 </Position>
               </offset>
             </handGrip>
-            <offHandGrip />
-            <animationParameters Type="SCarryAnimationParams">
-              <motionBase>1hr</motionBase>
-              <handTag />
-            </animationParameters>
-            <carryParameters Type="SCarryParams">
-              <width>0</width>
-              <height>0</height>
-              <depth>0</depth>
-            </carryParameters>
-          </SCarryableGrip>
-          <SCarryableGrip Type="SCarryableGrip">
-            <carryStyleID>1H_Standard</carryStyleID>
-            <canBeUsedBy>All</canBeUsedBy>
-            <handMode>LeftHand</handMode>
-            <gripAction>None</gripAction>
-            <handGrip Type="SGrip">
+            <offHandGrip Type="SGrip">
               <gripID />
-              <optionalHelper>$grip_left_1</optionalHelper>
+              <optionalHelper>$grip_right_1</optionalHelper>
               <gripShapeParameters Type="SGripShapeParams">
                 <gripShape>gs_cylinder</gripShape>
-                <dimension>0</dimension>
+                <dimension>7</dimension>
                 <wristRotation>0</wristRotation>
               </gripShapeParameters>
               <offset Type="QuatT">
@@ -303,47 +309,9 @@
                   <z>0</z>
                 </Position>
               </offset>
-            </handGrip>
-            <offHandGrip />
+            </offHandGrip>
             <animationParameters Type="SCarryAnimationParams">
-              <motionBase>1hl</motionBase>
-              <handTag />
-            </animationParameters>
-            <carryParameters Type="SCarryParams">
-              <width>0</width>
-              <height>0</height>
-              <depth>0</depth>
-            </carryParameters>
-          </SCarryableGrip>
-          <SCarryableGrip Type="SCarryableGrip">
-            <carryStyleID>1H_Reverse</carryStyleID>
-            <canBeUsedBy>All</canBeUsedBy>
-            <handMode>LeftHand</handMode>
-            <gripAction>None</gripAction>
-            <handGrip Type="SGrip">
-              <gripID>$grip_right_1</gripID>
-              <optionalHelper />
-              <gripShapeParameters Type="SGripShapeParams">
-                <gripShape>gs_cylinder</gripShape>
-                <dimension>0</dimension>
-                <wristRotation>0</wristRotation>
-              </gripShapeParameters>
-              <offset Type="QuatT">
-                <Rotation Type="Ang3">
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                </Rotation>
-                <Position Type="Vec3">
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                </Position>
-              </offset>
-            </handGrip>
-            <offHandGrip />
-            <animationParameters Type="SCarryAnimationParams">
-              <motionBase>1hl</motionBase>
+              <motionBase>2h</motionBase>
               <handTag />
             </animationParameters>
             <carryParameters Type="SCarryParams">
@@ -355,7 +323,31 @@
         </grips>
       </gripData>
       <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
-      <carryableTasks Type="SSequencerCarryableTaskParams" Count="0" />
+      <carryableTasks Type="SSequencerCarryableTaskParams" Count="7">
+        <SSequencerMoveToAnimateCarryableTaskParams Pointer="ptr:21" Type="SSequencerMoveToAnimateCarryableTaskParams">
+          <fragmentId>Place</fragmentId>
+          <fragTag>canister</fragTag>
+        </SSequencerMoveToAnimateCarryableTaskParams>
+        <SSequencerBespokePlaceCarryableTaskParams Pointer="ptr:22" Type="SSequencerBespokePlaceCarryableTaskParams">
+          <fragmentId>Place</fragmentId>
+          <fragTag>canister</fragTag>
+        </SSequencerBespokePlaceCarryableTaskParams>
+        <SSequencerMoveToAnimateCarryableTaskParams Pointer="ptr:17" Type="SSequencerMoveToAnimateCarryableTaskParams">
+          <fragmentId>Take</fragmentId>
+          <fragTag>canister</fragTag>
+        </SSequencerMoveToAnimateCarryableTaskParams>
+        <SSequencerBespokeTakeCarryableTaskParams Pointer="ptr:20" Type="SSequencerBespokeTakeCarryableTaskParams">
+          <fragmentId>Take</fragmentId>
+          <fragTag>canister</fragTag>
+        </SSequencerBespokeTakeCarryableTaskParams>
+        <SSequencerStowHeldEntityCarryableTaskParams Pointer="ptr:18" Type="SSequencerStowHeldEntityCarryableTaskParams" />
+        <SSequencerChangeStanceCarryableTaskParams Pointer="ptr:19" Type="SSequencerChangeStanceCarryableTaskParams">
+          <stance>Stand</stance>
+        </SSequencerChangeStanceCarryableTaskParams>
+        <SSequencerChangeStanceCarryableTaskParams Pointer="ptr:23" Type="SSequencerChangeStanceCarryableTaskParams">
+          <stance>Crouch</stance>
+        </SSequencerChangeStanceCarryableTaskParams>
+      </carryableTasks>
       <throwableParams Type="SThrowableParams">
         <reticle>none</reticle>
         <throwModes Type="SThrowMode" Count="5">
@@ -456,7 +448,44 @@
         <itemPort />
       </equipWearableParams>
       <ikInteractionsRecord />
-      <carryableSequences Type="SCarryableSequenceRef" Count="0" />
+      <carryableSequences Type="SCarryableSequenceRef" Count="4">
+        <SCarryableSequenceRef Type="SCarryableSequenceRef">
+          <sequenceAction>BespokePlace</sequenceAction>
+          <tags Type="Tag" Count="3">
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ef397d85-27d1-4670-a108-7703dc85a0ee" RecordId="ef397d85-27d1-4670-a108-7703dc85a0ee" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.3da25018-cbbb-4c5c-8cde-1c71c7a9a954" RecordId="3da25018-cbbb-4c5c-8cde-1c71c7a9a954" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.fd427628-b921-45b6-8cd7-498ad5101518" RecordId="fd427628-b921-45b6-8cd7-498ad5101518" />
+          </tags>
+          <carryableSequence PointsTo="ptr:13" />
+        </SCarryableSequenceRef>
+        <SCarryableSequenceRef Type="SCarryableSequenceRef">
+          <sequenceAction>BespokeTake</sequenceAction>
+          <tags Type="Tag" Count="3">
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ef397d85-27d1-4670-a108-7703dc85a0ee" RecordId="ef397d85-27d1-4670-a108-7703dc85a0ee" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6022afb5-b431-439a-befe-fac0e939d576" RecordId="6022afb5-b431-439a-befe-fac0e939d576" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.fd427628-b921-45b6-8cd7-498ad5101518" RecordId="fd427628-b921-45b6-8cd7-498ad5101518" />
+          </tags>
+          <carryableSequence PointsTo="ptr:14" />
+        </SCarryableSequenceRef>
+        <SCarryableSequenceRef Type="SCarryableSequenceRef">
+          <sequenceAction>BespokePlace</sequenceAction>
+          <tags Type="Tag" Count="3">
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ef397d85-27d1-4670-a108-7703dc85a0ee" RecordId="ef397d85-27d1-4670-a108-7703dc85a0ee" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.3da25018-cbbb-4c5c-8cde-1c71c7a9a954" RecordId="3da25018-cbbb-4c5c-8cde-1c71c7a9a954" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" RecordId="4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" />
+          </tags>
+          <carryableSequence PointsTo="ptr:15" />
+        </SCarryableSequenceRef>
+        <SCarryableSequenceRef Type="SCarryableSequenceRef">
+          <sequenceAction>BespokeTake</sequenceAction>
+          <tags Type="Tag" Count="3">
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ef397d85-27d1-4670-a108-7703dc85a0ee" RecordId="ef397d85-27d1-4670-a108-7703dc85a0ee" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6022afb5-b431-439a-befe-fac0e939d576" RecordId="6022afb5-b431-439a-befe-fac0e939d576" />
+            <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" RecordId="4bc7bc8c-578d-46e0-904a-e0ddd73ef8cd" />
+          </tags>
+          <carryableSequence PointsTo="ptr:16" />
+        </SCarryableSequenceRef>
+      </carryableSequences>
       <canBeCarriedInProne>True</canBeCarriedInProne>
     </SEntityComponentCarryableParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
@@ -588,31 +617,10 @@
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
         </SharedInteractions>
-        <InteractionPoints Type="SInteractionPointParams" Count="1">
+        <InteractionPoints Type="SInteractionPointParams" Count="2">
           <SInteractionPointParams Type="SInteractionPointParams">
-            <Interactions Type="SInteractionParams" Count="4">
-              <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:1" />
-                <DisplayName>@LOC_EMPTY</DisplayName>
-                <IsPrimary>True</IsPrimary>
-              </SInteractionParams>
-              <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:3" />
-                <DisplayName>@LOC_EMPTY</DisplayName>
-                <IsPrimary>False</IsPrimary>
-              </SInteractionParams>
-              <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:5" />
-                <DisplayName>@LOC_EMPTY</DisplayName>
-                <IsPrimary>False</IsPrimary>
-              </SInteractionParams>
-              <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:2" />
-                <DisplayName>@LOC_EMPTY</DisplayName>
-                <IsPrimary>False</IsPrimary>
-              </SInteractionParams>
-            </Interactions>
-            <HelperName />
+            <Interactions Type="SInteractionParams" Count="0" />
+            <HelperName>HighlightOnRayHitEntity</HelperName>
             <Tags Type="Tag" Count="0" />
             <Primitive />
             <PlayerAnimatedInteractionParams />
@@ -622,7 +630,7 @@
             <InteractionPointInternalSettingTemplateRef />
             <FirstInteractionPrimary>False</FirstInteractionPrimary>
             <UseHelperLocation>False</UseHelperLocation>
-            <ApplyToEntireSkeleton>True</ApplyToEntireSkeleton>
+            <ApplyToEntireSkeleton>False</ApplyToEntireSkeleton>
             <longRangeIP>False</longRangeIP>
             <Radius>2</Radius>
             <ShowHighlight>True</ShowHighlight>
@@ -659,6 +667,102 @@
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>TopBoundingBoxZSurface</InteractionPromptBound>
+            <UseHorizontalDistance>False</UseHorizontalDistance>
+            <MaxCursorScreenDistance>2</MaxCursorScreenDistance>
+            <ShowInnerThoughtsOffScreen>False</ShowInnerThoughtsOffScreen>
+            <OnlySelectableInLookDir>False</OnlySelectableInLookDir>
+            <AngleConstraint Type="SAngleConstraint">
+              <forwardDirOffset Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </forwardDirOffset>
+              <angleRange>181</angleRange>
+              <viewAngleLimit>110</viewAngleLimit>
+            </AngleConstraint>
+          </SInteractionPointParams>
+          <SInteractionPointParams Type="SInteractionPointParams">
+            <Interactions Type="SInteractionParams" Count="5">
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:1" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>True</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:3" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:5" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:2" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:4" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+            </Interactions>
+            <HelperName>$IP_interaction</HelperName>
+            <Tags Type="Tag" Count="0" />
+            <Primitive Type="SInteractionPointSpherePrimitiveParams">
+              <Center Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Center>
+              <Radius>0.2</Radius>
+            </Primitive>
+            <PlayerAnimatedInteractionParams />
+            <HighlightBehaviors Type="SHighlightBehaviorNode" Count="0" />
+            <AdditionalCollisionBones Type="ActivityBehaviorRequestCondition" Count="0" />
+            <InteractionPointModifiers Type="SInteractionPointModifier" Count="0" />
+            <InteractionPointInternalSettingTemplateRef />
+            <FirstInteractionPrimary>True</FirstInteractionPrimary>
+            <UseHelperLocation>True</UseHelperLocation>
+            <ApplyToEntireSkeleton>False</ApplyToEntireSkeleton>
+            <longRangeIP>False</longRangeIP>
+            <Radius>1.6</Radius>
+            <ShowHighlight>True</ShowHighlight>
+            <HighlightOnRayHitEntity>False</HighlightOnRayHitEntity>
+            <Offset Type="QuatT">
+              <Rotation Type="Ang3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Position Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Position>
+            </Offset>
+            <TextJustification>Middle</TextJustification>
+            <TextOrientation>RotateToPlayer</TextOrientation>
+            <TextScale>1</TextScale>
+            <ShowInteractionTextAtCursorPos>False</ShowInteractionTextAtCursorPos>
+            <ScalePromptOffsetWithEntity>False</ScalePromptOffsetWithEntity>
+            <InteractionPromptOffset Type="QuatT">
+              <Rotation Type="Ang3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Position Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Position>
+            </InteractionPromptOffset>
+            <InteractionPromptScale>1</InteractionPromptScale>
+            <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
+            <InteractionPromptBound>EntityRoot</InteractionPromptBound>
             <UseHorizontalDistance>False</UseHorizontalDistance>
             <MaxCursorScreenDistance>2</MaxCursorScreenDistance>
             <ShowInnerThoughtsOffScreen>False</ShowInnerThoughtsOffScreen>
@@ -1074,5 +1178,158 @@
       <tagTriggers Type="TagTrigger" Count="0" />
     </SEntityAudioControllerParams>
     <SAudioProxyParams Type="SAudioProxyParams" />
+    <ResourceContainer Type="ResourceContainer">
+      <capacity Type="SCentiCargoUnit">
+        <centiSCU>100</centiSCU>
+      </capacity>
+      <mass>0</mass>
+      <immutable>False</immutable>
+      <inclusiveResources Type="ResourceType" Count="1">
+        <ResourceType RecordReference="file://./../../../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.MedGel" RecordId="83101c4a-baea-429f-b5db-2a439dabe963" />
+      </inclusiveResources>
+      <exclusiveResources Type="ResourceType" Count="0" />
+      <inclusiveGroups Type="ResourceTypeGroup" Count="0" />
+      <exclusiveGroups Type="ResourceTypeGroup" Count="0" />
+      <defaultComposition Type="ResourceContainerDefaultCompositionEntry" Count="1">
+        <ResourceContainerDefaultCompositionEntry Type="ResourceContainerDefaultCompositionEntry">
+          <entry RecordReference="file://./../../../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.MedGel" RecordId="83101c4a-baea-429f-b5db-2a439dabe963" />
+          <weight>1</weight>
+        </ResourceContainerDefaultCompositionEntry>
+      </defaultComposition>
+      <defaultCompositionFillFactor>1</defaultCompositionFillFactor>
+    </ResourceContainer>
+    <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
+      <sequences Type="SSequencerDefSequenceParams" Count="4">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:14" Type="SReplicatedSequencerDefSequenceParams">
+          <name>BespokeTake_Stand</name>
+          <interaction />
+          <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="4">
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:17" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:18" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerMoveToAnimateCarryableTaskParams PointsTo="ptr:17" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:19" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerStowHeldEntityCarryableTaskParams PointsTo="ptr:18" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:20" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerChangeStanceCarryableTaskParams PointsTo="ptr:19" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+          </taskEntries>
+        </SReplicatedSequencerDefSequenceParams>
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:13" Type="SReplicatedSequencerDefSequenceParams">
+          <name>BespokePlace_Stand</name>
+          <interaction />
+          <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="3">
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:21" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:19" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerMoveToAnimateCarryableTaskParams PointsTo="ptr:21" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:22" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerChangeStanceCarryableTaskParams PointsTo="ptr:19" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+          </taskEntries>
+        </SReplicatedSequencerDefSequenceParams>
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:16" Type="SReplicatedSequencerDefSequenceParams">
+          <name>BespokeTake_Crouch</name>
+          <interaction />
+          <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="4">
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:17" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:18" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerMoveToAnimateCarryableTaskParams PointsTo="ptr:17" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:23" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerStowHeldEntityCarryableTaskParams PointsTo="ptr:18" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:20" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerChangeStanceCarryableTaskParams PointsTo="ptr:23" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+          </taskEntries>
+        </SReplicatedSequencerDefSequenceParams>
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:15" Type="SReplicatedSequencerDefSequenceParams">
+          <name>BespokePlace_Crouch</name>
+          <interaction />
+          <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="3">
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:21" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:23" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerMoveToAnimateCarryableTaskParams PointsTo="ptr:21" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+            <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
+              <task PointsTo="ptr:22" />
+              <postDelay>0</postDelay>
+              <dependentTasks Type="SSequencerDefTaskParams" Count="1">
+                <SSequencerChangeStanceCarryableTaskParams PointsTo="ptr:23" />
+              </dependentTasks>
+              <haltOnFailure>True</haltOnFailure>
+            </SSequencerSequenceTaskEntryParams>
+          </taskEntries>
+        </SReplicatedSequencerDefSequenceParams>
+      </sequences>
+      <resetSequence />
+    </SEntityComponentSequencerParams>
   </Components>
 </EntityClassDefinition.Carryable_1H_CY_medical_canister_healing_1>

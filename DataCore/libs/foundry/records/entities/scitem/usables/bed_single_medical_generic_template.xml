@@ -10,7 +10,7 @@
     <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.02af2eee-b979-40e5-b999-68b976c05bbf" RecordId="02af2eee-b979-40e5-b999-68b976c05bbf" />
   </tags>
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="33">
+  <Components Type="DataForgeComponentParams" Count="34">
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
@@ -77,8 +77,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -185,6 +185,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -2508,7 +2509,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Seat</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2758,8 +2759,8 @@
           <RequiredPortTags>HealingResource</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <MinSize>0</MinSize>
-          <MaxSize>0</MaxSize>
+          <MinSize>1</MinSize>
+          <MaxSize>1</MaxSize>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2792,17 +2793,39 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Container</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Medical</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
           </Types>
           <Extension />
-          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationEntity">
+            <usePhysicalAttachment>False</usePhysicalAttachment>
+            <useEntityAttachment>True</useEntityAttachment>
+            <useExteriorAttachment>False</useExteriorAttachment>
+            <usePhysicalParent>False</usePhysicalParent>
+            <useLogicalAttachment>False</useLogicalAttachment>
+            <constraintParams Type="SAttachmentConstraintParams">
+              <damping>0</damping>
+              <noSelfCollisions>True</noSelfCollisions>
+              <maxPullForce>0</maxPullForce>
+              <maxBendTorque>0</maxBendTorque>
+              <constrainToLine>False</constrainToLine>
+              <constrainToPlane>False</constrainToPlane>
+              <constrainFully>True</constrainFully>
+              <useWorldConstraintPosition>False</useWorldConstraintPosition>
+              <noRotation>True</noRotation>
+              <xMin>0</xMin>
+              <xMax>0</xMax>
+              <yzMax>0</yzMax>
+              <constraintHelper />
+              <constraintMaintainOrientation>False</constraintMaintainOrientation>
+            </constraintParams>
+            <hangarPort>False</hangarPort>
             <Helper Type="SItemPortDefHelperNode">
               <Tags />
               <Helper Type="SItemPortDefHelper">
-                <Name>$slot_canister_1</Name>
+                <Name />
                 <Offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>
@@ -2810,7 +2833,7 @@
                     <z>0</z>
                   </Rotation>
                   <Position Type="Vec3">
-                    <x>0</x>
+                    <x>2</x>
                     <y>0</y>
                     <z>0</z>
                   </Position>
@@ -2883,7 +2906,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Container</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Medical</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3055,6 +3078,7 @@
           <deadlyInjuryName>@med_surgeryName_deadlyInjury_rightLeg</deadlyInjuryName>
         </rightLegInjuries>
       </surgeryNames>
+      <resourceRegenerationPerMinute />
     </MedBedComponentParams>
     <SEntityAudioControllerParams Type="SEntityAudioControllerParams">
       <audioControllerEntityType>None</audioControllerEntityType>
@@ -3987,5 +4011,25 @@
       <linkPlugs Type="Tag" Count="0" />
     </SInteractionLinkParams>
     <SAudioProxyParams Type="SAudioProxyParams" />
+    <ResourceContainer Type="ResourceContainer">
+      <capacity Type="SMicroCargoUnit">
+        <microSCU>8</microSCU>
+      </capacity>
+      <mass>0</mass>
+      <immutable>False</immutable>
+      <inclusiveResources Type="ResourceType" Count="1">
+        <ResourceType RecordReference="file://./../../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.MedicalSupplies" RecordId="d5506a24-5729-4354-81fb-0959173357c4" />
+      </inclusiveResources>
+      <exclusiveResources Type="ResourceType" Count="0" />
+      <inclusiveGroups Type="ResourceTypeGroup" Count="0" />
+      <exclusiveGroups Type="ResourceTypeGroup" Count="0" />
+      <defaultComposition Type="ResourceContainerDefaultCompositionEntry" Count="1">
+        <ResourceContainerDefaultCompositionEntry Type="ResourceContainerDefaultCompositionEntry">
+          <entry RecordReference="file://./../../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.MedicalSupplies" RecordId="d5506a24-5729-4354-81fb-0959173357c4" />
+          <weight>1</weight>
+        </ResourceContainerDefaultCompositionEntry>
+      </defaultComposition>
+      <defaultCompositionFillFactor>0.5</defaultCompositionFillFactor>
+    </ResourceContainer>
   </Components>
 </EntityClassDefinition.Bed_Single_Medical_Generic_Template>

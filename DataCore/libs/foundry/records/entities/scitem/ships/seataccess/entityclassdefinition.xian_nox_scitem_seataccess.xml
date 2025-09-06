@@ -64,6 +64,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -74,7 +75,92 @@
     </SEntityComponentSequencerParams>
     <SCItemSeatAccessParams Type="SCItemSeatAccessParams">
       <humanPassageADB />
-      <gateways Type="SCSeatAccessGatewayInteractionParams" Count="0" />
+      <gateways Type="SCSeatAccessGatewayInteractionParams" Count="3">
+        <SCSeatAccessGatewayInteractionParams Type="SCSeatAccessGatewayInteractionParams">
+          <name>Nacelle</name>
+          <conditions Type="SCSeatAccessInteractionConditionParams">
+            <idle>Either</idle>
+            <landed>Either</landed>
+            <docked>Either</docked>
+            <zeroG>Either</zeroG>
+            <landingGearDown>Either</landingGearDown>
+            <landingGearUp>Either</landingGearUp>
+            <inQuantum>Either</inQuantum>
+          </conditions>
+          <fragmentOverride />
+          <openState Type="SCSeatAccessGatewayInteractionStateParams">
+            <interaction />
+            <fragmentTags>Open</fragmentTags>
+          </openState>
+          <closeState Type="SCSeatAccessGatewayInteractionStateParams">
+            <interaction />
+            <fragmentTags>Close</fragmentTags>
+          </closeState>
+          <audioCanopyTreatment>False</audioCanopyTreatment>
+          <openDuration>1</openDuration>
+          <closeDuration>1</closeDuration>
+          <audioThreshold>0.2</audioThreshold>
+          <isShipCanopyOpen Type="AudioRtpc">
+            <rtpc />
+          </isShipCanopyOpen>
+        </SCSeatAccessGatewayInteractionParams>
+        <SCSeatAccessGatewayInteractionParams Pointer="ptr:7" Type="SCSeatAccessGatewayInteractionParams">
+          <name>Cowling</name>
+          <conditions Type="SCSeatAccessInteractionConditionParams">
+            <idle>Either</idle>
+            <landed>Either</landed>
+            <docked>Either</docked>
+            <zeroG>Either</zeroG>
+            <landingGearDown>Either</landingGearDown>
+            <landingGearUp>Either</landingGearUp>
+            <inQuantum>Either</inQuantum>
+          </conditions>
+          <fragmentOverride />
+          <openState Type="SCSeatAccessGatewayInteractionStateParams">
+            <interaction PointsTo="ptr:1" />
+            <fragmentTags>Open</fragmentTags>
+          </openState>
+          <closeState Type="SCSeatAccessGatewayInteractionStateParams">
+            <interaction PointsTo="ptr:2" />
+            <fragmentTags>Close</fragmentTags>
+          </closeState>
+          <audioCanopyTreatment>False</audioCanopyTreatment>
+          <openDuration>1</openDuration>
+          <closeDuration>1</closeDuration>
+          <audioThreshold>0.2</audioThreshold>
+          <isShipCanopyOpen Type="AudioRtpc">
+            <rtpc />
+          </isShipCanopyOpen>
+        </SCSeatAccessGatewayInteractionParams>
+        <SCSeatAccessGatewayInteractionParams Pointer="ptr:8" Type="SCSeatAccessGatewayInteractionParams">
+          <name>Windshield</name>
+          <conditions Type="SCSeatAccessInteractionConditionParams">
+            <idle>Either</idle>
+            <landed>Either</landed>
+            <docked>Either</docked>
+            <zeroG>Either</zeroG>
+            <landingGearDown>Either</landingGearDown>
+            <landingGearUp>Either</landingGearUp>
+            <inQuantum>Either</inQuantum>
+          </conditions>
+          <fragmentOverride />
+          <openState Type="SCSeatAccessGatewayInteractionStateParams">
+            <interaction PointsTo="ptr:3" />
+            <fragmentTags>Open</fragmentTags>
+          </openState>
+          <closeState Type="SCSeatAccessGatewayInteractionStateParams">
+            <interaction PointsTo="ptr:4" />
+            <fragmentTags>Close</fragmentTags>
+          </closeState>
+          <audioCanopyTreatment>False</audioCanopyTreatment>
+          <openDuration>1</openDuration>
+          <closeDuration>1</closeDuration>
+          <audioThreshold>0.2</audioThreshold>
+          <isShipCanopyOpen Type="AudioRtpc">
+            <rtpc />
+          </isShipCanopyOpen>
+        </SCSeatAccessGatewayInteractionParams>
+      </gateways>
       <entrances Type="SCSeatAccessEntranceInteractionParams" Count="3">
         <SCSeatAccessEntranceInteractionParams Type="SCSeatAccessEntranceInteractionParams">
           <name>SeatEntrance</name>
@@ -98,8 +184,8 @@
           </dashboardConnection>
           <seatEnterExitAngleParams />
           <enterState Type="SCSeatAccessEntranceInteractionStateParams">
-            <interaction PointsTo="ptr:1" />
-            <fragmentTags>Pilot</fragmentTags>
+            <interaction PointsTo="ptr:5" />
+            <fragmentTags>Left</fragmentTags>
             <deployRetractFragmentTags />
             <skipState>None</skipState>
             <interiorEntrance>False</interiorEntrance>
@@ -110,8 +196,8 @@
             </attachment>
           </enterState>
           <exitState Type="SCSeatAccessEntranceInteractionStateParams">
-            <interaction PointsTo="ptr:2" />
-            <fragmentTags>Pilot</fragmentTags>
+            <interaction PointsTo="ptr:6" />
+            <fragmentTags>Left</fragmentTags>
             <deployRetractFragmentTags />
             <skipState>None</skipState>
             <interiorEntrance>False</interiorEntrance>
@@ -121,7 +207,42 @@
               <stance>Seated</stance>
             </attachment>
           </exitState>
-          <linkedGateways Type="SCSeatAccessLinkedGatewayParams" Count="0" />
+          <linkedGateways Type="SCSeatAccessLinkedGatewayParams" Count="2">
+            <SCSeatAccessLinkedGatewayParams Type="SCSeatAccessLinkedGatewayParams">
+              <gateway PointsTo="ptr:7" />
+              <syncToEntranceState>False</syncToEntranceState>
+              <oneWaySequencer>False</oneWaySequencer>
+              <ignoreCloseOnEnter>False</ignoreCloseOnEnter>
+              <ignoreCloseOnExit>False</ignoreCloseOnExit>
+              <openSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </openSequenceParams>
+              <closeSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </closeSequenceParams>
+            </SCSeatAccessLinkedGatewayParams>
+            <SCSeatAccessLinkedGatewayParams Type="SCSeatAccessLinkedGatewayParams">
+              <gateway PointsTo="ptr:8" />
+              <syncToEntranceState>False</syncToEntranceState>
+              <oneWaySequencer>False</oneWaySequencer>
+              <ignoreCloseOnEnter>False</ignoreCloseOnEnter>
+              <ignoreCloseOnExit>False</ignoreCloseOnExit>
+              <openSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </openSequenceParams>
+              <closeSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </closeSequenceParams>
+            </SCSeatAccessLinkedGatewayParams>
+          </linkedGateways>
         </SCSeatAccessEntranceInteractionParams>
         <SCSeatAccessEntranceInteractionParams Type="SCSeatAccessEntranceInteractionParams">
           <name>SeatEntrance_Right</name>
@@ -145,8 +266,8 @@
           </dashboardConnection>
           <seatEnterExitAngleParams />
           <enterState Type="SCSeatAccessEntranceInteractionStateParams">
-            <interaction PointsTo="ptr:3" />
-            <fragmentTags>Pilot+Right</fragmentTags>
+            <interaction PointsTo="ptr:9" />
+            <fragmentTags>Right</fragmentTags>
             <deployRetractFragmentTags />
             <skipState>None</skipState>
             <interiorEntrance>False</interiorEntrance>
@@ -157,8 +278,8 @@
             </attachment>
           </enterState>
           <exitState Type="SCSeatAccessEntranceInteractionStateParams">
-            <interaction PointsTo="ptr:4" />
-            <fragmentTags>Pilot+Right</fragmentTags>
+            <interaction PointsTo="ptr:10" />
+            <fragmentTags>Right</fragmentTags>
             <deployRetractFragmentTags />
             <skipState>None</skipState>
             <interiorEntrance>False</interiorEntrance>
@@ -168,7 +289,42 @@
               <stance>Seated</stance>
             </attachment>
           </exitState>
-          <linkedGateways Type="SCSeatAccessLinkedGatewayParams" Count="0" />
+          <linkedGateways Type="SCSeatAccessLinkedGatewayParams" Count="2">
+            <SCSeatAccessLinkedGatewayParams Type="SCSeatAccessLinkedGatewayParams">
+              <gateway PointsTo="ptr:7" />
+              <syncToEntranceState>False</syncToEntranceState>
+              <oneWaySequencer>False</oneWaySequencer>
+              <ignoreCloseOnEnter>False</ignoreCloseOnEnter>
+              <ignoreCloseOnExit>False</ignoreCloseOnExit>
+              <openSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </openSequenceParams>
+              <closeSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </closeSequenceParams>
+            </SCSeatAccessLinkedGatewayParams>
+            <SCSeatAccessLinkedGatewayParams Type="SCSeatAccessLinkedGatewayParams">
+              <gateway PointsTo="ptr:8" />
+              <syncToEntranceState>False</syncToEntranceState>
+              <oneWaySequencer>False</oneWaySequencer>
+              <ignoreCloseOnEnter>False</ignoreCloseOnEnter>
+              <ignoreCloseOnExit>False</ignoreCloseOnExit>
+              <openSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </openSequenceParams>
+              <closeSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </closeSequenceParams>
+            </SCSeatAccessLinkedGatewayParams>
+          </linkedGateways>
         </SCSeatAccessEntranceInteractionParams>
         <SCSeatAccessEntranceInteractionParams Type="SCSeatAccessEntranceInteractionParams">
           <name>SeatEntrance_ZeroG</name>
@@ -192,7 +348,7 @@
           </dashboardConnection>
           <seatEnterExitAngleParams />
           <enterState Type="SCSeatAccessEntranceInteractionStateParams">
-            <interaction PointsTo="ptr:5" />
+            <interaction PointsTo="ptr:11" />
             <fragmentTags>ZeroG</fragmentTags>
             <deployRetractFragmentTags />
             <skipState>None</skipState>
@@ -204,7 +360,7 @@
             </attachment>
           </enterState>
           <exitState Type="SCSeatAccessEntranceInteractionStateParams">
-            <interaction PointsTo="ptr:6" />
+            <interaction PointsTo="ptr:12" />
             <fragmentTags>ZeroG</fragmentTags>
             <deployRetractFragmentTags />
             <skipState>None</skipState>
@@ -215,15 +371,50 @@
               <stance>Seated</stance>
             </attachment>
           </exitState>
-          <linkedGateways Type="SCSeatAccessLinkedGatewayParams" Count="0" />
+          <linkedGateways Type="SCSeatAccessLinkedGatewayParams" Count="2">
+            <SCSeatAccessLinkedGatewayParams Type="SCSeatAccessLinkedGatewayParams">
+              <gateway PointsTo="ptr:7" />
+              <syncToEntranceState>False</syncToEntranceState>
+              <oneWaySequencer>False</oneWaySequencer>
+              <ignoreCloseOnEnter>False</ignoreCloseOnEnter>
+              <ignoreCloseOnExit>False</ignoreCloseOnExit>
+              <openSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </openSequenceParams>
+              <closeSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </closeSequenceParams>
+            </SCSeatAccessLinkedGatewayParams>
+            <SCSeatAccessLinkedGatewayParams Type="SCSeatAccessLinkedGatewayParams">
+              <gateway PointsTo="ptr:8" />
+              <syncToEntranceState>False</syncToEntranceState>
+              <oneWaySequencer>False</oneWaySequencer>
+              <ignoreCloseOnEnter>False</ignoreCloseOnEnter>
+              <ignoreCloseOnExit>False</ignoreCloseOnExit>
+              <openSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </openSequenceParams>
+              <closeSequenceParams Type="SCSeatAccessLinkedGatewaySequenceParams">
+                <dependencyType>Never</dependencyType>
+                <enterSequenceDelay>0</enterSequenceDelay>
+                <exitSequenceDelay>0</exitSequenceDelay>
+              </closeSequenceParams>
+            </SCSeatAccessLinkedGatewayParams>
+          </linkedGateways>
         </SCSeatAccessEntranceInteractionParams>
       </entrances>
       <passages Type="SCSeatAccessPassageInteractionParams" Count="0" />
     </SCItemSeatAccessParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="8">
-          <SSharedInteractionParams Pointer="ptr:1" Type="SSharedInteractionParams">
+        <SharedInteractions Type="SSharedInteractionParams" Count="14">
+          <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
             <Name>SeatEnter</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -248,7 +439,7 @@
             </conditionList>
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
             <Name>SeatExit</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -267,7 +458,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:3" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:9" Type="SSharedInteractionParams">
             <Name>SeatEnter_Right</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -286,7 +477,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:4" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:10" Type="SSharedInteractionParams">
             <Name>SeatExit_Right</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -305,7 +496,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:11" Type="SSharedInteractionParams">
             <Name>SeatEnter_ZeroG</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -330,7 +521,7 @@
             </conditionList>
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:12" Type="SSharedInteractionParams">
             <Name>SeatExit_ZeroG</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -387,12 +578,126 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:3" Type="SSharedInteractionParams">
+            <Name>OpenCowling</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:4" Type="SSharedInteractionParams">
+            <Name>CloseCowling</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Type="SSharedInteractionParams">
+            <Name>OpenWindshield</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Type="SSharedInteractionParams">
+            <Name>CloseWindshield</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:1" Type="SSharedInteractionParams">
+            <Name>OpenNacelle</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
+            <Name>CloseNacelle</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
         </SharedInteractions>
         <InteractionPoints Type="SInteractionPointParams" Count="6">
           <SInteractionPointParams Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="1">
               <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:1" />
+                <Interaction PointsTo="ptr:5" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
                 <IsPrimary>True</IsPrimary>
               </SInteractionParams>
@@ -491,7 +796,7 @@
           <SInteractionPointParams Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="1">
               <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:3" />
+                <Interaction PointsTo="ptr:9" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
                 <IsPrimary>False</IsPrimary>
               </SInteractionParams>
@@ -590,7 +895,7 @@
           <SInteractionPointParams Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="1">
               <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:5" />
+                <Interaction PointsTo="ptr:11" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
                 <IsPrimary>False</IsPrimary>
               </SInteractionParams>
@@ -689,7 +994,7 @@
           <SInteractionPointParams Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="1">
               <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:2" />
+                <Interaction PointsTo="ptr:6" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
                 <IsPrimary>False</IsPrimary>
               </SInteractionParams>
@@ -788,7 +1093,7 @@
           <SInteractionPointParams Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="1">
               <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:4" />
+                <Interaction PointsTo="ptr:10" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
                 <IsPrimary>False</IsPrimary>
               </SInteractionParams>
@@ -887,7 +1192,7 @@
           <SInteractionPointParams Type="SInteractionPointParams">
             <Interactions Type="SInteractionParams" Count="1">
               <SInteractionParams Type="SInteractionParams">
-                <Interaction PointsTo="ptr:6" />
+                <Interaction PointsTo="ptr:12" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
                 <IsPrimary>False</IsPrimary>
               </SInteractionParams>
@@ -1060,8 +1365,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>

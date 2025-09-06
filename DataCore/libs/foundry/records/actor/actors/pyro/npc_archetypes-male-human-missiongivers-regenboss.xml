@@ -12,7 +12,7 @@
     <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.071a27bb-ab55-4d2b-9f56-35309e2e72b6" RecordId="071a27bb-ab55-4d2b-9f56-35309e2e72b6" />
     <Tag RecordReference="file://./../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7d19dbfd-c255-4cfe-af32-4fc34b01a6bc" RecordId="7d19dbfd-c255-4cfe-af32-4fc34b01a6bc" />
   </tags>
-  <StaticEntityClassData Type="EntityClassStaticDataParams" Count="2">
+  <StaticEntityClassData Type="EntityClassStaticDataParams" Count="1">
     <EntityUIDisplayParams Type="EntityUIDisplayParams">
       <displayName>@LOC_UNINITIALIZED</displayName>
       <displayDescription>@LOC_UNINITIALIZED</displayDescription>
@@ -22,9 +22,6 @@
       <sortString />
       <trackerProperties Type="SActorEntryTrackerParams" />
     </EntityUIDisplayParams>
-    <SUniqueEntityClass Type="SUniqueEntityClass">
-      <fixed_geid>199999005087</fixed_geid>
-    </SUniqueEntityClass>
   </StaticEntityClassData>
   <Components Type="DataForgeComponentParams" Count="79">
     <SActorComponentParams Type="SActorComponentParams">
@@ -99,16 +96,35 @@
       <deathBehaviour />
     </SActorComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
-      <loadout Type="SItemPortLoadoutRandomGeneratedParams">
-        <WearRange />
-        <DirtRange />
+      <loadout Type="SItemPortLoadoutOutfitParams">
+        <WearRange Type="Range">
+          <minimum>0</minimum>
+          <maximum>0.3</maximum>
+        </WearRange>
+        <DirtRange Type="Range">
+          <minimum>0</minimum>
+          <maximum>0.3</maximum>
+        </DirtRange>
         <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
-        <GenerationSeed>0</GenerationSeed>
-        <LoadoutAssortments Type="SLoadoutAssortment" Count="3">
-          <SLoadoutAssortment ReferencedFile="file://./../../../../../../libs/foundry/records/loadoutkits/pu_loadoutbundles/populace/stormbreaker/civilians/regenboss.xml" />
-          <SLoadoutAssortment ReferencedFile="file://./../../../../../../libs/foundry/records/loadoutkits/pu_loadoutbundles/wear_and_dirt/dirt_light.xml" />
-          <SLoadoutAssortment ReferencedFile="file://./../../../../../../libs/foundry/records/loadoutkits/pu_loadoutbundles/wear_and_dirt/wear_light.xml" />
-        </LoadoutAssortments>
+        <BaseLoadout Type="SItemPortLoadoutXMLParams">
+          <WearRange />
+          <DirtRange />
+          <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
+          <loadoutPath>Scripts/Loadouts/Character/Human/Body/NPC/Civilian/Regen_Boss_Body.xml</loadoutPath>
+        </BaseLoadout>
+        <Outfits Type="SItemPortLoadoutOutfitTagParams" Count="1">
+          <SItemPortLoadoutOutfitTagParams Type="SItemPortLoadoutOutfitTagParams">
+            <OutfitNameTags Type="Tag" Count="0" />
+            <Loadouts Type="SItemPortLoadoutBaseParams" Count="1">
+              <SItemPortLoadoutXMLParams Type="SItemPortLoadoutXMLParams">
+                <WearRange />
+                <DirtRange />
+                <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
+                <loadoutPath>Scripts/Loadouts/Character/Human/Clothing/NPC/Civilian/RegenBoss.xml</loadoutPath>
+              </SItemPortLoadoutXMLParams>
+            </Loadouts>
+          </SItemPortLoadoutOutfitTagParams>
+        </Outfits>
       </loadout>
     </SEntityComponentDefaultLoadoutParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
@@ -457,10 +473,10 @@
       <mastergraphStateOverrides Type="SMastergraphStateOverride" Count="0" />
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="JumpDownNavigationLink" Count="1">
+      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="VaultNavigationLink" Count="0" />
+      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
         <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
           <helperName>Head</helperName>
@@ -1220,6 +1236,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -2352,7 +2369,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2560,6 +2577,7 @@
     <SAISkillsComponentParams Type="SAISkillsComponentParams">
       <skills ReferencedFile="file://./../../../../../../libs/foundry/records/aiprofile/skills/defaultskillslist.xml" />
       <profile ReferencedFile="file://./../../../../../../libs/foundry/records/aiprofile/baseaiprofile.xml" />
+      <skillExtenderList />
     </SAISkillsComponentParams>
     <SCoverSystemComponentParams Type="SCoverSystemComponentParams">
       <distanceToCover>0.5</distanceToCover>
@@ -2572,6 +2590,7 @@
     <SVisionComponentParams Type="SVisionComponentParams">
       <visualFieldProfile ReferencedFile="file://./../../../../../../libs/foundry/records/aiprofile/perception/visualfield/defaultvisualfieldprofile_pu_human.xml" />
       <filterProfile ReferencedFile="file://./../../../../../../libs/foundry/records/aiprofile/perception/observablefilters/defaultobservablefilterprofile_pu_human.xml" />
+      <adapter Type="ActorVisionComponentAdapter" />
     </SVisionComponentParams>
     <SRadarSenseComponentParams Type="SRadarSenseComponentParams" />
     <SHearingComponentParams Type="SHearingComponentParams">
@@ -2610,8 +2629,8 @@
       <copyTokenInteraction />
     </SLawComponentParams>
     <SCActorDNAComponentParams Type="SCActorDNAComponentParams">
-      <DNA />
-      <customizationFile>Libs/CharacterCustomizer/PU/MissionGivers/Male/asd_regenguy.chf</customizationFile>
+      <DNA>9493D0FCF6676CDDCCBF6F68000000000C000400040038007220230033130A00FFFF2E00FFFF2000FFFF0300D7231700F65D340058152600FFFF0C006E6404004BB50B00C3A32E00DA102500CD222300000000000000000000000000690F320008A237001AA02D0000002600211907005E1810003B5C3200B2CE2E00FEC92E000000000000000000000000008C313500000038008C4A37000000360000002000730E2600000000000000000000000000000000000000000000000000319B38000000000000000000000037006E822500E123320000000000</DNA>
+      <customizationFile />
     </SCActorDNAComponentParams>
   </Components>
 </EntityClassDefinition.NPC_Archetypes-Male-Human-MissionGivers-RegenBoss>

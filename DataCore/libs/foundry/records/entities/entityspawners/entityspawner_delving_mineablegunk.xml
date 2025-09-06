@@ -41,6 +41,7 @@
           <vehicleSpawnDeployLandingGears>True</vehicleSpawnDeployLandingGears>
           <infiniteMissiles>False</infiniteMissiles>
           <triggerAreas>False</triggerAreas>
+          <optionalUseChannel />
         </SSpawnEntity>
       </entitiesToSpawn>
       <startActive>True</startActive>
@@ -50,8 +51,8 @@
       <spawnInMovement>False</spawnInMovement>
       <untrackOnDetach>True</untrackOnDetach>
       <wildcardPorts Type="SItemPortDef" Count="0" />
-      <spawnerTasks Type="SSequencerSpawnInItemportSpawnerTaskParams" Count="1">
-        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:12" Type="SSequencerSpawnInItemportSpawnerTaskParams">
+      <spawnerTasks Type="SSequencerSpawnerTaskParams" Count="1">
+        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:14" Type="SSequencerSpawnInItemportSpawnerTaskParams">
           <entityToSpawn ReferencedFile="file://./../../../../../libs/foundry/records/entities/mineable/mineablerock_fps_flowstone.xml" />
           <port PointsTo="ptr:1" />
           <destroyAttachedEntityFirst>True</destroyAttachedEntityFirst>
@@ -166,8 +167,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -348,8 +349,8 @@
           <DefaultState />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
-          <States Type="SInteractionState" Count="5">
-            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+          <States Type="SInteractionState" Count="7">
+            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
               <StateName>CannotReact</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -369,7 +370,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
               <StateName>Blast_0</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -454,6 +455,60 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState PointsTo="ptr:10" />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+              <StateName>Blast_4</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState PointsTo="ptr:11" />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+              <StateName>Blast_5</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange Type="SStateAutoChange">
+                <NextState PointsTo="ptr:12" />
+                <Delay>1</Delay>
+                <RunWhenStreamedOut>False</RunWhenStreamedOut>
+              </StateAutoChange>
               <Interactions Type="SInteractionStateTransition" Count="0" />
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <stateTags Type="TagList">
@@ -468,11 +523,11 @@
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
               <itemPort PointsTo="ptr:1" />
-              <onEntityAttachedState PointsTo="ptr:10" />
-              <onEntityDetachedState PointsTo="ptr:11" />
+              <onEntityAttachedState PointsTo="ptr:13" />
+              <onEntityDetachedState PointsTo="ptr:12" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusStatModifier" Count="0" />
-              <itemSubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <itemTypes Type="ActorStatusPreset" Count="0" />
+              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -534,7 +589,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:12" />
+              <task PointsTo="ptr:14" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -549,9 +604,8 @@
         <particleEffects Type="SEntityEffectSystem_ParticleCategory">
           <enabled>True</enabled>
           <allowMultipleTags>True</allowMultipleTags>
-          <tagEffects Type="SEntityEffectSystem_ParticleTagEffect" Count="0" />
-          <triggerEffects Type="SEntityEffectSystem_ParticleTriggerEffect" Count="1">
-            <SEntityEffectSystem_ParticleTriggerEffect Type="SEntityEffectSystem_ParticleTriggerEffect">
+          <tagEffects Type="SEntityEffectSystem_ParticleTagEffect" Count="1">
+            <SEntityEffectSystem_ParticleTagEffect Type="SEntityEffectSystem_ParticleTagEffect">
               <name />
               <enabled>True</enabled>
               <primed>False</primed>
@@ -560,12 +614,12 @@
               <clipToVisArea>Local</clipToVisArea>
               <gpuVisAreaCullingMode>Default</gpuVisAreaCullingMode>
               <particleEffect Type="GlobalResourceParticle">
-                <path />
+                <path>da2e6330-ed26-884f-7b06-cca336b17f2b|star_citizen/props/asd_delving_props.flowstone_spawning</path>
               </particleEffect>
               <attachmentSettings Type="SEntityEffectSystem_Attachment_EntitySlot">
                 <offset Type="QuatT">
                   <Rotation Type="Ang3">
-                    <x>0</x>
+                    <x>90</x>
                     <y>0</y>
                     <z>0</z>
                   </Rotation>
@@ -578,9 +632,10 @@
                 <offsetParameter />
               </attachmentSettings>
               <propertyLinks Type="SEntityEffectSystem_ParticlePropertyLink" Count="0" />
-              <trigger RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" RecordId="cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" />
-            </SEntityEffectSystem_ParticleTriggerEffect>
-          </triggerEffects>
+              <tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" RecordId="cc72d407-ccfe-49ee-b5c9-fa1ccba1579a" />
+            </SEntityEffectSystem_ParticleTagEffect>
+          </tagEffects>
+          <triggerEffects Type="SEntityEffectSystem_ParticleTriggerEffect" Count="0" />
         </particleEffects>
         <materialEffects />
         <soundEffects />
@@ -597,7 +652,7 @@
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="1">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:9" />
+          <targetState PointsTo="ptr:11" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <TriggerSelfInteractionGameplayTrigger Type="TriggerSelfInteractionGameplayTrigger">
               <targetInteraction PointsTo="ptr:3" />

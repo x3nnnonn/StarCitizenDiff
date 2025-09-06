@@ -77,6 +77,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -281,7 +282,11 @@
       <intoxicationModifierRef />
       <hudParamsOverride />
       <autoDeployHelmetTargetingMode>True</autoDeployHelmetTargetingMode>
-      <runsSafetyChecks>True</runsSafetyChecks>
+      <gunFireSafety Type="SCItemTurretGunSafetyParams">
+        <selfHitCheckType>All</selfHitCheckType>
+        <fireConsentAngleCheckType>All</fireConsentAngleCheckType>
+        <fireConsentAngleDeg>25</fireConsentAngleDeg>
+      </gunFireSafety>
     </SCItemTurretParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
@@ -392,8 +397,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -446,8 +451,24 @@
     </SEntityPhysicsControllerParams>
     <SSCItemControllableManagerParams Type="SSCItemControllableManagerParams">
       <defaultMasterMode>SCM</defaultMasterMode>
-      <masterModeSpoolTimeToNAV>1</masterModeSpoolTimeToNAV>
-      <masterModeSpoolTimeToSCM>0.2</masterModeSpoolTimeToSCM>
+      <masterModes Type="SMasterModeParams" Count="4">
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>0.2</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+      </masterModes>
       <controllerParams Type="SCItemControllableGroupParams">
         <priorityGroups Type="SCItemPriorityGroupParam" Count="0" />
       </controllerParams>
@@ -746,6 +767,8 @@
       <shatterDestroyEvent />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
+      <duplicateHitToParent>False</duplicateHitToParent>
+      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SEntityComponentEffects Type="SEntityComponentEffects">
       <entityEffects Type="SEntitityEffectSystem_System">
@@ -1297,7 +1320,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1403,7 +1426,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1509,7 +1532,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1607,7 +1630,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>PowerPlant</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1742,7 +1765,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1862,7 +1885,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>TargetSelector</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1992,7 +2015,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>EnergyController</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2122,7 +2145,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CoolerController</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2233,7 +2256,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CoolerController</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2368,7 +2391,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2488,7 +2511,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cooler</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2608,7 +2631,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cooler</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2983,10 +3006,10 @@
     </SInteractionLinkParams>
     <SAudioProxyParams Type="SAudioProxyParams" />
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="JumpDownNavigationLink" Count="1">
+      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
         <EnumChoice>Turret</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="VaultNavigationLink" Count="0" />
+      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
       <defaultEntityObservablePoint />
       <defaultAimingObservablePoint />

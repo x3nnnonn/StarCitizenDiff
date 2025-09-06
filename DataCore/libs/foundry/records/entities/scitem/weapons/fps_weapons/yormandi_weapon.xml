@@ -18,7 +18,7 @@
       <canEntitleThroughWebsite>True</canEntitleThroughWebsite>
     </DefaultEntitlementEntityParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="25">
+  <Components Type="DataForgeComponentParams" Count="24">
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
         <Mass>0</Mass>
@@ -26,8 +26,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -138,6 +138,7 @@
           <z>0.75</z>
         </inventoryOccupancyDimensionsUIOverride>
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -156,6 +157,7 @@
       <flipInteraction />
       <swapAttachmentsInteraction PointsTo="ptr:10" />
       <attachToHeldItemInteraction />
+      <interactionMetadata ReferencedFile="file://./../../../../../../../libs/foundry/records/globalinteractionparams/carryableinteractionsmetadata_globaldefault.xml" />
       <carryableStatesParams Type="SCarryableStatesParams">
         <settledState PointsTo="ptr:11" />
         <carriedState PointsTo="ptr:12" />
@@ -2037,18 +2039,6 @@
       <oneShotCooldown>0.1</oneShotCooldown>
       <dragOnly>False</dragOnly>
     </EntityPhysicalAudioParams>
-    <SMeleeWeaponComponentParams Type="SMeleeWeaponComponentParams">
-      <helper />
-      <audioTriggerName />
-      <matFxTriggerName>melee_blunt</matFxTriggerName>
-      <canBeUsedForTakeDown>False</canBeUsedForTakeDown>
-      <canBlock>False</canBlock>
-      <canBeUsedInProne>False</canBeUsedInProne>
-      <canDodge>False</canDodge>
-      <stanceTransitionMeleeDelay>0.775</stanceTransitionMeleeDelay>
-      <proceduralAnimationRecord />
-      <meleeCombatConfig />
-    </SMeleeWeaponComponentParams>
     <SActorUsableParams Type="SActorUsableParams">
       <archetype RecordReference="file://./../../../../../../../libs/foundry/records/entities/scitem/usables/usablearchetypes.xml" RecordName="UsableArchetype.Carryable" RecordId="8149e01e-35dc-4ea0-9b46-c8d440068026" />
       <fragmentTag>Carryable</fragmentTag>
@@ -2484,15 +2474,29 @@
         </shootingTimeAccuracyData>
         <idealCombatRange>50</idealCombatRange>
         <CombatRangeCategory>Short</CombatRangeCategory>
-        <baseAccuracy>0.23</baseAccuracy>
+        <baseAccuracy>5000</baseAccuracy>
         <impactRadiusForFriendlyFire>0</impactRadiusForFriendlyFire>
         <firingValidationAngleTolerance>10</firingValidationAngleTolerance>
-        <bulletBendingAngleLimit>-1</bulletBendingAngleLimit>
+        <bulletBendingAngleLimit>10</bulletBendingAngleLimit>
         <canShootWhenObstructed>False</canShootWhenObstructed>
         <weaponAimingMethod Type="WeaponAIAimingMethodDirect">
           <enableSpread>False</enableSpread>
         </weaponAimingMethod>
-        <aiFiringActionParams Type="SWeaponActionAIParams" Count="0" />
+        <aiFiringActionParams Type="SWeaponActionAIParams" Count="1">
+          <SWeaponAIBeamParams Type="SWeaponAIBeamParams">
+            <name />
+            <aiShootingMode>Beam</aiShootingMode>
+            <duration Type="Range">
+              <minimum>0</minimum>
+              <maximum>0</maximum>
+            </duration>
+            <cooldown Type="Range">
+              <minimum>0</minimum>
+              <maximum>0</maximum>
+            </cooldown>
+            <minBullets>3</minBullets>
+          </SWeaponAIBeamParams>
+        </aiFiringActionParams>
       </weaponAIData>
       <connectionParams Type="SWeaponConnectionParams">
         <powerActiveCooldown>1</powerActiveCooldown>
@@ -4107,7 +4111,280 @@
         </timeSinceLastZoomOutRtpc>
         <glintTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.b5b4bab9-c5ff-4cf2-90ec-ebc8d6f05a09" RecordId="b5b4bab9-c5ff-4cf2-90ec-ebc8d6f05a09" />
       </aimAction>
-      <fireActions Type="SWeaponActionParams" Count="1">
+      <fireActions Type="SWeaponActionParams" Count="6">
+        <SWeaponActionParallelParams Type="SWeaponActionParallelParams">
+          <name>Phase 1 weapon</name>
+          <localisedName>@LOC_PLACEHOLDER</localisedName>
+          <mannequinTag Type="SMannequinTagParams">
+            <tag />
+          </mannequinTag>
+          <entityTag />
+          <entityTags Type="TagList">
+            <tags Type="Tag" Count="0" />
+          </entityTags>
+          <uiBindingsTag />
+          <aiShootingMode>Beam</aiShootingMode>
+          <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </switchFireModeAudioTrigger>
+          <selectableCondition />
+          <hasReloadModesOnUI>False</hasReloadModesOnUI>
+          <weaponActions Type="SWeaponActionParams" Count="2">
+            <SWeaponActionFireBeamParams Type="SWeaponActionFireBeamParams">
+              <name />
+              <localisedName>@LOC_PLACEHOLDER</localisedName>
+              <mannequinTag Type="SMannequinTagParams">
+                <tag />
+              </mannequinTag>
+              <entityTag />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+              <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2e97ef2b-db28-4bba-a37f-e52978fc3f61" RecordId="2e97ef2b-db28-4bba-a37f-e52978fc3f61" />
+              <aiShootingMode>Rapid</aiShootingMode>
+              <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </switchFireModeAudioTrigger>
+              <selectableCondition />
+              <hasReloadModesOnUI>False</hasReloadModesOnUI>
+              <fireHelper>muzzle_flash</fireHelper>
+              <toggle>False</toggle>
+              <ammoType>Primary</ammoType>
+              <minEnergyDraw>1</minEnergyDraw>
+              <maxEnergyDraw>1</maxEnergyDraw>
+              <damagePerSecond Type="DamageInfo">
+                <DamagePhysical>0</DamagePhysical>
+                <DamageEnergy>100</DamageEnergy>
+                <DamageDistortion>200</DamageDistortion>
+                <DamageThermal>0</DamageThermal>
+                <DamageBiochemical>0</DamageBiochemical>
+                <DamageStun>0</DamageStun>
+              </damagePerSecond>
+              <fullDamageRange>125</fullDamageRange>
+              <zeroDamageRange>125</zeroDamageRange>
+              <heatPerSecond>0</heatPerSecond>
+              <wearPerSecond>0</wearPerSecond>
+              <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/none_smg_energy_01/none_smg_energy_01_rapid.xml" />
+              <recoilInterval>0.5</recoilInterval>
+              <soundRadius>0</soundRadius>
+              <soundEmittingInterval>0.5</soundEmittingInterval>
+              <misfire />
+              <minorMisfireDuration>0.3</minorMisfireDuration>
+              <hitType>ElectricArc</hitType>
+              <hitRadius>0.1</hitRadius>
+              <ignoreSkiplist>False</ignoreSkiplist>
+              <shouldDryFireInGreenZones>False</shouldDryFireInGreenZones>
+              <spreadParams Type="SSpreadParams">
+                <min>0</min>
+                <max>0</max>
+                <firstAttack>0</firstAttack>
+                <attack>0</attack>
+                <decay>0</decay>
+              </spreadParams>
+              <fireDuringChargeUp>True</fireDuringChargeUp>
+              <chargeUpTime>0.1</chargeUpTime>
+              <chargeDownTime>0.1</chargeDownTime>
+              <chainParams />
+              <fireFragment Type="SFragmentParams">
+                <fragment>rapid_fire</fragment>
+                <forceWeaponController>False</forceWeaponController>
+              </fireFragment>
+              <stopFireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </stopFireFragment>
+              <startFireOneShotAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireOneShotAudioTrigger>
+              <startFireLoopAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
+              </startFireLoopAudioTrigger>
+              <stopFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
+              </stopFireAudioTrigger>
+              <dryFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger>Play_WPFA_Handling_NONE_SMG_DryFire</audioTrigger>
+              </dryFireAudioTrigger>
+              <timeSinceLastFireRTPC Type="AudioRtpc">
+                <rtpc />
+              </timeSinceLastFireRTPC>
+              <fireEffects Type="SWeaponParticleEffectParams" Count="1">
+                <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
+                  <firstPerson Type="GlobalResourceParticle">
+                    <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+                  </firstPerson>
+                  <thirdPerson Type="GlobalResourceParticle">
+                    <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+                  </thirdPerson>
+                  <helper>muzzle_flash</helper>
+                  <triggerTag />
+                  <modifierSource>Wear</modifierSource>
+                  <delay>0</delay>
+                  <scale>1</scale>
+                  <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
+                  <isMuzzleFlash>False</isMuzzleFlash>
+                </SWeaponParticleEffectParams>
+              </fireEffects>
+              <beamGroup Type="SBeamGroupParams">
+                <hitEffectName>ammo_creature_yormandi</hitEffectName>
+                <cuttableImpacts>False</cuttableImpacts>
+                <tractorBeam>True</tractorBeam>
+                <skipListIncludeOwner>True</skipListIncludeOwner>
+                <useADSHelper>False</useADSHelper>
+                <detachOnActivate>False</detachOnActivate>
+                <immediateRaycast>False</immediateRaycast>
+                <beamSizeSwitch Type="AudioSwitch">
+                  <switch />
+                </beamSizeSwitch>
+                <beamAudioOneShot Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamAudioOneShot>
+                <beamLoopAudioTrigger Type="GlobalResourceAudio">
+                  <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+                </beamLoopAudioTrigger>
+                <beamStopAudioTrigger Type="GlobalResourceAudio">
+                  <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+                </beamStopAudioTrigger>
+                <beamActiveRTPC Type="AudioRtpc">
+                  <rtpc />
+                </beamActiveRTPC>
+                <beamModifierRTPC Type="AudioRtpc">
+                  <rtpc>Weapon_Power_Level</rtpc>
+                </beamModifierRTPC>
+                <beamModifierRTPCSource>Power</beamModifierRTPCSource>
+                <beamImpactModifierSource>WeaponState</beamImpactModifierSource>
+                <beamImpactStartTriggerOneShot Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamImpactStartTriggerOneShot>
+                <beamImpactStopTriggerOneShot Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamImpactStopTriggerOneShot>
+                <beamImpactStartTrigger Type="GlobalResourceAudio">
+                  <audioTrigger>Play_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
+                </beamImpactStartTrigger>
+                <beamImpactStopTrigger Type="GlobalResourceAudio">
+                  <audioTrigger>Stop_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
+                </beamImpactStopTrigger>
+                <targetAttractionRTPC Type="AudioRtpc">
+                  <rtpc>Beam_Target_Attraction</rtpc>
+                </targetAttractionRTPC>
+                <beamEffects Type="SBeamEffectParams" Count="1">
+                  <SBeamEffectParams Type="SBeamEffectParams">
+                    <helper>weapon_term_01</helper>
+                    <killParticlesOnDeactivate>True</killParticlesOnDeactivate>
+                    <particleEffect Type="GlobalResourceParticle">
+                      <path>91b398f3-d7b7-369c-2f4b-f45bc00bd924|star_citizen/creatures/yormandi.projectile effects.projectile_beam_small</path>
+                    </particleEffect>
+                    <thirdPersonParticleEffect Type="GlobalResourceParticle">
+                      <path>91b398f3-d7b7-369c-2f4b-f45bc00bd924|star_citizen/creatures/yormandi.projectile effects.projectile_beam_small</path>
+                    </thirdPersonParticleEffect>
+                    <startPointStrength>0</startPointStrength>
+                    <endPointStrength>1</endPointStrength>
+                    <useMultiSpline>False</useMultiSpline>
+                    <multiSplineOffset>1</multiSplineOffset>
+                    <modifierSource>Power</modifierSource>
+                    <tintColor />
+                    <particleAudioParams Type="SBeamParticleAudioParams" Count="0" />
+                  </SBeamEffectParams>
+                </beamEffects>
+              </beamGroup>
+              <signatureEmitterParams />
+            </SWeaponActionFireBeamParams>
+            <SWeaponActionFireRapidParams Type="SWeaponActionFireRapidParams">
+              <name>Rapid</name>
+              <localisedName>@FireMode_Rapid</localisedName>
+              <mannequinTag Type="SMannequinTagParams">
+                <tag />
+              </mannequinTag>
+              <entityTag />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+              <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7484099b-acb0-433a-afad-bc40bb5d2b2f" RecordId="7484099b-acb0-433a-afad-bc40bb5d2b2f" />
+              <aiShootingMode>Rapid</aiShootingMode>
+              <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </switchFireModeAudioTrigger>
+              <selectableCondition />
+              <hasReloadModesOnUI>False</hasReloadModesOnUI>
+              <launchParams Type="SProjectileLauncher">
+                <fireHelper>muzzle_flash</fireHelper>
+                <muzzleHelper />
+                <ammoCost>1</ammoCost>
+                <pelletCount>1</pelletCount>
+                <damageMultiplier>1</damageMultiplier>
+                <soundRadius>150</soundRadius>
+                <spreadParams Type="SSpreadParams">
+                  <min>0</min>
+                  <max>0</max>
+                  <firstAttack>0</firstAttack>
+                  <attack>0</attack>
+                  <decay>0</decay>
+                </spreadParams>
+                <projectileType>Primary</projectileType>
+              </launchParams>
+              <fireRate>60</fireRate>
+              <heatPerShot>0</heatPerShot>
+              <wearPerShot>0</wearPerShot>
+              <fireDuringSpinUp>True</fireDuringSpinUp>
+              <spinUpTime>0</spinUpTime>
+              <spinDownTime>0</spinDownTime>
+              <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/volt_shotgun_energy_01/volt_shotgun_energy_01_single_post_heat.xml" />
+              <misfire />
+              <fireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </fireFragment>
+              <oneShotFireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </oneShotFireFragment>
+              <stopFireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </stopFireFragment>
+              <spinFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </spinFragment>
+              <spinParam>spin_speed</spinParam>
+              <audioLoopTimeBetweenFirstShots>10</audioLoopTimeBetweenFirstShots>
+              <startFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireAudioTrigger>
+              <startFireAudioTriggerOneShot Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireAudioTriggerOneShot>
+              <stopFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </stopFireAudioTrigger>
+              <startRotationAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startRotationAudioTrigger>
+              <stopRotationAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </stopRotationAudioTrigger>
+              <dryFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </dryFireAudioTrigger>
+              <spinRTPC Type="AudioRtpc">
+                <rtpc>Weapon_Rotation_Speed</rtpc>
+              </spinRTPC>
+              <loadRTPC Type="AudioRtpc">
+                <rtpc>Weapon_Load</rtpc>
+              </loadRTPC>
+              <fireRateRTPC Type="AudioRtpc">
+                <rtpc>Weapon_Fire_Rate</rtpc>
+              </fireRateRTPC>
+              <fireEffects Type="SWeaponParticleEffectParams" Count="0" />
+              <stopFireEffects Type="SWeaponParticleEffectParams" Count="0" />
+              <vibrationParams Type="SWeaponVibrationParams">
+                <vibrationImpulse>2500</vibrationImpulse>
+              </vibrationParams>
+              <signatureEmitterParams />
+            </SWeaponActionFireRapidParams>
+          </weaponActions>
+        </SWeaponActionParallelParams>
         <SWeaponActionFireBeamParams Type="SWeaponActionFireBeamParams">
           <name>Damage Beam</name>
           <localisedName>@LOC_PLACEHOLDER</localisedName>
@@ -4119,7 +4396,7 @@
             <tags Type="Tag" Count="0" />
           </entityTags>
           <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2e97ef2b-db28-4bba-a37f-e52978fc3f61" RecordId="2e97ef2b-db28-4bba-a37f-e52978fc3f61" />
-          <aiShootingMode>Beam</aiShootingMode>
+          <aiShootingMode>Rapid</aiShootingMode>
           <switchFireModeAudioTrigger Type="GlobalResourceAudio">
             <audioTrigger />
           </switchFireModeAudioTrigger>
@@ -4129,42 +4406,42 @@
           <toggle>False</toggle>
           <ammoType>Primary</ammoType>
           <minEnergyDraw>1</minEnergyDraw>
-          <maxEnergyDraw>7.5</maxEnergyDraw>
+          <maxEnergyDraw>10</maxEnergyDraw>
           <damagePerSecond Type="DamageInfo">
             <DamagePhysical>0</DamagePhysical>
-            <DamageEnergy>205</DamageEnergy>
+            <DamageEnergy>165</DamageEnergy>
             <DamageDistortion>0</DamageDistortion>
             <DamageThermal>0</DamageThermal>
             <DamageBiochemical>0</DamageBiochemical>
             <DamageStun>0</DamageStun>
           </damagePerSecond>
-          <fullDamageRange>10</fullDamageRange>
-          <zeroDamageRange>25</zeroDamageRange>
-          <heatPerSecond>0</heatPerSecond>
+          <fullDamageRange>22.5</fullDamageRange>
+          <zeroDamageRange>35</zeroDamageRange>
+          <heatPerSecond>20</heatPerSecond>
           <wearPerSecond>0.03</wearPerSecond>
-          <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/volt_smg_energy_01/volt_smg_energy_01_beam.xml" />
-          <recoilInterval>0.1</recoilInterval>
-          <soundRadius>150</soundRadius>
+          <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/none_smg_energy_01/none_smg_energy_01_rapid.xml" />
+          <recoilInterval>0.075</recoilInterval>
+          <soundRadius>0</soundRadius>
           <soundEmittingInterval>0.5</soundEmittingInterval>
           <misfire ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponmisfiredef/beam_misfire.xml" />
           <minorMisfireDuration>0.3</minorMisfireDuration>
           <hitType>ElectricArc</hitType>
-          <hitRadius>0.01</hitRadius>
+          <hitRadius>0.005</hitRadius>
           <ignoreSkiplist>False</ignoreSkiplist>
           <shouldDryFireInGreenZones>True</shouldDryFireInGreenZones>
           <spreadParams Type="SSpreadParams">
             <min>0</min>
-            <max>2</max>
-            <firstAttack>0.4</firstAttack>
-            <attack>0.4</attack>
-            <decay>3</decay>
+            <max>1.2</max>
+            <firstAttack>0.2</firstAttack>
+            <attack>0.15</attack>
+            <decay>0.1</decay>
           </spreadParams>
           <fireDuringChargeUp>True</fireDuringChargeUp>
           <chargeUpTime>0.1</chargeUpTime>
           <chargeDownTime>0.1</chargeDownTime>
           <chainParams />
           <fireFragment Type="SFragmentParams">
-            <fragment>firing</fragment>
+            <fragment>rapid_fire</fragment>
             <forceWeaponController>False</forceWeaponController>
           </fireFragment>
           <stopFireFragment Type="SFragmentParams">
@@ -4175,10 +4452,10 @@
             <audioTrigger />
           </startFireOneShotAudioTrigger>
           <startFireLoopAudioTrigger Type="GlobalResourceAudio">
-            <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+            <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
           </startFireLoopAudioTrigger>
           <stopFireAudioTrigger Type="GlobalResourceAudio">
-            <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+            <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
           </stopFireAudioTrigger>
           <dryFireAudioTrigger Type="GlobalResourceAudio">
             <audioTrigger>Play_WPFA_Handling_NONE_SMG_DryFire</audioTrigger>
@@ -4198,7 +4475,7 @@
               <triggerTag />
               <modifierSource>Wear</modifierSource>
               <delay>0</delay>
-              <scale>1</scale>
+              <scale>2</scale>
               <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
               <isMuzzleFlash>False</isMuzzleFlash>
             </SWeaponParticleEffectParams>
@@ -4206,7 +4483,7 @@
           <beamGroup Type="SBeamGroupParams">
             <hitEffectName>ammo_creature_yormandi</hitEffectName>
             <cuttableImpacts>False</cuttableImpacts>
-            <tractorBeam>False</tractorBeam>
+            <tractorBeam>True</tractorBeam>
             <skipListIncludeOwner>True</skipListIncludeOwner>
             <useADSHelper>False</useADSHelper>
             <detachOnActivate>False</detachOnActivate>
@@ -4221,13 +4498,13 @@
               <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
             </beamLoopAudioTrigger>
             <beamStopAudioTrigger Type="GlobalResourceAudio">
-              <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+              <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
             </beamStopAudioTrigger>
             <beamActiveRTPC Type="AudioRtpc">
-              <rtpc>Weapon_Power_Level</rtpc>
+              <rtpc />
             </beamActiveRTPC>
             <beamModifierRTPC Type="AudioRtpc">
-              <rtpc>Weapon_Heat_Level</rtpc>
+              <rtpc>Weapon_Power_Level</rtpc>
             </beamModifierRTPC>
             <beamModifierRTPCSource>Power</beamModifierRTPCSource>
             <beamImpactModifierSource>WeaponState</beamImpactModifierSource>
@@ -4244,20 +4521,20 @@
               <audioTrigger>Stop_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
             </beamImpactStopTrigger>
             <targetAttractionRTPC Type="AudioRtpc">
-              <rtpc />
+              <rtpc>Beam_Target_Attraction</rtpc>
             </targetAttractionRTPC>
             <beamEffects Type="SBeamEffectParams" Count="1">
               <SBeamEffectParams Type="SBeamEffectParams">
-                <helper>muzzle_flash</helper>
+                <helper>weapon_term_01</helper>
                 <killParticlesOnDeactivate>True</killParticlesOnDeactivate>
                 <particleEffect Type="GlobalResourceParticle">
-                  <path>df3c7490-6436-bf4d-2798-fdeca129ccb0|star_citizen/creatures/yormandi.projectile effects.projectile_beam_large</path>
+                  <path>91b398f3-d7b7-369c-2f4b-f45bc00bd924|star_citizen/creatures/yormandi.projectile effects.projectile_beam_small</path>
                 </particleEffect>
                 <thirdPersonParticleEffect Type="GlobalResourceParticle">
-                  <path>df3c7490-6436-bf4d-2798-fdeca129ccb0|star_citizen/creatures/yormandi.projectile effects.projectile_beam_large</path>
+                  <path>91b398f3-d7b7-369c-2f4b-f45bc00bd924|star_citizen/creatures/yormandi.projectile effects.projectile_beam_small</path>
                 </thirdPersonParticleEffect>
                 <startPointStrength>0</startPointStrength>
-                <endPointStrength>0</endPointStrength>
+                <endPointStrength>1</endPointStrength>
                 <useMultiSpline>False</useMultiSpline>
                 <multiSplineOffset>1</multiSplineOffset>
                 <modifierSource>Power</modifierSource>
@@ -4268,6 +4545,702 @@
           </beamGroup>
           <signatureEmitterParams />
         </SWeaponActionFireBeamParams>
+        <SWeaponActionFireBeamParams Type="SWeaponActionFireBeamParams">
+          <name>Damage Beam</name>
+          <localisedName>@LOC_PLACEHOLDER</localisedName>
+          <mannequinTag Type="SMannequinTagParams">
+            <tag />
+          </mannequinTag>
+          <entityTag />
+          <entityTags Type="TagList">
+            <tags Type="Tag" Count="0" />
+          </entityTags>
+          <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2e97ef2b-db28-4bba-a37f-e52978fc3f61" RecordId="2e97ef2b-db28-4bba-a37f-e52978fc3f61" />
+          <aiShootingMode>Rapid</aiShootingMode>
+          <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </switchFireModeAudioTrigger>
+          <selectableCondition />
+          <hasReloadModesOnUI>False</hasReloadModesOnUI>
+          <fireHelper>muzzle_flash</fireHelper>
+          <toggle>False</toggle>
+          <ammoType>Primary</ammoType>
+          <minEnergyDraw>1</minEnergyDraw>
+          <maxEnergyDraw>10</maxEnergyDraw>
+          <damagePerSecond Type="DamageInfo">
+            <DamagePhysical>0</DamagePhysical>
+            <DamageEnergy>165</DamageEnergy>
+            <DamageDistortion>0</DamageDistortion>
+            <DamageThermal>0</DamageThermal>
+            <DamageBiochemical>0</DamageBiochemical>
+            <DamageStun>0</DamageStun>
+          </damagePerSecond>
+          <fullDamageRange>22.5</fullDamageRange>
+          <zeroDamageRange>35</zeroDamageRange>
+          <heatPerSecond>20</heatPerSecond>
+          <wearPerSecond>0.03</wearPerSecond>
+          <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/none_smg_energy_01/none_smg_energy_01_rapid.xml" />
+          <recoilInterval>0.075</recoilInterval>
+          <soundRadius>0</soundRadius>
+          <soundEmittingInterval>0.5</soundEmittingInterval>
+          <misfire ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponmisfiredef/beam_misfire.xml" />
+          <minorMisfireDuration>0.3</minorMisfireDuration>
+          <hitType>ElectricArc</hitType>
+          <hitRadius>0.005</hitRadius>
+          <ignoreSkiplist>False</ignoreSkiplist>
+          <shouldDryFireInGreenZones>True</shouldDryFireInGreenZones>
+          <spreadParams Type="SSpreadParams">
+            <min>0</min>
+            <max>1.2</max>
+            <firstAttack>0.2</firstAttack>
+            <attack>0.15</attack>
+            <decay>0.1</decay>
+          </spreadParams>
+          <fireDuringChargeUp>True</fireDuringChargeUp>
+          <chargeUpTime>0.1</chargeUpTime>
+          <chargeDownTime>0.1</chargeDownTime>
+          <chainParams />
+          <fireFragment Type="SFragmentParams">
+            <fragment>rapid_fire</fragment>
+            <forceWeaponController>False</forceWeaponController>
+          </fireFragment>
+          <stopFireFragment Type="SFragmentParams">
+            <fragment>stop_firing</fragment>
+            <forceWeaponController>False</forceWeaponController>
+          </stopFireFragment>
+          <startFireOneShotAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </startFireOneShotAudioTrigger>
+          <startFireLoopAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
+          </startFireLoopAudioTrigger>
+          <stopFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
+          </stopFireAudioTrigger>
+          <dryFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_Handling_NONE_SMG_DryFire</audioTrigger>
+          </dryFireAudioTrigger>
+          <timeSinceLastFireRTPC Type="AudioRtpc">
+            <rtpc />
+          </timeSinceLastFireRTPC>
+          <fireEffects Type="SWeaponParticleEffectParams" Count="1">
+            <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
+              <firstPerson Type="GlobalResourceParticle">
+                <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+              </firstPerson>
+              <thirdPerson Type="GlobalResourceParticle">
+                <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+              </thirdPerson>
+              <helper>muzzle_flash</helper>
+              <triggerTag />
+              <modifierSource>Wear</modifierSource>
+              <delay>0</delay>
+              <scale>2</scale>
+              <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
+              <isMuzzleFlash>False</isMuzzleFlash>
+            </SWeaponParticleEffectParams>
+          </fireEffects>
+          <beamGroup Type="SBeamGroupParams">
+            <hitEffectName>ammo_creature_yormandi</hitEffectName>
+            <cuttableImpacts>False</cuttableImpacts>
+            <tractorBeam>True</tractorBeam>
+            <skipListIncludeOwner>True</skipListIncludeOwner>
+            <useADSHelper>False</useADSHelper>
+            <detachOnActivate>False</detachOnActivate>
+            <immediateRaycast>False</immediateRaycast>
+            <beamSizeSwitch Type="AudioSwitch">
+              <switch />
+            </beamSizeSwitch>
+            <beamAudioOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </beamAudioOneShot>
+            <beamLoopAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+            </beamLoopAudioTrigger>
+            <beamStopAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+            </beamStopAudioTrigger>
+            <beamActiveRTPC Type="AudioRtpc">
+              <rtpc />
+            </beamActiveRTPC>
+            <beamModifierRTPC Type="AudioRtpc">
+              <rtpc>Weapon_Power_Level</rtpc>
+            </beamModifierRTPC>
+            <beamModifierRTPCSource>Power</beamModifierRTPCSource>
+            <beamImpactModifierSource>WeaponState</beamImpactModifierSource>
+            <beamImpactStartTriggerOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </beamImpactStartTriggerOneShot>
+            <beamImpactStopTriggerOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </beamImpactStopTriggerOneShot>
+            <beamImpactStartTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Play_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
+            </beamImpactStartTrigger>
+            <beamImpactStopTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Stop_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
+            </beamImpactStopTrigger>
+            <targetAttractionRTPC Type="AudioRtpc">
+              <rtpc>Beam_Target_Attraction</rtpc>
+            </targetAttractionRTPC>
+            <beamEffects Type="SBeamEffectParams" Count="1">
+              <SBeamEffectParams Type="SBeamEffectParams">
+                <helper>weapon_term_01</helper>
+                <killParticlesOnDeactivate>True</killParticlesOnDeactivate>
+                <particleEffect Type="GlobalResourceParticle">
+                  <path>c1581099-4aee-ef15-eda5-2b9c1aa458bc|star_citizen/creatures/yormandi.projectile effects.projectile_beam_medium</path>
+                </particleEffect>
+                <thirdPersonParticleEffect Type="GlobalResourceParticle">
+                  <path>c1581099-4aee-ef15-eda5-2b9c1aa458bc|star_citizen/creatures/yormandi.projectile effects.projectile_beam_medium</path>
+                </thirdPersonParticleEffect>
+                <startPointStrength>0</startPointStrength>
+                <endPointStrength>1</endPointStrength>
+                <useMultiSpline>False</useMultiSpline>
+                <multiSplineOffset>1</multiSplineOffset>
+                <modifierSource>Power</modifierSource>
+                <tintColor />
+                <particleAudioParams Type="SBeamParticleAudioParams" Count="0" />
+              </SBeamEffectParams>
+            </beamEffects>
+          </beamGroup>
+          <signatureEmitterParams />
+        </SWeaponActionFireBeamParams>
+        <SWeaponActionFireBeamParams Type="SWeaponActionFireBeamParams">
+          <name>Damage Beam</name>
+          <localisedName>@LOC_PLACEHOLDER</localisedName>
+          <mannequinTag Type="SMannequinTagParams">
+            <tag />
+          </mannequinTag>
+          <entityTag />
+          <entityTags Type="TagList">
+            <tags Type="Tag" Count="0" />
+          </entityTags>
+          <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2e97ef2b-db28-4bba-a37f-e52978fc3f61" RecordId="2e97ef2b-db28-4bba-a37f-e52978fc3f61" />
+          <aiShootingMode>Rapid</aiShootingMode>
+          <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </switchFireModeAudioTrigger>
+          <selectableCondition />
+          <hasReloadModesOnUI>False</hasReloadModesOnUI>
+          <fireHelper>muzzle_flash</fireHelper>
+          <toggle>False</toggle>
+          <ammoType>Primary</ammoType>
+          <minEnergyDraw>1</minEnergyDraw>
+          <maxEnergyDraw>10</maxEnergyDraw>
+          <damagePerSecond Type="DamageInfo">
+            <DamagePhysical>0</DamagePhysical>
+            <DamageEnergy>165</DamageEnergy>
+            <DamageDistortion>0</DamageDistortion>
+            <DamageThermal>0</DamageThermal>
+            <DamageBiochemical>0</DamageBiochemical>
+            <DamageStun>0</DamageStun>
+          </damagePerSecond>
+          <fullDamageRange>22.5</fullDamageRange>
+          <zeroDamageRange>35</zeroDamageRange>
+          <heatPerSecond>20</heatPerSecond>
+          <wearPerSecond>0.03</wearPerSecond>
+          <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/none_smg_energy_01/none_smg_energy_01_rapid.xml" />
+          <recoilInterval>0.075</recoilInterval>
+          <soundRadius>0</soundRadius>
+          <soundEmittingInterval>0.5</soundEmittingInterval>
+          <misfire ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponmisfiredef/beam_misfire.xml" />
+          <minorMisfireDuration>0.3</minorMisfireDuration>
+          <hitType>ElectricArc</hitType>
+          <hitRadius>0.005</hitRadius>
+          <ignoreSkiplist>False</ignoreSkiplist>
+          <shouldDryFireInGreenZones>True</shouldDryFireInGreenZones>
+          <spreadParams Type="SSpreadParams">
+            <min>0</min>
+            <max>1.2</max>
+            <firstAttack>0.2</firstAttack>
+            <attack>0.15</attack>
+            <decay>0.1</decay>
+          </spreadParams>
+          <fireDuringChargeUp>True</fireDuringChargeUp>
+          <chargeUpTime>0.1</chargeUpTime>
+          <chargeDownTime>0.1</chargeDownTime>
+          <chainParams />
+          <fireFragment Type="SFragmentParams">
+            <fragment>rapid_fire</fragment>
+            <forceWeaponController>False</forceWeaponController>
+          </fireFragment>
+          <stopFireFragment Type="SFragmentParams">
+            <fragment>stop_firing</fragment>
+            <forceWeaponController>False</forceWeaponController>
+          </stopFireFragment>
+          <startFireOneShotAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </startFireOneShotAudioTrigger>
+          <startFireLoopAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
+          </startFireLoopAudioTrigger>
+          <stopFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire</audioTrigger>
+          </stopFireAudioTrigger>
+          <dryFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_Handling_NONE_SMG_DryFire</audioTrigger>
+          </dryFireAudioTrigger>
+          <timeSinceLastFireRTPC Type="AudioRtpc">
+            <rtpc />
+          </timeSinceLastFireRTPC>
+          <fireEffects Type="SWeaponParticleEffectParams" Count="1">
+            <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
+              <firstPerson Type="GlobalResourceParticle">
+                <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+              </firstPerson>
+              <thirdPerson Type="GlobalResourceParticle">
+                <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+              </thirdPerson>
+              <helper>muzzle_flash</helper>
+              <triggerTag />
+              <modifierSource>Wear</modifierSource>
+              <delay>0</delay>
+              <scale>2</scale>
+              <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
+              <isMuzzleFlash>False</isMuzzleFlash>
+            </SWeaponParticleEffectParams>
+          </fireEffects>
+          <beamGroup Type="SBeamGroupParams">
+            <hitEffectName>ammo_creature_yormandi</hitEffectName>
+            <cuttableImpacts>False</cuttableImpacts>
+            <tractorBeam>True</tractorBeam>
+            <skipListIncludeOwner>True</skipListIncludeOwner>
+            <useADSHelper>False</useADSHelper>
+            <detachOnActivate>False</detachOnActivate>
+            <immediateRaycast>False</immediateRaycast>
+            <beamSizeSwitch Type="AudioSwitch">
+              <switch />
+            </beamSizeSwitch>
+            <beamAudioOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </beamAudioOneShot>
+            <beamLoopAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Play_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+            </beamLoopAudioTrigger>
+            <beamStopAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Stop_WPFA_Summed_NONE_SMG_Fire_Beam</audioTrigger>
+            </beamStopAudioTrigger>
+            <beamActiveRTPC Type="AudioRtpc">
+              <rtpc />
+            </beamActiveRTPC>
+            <beamModifierRTPC Type="AudioRtpc">
+              <rtpc>Weapon_Power_Level</rtpc>
+            </beamModifierRTPC>
+            <beamModifierRTPCSource>Power</beamModifierRTPCSource>
+            <beamImpactModifierSource>WeaponState</beamImpactModifierSource>
+            <beamImpactStartTriggerOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </beamImpactStartTriggerOneShot>
+            <beamImpactStopTriggerOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </beamImpactStopTriggerOneShot>
+            <beamImpactStartTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Play_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
+            </beamImpactStartTrigger>
+            <beamImpactStopTrigger Type="GlobalResourceAudio">
+              <audioTrigger>Stop_WPFI_Impact_Tech_Laser_NONE_SMG</audioTrigger>
+            </beamImpactStopTrigger>
+            <targetAttractionRTPC Type="AudioRtpc">
+              <rtpc>Beam_Target_Attraction</rtpc>
+            </targetAttractionRTPC>
+            <beamEffects Type="SBeamEffectParams" Count="1">
+              <SBeamEffectParams Type="SBeamEffectParams">
+                <helper>weapon_term_01</helper>
+                <killParticlesOnDeactivate>True</killParticlesOnDeactivate>
+                <particleEffect Type="GlobalResourceParticle">
+                  <path>df3c7490-6436-bf4d-2798-fdeca129ccb0|star_citizen/creatures/yormandi.projectile effects.projectile_beam_large</path>
+                </particleEffect>
+                <thirdPersonParticleEffect Type="GlobalResourceParticle">
+                  <path>df3c7490-6436-bf4d-2798-fdeca129ccb0|star_citizen/creatures/yormandi.projectile effects.projectile_beam_large</path>
+                </thirdPersonParticleEffect>
+                <startPointStrength>0</startPointStrength>
+                <endPointStrength>1</endPointStrength>
+                <useMultiSpline>False</useMultiSpline>
+                <multiSplineOffset>1</multiSplineOffset>
+                <modifierSource>Power</modifierSource>
+                <tintColor />
+                <particleAudioParams Type="SBeamParticleAudioParams" Count="0" />
+              </SBeamEffectParams>
+            </beamEffects>
+          </beamGroup>
+          <signatureEmitterParams />
+        </SWeaponActionFireBeamParams>
+        <SWeaponActionFireRapidParams Type="SWeaponActionFireRapidParams">
+          <name>Rapid</name>
+          <localisedName>@FireMode_Rapid</localisedName>
+          <mannequinTag Type="SMannequinTagParams">
+            <tag />
+          </mannequinTag>
+          <entityTag />
+          <entityTags Type="TagList">
+            <tags Type="Tag" Count="0" />
+          </entityTags>
+          <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.edc3288b-451e-4399-917d-b2df4b733bee" RecordId="edc3288b-451e-4399-917d-b2df4b733bee" />
+          <aiShootingMode>Rapid</aiShootingMode>
+          <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_Handling_BEHR_Rifle_P4AR_FiremodeSwitch_Rapid</audioTrigger>
+          </switchFireModeAudioTrigger>
+          <selectableCondition />
+          <hasReloadModesOnUI>False</hasReloadModesOnUI>
+          <launchParams Type="SProjectileLauncher">
+            <fireHelper>weapon_term_internal_01</fireHelper>
+            <muzzleHelper />
+            <ammoCost>1</ammoCost>
+            <pelletCount>1</pelletCount>
+            <damageMultiplier>1</damageMultiplier>
+            <soundRadius>150</soundRadius>
+            <spreadParams Type="SSpreadParams">
+              <min>0.18</min>
+              <max>5</max>
+              <firstAttack>1.35</firstAttack>
+              <attack>1.25</attack>
+              <decay>6.5</decay>
+            </spreadParams>
+            <projectileType>Primary</projectileType>
+          </launchParams>
+          <fireRate>810</fireRate>
+          <heatPerShot>0</heatPerShot>
+          <wearPerShot>0.07</wearPerShot>
+          <fireDuringSpinUp>True</fireDuringSpinUp>
+          <spinUpTime>0</spinUpTime>
+          <spinDownTime>0</spinDownTime>
+          <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/behr_rifle_ballistic_01/behr_rifle_ballistic_01_rapid_newrecoil.xml" />
+          <misfire ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponmisfiredef/rapid_misfire.xml" />
+          <fireFragment Type="SFragmentParams">
+            <fragment>rapid_fire</fragment>
+            <forceWeaponController>False</forceWeaponController>
+          </fireFragment>
+          <oneShotFireFragment Type="SFragmentParams">
+            <fragment />
+            <forceWeaponController>False</forceWeaponController>
+          </oneShotFireFragment>
+          <stopFireFragment Type="SFragmentParams">
+            <fragment>stop_rapid_fire</fragment>
+            <forceWeaponController>False</forceWeaponController>
+          </stopFireFragment>
+          <spinFragment Type="SFragmentParams">
+            <fragment />
+            <forceWeaponController>False</forceWeaponController>
+          </spinFragment>
+          <spinParam>spin_speed</spinParam>
+          <audioLoopTimeBetweenFirstShots>10</audioLoopTimeBetweenFirstShots>
+          <startFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_BEHR_Rifle_P4AR_Fire_Auto</audioTrigger>
+          </startFireAudioTrigger>
+          <startFireAudioTriggerOneShot Type="GlobalResourceAudio">
+            <audioTrigger />
+          </startFireAudioTriggerOneShot>
+          <stopFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Stop_WPFA_BEHR_Rifle_P4AR_Fire_Auto</audioTrigger>
+          </stopFireAudioTrigger>
+          <startRotationAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </startRotationAudioTrigger>
+          <stopRotationAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </stopRotationAudioTrigger>
+          <dryFireAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger>Play_WPFA_Handling_BEHR_Rifle_P4AR_DryFire</audioTrigger>
+          </dryFireAudioTrigger>
+          <spinRTPC Type="AudioRtpc">
+            <rtpc>Weapon_Rotation_Speed</rtpc>
+          </spinRTPC>
+          <loadRTPC Type="AudioRtpc">
+            <rtpc>Weapon_Load</rtpc>
+          </loadRTPC>
+          <fireRateRTPC Type="AudioRtpc">
+            <rtpc>Weapon_Fire_Rate</rtpc>
+          </fireRateRTPC>
+          <fireEffects Type="SWeaponParticleEffectParams" Count="1">
+            <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
+              <firstPerson Type="GlobalResourceParticle">
+                <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+              </firstPerson>
+              <thirdPerson Type="GlobalResourceParticle">
+                <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+              </thirdPerson>
+              <helper>muzzle_flash</helper>
+              <triggerTag />
+              <modifierSource>BarrelAttachment</modifierSource>
+              <delay>0</delay>
+              <scale>1</scale>
+              <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
+              <isMuzzleFlash>False</isMuzzleFlash>
+            </SWeaponParticleEffectParams>
+          </fireEffects>
+          <stopFireEffects Type="SWeaponParticleEffectParams" Count="0" />
+          <vibrationParams Type="SWeaponVibrationParams">
+            <vibrationImpulse>2500</vibrationImpulse>
+          </vibrationParams>
+          <signatureEmitterParams />
+        </SWeaponActionFireRapidParams>
+        <SWeaponActionParallelParams Type="SWeaponActionParallelParams">
+          <name />
+          <localisedName>@LOC_PLACEHOLDER</localisedName>
+          <mannequinTag Type="SMannequinTagParams">
+            <tag />
+          </mannequinTag>
+          <entityTag />
+          <entityTags Type="TagList">
+            <tags Type="Tag" Count="0" />
+          </entityTags>
+          <uiBindingsTag />
+          <aiShootingMode>Single</aiShootingMode>
+          <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </switchFireModeAudioTrigger>
+          <selectableCondition />
+          <hasReloadModesOnUI>False</hasReloadModesOnUI>
+          <weaponActions Type="SWeaponActionParams" Count="2">
+            <SWeaponActionFireBeamParams Type="SWeaponActionFireBeamParams">
+              <name />
+              <localisedName>@LOC_PLACEHOLDER</localisedName>
+              <mannequinTag Type="SMannequinTagParams">
+                <tag />
+              </mannequinTag>
+              <entityTag />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+              <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2e97ef2b-db28-4bba-a37f-e52978fc3f61" RecordId="2e97ef2b-db28-4bba-a37f-e52978fc3f61" />
+              <aiShootingMode>Single</aiShootingMode>
+              <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </switchFireModeAudioTrigger>
+              <selectableCondition />
+              <hasReloadModesOnUI>False</hasReloadModesOnUI>
+              <fireHelper>muzzle_flash</fireHelper>
+              <toggle>False</toggle>
+              <ammoType>Primary</ammoType>
+              <minEnergyDraw>0</minEnergyDraw>
+              <maxEnergyDraw>0</maxEnergyDraw>
+              <damagePerSecond Type="DamageInfo">
+                <DamagePhysical>0</DamagePhysical>
+                <DamageEnergy>0</DamageEnergy>
+                <DamageDistortion>0</DamageDistortion>
+                <DamageThermal>0</DamageThermal>
+                <DamageBiochemical>0</DamageBiochemical>
+                <DamageStun>0</DamageStun>
+              </damagePerSecond>
+              <fullDamageRange>10</fullDamageRange>
+              <zeroDamageRange>10</zeroDamageRange>
+              <heatPerSecond>0</heatPerSecond>
+              <wearPerSecond>0</wearPerSecond>
+              <recoil />
+              <recoilInterval>0.5</recoilInterval>
+              <soundRadius>0</soundRadius>
+              <soundEmittingInterval>0.5</soundEmittingInterval>
+              <misfire />
+              <minorMisfireDuration>0.3</minorMisfireDuration>
+              <hitType>ElectricArc</hitType>
+              <hitRadius>0.1</hitRadius>
+              <ignoreSkiplist>False</ignoreSkiplist>
+              <shouldDryFireInGreenZones>False</shouldDryFireInGreenZones>
+              <spreadParams />
+              <fireDuringChargeUp>False</fireDuringChargeUp>
+              <chargeUpTime>0.1</chargeUpTime>
+              <chargeDownTime>0.1</chargeDownTime>
+              <chainParams />
+              <fireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </fireFragment>
+              <stopFireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </stopFireFragment>
+              <startFireOneShotAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireOneShotAudioTrigger>
+              <startFireLoopAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireLoopAudioTrigger>
+              <stopFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </stopFireAudioTrigger>
+              <dryFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </dryFireAudioTrigger>
+              <timeSinceLastFireRTPC Type="AudioRtpc">
+                <rtpc />
+              </timeSinceLastFireRTPC>
+              <fireEffects Type="SWeaponParticleEffectParams" Count="1">
+                <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
+                  <firstPerson Type="GlobalResourceParticle">
+                    <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+                  </firstPerson>
+                  <thirdPerson Type="GlobalResourceParticle">
+                    <path>405085bb-f526-f578-3141-400f909ed482|star_citizen/creatures/yormandi.projectile effects.projectile_muzzleflash</path>
+                  </thirdPerson>
+                  <helper>muzzle_flash</helper>
+                  <triggerTag />
+                  <modifierSource>Wear</modifierSource>
+                  <delay>0</delay>
+                  <scale>1</scale>
+                  <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
+                  <isMuzzleFlash>False</isMuzzleFlash>
+                </SWeaponParticleEffectParams>
+              </fireEffects>
+              <beamGroup Type="SBeamGroupParams">
+                <hitEffectName>ammo_creature_yormandi</hitEffectName>
+                <cuttableImpacts>False</cuttableImpacts>
+                <tractorBeam>False</tractorBeam>
+                <skipListIncludeOwner>True</skipListIncludeOwner>
+                <useADSHelper>False</useADSHelper>
+                <detachOnActivate>False</detachOnActivate>
+                <immediateRaycast>False</immediateRaycast>
+                <beamSizeSwitch Type="AudioSwitch">
+                  <switch />
+                </beamSizeSwitch>
+                <beamAudioOneShot Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamAudioOneShot>
+                <beamLoopAudioTrigger Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamLoopAudioTrigger>
+                <beamStopAudioTrigger Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamStopAudioTrigger>
+                <beamActiveRTPC Type="AudioRtpc">
+                  <rtpc>Weapon_Power_Level</rtpc>
+                </beamActiveRTPC>
+                <beamModifierRTPC Type="AudioRtpc">
+                  <rtpc>Weapon_Heat_Level</rtpc>
+                </beamModifierRTPC>
+                <beamModifierRTPCSource>Power</beamModifierRTPCSource>
+                <beamImpactModifierSource>WeaponState</beamImpactModifierSource>
+                <beamImpactStartTriggerOneShot Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamImpactStartTriggerOneShot>
+                <beamImpactStopTriggerOneShot Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamImpactStopTriggerOneShot>
+                <beamImpactStartTrigger Type="GlobalResourceAudio">
+                  <audioTrigger />
+                </beamImpactStartTrigger>
+                <beamImpactStopTrigger Type="GlobalResourceAudio">
+                  <audioTrigger>bar</audioTrigger>
+                </beamImpactStopTrigger>
+                <targetAttractionRTPC Type="AudioRtpc">
+                  <rtpc />
+                </targetAttractionRTPC>
+                <beamEffects Type="SBeamEffectParams" Count="1">
+                  <SBeamEffectParams Type="SBeamEffectParams">
+                    <helper>muzzle_flash</helper>
+                    <killParticlesOnDeactivate>True</killParticlesOnDeactivate>
+                    <particleEffect Type="GlobalResourceParticle">
+                      <path>c1581099-4aee-ef15-eda5-2b9c1aa458bc|star_citizen/creatures/yormandi.projectile effects.projectile_beam_medium</path>
+                    </particleEffect>
+                    <thirdPersonParticleEffect Type="GlobalResourceParticle">
+                      <path>c1581099-4aee-ef15-eda5-2b9c1aa458bc|star_citizen/creatures/yormandi.projectile effects.projectile_beam_medium</path>
+                    </thirdPersonParticleEffect>
+                    <startPointStrength>0</startPointStrength>
+                    <endPointStrength>0</endPointStrength>
+                    <useMultiSpline>False</useMultiSpline>
+                    <multiSplineOffset>1</multiSplineOffset>
+                    <modifierSource>Wear</modifierSource>
+                    <tintColor />
+                    <particleAudioParams Type="SBeamParticleAudioParams" Count="0" />
+                  </SBeamEffectParams>
+                </beamEffects>
+              </beamGroup>
+              <signatureEmitterParams />
+            </SWeaponActionFireBeamParams>
+            <SWeaponActionFireRapidParams Type="SWeaponActionFireRapidParams">
+              <name>Rapid</name>
+              <localisedName>@FireMode_Rapid</localisedName>
+              <mannequinTag Type="SMannequinTagParams">
+                <tag />
+              </mannequinTag>
+              <entityTag />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+              <uiBindingsTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7484099b-acb0-433a-afad-bc40bb5d2b2f" RecordId="7484099b-acb0-433a-afad-bc40bb5d2b2f" />
+              <aiShootingMode>Rapid</aiShootingMode>
+              <switchFireModeAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </switchFireModeAudioTrigger>
+              <selectableCondition />
+              <hasReloadModesOnUI>False</hasReloadModesOnUI>
+              <launchParams Type="SProjectileLauncher">
+                <fireHelper>muzzle_flash</fireHelper>
+                <muzzleHelper />
+                <ammoCost>1</ammoCost>
+                <pelletCount>1</pelletCount>
+                <damageMultiplier>1</damageMultiplier>
+                <soundRadius>150</soundRadius>
+                <spreadParams Type="SSpreadParams">
+                  <min>0</min>
+                  <max>0</max>
+                  <firstAttack>0</firstAttack>
+                  <attack>0</attack>
+                  <decay>0</decay>
+                </spreadParams>
+                <projectileType>Primary</projectileType>
+              </launchParams>
+              <fireRate>60</fireRate>
+              <heatPerShot>0</heatPerShot>
+              <wearPerShot>0</wearPerShot>
+              <fireDuringSpinUp>True</fireDuringSpinUp>
+              <spinUpTime>0</spinUpTime>
+              <spinDownTime>0</spinDownTime>
+              <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/volt_shotgun_energy_01/volt_shotgun_energy_01_single_post_heat.xml" />
+              <misfire />
+              <fireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </fireFragment>
+              <oneShotFireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </oneShotFireFragment>
+              <stopFireFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </stopFireFragment>
+              <spinFragment Type="SFragmentParams">
+                <fragment />
+                <forceWeaponController>False</forceWeaponController>
+              </spinFragment>
+              <spinParam>spin_speed</spinParam>
+              <audioLoopTimeBetweenFirstShots>10</audioLoopTimeBetweenFirstShots>
+              <startFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireAudioTrigger>
+              <startFireAudioTriggerOneShot Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startFireAudioTriggerOneShot>
+              <stopFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </stopFireAudioTrigger>
+              <startRotationAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </startRotationAudioTrigger>
+              <stopRotationAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </stopRotationAudioTrigger>
+              <dryFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </dryFireAudioTrigger>
+              <spinRTPC Type="AudioRtpc">
+                <rtpc>Weapon_Rotation_Speed</rtpc>
+              </spinRTPC>
+              <loadRTPC Type="AudioRtpc">
+                <rtpc>Weapon_Load</rtpc>
+              </loadRTPC>
+              <fireRateRTPC Type="AudioRtpc">
+                <rtpc>Weapon_Fire_Rate</rtpc>
+              </fireRateRTPC>
+              <fireEffects Type="SWeaponParticleEffectParams" Count="0" />
+              <stopFireEffects Type="SWeaponParticleEffectParams" Count="0" />
+              <vibrationParams Type="SWeaponVibrationParams">
+                <vibrationImpulse>2500</vibrationImpulse>
+              </vibrationParams>
+              <signatureEmitterParams />
+            </SWeaponActionFireRapidParams>
+          </weaponActions>
+        </SWeaponActionParallelParams>
       </fireActions>
       <audioParams Type="SWeaponAudioParams">
         <visorAudioAvailable>False</visorAudioAvailable>
@@ -4472,7 +5445,7 @@
       </fireSpinAnimations>
       <aimableAnglesRecord />
       <gimbalModeModifierRecord />
-      <arModifierRecord />
+      <arModifierRecord ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponarmodifiers/default.xml" />
       <weaponDegradationModifier Type="SWeaponModifierParams">
         <weaponStats Type="SWeaponStats">
           <fireRate>0</fireRate>
@@ -4814,7 +5787,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Magazine</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -4908,7 +5881,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>IronSight</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5002,7 +5975,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Barrel</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5096,7 +6069,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="BasicStatusEffectApplicationType" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>BottomAttachment</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5325,8 +6298,8 @@
       <maxAmmoCount>99999</maxAmmoCount>
       <maxRestockCount>3</maxRestockCount>
       <lowAmmoWarningPercentage>0.1</lowAmmoWarningPercentage>
-      <ammoParamsRecord ReferencedFile="file://./../../../../../../../libs/foundry/records/ammoparams/fps/vlk_spewgun_ballistic_01_ammo_special_irradiatated.xml" />
-      <secondaryAmmoParamsRecord ReferencedFile="file://./../../../../../../../libs/foundry/records/ammoparams/fps/vlk_spewgun_ballistic_01_ammo_special_irradiatated.xml" />
+      <ammoParamsRecord />
+      <secondaryAmmoParamsRecord />
       <ammoContainerType>Primary</ammoContainerType>
       <despawnEmptyAmmoContainer>True</despawnEmptyAmmoContainer>
       <allowAmmoRepool>True</allowAmmoRepool>

@@ -187,8 +187,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AudioBreathStyle" Count="0" />
-        <PhysFlagsColliderOverride Type="AudioBreathStyle" Count="0" />
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingFreefall>0.05</DampingFreefall>
@@ -898,7 +898,7 @@
           <tasks Type="FloatUserVariableTask" Count="0" />
         </FloatUserVariable>
       </floats>
-      <ints Type="IntUserVariable" Count="2">
+      <ints Type="IntUserVariable" Count="3">
         <IntUserVariable Type="IntUserVariable">
           <name>uv_popupMessageColor</name>
           <defaultValue>1</defaultValue>
@@ -909,8 +909,13 @@
           <defaultValue>3</defaultValue>
           <tasks Type="IntUserVariableTask" Count="0" />
         </IntUserVariable>
+        <IntUserVariable Type="IntUserVariable">
+          <name>uv_maintenanceEntity01StatusColor</name>
+          <defaultValue>3</defaultValue>
+          <tasks Type="IntUserVariableTask" Count="0" />
+        </IntUserVariable>
       </ints>
-      <bools Type="BoolUserVariable" Count="3">
+      <bools Type="BoolUserVariable" Count="4">
         <BoolUserVariable Type="BoolUserVariable">
           <name>uv_regenDataLayout</name>
           <defaultValue>False</defaultValue>
@@ -926,9 +931,14 @@
           <defaultValue>False</defaultValue>
           <tasks Type="BoolUserVariableTask" Count="0" />
         </BoolUserVariable>
+        <BoolUserVariable Type="BoolUserVariable">
+          <name>uv_maintenanceEntity01Active</name>
+          <defaultValue>True</defaultValue>
+          <tasks Type="BoolUserVariableTask" Count="0" />
+        </BoolUserVariable>
       </bools>
       <strings Type="StringUserVariable" Count="0" />
-      <locStrings Type="LocStringUserVariable" Count="7">
+      <locStrings Type="LocStringUserVariable" Count="9">
         <LocStringUserVariable Type="LocStringUserVariable">
           <name>uv_screenTitle</name>
           <defaultValue>@LOC_EMPTY</defaultValue>
@@ -938,12 +948,12 @@
           <defaultValue>@ASD_DiagnosticsData_HeaderTitle</defaultValue>
         </LocStringUserVariable>
         <LocStringUserVariable Type="LocStringUserVariable">
-          <name>uv_dataTitle</name>
-          <defaultValue>@ASD_DiagnosticsData</defaultValue>
+          <name>uv_popupLocString</name>
+          <defaultValue>@ASD_NotAuthorized</defaultValue>
         </LocStringUserVariable>
         <LocStringUserVariable Type="LocStringUserVariable">
-          <name>uv_dataSubTitle</name>
-          <defaultValue>@LOC_EMPTY</defaultValue>
+          <name>uv_downloadButtonText</name>
+          <defaultValue>@ASD_DownloadData</defaultValue>
         </LocStringUserVariable>
         <LocStringUserVariable Type="LocStringUserVariable">
           <name>uv_downloadReadoutText</name>
@@ -957,13 +967,21 @@
           <name>uv_dataSubTitle</name>
           <defaultValue>@LOC_EMPTY</defaultValue>
         </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_maintenanceEntity01Name</name>
+          <defaultValue>@ASD_FuelReactor</defaultValue>
+        </LocStringUserVariable>
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>uv_maintenanceEntity01Status</name>
+          <defaultValue>@ASD_Unpowered</defaultValue>
+        </LocStringUserVariable>
       </locStrings>
     </UserVariablesComponentParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="4">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:8" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="5">
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="7">
             <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
               <operationType Type="SSetUserVariable">
                 <valueSet Type="SUserVariableSetBoolValue">
@@ -1004,6 +1022,22 @@
                 </valueSet>
               </operationType>
             </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetLocStringValue">
+                  <variableName>uv_maintenanceEntity01Status</variableName>
+                  <valueToSet>@ASD_Unpowered</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetIntValue">
+                  <variableName>uv_maintenanceEntity01StatusColor</variableName>
+                  <valueToSet>3</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
@@ -1037,7 +1071,7 @@
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:10" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="3">
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="5">
             <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
               <operationType Type="SSetUserVariable">
                 <valueSet Type="SUserVariableSetBoolValue">
@@ -1058,6 +1092,22 @@
               <operationType Type="SSetUserVariable">
                 <valueSet Type="SUserVariableSetIntValue">
                   <variableName>uv_subTitleColor</variableName>
+                  <valueToSet>2</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetLocStringValue">
+                  <variableName>uv_maintenanceEntity01Status</variableName>
+                  <valueToSet>@F_Ind_FullyCharged</valueToSet>
+                </valueSet>
+              </operationType>
+            </SModifyUservariableGameplayTrigger>
+            <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
+              <operationType Type="SSetUserVariable">
+                <valueSet Type="SUserVariableSetIntValue">
+                  <variableName>uv_maintenanceEntity01StatusColor</variableName>
                   <valueToSet>2</valueToSet>
                 </valueSet>
               </operationType>
