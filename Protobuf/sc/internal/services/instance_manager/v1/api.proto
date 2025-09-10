@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package sc.internal.services.instance_manager.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "sc/external/common/api/v1/pagination.proto";
+import "sc/external/common/api/v1/query.proto";
+
+service InstanceManagerService {
+  rpc RequestInstance ( .sc.internal.services.instance_manager.v1.RequestInstanceRequest ) returns ( .sc.internal.services.instance_manager.v1.RequestInstanceResponse );
+  rpc ReleaseInstance ( .sc.internal.services.instance_manager.v1.ReleaseInstanceRequest ) returns ( .sc.internal.services.instance_manager.v1.ReleaseInstanceResponse );
+  rpc GetInstance ( .sc.internal.services.instance_manager.v1.GetInstanceRequest ) returns ( .sc.internal.services.instance_manager.v1.GetInstanceResponse );
+  rpc ListInstances ( .sc.internal.services.instance_manager.v1.ListInstancesRequest ) returns ( .sc.internal.services.instance_manager.v1.ListInstancesResponse );
+}
+
+message RequestInstanceRequest {
+  string instance_type = 1;
+  string shard_id = 2;
+  string requester_urn = 3;
+}
+
+message RequestInstanceResponse {
+  uint64 instance_geid = 1;
+  .sc.internal.services.instance_manager.v1.InstanceStatus status = 2;
+}
+
+message ReleaseInstanceRequest {
+  oneof identifier {
+    uint64 instance_geid = 1;
+    string requester_urn = 2;
+  }
+  string shard_id = 3;
+}
+
+message ReleaseInstanceResponse {
+  .sc.internal.services.instance_manager.v1.InstanceStatus status = 1;
+}
+
+message GetInstanceRequest {
+  oneof identifier {
+    uint64 instance_geid = 1;
+    string requester_urn = 2;
+  }
+  string shard_id = 3;
+}
+
+message GetInstanceResponse {
+  .sc.internal.services.instance_manager.v1.Instance instance = 1;
+}
+
+message ListInstancesRequest {
+  .sc.external.common.api.v1.Query query = 1;
+}
+
+message ListInstancesResponse {
+  repeated .sc.internal.services.instance_manager.v1.Instance results = 1;
+  .sc.external.common.api.v1.PaginationInfo page_info = 2;
+}
+
+message Instance {
+  uint64 instance_geid = 1;
+  string type = 2;
+  string shard_id = 3;
+  string requester_urn = 4;
+  .sc.internal.services.instance_manager.v1.InstanceStatus status = 5;
+  .google.protobuf.Timestamp created_at = 6;
+  .google.protobuf.Timestamp expiry = 7;
+}
+
+enum InstanceStatus {
+  INSTANCE_STATUS_UNSPECIFIED = 0;
+}
+

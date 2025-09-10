@@ -104,6 +104,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -220,8 +221,6 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
-            <PromptStyle>PromptAndText</PromptStyle>
-            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -253,11 +252,6 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
-      <meshsetup Type="SGeometryMeshsetupParams">
-        <visibilityTags Type="TagList">
-          <tags Type="Tag" Count="0" />
-        </visibilityTags>
-      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -320,11 +314,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
-        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <spawnBoxScale>0.5</spawnBoxScale>
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
-        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -473,14 +467,14 @@
       </uiDescription>
       <MFDParams Type="SCItemSeatDashboardMFDParams">
         <setupEnabled>True</setupEnabled>
-        <innerThoughtGeometryName>UI_console_screen</innerThoughtGeometryName>
+        <innerThoughtGeometryName>console_screen_mesh</innerThoughtGeometryName>
         <defaultCommsCallMFD PointsTo="ptr:2" />
         <primaryMFD PointsTo="ptr:2" />
         <availableViews ReferencedFile="file://./../../../../../../../libs/foundry/records/entities/scitem/ships/displays/mfdviewlists/defaultmfdviewlist.xml" />
         <modeConfiguration ReferencedFile="file://./../../../../../../../libs/foundry/records/entities/scitem/ships/displays/mfdviewconfigs/defaultmfdviewconfig.xml" />
         <MFDs Type="SMFD" Count="1">
           <SMFD Pointer="ptr:2" Type="SMFD">
-            <geometryName>UI_console_screen</geometryName>
+            <geometryName>console_screen_mesh</geometryName>
             <backgroundEnabled>True</backgroundEnabled>
             <upControlLink />
             <downControlLink />
@@ -544,7 +538,6 @@
         <audioTrigger />
       </videoAudioResumeTrigger>
       <dialogueContext />
-      <bypassRealisticMode>False</bypassRealisticMode>
     </UIAudioComponentEntityComponentParams>
     <SActorUsableParams Type="SActorUsableParams">
       <archetype RecordReference="file://./../../../../../../../libs/foundry/records/entities/scitem/usables/usablearchetypes.xml" RecordName="UsableArchetype.OperatorSeat" RecordId="5c06e726-90c3-47d8-a5e5-7293f3c7e6b5" />
@@ -613,18 +606,15 @@
         </OperatorSeatAlignmentSlot>
       </alignmentSlots>
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
-      <freeItemPortsForDirectInteraction Type="SItemPortDef" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="0" />
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="0" />
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
       </specializedData>
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
-      <lowEnergyThreshold>0</lowEnergyThreshold>
-      <highEnergyThreshold>2</highEnergyThreshold>
     </SActorUsableParams>
     <ItemControlComponentParams Type="ItemControlComponentParams">
       <turnedOnByDefault>False</turnedOnByDefault>
@@ -648,17 +638,14 @@
       <masterController />
       <Ports Type="SItemPortDef" Count="1">
         <SItemPortDef Type="SItemPortDef">
-          <Name>UI_console_screen</Name>
+          <Name>console_screen_mesh</Name>
           <DisplayName />
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -691,15 +678,37 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Display</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
-          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationEntity">
+            <usePhysicalAttachment>False</usePhysicalAttachment>
+            <useEntityAttachment>True</useEntityAttachment>
+            <useExteriorAttachment>False</useExteriorAttachment>
+            <usePhysicalParent>False</usePhysicalParent>
+            <useLogicalAttachment>False</useLogicalAttachment>
+            <constraintParams Type="SAttachmentConstraintParams">
+              <damping>0</damping>
+              <noSelfCollisions>True</noSelfCollisions>
+              <maxPullForce>0</maxPullForce>
+              <maxBendTorque>0</maxBendTorque>
+              <constrainToLine>False</constrainToLine>
+              <constrainToPlane>False</constrainToPlane>
+              <constrainFully>True</constrainFully>
+              <useWorldConstraintPosition>False</useWorldConstraintPosition>
+              <noRotation>True</noRotation>
+              <xMin>0</xMin>
+              <xMax>0</xMax>
+              <yzMax>0</yzMax>
+              <constraintHelper />
+              <constraintMaintainOrientation>False</constraintMaintainOrientation>
+            </constraintParams>
+            <hangarPort>False</hangarPort>
             <Helper Type="SItemPortDefHelperNode">
               <Tags />
               <Helper Type="SItemPortDefHelper">
-                <Name>UI_console_screen</Name>
+                <Name />
                 <Offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>

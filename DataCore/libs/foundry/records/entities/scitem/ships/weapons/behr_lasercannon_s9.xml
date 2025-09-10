@@ -49,6 +49,7 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
+      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -65,13 +66,14 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
-      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <shatterDestroyEvent />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
+      <duplicateHitToParent>False</duplicateHitToParent>
+      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SDegradationParams Type="SDegradationParams">
       <StopDegradingIfDestroyed>False</StopDegradingIfDestroyed>
@@ -172,14 +174,14 @@
           <z>4.81137</z>
         </inventoryOccupancyDimensions>
         <inventoryOccupancyLocalBoundsMin Type="Vec3">
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
+          <x>-2.514</x>
+          <y>-7.303</y>
+          <z>-5.64</z>
         </inventoryOccupancyLocalBoundsMin>
         <inventoryOccupancyLocalBoundsMax Type="Vec3">
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
+          <x>2.514</x>
+          <y>22.826</y>
+          <z>0.478</z>
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride Type="Vec3">
           <x>1.5</x>
@@ -187,6 +189,7 @@
           <z>1.5</z>
         </inventoryOccupancyDimensionsUIOverride>
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -215,7 +218,32 @@
           <maximum>100</maximum>
         </accuracyRange>
         <accuracyRangeCurve Type="BezierCurve">
-          <points Type="Vec2" Count="0" />
+          <points Type="Vec2" Count="6">
+            <Vec2 Type="Vec2">
+              <x>-0.1</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.4</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.4798653</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1.520135</x>
+              <y>1</y>
+            </Vec2>
+          </points>
           <useLUT>False</useLUT>
         </accuracyRangeCurve>
         <shootingTimeAccuracyData Type="SWeaponAIShootingTimeAccuracyData">
@@ -225,8 +253,7 @@
             <useLUT>False</useLUT>
           </timePrecisionCurve>
         </shootingTimeAccuracyData>
-        <idealCombatRange>30</idealCombatRange>
-        <maxFiringRange>50</maxFiringRange>
+        <idealCombatRange>50</idealCombatRange>
         <CombatRangeCategory>Medium</CombatRangeCategory>
         <baseAccuracy>1</baseAccuracy>
         <impactRadiusForFriendlyFire>0</impactRadiusForFriendlyFire>
@@ -258,7 +285,6 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
-          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -273,7 +299,6 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
-            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -472,7 +497,6 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
-          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -487,7 +511,6 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
-            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -686,7 +709,6 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
-          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -701,7 +723,6 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
-            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -900,7 +921,6 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
-          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -915,7 +935,6 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
-            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1114,7 +1133,6 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
-          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -1129,7 +1147,6 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
-            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1357,7 +1374,6 @@
           <selectableCondition />
           <hasReloadModesOnUI>False</hasReloadModesOnUI>
           <mode>Looping</mode>
-          <misfire />
           <sequenceEntries Type="SWeaponSequenceEntryParams" Count="1">
             <SWeaponSequenceEntryParams Type="SWeaponSequenceEntryParams">
               <delay>100</delay>
@@ -1399,7 +1415,7 @@
                 <fireRate>100</fireRate>
                 <heatPerShot>0</heatPerShot>
                 <wearPerShot>0</wearPerShot>
-                <recoil />
+                <recoil ReferencedFile="file://./../../../../../../../libs/foundry/records/weaponproceduralrecoil/shiprecoil/amrs_lasercannon_s4_recoil.xml" />
                 <misfire />
                 <fireFragment Type="SFragmentParams">
                   <fragment>barrel_recoil</fragment>
@@ -1417,20 +1433,6 @@
                 <cooldownStopTrigger Type="GlobalResourceAudio">
                   <audioTrigger />
                 </cooldownStopTrigger>
-                <NLPCAudioTriggers Type="SWeaponActionFireSingleNLPCAudioTriggers">
-                  <fireAudioTrigger Type="GlobalResourceAudio">
-                    <audioTrigger />
-                  </fireAudioTrigger>
-                  <dryFireAudioTrigger Type="GlobalResourceAudio">
-                    <audioTrigger />
-                  </dryFireAudioTrigger>
-                  <cooldownStartTrigger Type="GlobalResourceAudio">
-                    <audioTrigger />
-                  </cooldownStartTrigger>
-                  <cooldownStopTrigger Type="GlobalResourceAudio">
-                    <audioTrigger />
-                  </cooldownStopTrigger>
-                </NLPCAudioTriggers>
                 <fireEffects Type="SWeaponParticleEffectParams" Count="1">
                   <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
                     <firstPerson Type="GlobalResourceParticle">
@@ -1446,16 +1448,13 @@
                     <scale>1.25</scale>
                     <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
                     <isMuzzleFlash>False</isMuzzleFlash>
-                    <effectCondition />
                   </SWeaponParticleEffectParams>
                 </fireEffects>
                 <vibrationParams Type="SWeaponVibrationParams">
-                  <normalVibration>0</normalVibration>
-                  <playerVibration>0</playerVibration>
+                  <vibrationImpulse>2500</vibrationImpulse>
                 </vibrationParams>
                 <explosionParams />
                 <signatureEmitterParams />
-                <adaptiveTriggerParams />
               </weaponAction>
             </SWeaponSequenceEntryParams>
           </sequenceEntries>
@@ -1497,9 +1496,6 @@
         <switchFireModeAudioTrigger Type="GlobalResourceAudio">
           <audioTrigger />
         </switchFireModeAudioTrigger>
-        <switchWeaponPresetAudioTrigger Type="GlobalResourceAudio">
-          <audioTrigger />
-        </switchWeaponPresetAudioTrigger>
         <weaponHeatRTPC Type="AudioRtpc">
           <rtpc>Weapon_Heat_Level</rtpc>
         </weaponHeatRTPC>
@@ -1707,11 +1703,6 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
-      <meshsetup Type="SGeometryMeshsetupParams">
-        <visibilityTags Type="TagList">
-          <tags Type="Tag" Count="0" />
-        </visibilityTags>
-      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -1808,11 +1799,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
-        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <spawnBoxScale>0.5</spawnBoxScale>
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
-        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -1909,11 +1900,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1946,7 +1934,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Barrel</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2025,11 +2013,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2062,7 +2047,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>FiringMechanism</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2119,11 +2104,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2156,7 +2138,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>PowerArray</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2213,11 +2195,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2250,7 +2229,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>Ventilation</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2324,7 +2303,7 @@
           <max>1</max>
           <default>1</default>
           <scalingMinimum>True</scalingMinimum>
-          <affectedResources Type="BuildingBlocks_BindingsTagFromBoolean" Count="1">
+          <affectedResources Type="LinkedStatBase" Count="1">
             <EnumChoice>Power</EnumChoice>
           </affectedResources>
         </ItemThrottleParams>

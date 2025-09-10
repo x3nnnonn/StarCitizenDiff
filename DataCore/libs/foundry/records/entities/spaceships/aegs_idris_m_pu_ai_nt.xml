@@ -78,7 +78,7 @@
       <dynamicallyUpdatePersistanceLocation>True</dynamicallyUpdatePersistanceLocation>
     </SEntityDynamicLocationProperties>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="62">
+  <Components Type="DataForgeComponentParams" Count="63">
     <VehicleComponentParams Type="VehicleComponentParams">
       <landingSystem ReferencedFile="file://./../../../../../libs/foundry/records/entities/scitem/ships/landingsystem/aegs_idris_landingsystem.xml" />
       <manufacturer ReferencedFile="file://./../../../../../libs/foundry/records/scitemmanufacturer/scitemmanufacturer.aegs.xml" />
@@ -376,16 +376,7 @@
       </shieldSDFParams>
       <DashboardCanvasConfig ReferencedFile="file://./../../../../../libs/foundry/records/ui/buildingblocks/dashboard/config/aegs_idris.xml" />
       <inventoryContainerParams ReferencedFile="file://./../../../../../libs/foundry/records/inventorycontainers/ships/ship_capital.xml" />
-      <landingOffset Type="Vec3">
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </landingOffset>
-      <landingRotationOffset Type="Ang3">
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </landingRotationOffset>
+      <spawnBoxScale>0.5</spawnBoxScale>
     </VehicleComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
@@ -3142,6 +3133,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -4117,8 +4109,24 @@
     </SAtmosphericEffectsComponentParams>
     <SSCItemControllableManagerParams Type="SSCItemControllableManagerParams">
       <defaultMasterMode>SCM</defaultMasterMode>
-      <masterModeSpoolTimeToNAV>1</masterModeSpoolTimeToNAV>
-      <masterModeSpoolTimeToSCM>0.2</masterModeSpoolTimeToSCM>
+      <masterModes Type="SMasterModeParams" Count="4">
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>0.2</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+      </masterModes>
       <controllerParams />
     </SSCItemControllableManagerParams>
     <SHealthComponentParams Type="SHealthComponentParams">
@@ -4157,6 +4165,7 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
+      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -4173,13 +4182,14 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
-      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <shatterDestroyEvent />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
+      <duplicateHitToParent>False</duplicateHitToParent>
+      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SInteractionLinkParams Type="SInteractionLinkParams">
       <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="0" />
@@ -4208,11 +4218,7 @@
           </crossSection>
         </crossSectionParams>
         <emissionModifierParams />
-        <deathParams />
         <scanBounds />
-        <roomParams Type="SCSignatureSystemRoomParams">
-          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
-        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="0" />
@@ -4229,14 +4235,155 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
-      <linkedObjectives Type="MissionObjective" Count="0" />
-      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
-      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSuperGUIDComponentParams Type="SSuperGUIDComponentParams" />
     <AutopilotParams Type="AutopilotParams" />
     <ShipAudioComponentParams Type="ShipAudioComponentParams">
+      <playerParams Type="ShipAudioPlayerParams">
+        <useDeprecatedAudioModel>True</useDeprecatedAudioModel>
+        <thrusterParams Type="ShipAudioThrusterParams" Count="3">
+          <ShipAudioThrusterParams Type="ShipAudioThrusterParams">
+            <startLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startLoop>
+            <stopLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </stopLoop>
+            <startOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startOneShot>
+            <afterburnerEnabledOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerEnabledOneShot>
+            <afterburnerStartLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerStartLoop>
+            <afterburnerStopLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerStopLoop>
+            <thrusterStrengthSmoothedRtpc Type="AudioRtpc">
+              <rtpc />
+            </thrusterStrengthSmoothedRtpc>
+            <thrusterFire />
+            <thrusterType>Maneuver</thrusterType>
+          </ShipAudioThrusterParams>
+          <ShipAudioThrusterParams Type="ShipAudioThrusterParams">
+            <startLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startLoop>
+            <stopLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </stopLoop>
+            <startOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startOneShot>
+            <afterburnerEnabledOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerEnabledOneShot>
+            <afterburnerStartLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerStartLoop>
+            <afterburnerStopLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerStopLoop>
+            <thrusterStrengthSmoothedRtpc Type="AudioRtpc">
+              <rtpc />
+            </thrusterStrengthSmoothedRtpc>
+            <thrusterFire />
+            <thrusterType>Main</thrusterType>
+          </ShipAudioThrusterParams>
+          <ShipAudioThrusterParams Type="ShipAudioThrusterParams">
+            <startLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startLoop>
+            <stopLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </stopLoop>
+            <startOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startOneShot>
+            <afterburnerEnabledOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerEnabledOneShot>
+            <afterburnerStartLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerStartLoop>
+            <afterburnerStopLoop Type="GlobalResourceAudio">
+              <audioTrigger />
+            </afterburnerStopLoop>
+            <thrusterStrengthSmoothedRtpc Type="AudioRtpc">
+              <rtpc />
+            </thrusterStrengthSmoothedRtpc>
+            <thrusterFire />
+            <thrusterType>Retro</thrusterType>
+          </ShipAudioThrusterParams>
+        </thrusterParams>
+        <linearJerkOneShot Type="GlobalResourceAudio">
+          <audioTrigger />
+        </linearJerkOneShot>
+        <linearJerkCooldownTime>2</linearJerkCooldownTime>
+        <linearJerkNormalizedRtpc Type="AudioRtpc">
+          <rtpc />
+        </linearJerkNormalizedRtpc>
+        <linearJerkTriggerThreshold>0.9</linearJerkTriggerThreshold>
+        <linearJerkMinMagnitude>1</linearJerkMinMagnitude>
+        <linearJerkExpSmoothingAlpha>0.99</linearJerkExpSmoothingAlpha>
+        <angularJerkOneShot Type="GlobalResourceAudio">
+          <audioTrigger />
+        </angularJerkOneShot>
+        <angularJerkCooldownTime>2</angularJerkCooldownTime>
+        <angularJerkNormalizedRtpc Type="AudioRtpc">
+          <rtpc />
+        </angularJerkNormalizedRtpc>
+        <angularJerkTriggerThreshold>0.9</angularJerkTriggerThreshold>
+        <angularJerkMinMagnitude>1</angularJerkMinMagnitude>
+        <angularJerkExpSmoothingAlpha>0.99</angularJerkExpSmoothingAlpha>
+        <takeoffOneShot Type="GlobalResourceAudio">
+          <audioTrigger />
+        </takeoffOneShot>
+        <landingOneShot Type="GlobalResourceAudio">
+          <audioTrigger />
+        </landingOneShot>
+        <takeoffLandingCooldownTime>1</takeoffLandingCooldownTime>
+      </playerParams>
+      <nlpcParams Type="ShipAudioNlpcParams">
+        <useDeprecatedAudioModel>False</useDeprecatedAudioModel>
+        <passByOneShot Type="GlobalResourceAudio">
+          <audioTrigger />
+        </passByOneShot>
+        <movementLoopStart Type="GlobalResourceAudio">
+          <audioTrigger>Play_SSPB_AEGS_Gladius_NLPC_LP</audioTrigger>
+        </movementLoopStart>
+        <movementLoopStop Type="GlobalResourceAudio">
+          <audioTrigger>Stop_SSPB_AEGS_Gladius_NLPC_LP</audioTrigger>
+        </movementLoopStop>
+        <relativeSpeedRtpc Type="AudioRtpc">
+          <rtpc />
+        </relativeSpeedRtpc>
+        <allegianceRtpc Type="AudioRtpc">
+          <rtpc />
+        </allegianceRtpc>
+        <passByBuildupTime>2</passByBuildupTime>
+        <minTimeBetweenPassBy>5</minTimeBetweenPassBy>
+      </nlpcParams>
+      <trackviewParams Type="ShipAudioTrackviewParams">
+        <startShipTrackviewMovement Type="GlobalResourceAudio">
+          <audioTrigger />
+        </startShipTrackviewMovement>
+        <stopShipTrackviewMovement Type="GlobalResourceAudio">
+          <audioTrigger />
+        </stopShipTrackviewMovement>
+        <shipTrackviewVelRtpc Type="AudioRtpc">
+          <rtpc />
+        </shipTrackviewVelRtpc>
+        <shipTrackviewAccelRtpc Type="AudioRtpc">
+          <rtpc />
+        </shipTrackviewAccelRtpc>
+        <shipDistanceFromCameraRtpc Type="AudioRtpc">
+          <rtpc />
+        </shipDistanceFromCameraRtpc>
+      </trackviewParams>
       <shipManufacturerTag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.849ebbce-1558-4b50-8745-6f7bbcbfa19a" RecordId="849ebbce-1558-4b50-8745-6f7bbcbfa19a" />
       <shipBuildQualityRtpc Type="AudioRtpc">
         <rtpc>GP_Ship_Build_Quality</rtpc>
@@ -5058,141 +5205,6 @@
       <gasCloudDensityRtpc Type="AudioRtpc">
         <rtpc>GP_Ship_Gas_Clouds_Density</rtpc>
       </gasCloudDensityRtpc>
-      <playerParams Type="ShipAudioPlayerParams">
-        <thrusterParams Type="ShipAudioThrusterParams" Count="3">
-          <ShipAudioThrusterParams Type="ShipAudioThrusterParams">
-            <startLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </startLoop>
-            <stopLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </stopLoop>
-            <startOneShot Type="GlobalResourceAudio">
-              <audioTrigger />
-            </startOneShot>
-            <afterburnerEnabledOneShot Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerEnabledOneShot>
-            <afterburnerStartLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerStartLoop>
-            <afterburnerStopLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerStopLoop>
-            <thrusterStrengthSmoothedRtpc Type="AudioRtpc">
-              <rtpc />
-            </thrusterStrengthSmoothedRtpc>
-            <thrusterType />
-          </ShipAudioThrusterParams>
-          <ShipAudioThrusterParams Type="ShipAudioThrusterParams">
-            <startLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </startLoop>
-            <stopLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </stopLoop>
-            <startOneShot Type="GlobalResourceAudio">
-              <audioTrigger />
-            </startOneShot>
-            <afterburnerEnabledOneShot Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerEnabledOneShot>
-            <afterburnerStartLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerStartLoop>
-            <afterburnerStopLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerStopLoop>
-            <thrusterStrengthSmoothedRtpc Type="AudioRtpc">
-              <rtpc />
-            </thrusterStrengthSmoothedRtpc>
-            <thrusterType />
-          </ShipAudioThrusterParams>
-          <ShipAudioThrusterParams Type="ShipAudioThrusterParams">
-            <startLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </startLoop>
-            <stopLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </stopLoop>
-            <startOneShot Type="GlobalResourceAudio">
-              <audioTrigger />
-            </startOneShot>
-            <afterburnerEnabledOneShot Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerEnabledOneShot>
-            <afterburnerStartLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerStartLoop>
-            <afterburnerStopLoop Type="GlobalResourceAudio">
-              <audioTrigger />
-            </afterburnerStopLoop>
-            <thrusterStrengthSmoothedRtpc Type="AudioRtpc">
-              <rtpc />
-            </thrusterStrengthSmoothedRtpc>
-            <thrusterType />
-          </ShipAudioThrusterParams>
-        </thrusterParams>
-        <linearJerkOneShot Type="GlobalResourceAudio">
-          <audioTrigger />
-        </linearJerkOneShot>
-        <linearJerkCooldownTime>2</linearJerkCooldownTime>
-        <linearJerkNormalizedRtpc Type="AudioRtpc">
-          <rtpc />
-        </linearJerkNormalizedRtpc>
-        <linearJerkTriggerThreshold>0.9</linearJerkTriggerThreshold>
-        <linearJerkMinMagnitude>1</linearJerkMinMagnitude>
-        <linearJerkExpSmoothingAlpha>0.99</linearJerkExpSmoothingAlpha>
-        <angularJerkOneShot Type="GlobalResourceAudio">
-          <audioTrigger />
-        </angularJerkOneShot>
-        <angularJerkCooldownTime>2</angularJerkCooldownTime>
-        <angularJerkNormalizedRtpc Type="AudioRtpc">
-          <rtpc />
-        </angularJerkNormalizedRtpc>
-        <angularJerkTriggerThreshold>0.9</angularJerkTriggerThreshold>
-        <angularJerkMinMagnitude>1</angularJerkMinMagnitude>
-        <angularJerkExpSmoothingAlpha>0.99</angularJerkExpSmoothingAlpha>
-        <takeoffOneShot Type="GlobalResourceAudio">
-          <audioTrigger />
-        </takeoffOneShot>
-      </playerParams>
-      <nlpcParams Type="ShipAudioNlpcParams">
-        <passByOneShot Type="GlobalResourceAudio">
-          <audioTrigger />
-        </passByOneShot>
-        <movementLoopStart Type="GlobalResourceAudio">
-          <audioTrigger />
-        </movementLoopStart>
-        <movementLoopStop Type="GlobalResourceAudio">
-          <audioTrigger />
-        </movementLoopStop>
-        <relativeSpeedRtpc Type="AudioRtpc">
-          <rtpc />
-        </relativeSpeedRtpc>
-        <allegianceRtpc Type="AudioRtpc">
-          <rtpc />
-        </allegianceRtpc>
-        <passByBuildupTime>2</passByBuildupTime>
-        <minTimeBetweenPassBy>5</minTimeBetweenPassBy>
-      </nlpcParams>
-      <trackviewParams Type="ShipAudioTrackviewParams">
-        <startShipTrackviewMovement Type="GlobalResourceAudio">
-          <audioTrigger />
-        </startShipTrackviewMovement>
-        <stopShipTrackviewMovement Type="GlobalResourceAudio">
-          <audioTrigger />
-        </stopShipTrackviewMovement>
-        <shipTrackviewVelRtpc Type="AudioRtpc">
-          <rtpc />
-        </shipTrackviewVelRtpc>
-        <shipTrackviewAccelRtpc Type="AudioRtpc">
-          <rtpc />
-        </shipTrackviewAccelRtpc>
-        <shipDistanceFromCameraRtpc Type="AudioRtpc">
-          <rtpc />
-        </shipDistanceFromCameraRtpc>
-      </trackviewParams>
     </ShipAudioComponentParams>
     <AudioPassByComponentParams Type="AudioPassByComponentParams">
       <loopStart Type="GlobalResourceAudio">
@@ -5287,11 +5299,6 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
-      <meshsetup Type="SGeometryMeshsetupParams">
-        <visibilityTags Type="TagList">
-          <tags Type="Tag" Count="0" />
-        </visibilityTags>
-      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -5802,18 +5809,6 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
-      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </tractorBeamPickupTrigger>
-      <tractorBeamDropTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </tractorBeamDropTrigger>
-      <detachBreakTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </detachBreakTrigger>
-      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity_Vehicles</rtpc>
       </rtpcSlideVelocity>
@@ -5847,16 +5842,12 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
-      <rtpcSize Type="AudioRtpc">
-        <rtpc />
-      </rtpcSize>
       <minimumImpulseContinuous>10</minimumImpulseContinuous>
       <minimumImpulseTransient>5</minimumImpulseTransient>
       <minimumVelocityNoImpulse>100</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
-      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7f3a1138-ec2c-4dac-9c5a-2598090c79ec" RecordId="7f3a1138-ec2c-4dac-9c5a-2598090c79ec" />
       <oneShotCooldown>0.08</oneShotCooldown>
@@ -5896,11 +5887,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6005,11 +5993,8 @@
           <RequiredPortTags />
           <Flags>dockingport1</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6042,7 +6027,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>DockingCollar</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6119,11 +6104,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6156,7 +6138,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AirTrafficController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6233,11 +6215,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>4</MinSize>
           <MaxSize>4</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6270,7 +6249,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>LifeSupportGenerator</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6325,11 +6304,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6362,7 +6338,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6417,11 +6393,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6454,7 +6427,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6509,11 +6482,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6546,7 +6516,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6601,11 +6571,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6638,7 +6605,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6693,11 +6660,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6730,7 +6694,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6785,11 +6749,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6822,7 +6783,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6877,11 +6838,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6914,7 +6872,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6969,11 +6927,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7006,7 +6961,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7061,11 +7016,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7098,7 +7050,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7153,11 +7105,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7190,7 +7139,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7245,11 +7194,8 @@
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7282,7 +7228,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7337,11 +7283,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7397,7 +7340,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7452,11 +7395,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7512,7 +7452,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7567,11 +7507,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7627,7 +7564,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7682,11 +7619,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7742,7 +7676,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7797,11 +7731,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7857,7 +7788,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7912,11 +7843,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7972,7 +7900,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8027,11 +7955,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8087,7 +8012,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8142,11 +8067,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8202,7 +8124,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8257,11 +8179,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8317,7 +8236,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8372,11 +8291,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8432,7 +8348,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8487,11 +8403,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8547,7 +8460,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8602,11 +8515,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8662,7 +8572,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8717,11 +8627,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8777,7 +8684,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8832,11 +8739,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8892,7 +8796,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8947,11 +8851,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9007,7 +8908,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9062,11 +8963,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9122,7 +9020,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9177,11 +9075,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9237,7 +9132,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9292,11 +9187,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9352,7 +9244,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9407,11 +9299,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9467,7 +9356,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9522,11 +9411,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9582,7 +9468,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9637,11 +9523,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9697,7 +9580,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9752,11 +9635,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9812,7 +9692,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9867,11 +9747,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9904,7 +9781,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -9968,7 +9844,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10023,11 +9899,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10060,7 +9933,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10124,7 +9996,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10179,11 +10051,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10216,7 +10085,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10280,7 +10148,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10335,11 +10203,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10372,7 +10237,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10436,7 +10300,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10491,11 +10355,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10528,7 +10389,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10592,7 +10452,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10647,11 +10507,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10684,7 +10541,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10748,7 +10604,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10803,11 +10659,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10840,7 +10693,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10904,7 +10756,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10959,11 +10811,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10996,7 +10845,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -11060,7 +10908,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -11115,11 +10963,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -11152,7 +10997,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -11216,7 +11060,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -11271,11 +11115,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -11308,7 +11149,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -11372,7 +11212,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -11427,11 +11267,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -11464,7 +11301,6 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
-                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -11528,7 +11364,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -11583,11 +11419,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -11692,11 +11525,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -11801,11 +11631,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass ReferencedFile="file://./../../../../../libs/foundry/records/entities/scitem/ships/utility/engineering/engineering_buff_modifier_aegs_idris.xml" />
@@ -11910,11 +11737,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -11947,7 +11771,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>MannedTurret</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -12004,11 +11828,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12041,7 +11862,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12096,11 +11917,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12133,7 +11951,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12188,11 +12006,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12225,7 +12040,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12280,11 +12095,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12317,7 +12129,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12372,11 +12184,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12409,7 +12218,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12464,11 +12273,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12501,7 +12307,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12556,11 +12362,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12593,7 +12396,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12648,11 +12451,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12685,7 +12485,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12740,11 +12540,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12777,7 +12574,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12832,11 +12629,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12869,7 +12663,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -12924,11 +12718,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -12961,7 +12752,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13016,11 +12807,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13053,7 +12841,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13108,11 +12896,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13145,7 +12930,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13200,11 +12985,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13237,7 +13019,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13292,11 +13074,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13329,7 +13108,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13384,11 +13163,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13421,7 +13197,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13476,11 +13252,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13513,7 +13286,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13568,11 +13341,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13605,7 +13375,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13660,11 +13430,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13697,7 +13464,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13752,11 +13519,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13789,7 +13553,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13844,11 +13608,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13881,7 +13642,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -13936,11 +13697,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -13973,7 +13731,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14028,11 +13786,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14065,7 +13820,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14120,11 +13875,8 @@
           <RequiredPortTags />
           <Flags>selfphys uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14157,7 +13909,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CargoGrid</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14212,11 +13964,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14249,7 +13998,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14326,11 +14075,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14363,7 +14109,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14440,11 +14186,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14477,7 +14220,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14554,11 +14297,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14591,7 +14331,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14668,11 +14408,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14705,7 +14442,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14782,11 +14519,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14819,7 +14553,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -14896,11 +14630,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -14933,7 +14664,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15010,11 +14741,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15047,7 +14775,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15124,11 +14852,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15161,7 +14886,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15238,11 +14963,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15275,7 +14997,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15352,11 +15074,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15389,7 +15108,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15466,11 +15185,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15503,7 +15219,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15580,11 +15296,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15617,7 +15330,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15694,11 +15407,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15731,7 +15441,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15808,11 +15518,8 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -15845,7 +15552,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -15922,11 +15629,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -16009,11 +15713,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass ReferencedFile="file://./../../../../../libs/foundry/records/entities/scitem/ships/utility/engineering/engineering_buff_modifier_aegs_idris.xml" />
@@ -16118,11 +15819,8 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -16155,7 +15853,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>TurretBase</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice>MannedTurret</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -16234,11 +15932,8 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -16271,7 +15966,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type />
-              <SubTypes Type="StatusEffectSetupBase" Count="1">
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
                 <EnumChoice />
               </SubTypes>
             </SItemPortDefTypes>
@@ -17145,6 +16840,7 @@
     </SItemPortContainerComponentParams>
     <EntityComponentVibrationVehicleParams Type="EntityComponentVibrationVehicleParams">
       <vibrationRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclebase.xml" />
+      <normalizationMassOverride>-1</normalizationMassOverride>
       <vibrationVehicleRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclespecifics.xml" />
     </EntityComponentVibrationVehicleParams>
     <AITargetableComponentParams Type="AITargetableComponentParams">
@@ -17184,7 +16880,6 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:65" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -17210,7 +16905,6 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:67" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -17288,7 +16982,6 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>10</fadeOutDuration>
-          <enableCloudCondensation>True</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
         <SurfaceRaindrops_Emitter Type="SurfaceRaindrops_Emitter">
           <particleEffect Type="GlobalResourceParticle">
@@ -17304,12 +16997,12 @@
             <maximum>270</maximum>
           </temperatureRange>
           <fadeOutDuration>10</fadeOutDuration>
-          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
       </customEmitters>
       <wipeEffect Type="GlobalResourceParticle">
         <path />
       </wipeEffect>
+      <enableCloudCondensation>True</enableCloudCondensation>
       <inactiveDuration>25</inactiveDuration>
       <maximumSpeed>200</maximumSpeed>
       <waterSprayHeightRange Type="Range">
@@ -17507,15 +17200,14 @@
       </adapters>
     </AINavigationDynamicTriggerComponent>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="ActorStatusStatModifier" Count="2">
+      <perceptionTypes Type="MovementSystemComponentParams" Count="2">
         <EnumChoice>Vehicle</EnumChoice>
         <EnumChoice>Spaceship</EnumChoice>
       </perceptionTypes>
-      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
-      <excludedSenses Type="ActorStatusAddBuff" Count="0" />
+      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
-      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <defaultEntityObservablePoint />
+      <defaultAimingObservablePoint />
       <observableExtensions Type="IObservableExtender" Count="1">
         <AudioObservableExtender Type="AudioObservableExtender">
           <hearingRadiusAtFullStrength>800</hearingRadiusAtFullStrength>
@@ -17540,5 +17232,6 @@
     </AnnunciatorProviderParams>
     <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams" />
     <AtmosphericFlightDataParams Type="AtmosphericFlightDataParams" />
+    <PositionTrackerComponentParams Type="PositionTrackerComponentParams" />
   </Components>
 </EntityClassDefinition.AEGS_Idris_M_PU_AI_NT>

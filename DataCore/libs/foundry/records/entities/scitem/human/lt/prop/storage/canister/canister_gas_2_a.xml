@@ -11,11 +11,6 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
-      <meshsetup Type="SGeometryMeshsetupParams">
-        <visibilityTags Type="TagList">
-          <tags Type="Tag" Count="0" />
-        </visibilityTags>
-      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -159,15 +154,15 @@
     </SGeometryResourceParams>
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
-        <Mass>20</Mass>
+        <Mass>18</Mass>
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
-        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <spawnBoxScale>0.5</spawnBoxScale>
+        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
-        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -180,7 +175,12 @@
         <Resting>True</Resting>
         <physicalizeAllSlots>True</physicalizeAllSlots>
         <enableExteriorShadow>False</enableExteriorShadow>
-        <buoyancyParams />
+        <buoyancyParams Type="SEntityBuoyancyParams">
+          <buoyantInAir>False</buoyantInAir>
+          <waterDamping>1</waterDamping>
+          <waterResistance>3</waterResistance>
+          <waterDensity>200</waterDensity>
+        </buoyancyParams>
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
@@ -252,6 +252,7 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
+      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>True</UseDirtShaderForDamage>
@@ -282,7 +283,6 @@
           <y>0</y>
           <z>1</z>
         </explosionUp>
-        <explosionZone>AdamHosted</explosionZone>
         <pressure>500</pressure>
         <holeSize>0</holeSize>
         <terrainHoleSize>3</terrainHoleSize>
@@ -301,7 +301,6 @@
         </damage>
         <flashbangParams />
         <shockwaveParams />
-        <fragmentParams />
         <hitType>explosion</hitType>
         <effect Type="GlobalResourceParticle">
           <path>19eac720-33d6-1a93-c91a-cfdd354231a3|Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_50cm_once_fixed</path>
@@ -339,13 +338,14 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
-      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <shatterDestroyEvent />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
+      <duplicateHitToParent>False</duplicateHitToParent>
+      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <EntityPhysicalAudioParams Type="EntityPhysicalAudioParams">
       <collisionTriggers Type="PhysicalAudioCollisionTrigger" Count="1">
@@ -387,18 +387,6 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
-      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </tractorBeamPickupTrigger>
-      <tractorBeamDropTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </tractorBeamDropTrigger>
-      <detachBreakTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </detachBreakTrigger>
-      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity</rtpc>
       </rtpcSlideVelocity>
@@ -432,16 +420,12 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
-      <rtpcSize Type="AudioRtpc">
-        <rtpc />
-      </rtpcSize>
       <minimumImpulseContinuous>30</minimumImpulseContinuous>
       <minimumImpulseTransient>6</minimumImpulseTransient>
       <minimumVelocityNoImpulse>25</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
-      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>True</useAABBCentre>
       <oneShotTag RecordReference="file://./../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.0d401f6c-38a4-4c52-bb02-26059dd8d98a" RecordId="0d401f6c-38a4-4c52-bb02-26059dd8d98a" />
       <oneShotCooldown>0.2</oneShotCooldown>
@@ -473,7 +457,6 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -494,7 +477,6 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />

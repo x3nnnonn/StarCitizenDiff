@@ -28,7 +28,7 @@
       </primaryOrganization>
     </SOrganizationRelationships>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="78">
+  <Components Type="DataForgeComponentParams" Count="79">
     <SActorComponentParams Type="SActorComponentParams">
       <character />
       <isAIControlled>True</isAIControlled>
@@ -129,11 +129,6 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
-      <meshsetup Type="SGeometryMeshsetupParams">
-        <visibilityTags Type="TagList">
-          <tags Type="Tag" Count="0" />
-        </visibilityTags>
-      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -317,11 +312,7 @@
         </baseSignatureParams>
         <crossSectionParams Type="SSCSignatureSystemActorCrossSectionParams" />
         <emissionModifierParams />
-        <deathParams />
         <scanBounds />
-        <roomParams Type="SCSignatureSystemRoomParams">
-          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
-        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="1">
@@ -340,9 +331,6 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
-      <linkedObjectives Type="MissionObjective" Count="0" />
-      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
-      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSCActorRotationComponentParams Type="SSCActorRotationComponentParams" />
@@ -393,6 +381,7 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
+        <spawnBoxScale>0.5</spawnBoxScale>
         <stiffnessScale>2</stiffnessScale>
         <airResistance>0</airResistance>
         <airControl>0.9</airControl>
@@ -483,24 +472,21 @@
       <mastergraphStateOverrides Type="SMastergraphStateOverride" Count="0" />
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="ActorStatusStatModifier" Count="1">
+      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
-      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
-      <excludedSenses Type="ActorStatusAddBuff" Count="0" />
+      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
-        <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
+        <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
           <helperName>Head</helperName>
-          <accuracyMultiplier>0.6</accuracyMultiplier>
           <relativePositionOffset Type="Vec3">
             <x>0</x>
             <y>0</y>
             <z>0</z>
           </relativePositionOffset>
         </SObservablePointDef>
-        <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
+        <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Spine3</helperName>
-          <accuracyMultiplier>1</accuracyMultiplier>
           <relativePositionOffset Type="Vec3">
             <x>0</x>
             <y>0</y>
@@ -508,14 +494,8 @@
           </relativePositionOffset>
         </SObservablePointDef>
       </observablePoints>
-      <visionObservablePointOrdering Type="SObservablePointDef" Count="2">
-        <SObservablePointDef PointsTo="ptr:2" />
-        <SObservablePointDef PointsTo="ptr:3" />
-      </visionObservablePointOrdering>
-      <aimingObservablePointOrdering Type="SObservablePointDef" Count="2">
-        <SObservablePointDef PointsTo="ptr:3" />
-        <SObservablePointDef PointsTo="ptr:2" />
-      </aimingObservablePointOrdering>
+      <defaultEntityObservablePoint PointsTo="ptr:2" />
+      <defaultAimingObservablePoint PointsTo="ptr:3" />
       <observableExtensions Type="IObservableExtender" Count="1">
         <ActorObservableExtender Type="ActorObservableExtender" />
       </observableExtensions>
@@ -528,7 +508,7 @@
     </SCommunicationUserComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="17">
+        <SharedInteractions Type="SSharedInteractionParams" Count="18">
           <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
             <Name>LookAt</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -851,6 +831,25 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:30" Type="SSharedInteractionParams">
+            <Name>ConsumeActor</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Hide</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
           <SSharedInteractionParams Pointer="ptr:13" Type="SSharedInteractionParams">
             <Name>CommsTap</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -981,8 +980,6 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
-            <PromptStyle>PromptAndText</PromptStyle>
-            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -1114,8 +1111,6 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
-            <PromptStyle>PromptAndText</PromptStyle>
-            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -1240,6 +1235,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -2119,7 +2115,6 @@
         </PointAlignmentSlot>
       </alignmentSlots>
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
-      <freeItemPortsForDirectInteraction Type="SItemPortDef" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="1">
         <UsableSlottingSetup Type="UsableSlottingSetup">
           <name />
@@ -2134,15 +2129,13 @@
         </UsableSlottingSetup>
       </slottingSetups>
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="0" />
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
       </specializedData>
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
-      <lowEnergyThreshold>0</lowEnergyThreshold>
-      <highEnergyThreshold>2</highEnergyThreshold>
     </SActorUsableParams>
     <SEntityLootableContainerParams Type="SEntityLootableContainerParams">
       <initialLocalPlayerAccess>False</initialLocalPlayerAccess>
@@ -2189,7 +2182,11 @@
       <outfitHangerGroups Type="SOutfitHangerGroup" Count="0" />
       <coreInventoryItems Type="SCoreInventoryItem" Count="0" />
     </SEntityLootableContainerParams>
-    <DataForgeComponentParams />
+    <AudioRayOcclusionParams Type="AudioRayOcclusionParams">
+      <occlusionType>MultiRayRadius</occlusionType>
+      <occlusionCalcRule>Average</occlusionCalcRule>
+      <rayTargetBoneName>HeadCam</rayTargetBoneName>
+    </AudioRayOcclusionParams>
     <SEntityAudioControllerParams Type="SEntityAudioControllerParams">
       <audioControllerEntityType>Actor</audioControllerEntityType>
       <randomSeedCount>4</randomSeedCount>
@@ -2222,7 +2219,6 @@
       <dragInteraction PointsTo="ptr:6" />
       <dropInteraction PointsTo="ptr:7" />
       <turnoverInteraction PointsTo="ptr:8" />
-      <carryInteraction />
       <defaultGrip ReferencedFile="file://./../../../../../../../../../../libs/foundry/records/grips/grip_neckdrag.xml" />
       <overrideGrips Type="Grip" Count="3">
         <Grip ReferencedFile="file://./../../../../../../../../../../libs/foundry/records/grips/grip_neckdrag_lightcore.xml" />
@@ -2266,18 +2262,6 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
-      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </tractorBeamPickupTrigger>
-      <tractorBeamDropTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </tractorBeamDropTrigger>
-      <detachBreakTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </detachBreakTrigger>
-      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
-        <audioTrigger />
-      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity_Body_Drag</rtpc>
       </rtpcSlideVelocity>
@@ -2311,16 +2295,12 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
-      <rtpcSize Type="AudioRtpc">
-        <rtpc />
-      </rtpcSize>
       <minimumImpulseContinuous>1</minimumImpulseContinuous>
       <minimumImpulseTransient>10</minimumImpulseTransient>
       <minimumVelocityNoImpulse>1</minimumVelocityNoImpulse>
       <slideThreshold>8</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
-      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag />
       <oneShotCooldown>0.2</oneShotCooldown>
@@ -2354,11 +2334,8 @@
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.27893aeb-650b-4c1b-9c96-a5ae9b0da261" RecordId="27893aeb-650b-4c1b-9c96-a5ae9b0da261" />
           </Tags>
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2391,7 +2368,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2533,7 +2510,6 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2556,7 +2532,6 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2582,6 +2557,18 @@
         </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
+    <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="0" />
+      <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
+        <SOnInteractionTriggers Type="SOnInteractionTriggers">
+          <targetInteraction PointsTo="ptr:30" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <SDestroySelfGameplayTrigger Type="SDestroySelfGameplayTrigger" />
+          </gameplayTriggers>
+        </SOnInteractionTriggers>
+      </onInteractionSuccessTriggers>
+      <onInteractionFailedTriggers Type="SOnInteractionTriggers" Count="0" />
+    </SCInteractionStateGameplayTriggerComponentParams>
     <SubsumptionDataComponentParams Type="SubsumptionDataComponentParams">
       <usableGroupCoordinatorData />
     </SubsumptionDataComponentParams>
@@ -2589,6 +2576,7 @@
     <SAISkillsComponentParams Type="SAISkillsComponentParams">
       <skills ReferencedFile="file://./../../../../../../../../../../libs/foundry/records/aiprofile/skills/defaultskillslist.xml" />
       <profile ReferencedFile="file://./../../../../../../../../../../libs/foundry/records/aiprofile/baseaiprofile.xml" />
+      <skillExtenderList />
     </SAISkillsComponentParams>
     <SCoverSystemComponentParams Type="SCoverSystemComponentParams">
       <distanceToCover>0.5</distanceToCover>
@@ -2606,7 +2594,7 @@
     <SRadarSenseComponentParams Type="SRadarSenseComponentParams" />
     <SHearingComponentParams Type="SHearingComponentParams">
       <movementSoundOriginFilter />
-      <soundTypeFilter Type="SActorForceReactionImpulseAccumulationConfig" Count="0" />
+      <soundTypeFilter Type="ActivityBehaviorRequestCondition" Count="0" />
     </SHearingComponentParams>
     <AttentionTargetComponentParams Type="AttentionTargetComponentParams">
       <attackerScore>1</attackerScore>
@@ -2642,7 +2630,6 @@
     <SCActorDNAComponentParams Type="SCActorDNAComponentParams">
       <DNA>000AA477000AA4770009000000090000000B5F030002000000020000000D0000000D0000000F0000000F0000000DA21F00090000000900000000CA8A0000CA8A00060000000947B3000947B3000F0000000F0000000BC8130008000000060000000B0000000B0000000800000008000000020000000B0000000B00000006BCED0006BCED000100000001A7D700025DDF00005B8700005B8700013574000135740008A0FB0003B84B0003B84B0003431100034311000A37EB00045827000B0000</DNA>
       <customizationFile />
-      <randomizeFromArchetypes>True</randomizeFromArchetypes>
     </SCActorDNAComponentParams>
   </Components>
 </EntityClassDefinition.NPC_Archetypes-Male-Human-Civilians-Orison-Nurse_Orison_04>

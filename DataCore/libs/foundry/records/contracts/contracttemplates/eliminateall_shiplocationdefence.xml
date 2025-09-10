@@ -37,7 +37,7 @@
     <showLifeTimeInMobiGlas>True</showLifeTimeInMobiGlas>
     <preShowObjectives>False</preShowObjectives>
   </contractDisplayInfo>
-  <modifiers Type="BaseMissionModifier" Count="9">
+  <modifiers Type="BaseMissionModifier" Count="8">
     <MissionModifier_SecurityClearance Type="MissionModifier_SecurityClearance">
       <modifierName />
       <enabled>True</enabled>
@@ -86,9 +86,8 @@
       <clearanceToken ReferencedFile="file://./../../../../../libs/foundry/records/lawsystem/securityclearancetokens/pu/dc_c_interior.xml" />
       <locationProperty PointsTo="ptr:1" />
     </MissionModifier_SecurityClearance>
-    <BaseMissionModifier />
   </modifiers>
-  <contractProperties Type="MissionProperty" Count="25">
+  <contractProperties Type="MissionProperty" Count="29">
     <MissionProperty Pointer="ptr:1" Type="MissionProperty">
       <missionVariableName>BP_MissionLocation</missionVariableName>
       <extendedTextToken>Location</extendedTextToken>
@@ -312,6 +311,58 @@
         <value>True</value>
       </value>
     </MissionProperty>
+    <MissionProperty Pointer="ptr:27" Type="MissionProperty">
+      <missionVariableName>CN_MissionStart</missionVariableName>
+      <extendedTextToken />
+      <value Type="MissionPropertyValue_Tags">
+        <tags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </tags>
+        <negativeTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </negativeTags>
+        <options Type="MissionPropertyValueOption_Tags" Count="0" />
+      </value>
+    </MissionProperty>
+    <MissionProperty Pointer="ptr:28" Type="MissionProperty">
+      <missionVariableName>CN_MissionComplete</missionVariableName>
+      <extendedTextToken />
+      <value Type="MissionPropertyValue_Tags">
+        <tags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </tags>
+        <negativeTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </negativeTags>
+        <options Type="MissionPropertyValueOption_Tags" Count="0" />
+      </value>
+    </MissionProperty>
+    <MissionProperty Pointer="ptr:29" Type="MissionProperty">
+      <missionVariableName>CN_MissionFail</missionVariableName>
+      <extendedTextToken />
+      <value Type="MissionPropertyValue_Tags">
+        <tags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </tags>
+        <negativeTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </negativeTags>
+        <options Type="MissionPropertyValueOption_Tags" Count="0" />
+      </value>
+    </MissionProperty>
+    <MissionProperty Pointer="ptr:30" Type="MissionProperty">
+      <missionVariableName>CN_MissionAbandon</missionVariableName>
+      <extendedTextToken />
+      <value Type="MissionPropertyValue_Tags">
+        <tags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </tags>
+        <negativeTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </negativeTags>
+        <options Type="MissionPropertyValueOption_Tags" Count="0" />
+      </value>
+    </MissionProperty>
     <MissionProperty Pointer="ptr:16" Type="MissionProperty">
       <missionVariableName>ContinuousWaves_BP</missionVariableName>
       <extendedTextToken />
@@ -494,6 +545,7 @@
         <module>Libs/Subsumption/Missions/PU/Missions/InfiltrateAndDefend/PU_EliminateAll.xml</module>
         <moduleHierarchy ReferencedFile="file://./../../../../../libs/foundry/records/contracts/modulehierarchy/eliminateall_mmh.xml" />
         <disableTravelObjectives>False</disableTravelObjectives>
+        <disableReturnObjectives>False</disableReturnObjectives>
         <travelRadiusKM>0</travelRadiusKM>
         <allPlayersLeftGracePeriod>-1</allPlayersLeftGracePeriod>
         <travelObjectiveInfo Type="ObjectiveDisplayInfo">
@@ -512,6 +564,7 @@
         </returnObjectiveInfo>
         <navPointSpawnInfo />
         <location PointsTo="ptr:15" />
+        <securityManifestToOverride />
       </objectiveHandler>
       <rewardContribution />
       <displayInfo Type="ObjectiveDisplayInfo">
@@ -584,6 +637,7 @@
         <module>Libs/Subsumption/Missions/PU/PU_MissionModules/LocationManager/LocationDefence/ShipLocationDefence.xml</module>
         <moduleHierarchy />
         <disableTravelObjectives>True</disableTravelObjectives>
+        <disableReturnObjectives>False</disableReturnObjectives>
         <travelRadiusKM>0</travelRadiusKM>
         <allPlayersLeftGracePeriod>-1</allPlayersLeftGracePeriod>
         <travelObjectiveInfo Type="ObjectiveDisplayInfo">
@@ -602,6 +656,7 @@
         </returnObjectiveInfo>
         <navPointSpawnInfo />
         <location PointsTo="ptr:24" />
+        <securityManifestToOverride />
       </objectiveHandler>
       <rewardContribution />
       <displayInfo Type="ObjectiveDisplayInfo">
@@ -641,6 +696,25 @@
       </MissionFlowTrigger>
     </triggers>
   </missionFlow>
-  <contractStartCommsNotification />
-  <contractEndCommsNotifications Type="ContractEndCommsNotification" Count="0" />
+  <contractStartCommsNotification Type="ContractCommsNotification">
+    <communicationTags PointsTo="ptr:27" />
+    <delay>1</delay>
+  </contractStartCommsNotification>
+  <contractEndCommsNotifications Type="ContractEndCommsNotification" Count="3">
+    <ContractEndCommsNotification Type="ContractEndCommsNotification">
+      <reason>Complete</reason>
+      <communicationTags PointsTo="ptr:28" />
+      <delay>1</delay>
+    </ContractEndCommsNotification>
+    <ContractEndCommsNotification Type="ContractEndCommsNotification">
+      <reason>Fail</reason>
+      <communicationTags PointsTo="ptr:29" />
+      <delay>1</delay>
+    </ContractEndCommsNotification>
+    <ContractEndCommsNotification Type="ContractEndCommsNotification">
+      <reason>Abandon</reason>
+      <communicationTags PointsTo="ptr:30" />
+      <delay>1</delay>
+    </ContractEndCommsNotification>
+  </contractEndCommsNotifications>
 </ContractTemplate.EliminateAll_ShipLocationDefence>

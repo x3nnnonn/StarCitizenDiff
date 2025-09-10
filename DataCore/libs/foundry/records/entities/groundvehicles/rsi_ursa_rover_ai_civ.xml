@@ -62,7 +62,7 @@
       <dynamicallyUpdatePersistanceLocation>True</dynamicallyUpdatePersistanceLocation>
     </SEntityDynamicLocationProperties>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="48">
+  <Components Type="DataForgeComponentParams" Count="49">
     <VehicleComponentParams Type="VehicleComponentParams">
       <landingSystem />
       <manufacturer ReferencedFile="file://./../../../../../libs/foundry/records/scitemmanufacturer/scitemmanufacturer.rsi.xml" />
@@ -170,16 +170,7 @@
       </shieldSDFParams>
       <DashboardCanvasConfig />
       <inventoryContainerParams ReferencedFile="file://./../../../../../libs/foundry/records/inventorycontainers/ships/rsi_ursa_template.xml" />
-      <landingOffset Type="Vec3">
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </landingOffset>
-      <landingRotationOffset Type="Ang3">
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </landingRotationOffset>
+      <spawnBoxScale>0.5</spawnBoxScale>
     </VehicleComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
@@ -600,6 +591,7 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
+        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -711,8 +703,24 @@
     </SEntityComponentEffects>
     <SSCItemControllableManagerParams Type="SSCItemControllableManagerParams">
       <defaultMasterMode>SCM</defaultMasterMode>
-      <masterModeSpoolTimeToNAV>1</masterModeSpoolTimeToNAV>
-      <masterModeSpoolTimeToSCM>0.2</masterModeSpoolTimeToSCM>
+      <masterModes Type="SMasterModeParams" Count="4">
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>True</available>
+          <spoolTime>0.2</spoolTime>
+        </SMasterModeParams>
+        <SMasterModeParams Type="SMasterModeParams">
+          <available>False</available>
+          <spoolTime>1</spoolTime>
+        </SMasterModeParams>
+      </masterModes>
       <controllerParams />
     </SSCItemControllableManagerParams>
     <SHealthComponentParams Type="SHealthComponentParams">
@@ -751,6 +759,7 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
+      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -767,13 +776,14 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
-      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <shatterDestroyEvent />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
+      <duplicateHitToParent>False</duplicateHitToParent>
+      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SInteractionLinkParams Type="SInteractionLinkParams">
       <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="0" />
@@ -802,11 +812,7 @@
           </crossSection>
         </crossSectionParams>
         <emissionModifierParams />
-        <deathParams />
         <scanBounds />
-        <roomParams Type="SCSignatureSystemRoomParams">
-          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
-        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="1">
@@ -825,9 +831,6 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
-      <linkedObjectives Type="MissionObjective" Count="0" />
-      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
-      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSuperGUIDComponentParams Type="SSuperGUIDComponentParams" />
@@ -835,11 +838,6 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
-      <meshsetup Type="SGeometryMeshsetupParams">
-        <visibilityTags Type="TagList">
-          <tags Type="Tag" Count="0" />
-        </visibilityTags>
-      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -880,7 +878,7 @@
           <LodRatio>100</LodRatio>
         </Geometry>
         <ScaleMultiplier>1</ScaleMultiplier>
-        <SubGeometry Type="SGeometryNodeParams" Count="9">
+        <SubGeometry Type="SGeometryNodeParams" Count="10">
           <SGeometryNodeParams Type="SGeometryNodeParams">
             <Tags>Paint_Lynx_White_Blue_Blue</Tags>
             <Geometry Type="SGeometryDataParams">
@@ -1218,6 +1216,48 @@
             <SubGeometry Type="SGeometryNodeParams" Count="0" />
           </SGeometryNodeParams>
           <SGeometryNodeParams Type="SGeometryNodeParams">
+            <Tags>Paint_Ursa_Black_Grey_Red_Pirate_Skull</Tags>
+            <Geometry Type="SGeometryDataParams">
+              <Geometry Type="GlobalResourceGeometry">
+                <path>objects\Vehicles\RSI\Ursa\RSI_Ursa_Rover.cga</path>
+              </Geometry>
+              <Material Type="GlobalResourceMaterial">
+                <path>Objects/Vehicles/RSI/Ursa/Materials/rsi_ursa_rover_black_grey_red_pirate_skull.mtl</path>
+              </Material>
+              <SimulationGeometry />
+              <Palette Type="TintPaletteRef">
+                <RootRecord ReferencedFile="file://./../../../../../libs/foundry/records/tintpalettes/brand/pirate/pirate_skull.xml" />
+                <ChildPath />
+              </Palette>
+              <Slot>Main</Slot>
+              <MaterialAttachments />
+              <ProxyCDFPath />
+              <ModifiersPath />
+              <AttachFlags>0</AttachFlags>
+              <DeformerType>Standard</DeformerType>
+              <ProtosBShapeExclude>0</ProtosBShapeExclude>
+              <VisTP>True</VisTP>
+              <VisFP>True</VisFP>
+              <VisShadow>True</VisShadow>
+              <VisSecondaryViews>True</VisSecondaryViews>
+              <WrinkleMap>False</WrinkleMap>
+              <EnableDecalProjection>False</EnableDecalProjection>
+              <BBoxJoint />
+              <BBoxRadius>0</BBoxRadius>
+              <Wear>0</Wear>
+              <Dirt>0</Dirt>
+              <Interference>0</Interference>
+              <Damage>0</Damage>
+              <RenderLayer>Default</RenderLayer>
+              <VisAreaMode>AABB_Center</VisAreaMode>
+              <SunShadowMode>Upto_400m</SunShadowMode>
+              <viewDistRatio />
+              <LodRatio>100</LodRatio>
+            </Geometry>
+            <ScaleMultiplier>1</ScaleMultiplier>
+            <SubGeometry Type="SGeometryNodeParams" Count="0" />
+          </SGeometryNodeParams>
+          <SGeometryNodeParams Type="SGeometryNodeParams">
             <Tags />
             <Geometry Type="SGeometryDataParams">
               <Geometry Type="GlobalResourceGeometry">
@@ -1358,11 +1398,8 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <OnAttachTags Type="Tag" Count="0" />
-          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
-          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1395,7 +1432,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="StatusEffectSetupBase" Count="0" />
+              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1490,6 +1527,7 @@
     </EntityComponentAudioEnvironmentFeedbackParams>
     <EntityComponentVibrationParams Type="EntityComponentVibrationParams">
       <vibrationRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclebase.xml" />
+      <normalizationMassOverride>-1</normalizationMassOverride>
     </EntityComponentVibrationParams>
     <SurfaceRaindropsComponentParams Type="SurfaceRaindropsComponentParams">
       <enable>True</enable>
@@ -1516,7 +1554,6 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>10</fadeOutDuration>
-          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
         <SurfaceRaindrops_Emitter Type="SurfaceRaindrops_Emitter">
           <particleEffect Type="GlobalResourceParticle">
@@ -1532,12 +1569,12 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>35</fadeOutDuration>
-          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
       </customEmitters>
       <wipeEffect Type="GlobalResourceParticle">
         <path />
       </wipeEffect>
+      <enableCloudCondensation>False</enableCloudCondensation>
       <inactiveDuration>35</inactiveDuration>
       <maximumSpeed>50</maximumSpeed>
       <waterSprayHeightRange Type="Range">
@@ -1867,14 +1904,13 @@
       <entrancesRecord ReferencedFile="file://./../../../../../libs/foundry/records/ui/vehicleentrance/rsi_ursa_rover.xml" />
     </EntranceDisplayComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="ActorStatusStatModifier" Count="1">
+      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
         <EnumChoice>Vehicle</EnumChoice>
       </perceptionTypes>
-      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
-      <excludedSenses Type="ActorStatusAddBuff" Count="0" />
+      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
-      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <defaultEntityObservablePoint />
+      <defaultAimingObservablePoint />
       <observableExtensions Type="IObservableExtender" Count="1">
         <AudioObservableExtender Type="AudioObservableExtender">
           <hearingRadiusAtFullStrength>550</hearingRadiusAtFullStrength>
@@ -1901,5 +1937,6 @@
       <shotAlertTime>1</shotAlertTime>
     </AnnunciatorProviderParams>
     <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams" />
+    <PositionTrackerComponentParams Type="PositionTrackerComponentParams" />
   </Components>
 </EntityClassDefinition.RSI_Ursa_Rover_AI_CIV>
