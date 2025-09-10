@@ -72,7 +72,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -80,6 +79,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -142,7 +146,6 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
         <aiNavigationType>Included</aiNavigationType>
       </PhysType>
     </SEntityPhysicsControllerParams>
@@ -182,7 +185,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -199,14 +201,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <ItemControlComponentParams Type="ItemControlComponentParams">
       <turnedOnByDefault>True</turnedOnByDefault>
@@ -366,6 +367,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -415,6 +418,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -439,6 +443,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -459,8 +464,8 @@
               <onEntityAttachedState PointsTo="ptr:4" />
               <onEntityDetachedState PointsTo="ptr:2" />
               <onPortDestroyedState PointsTo="ptr:2" />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -482,6 +487,7 @@
                   <enable>True</enable>
                 </SendItemResourceNetworkedStateEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -508,6 +514,7 @@
                   <enable>False</enable>
                 </SendItemResourceNetworkedStateEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -645,8 +652,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -679,7 +689,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Fuse</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>

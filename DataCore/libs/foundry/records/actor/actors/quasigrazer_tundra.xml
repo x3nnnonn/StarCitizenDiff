@@ -23,7 +23,7 @@
       <trackerProperties Type="SActorEntryTrackerParams" />
     </EntityUIDisplayParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="65">
+  <Components Type="DataForgeComponentParams" Count="64">
     <SActorComponentParams Type="SActorComponentParams">
       <character />
       <isAIControlled>True</isAIControlled>
@@ -109,6 +109,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -205,7 +210,11 @@
         </baseSignatureParams>
         <crossSectionParams Type="SSCSignatureSystemActorCrossSectionParams" />
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="1">
@@ -224,6 +233,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSCActorRotationComponentParams Type="SSCActorRotationComponentParams" />
@@ -266,7 +278,6 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
         <stiffnessScale>2</stiffnessScale>
         <airResistance>0</airResistance>
         <airControl>0.9</airControl>
@@ -366,21 +377,24 @@
       </mastergraphStateOverrides>
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
+      <perceptionTypes Type="ActorStatusStatModifier" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusAddBuff" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
-        <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
+        <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Head</helperName>
+          <accuracyMultiplier>0.6</accuracyMultiplier>
           <relativePositionOffset Type="Vec3">
             <x>0</x>
             <y>0</y>
             <z>0</z>
           </relativePositionOffset>
         </SObservablePointDef>
-        <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
+        <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
           <helperName>Spine3</helperName>
+          <accuracyMultiplier>1</accuracyMultiplier>
           <relativePositionOffset Type="Vec3">
             <x>0</x>
             <y>0</y>
@@ -388,8 +402,14 @@
           </relativePositionOffset>
         </SObservablePointDef>
       </observablePoints>
-      <defaultEntityObservablePoint PointsTo="ptr:2" />
-      <defaultAimingObservablePoint PointsTo="ptr:3" />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="2">
+        <SObservablePointDef PointsTo="ptr:2" />
+        <SObservablePointDef PointsTo="ptr:3" />
+      </visionObservablePointOrdering>
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="2">
+        <SObservablePointDef PointsTo="ptr:3" />
+        <SObservablePointDef PointsTo="ptr:2" />
+      </aimingObservablePointOrdering>
       <observableExtensions Type="IObservableExtender" Count="1">
         <ActorObservableExtender Type="ActorObservableExtender" />
       </observableExtensions>
@@ -402,7 +422,7 @@
     </SCommunicationUserComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="17">
+        <SharedInteractions Type="SSharedInteractionParams" Count="16">
           <SSharedInteractionParams Type="SSharedInteractionParams">
             <Name>LookAt</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -725,25 +745,6 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:70" Type="SSharedInteractionParams">
-            <Name>ConsumeActor</Name>
-            <QueryTags Type="Tag" Count="0" />
-            <RoomTag />
-            <UsableTag />
-            <LinkingTag />
-            <DisplayName>@usable_use</DisplayName>
-            <DisplayType>Hide</DisplayType>
-            <GenericCursor>SingleAction</GenericCursor>
-            <FocusModeOnly>False</FocusModeOnly>
-            <Sendable>False</Sendable>
-            <Linkable>False</Linkable>
-            <LockedByLinks>False</LockedByLinks>
-            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
-            <available>True</available>
-            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
-            <conditionList />
-            <playerAnimatedInteractionBase />
-          </SSharedInteractionParams>
         </SharedInteractions>
         <InteractionPoints Type="SInteractionPointParams" Count="2">
           <SInteractionPointParams Pointer="ptr:6" Type="SInteractionPointParams">
@@ -815,6 +816,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -895,6 +898,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -1019,7 +1024,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -1088,7 +1092,7 @@
                 </offset>
                 <offsetParameter />
                 <attachmentZone>Host</attachmentZone>
-                <boneAttachment>Tail_02</boneAttachment>
+                <boneAttachment>Tail_2</boneAttachment>
               </attachmentSettings>
               <propertyLinks Type="SEntityEffectSystem_ParticlePropertyLink" Count="0" />
               <tag />
@@ -1733,11 +1737,7 @@
       <outfitHangerGroups Type="SOutfitHangerGroup" Count="0" />
       <coreInventoryItems Type="SCoreInventoryItem" Count="0" />
     </SEntityLootableContainerParams>
-    <AudioRayOcclusionParams Type="AudioRayOcclusionParams">
-      <occlusionType>MultiRayRadius</occlusionType>
-      <occlusionCalcRule>Average</occlusionCalcRule>
-      <rayTargetBoneName>Head</rayTargetBoneName>
-    </AudioRayOcclusionParams>
+    <DataForgeComponentParams />
     <SEntityAudioControllerParams Type="SEntityAudioControllerParams">
       <audioControllerEntityType>Actor</audioControllerEntityType>
       <randomSeedCount>4</randomSeedCount>
@@ -1799,6 +1799,18 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
+      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamPickupTrigger>
+      <tractorBeamDropTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamDropTrigger>
+      <detachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </detachBreakTrigger>
+      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity</rtpc>
       </rtpcSlideVelocity>
@@ -1832,12 +1844,16 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
+      <rtpcSize Type="AudioRtpc">
+        <rtpc />
+      </rtpcSize>
       <minimumImpulseContinuous>40</minimumImpulseContinuous>
       <minimumImpulseTransient>20</minimumImpulseTransient>
       <minimumVelocityNoImpulse>100</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
+      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag />
       <oneShotCooldown>0.2</oneShotCooldown>
@@ -1871,8 +1887,11 @@
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.27893aeb-650b-4c1b-9c96-a5ae9b0da261" RecordId="27893aeb-650b-4c1b-9c96-a5ae9b0da261" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1905,7 +1924,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1960,8 +1979,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2044,8 +2066,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2128,8 +2153,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2212,8 +2240,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2296,8 +2327,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2380,8 +2414,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2464,8 +2501,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2548,8 +2588,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2632,8 +2675,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2716,8 +2762,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2800,8 +2849,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2884,8 +2936,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2968,8 +3023,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3052,8 +3110,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3136,8 +3197,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3220,8 +3284,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3304,8 +3371,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3388,8 +3458,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3472,8 +3545,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3556,8 +3632,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3698,6 +3777,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3720,6 +3800,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3757,6 +3838,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3779,6 +3861,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3799,8 +3882,8 @@
               <onEntityAttachedState PointsTo="ptr:10" />
               <onEntityDetachedState PointsTo="ptr:12" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -3818,6 +3901,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3840,6 +3924,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3860,8 +3945,8 @@
               <onEntityAttachedState PointsTo="ptr:13" />
               <onEntityDetachedState PointsTo="ptr:15" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -3879,6 +3964,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3901,6 +3987,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3921,8 +4008,8 @@
               <onEntityAttachedState PointsTo="ptr:16" />
               <onEntityDetachedState PointsTo="ptr:18" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -3940,6 +4027,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3962,6 +4050,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3982,8 +4071,8 @@
               <onEntityAttachedState PointsTo="ptr:19" />
               <onEntityDetachedState PointsTo="ptr:21" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4001,6 +4090,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4023,6 +4113,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4043,8 +4134,8 @@
               <onEntityAttachedState PointsTo="ptr:22" />
               <onEntityDetachedState PointsTo="ptr:24" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4062,6 +4153,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4084,6 +4176,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4104,8 +4197,8 @@
               <onEntityAttachedState PointsTo="ptr:25" />
               <onEntityDetachedState PointsTo="ptr:27" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4123,6 +4216,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4145,6 +4239,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4165,8 +4260,8 @@
               <onEntityAttachedState PointsTo="ptr:28" />
               <onEntityDetachedState PointsTo="ptr:30" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4184,6 +4279,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4206,6 +4302,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4226,8 +4323,8 @@
               <onEntityAttachedState PointsTo="ptr:31" />
               <onEntityDetachedState PointsTo="ptr:33" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4245,6 +4342,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4267,6 +4365,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4287,8 +4386,8 @@
               <onEntityAttachedState PointsTo="ptr:34" />
               <onEntityDetachedState PointsTo="ptr:36" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4306,6 +4405,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4328,6 +4428,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4348,8 +4449,8 @@
               <onEntityAttachedState PointsTo="ptr:37" />
               <onEntityDetachedState PointsTo="ptr:39" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4367,6 +4468,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4389,6 +4491,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4409,8 +4512,8 @@
               <onEntityAttachedState PointsTo="ptr:40" />
               <onEntityDetachedState PointsTo="ptr:42" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4428,6 +4531,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4450,6 +4554,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4470,8 +4575,8 @@
               <onEntityAttachedState PointsTo="ptr:43" />
               <onEntityDetachedState PointsTo="ptr:45" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4489,6 +4594,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4511,6 +4617,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4531,8 +4638,8 @@
               <onEntityAttachedState PointsTo="ptr:46" />
               <onEntityDetachedState PointsTo="ptr:48" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4550,6 +4657,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4572,6 +4680,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4592,8 +4701,8 @@
               <onEntityAttachedState PointsTo="ptr:49" />
               <onEntityDetachedState PointsTo="ptr:51" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4611,6 +4720,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4633,6 +4743,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4653,8 +4764,8 @@
               <onEntityAttachedState PointsTo="ptr:52" />
               <onEntityDetachedState PointsTo="ptr:54" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4672,6 +4783,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4694,6 +4806,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4714,8 +4827,8 @@
               <onEntityAttachedState PointsTo="ptr:55" />
               <onEntityDetachedState PointsTo="ptr:57" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4733,6 +4846,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4755,6 +4869,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4775,8 +4890,8 @@
               <onEntityAttachedState PointsTo="ptr:58" />
               <onEntityDetachedState PointsTo="ptr:60" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4794,6 +4909,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4816,6 +4932,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4836,8 +4953,8 @@
               <onEntityAttachedState PointsTo="ptr:61" />
               <onEntityDetachedState PointsTo="ptr:63" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4855,6 +4972,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4877,6 +4995,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4897,8 +5016,8 @@
               <onEntityAttachedState PointsTo="ptr:64" />
               <onEntityDetachedState PointsTo="ptr:66" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -4916,6 +5035,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4938,6 +5058,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -4958,25 +5079,13 @@
               <onEntityAttachedState PointsTo="ptr:67" />
               <onEntityDetachedState PointsTo="ptr:69" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatusPreset" Count="0" />
-              <itemSubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <itemTypes Type="StatusEffectSetup" Count="0" />
+              <itemSubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
-    <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
-      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="0" />
-      <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
-        <SOnInteractionTriggers Type="SOnInteractionTriggers">
-          <targetInteraction PointsTo="ptr:70" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
-            <SDestroySelfGameplayTrigger Type="SDestroySelfGameplayTrigger" />
-          </gameplayTriggers>
-        </SOnInteractionTriggers>
-      </onInteractionSuccessTriggers>
-      <onInteractionFailedTriggers Type="SOnInteractionTriggers" Count="0" />
-    </SCInteractionStateGameplayTriggerComponentParams>
     <SEntityPerceptionComponentParams Type="SEntityPerceptionComponentParams">
       <ignoreHostiles>False</ignoreHostiles>
       <perceptionProfile ReferencedFile="file://./../../../../../libs/foundry/records/aiprofile/creatureperceptionprofile.xml" />
@@ -5007,7 +5116,7 @@
     </ActivityBehaviorComponentParams>
     <SHearingComponentParams Type="SHearingComponentParams">
       <movementSoundOriginFilter />
-      <soundTypeFilter Type="ActivityBehaviorRequestCondition" Count="0" />
+      <soundTypeFilter Type="SActorForceReactionImpulseAccumulationConfig" Count="0" />
     </SHearingComponentParams>
     <AILookComponentParams Type="AILookComponentParams" />
     <SDynamicGroupComponentParams Type="SDynamicGroupComponentParams" />

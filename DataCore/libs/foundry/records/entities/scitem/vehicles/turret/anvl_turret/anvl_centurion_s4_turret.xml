@@ -64,7 +64,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -110,6 +109,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -206,11 +210,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -502,11 +506,7 @@
       <intoxicationModifierRef ReferencedFile="file://./../../../../../../../../libs/foundry/records/intoxication/globalturretintoxicationmodifierparams.xml" />
       <hudParamsOverride />
       <autoDeployHelmetTargetingMode>True</autoDeployHelmetTargetingMode>
-      <gunFireSafety Type="SCItemTurretGunSafetyParams">
-        <selfHitCheckType>All</selfHitCheckType>
-        <fireConsentAngleCheckType>All</fireConsentAngleCheckType>
-        <fireConsentAngleDeg>25</fireConsentAngleDeg>
-      </gunFireSafety>
+      <runsSafetyChecks>True</runsSafetyChecks>
     </SCItemTurretParams>
     <EntityComponentPowerConnection Type="EntityComponentPowerConnection">
       <PowerBase>0</PowerBase>
@@ -568,7 +568,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -599,6 +598,7 @@
           <y>0</y>
           <z>1</z>
         </explosionUp>
+        <explosionZone>AdamHosted</explosionZone>
         <pressure>100</pressure>
         <holeSize>0</holeSize>
         <terrainHoleSize>3</terrainHoleSize>
@@ -617,6 +617,7 @@
         </damage>
         <flashbangParams />
         <shockwaveParams />
+        <fragmentParams />
         <hitType>explosion</hitType>
         <effect Type="GlobalResourceParticle">
           <path>14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1</path>
@@ -649,14 +650,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SCItemShipComputerParams Type="SCItemShipComputerParams">
       <definition ReferencedFile="file://./../../../../../../../../libs/foundry/records/audio/shipcomputers/manufacturerdefinitions/anvl.xml" />
@@ -679,6 +679,7 @@
         <audioTrigger />
       </videoAudioResumeTrigger>
       <dialogueContext />
+      <bypassRealisticMode>False</bypassRealisticMode>
     </UIAudioComponentEntityComponentParams>
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
@@ -690,8 +691,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>4</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -724,7 +728,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -781,8 +785,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>4</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -815,7 +822,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -872,8 +879,11 @@
           <RequiredPortTags />
           <Flags>left</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>4</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -906,7 +916,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -963,8 +973,11 @@
           <RequiredPortTags />
           <Flags>right</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>4</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -997,7 +1010,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>

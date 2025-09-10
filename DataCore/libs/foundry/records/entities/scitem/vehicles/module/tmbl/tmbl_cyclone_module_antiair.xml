@@ -64,7 +64,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>ExteriorConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -72,7 +71,7 @@
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
         <SharedInteractions Type="SSharedInteractionParams" Count="2">
-          <SSharedInteractionParams Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:1" Type="SSharedInteractionParams">
             <Name>Open</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -91,7 +90,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:3" Type="SSharedInteractionParams">
             <Name>Close</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -126,10 +125,10 @@
       <sequences Type="SSequencerDefSequenceParams" Count="2">
         <SReplicatedSequencerDefSequenceParams Type="SReplicatedSequencerDefSequenceParams">
           <name>DeployMissiles</name>
-          <interaction />
+          <interaction PointsTo="ptr:1" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:1" />
+              <task PointsTo="ptr:2" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -138,10 +137,10 @@
         </SReplicatedSequencerDefSequenceParams>
         <SReplicatedSequencerDefSequenceParams Type="SReplicatedSequencerDefSequenceParams">
           <name>RetractMissiles</name>
-          <interaction />
+          <interaction PointsTo="ptr:3" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:2" />
+              <task PointsTo="ptr:4" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -154,6 +153,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -216,11 +220,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -282,12 +286,12 @@
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
       <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="2">
-        <SSequencerAnimationTaskParams Pointer="ptr:1" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:2" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBed</fragmentId>
           <fragTag>Open</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:2" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:4" Type="SSequencerAnimationTaskParams">
           <fragmentId>SCItemBed</fragmentId>
           <fragTag>Close</fragTag>
           <looping>False</looping>
@@ -400,7 +404,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>False</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -417,35 +420,40 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
       <StateTypes Type="SInteractionStateType" Count="1">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>MissilesState</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:3" />
+          <DefaultState PointsTo="ptr:5" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:3" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
               <StateName>MissilesOpened</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:3" />
+                  <NextState PointsTo="ptr:6" />
+                </SInteractionStateTransition>
+              </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <stateTags Type="TagList">
                 <tags Type="Tag" Count="0" />
@@ -455,17 +463,23 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Type="SInteractionState">
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
               <StateName>MissilesClosed</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:1" />
+                  <NextState PointsTo="ptr:5" />
+                </SInteractionStateTransition>
+              </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <stateTags Type="TagList">
                 <tags Type="Tag" Count="0" />
@@ -490,8 +504,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -524,7 +541,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponDefensive</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>CountermeasureLauncher</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -581,8 +598,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -615,7 +635,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponDefensive</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>CountermeasureLauncher</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -672,8 +692,11 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -706,13 +729,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileLauncher</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>MissileRack</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -769,8 +792,11 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -803,13 +829,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileLauncher</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>MissileRack</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -866,8 +892,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -900,7 +929,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>EMP</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -955,8 +984,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -989,7 +1021,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />

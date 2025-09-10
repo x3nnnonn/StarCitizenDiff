@@ -10,7 +10,7 @@
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.edee469a-a334-4c12-91e9-c69d1213b843" RecordId="edee469a-a334-4c12-91e9-c69d1213b843" />
   </tags>
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="21">
+  <Components Type="DataForgeComponentParams" Count="22">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>Turret</Type>
@@ -67,7 +67,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -272,15 +271,16 @@
       <intoxicationModifierRef ReferencedFile="file://./../../../../../../../libs/foundry/records/intoxication/globalturretintoxicationmodifierparams.xml" />
       <hudParamsOverride />
       <autoDeployHelmetTargetingMode>True</autoDeployHelmetTargetingMode>
-      <gunFireSafety Type="SCItemTurretGunSafetyParams">
-        <selfHitCheckType>All</selfHitCheckType>
-        <fireConsentAngleCheckType>All</fireConsentAngleCheckType>
-        <fireConsentAngleDeg>25</fireConsentAngleDeg>
-      </gunFireSafety>
+      <runsSafetyChecks>True</runsSafetyChecks>
     </SCItemTurretParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -343,11 +343,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -401,18 +401,20 @@
         <WearRange />
         <DirtRange />
         <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
-        <entries Type="SItemPortLoadoutEntryParams" Count="1">
+        <entries Type="SItemPortLoadoutEntryParams" Count="2">
           <SItemPortLoadoutEntryParams Type="SItemPortLoadoutEntryParams">
-            <itemPortName>turret_centre</itemPortName>
+            <itemPortName>turret_right</itemPortName>
             <entityClassName />
-            <entityClassReference ReferencedFile="file://./../../../../../../../libs/foundry/records/entities/scitem/ships/missile_racks/behr/mrck_s05_behr_pdc_missile_16_s1.xml" />
+            <entityClassReference />
             <inventoryContainer />
-            <loadout Type="SItemPortLoadoutManualParams">
-              <WearRange />
-              <DirtRange />
-              <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
-              <entries Type="SItemPortLoadoutEntryParams" Count="0" />
-            </loadout>
+            <loadout />
+          </SItemPortLoadoutEntryParams>
+          <SItemPortLoadoutEntryParams Type="SItemPortLoadoutEntryParams">
+            <itemPortName>turret_left</itemPortName>
+            <entityClassName />
+            <entityClassReference />
+            <inventoryContainer />
+            <loadout />
           </SItemPortLoadoutEntryParams>
         </entries>
       </loadout>
@@ -465,16 +467,19 @@
     </EntityComponentHeatConnection>
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
-      <Ports Type="SItemPortDef" Count="1">
+      <Ports Type="SItemPortDef" Count="2">
         <SItemPortDef Type="SItemPortDef">
-          <Name>turret_centre</Name>
+          <Name>turret_left</Name>
           <DisplayName>port_NameTurretGunSlot01</DisplayName>
           <PortTags />
-          <RequiredPortTags>$PDC</RequiredPortTags>
+          <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
-          <MinSize>5</MinSize>
-          <MaxSize>5</MaxSize>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
+          <MinSize>8</MinSize>
+          <MaxSize>8</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -502,46 +507,13 @@
           <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
           <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
           <controllableTag />
-          <control Type="SCItemControlPriorities">
-            <itemControlPriorities Type="SCItemControlPriorityTable" Count="3">
-              <SCItemControlPriorityTable Type="SCItemControlPriorityTable">
-                <itemType>Turret</itemType>
-                <defaultPriority Type="SCItemControlPriorityNoControlValue" />
-                <tagPrioritiesTable Type="SCItemControlPriorityTag" Count="1">
-                  <SCItemControlPriorityTag Type="SCItemControlPriorityTag">
-                    <tag>PDC_Turret_01</tag>
-                    <priorityValue Type="SCItemControlPriorityExclusiveValue" />
-                  </SCItemControlPriorityTag>
-                </tagPrioritiesTable>
-              </SCItemControlPriorityTable>
-              <SCItemControlPriorityTable Type="SCItemControlPriorityTable">
-                <itemType>MissileLauncher</itemType>
-                <defaultPriority Type="SCItemControlPriorityNoControlValue" />
-                <tagPrioritiesTable Type="SCItemControlPriorityTag" Count="1">
-                  <SCItemControlPriorityTag Type="SCItemControlPriorityTag">
-                    <tag>PDC_Turret_01</tag>
-                    <priorityValue Type="SCItemControlPriorityExclusiveValue" />
-                  </SCItemControlPriorityTag>
-                </tagPrioritiesTable>
-              </SCItemControlPriorityTable>
-              <SCItemControlPriorityTable Type="SCItemControlPriorityTable">
-                <itemType>Missile</itemType>
-                <defaultPriority Type="SCItemControlPriorityNoControlValue" />
-                <tagPrioritiesTable Type="SCItemControlPriorityTag" Count="1">
-                  <SCItemControlPriorityTag Type="SCItemControlPriorityTag">
-                    <tag>PDC_Turret_01</tag>
-                    <priorityValue Type="SCItemControlPriorityExclusiveValue" />
-                  </SCItemControlPriorityTag>
-                </tagPrioritiesTable>
-              </SCItemControlPriorityTable>
-            </itemControlPriorities>
-          </control>
+          <control />
           <Connections Type="SItemPortConnectionParam" Count="0" />
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
-              <Type>MissileLauncher</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
-                <EnumChoice>MissileRack</EnumChoice>
+              <Type>WeaponGun</Type>
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
+                <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
           </Types>
@@ -550,11 +522,105 @@
             <Helper Type="SItemPortDefHelperNode">
               <Tags />
               <Helper Type="SItemPortDefHelper">
-                <Name>turret_centre</Name>
+                <Name>turret_left</Name>
                 <Offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>
+                    <y>90</y>
+                    <z>0</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>0</x>
                     <y>0</y>
+                    <z>0</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>True</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
+        <SItemPortDef Type="SItemPortDef">
+          <Name>turret_right</Name>
+          <DisplayName>port_NameTurretGunSlot02</DisplayName>
+          <PortTags />
+          <RequiredPortTags />
+          <Flags>$uneditable</Flags>
+          <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
+          <MinSize>8</MinSize>
+          <MaxSize>8</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="1">
+            <SItemPortDefTypes Type="SItemPortDefTypes">
+              <Type>WeaponGun</Type>
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
+                <EnumChoice>Gun</EnumChoice>
+              </SubTypes>
+            </SItemPortDefTypes>
+          </Types>
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>turret_right</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>0</x>
+                    <y>-90</y>
                     <z>0</z>
                   </Rotation>
                   <Position Type="Vec3">
@@ -596,7 +662,7 @@
       <RequiredItemTags />
       <InternalResourceLinks Type="SInternalResourceLink" Count="0" />
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
-      <LinkAllItemsToResourceNetwork>True</LinkAllItemsToResourceNetwork>
+      <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
@@ -694,7 +760,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -711,14 +776,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
@@ -792,5 +856,6 @@
     <SDialogueComponentParams Type="SDialogueComponentParams" />
     <SAudioProxyParams Type="SAudioProxyParams" />
     <SCItemAimableComponentParams Type="SCItemAimableComponentParams" />
+    <DataForgeComponentParams />
   </Components>
 </EntityClassDefinition.Turret_PDC_BEHR_M>

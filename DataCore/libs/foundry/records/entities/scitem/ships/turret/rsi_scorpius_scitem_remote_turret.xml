@@ -71,7 +71,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -79,6 +78,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -553,11 +557,7 @@
       <intoxicationModifierRef ReferencedFile="file://./../../../../../../../libs/foundry/records/intoxication/globalturretintoxicationmodifierparams.xml" />
       <hudParamsOverride />
       <autoDeployHelmetTargetingMode>True</autoDeployHelmetTargetingMode>
-      <gunFireSafety Type="SCItemTurretGunSafetyParams">
-        <selfHitCheckType>All</selfHitCheckType>
-        <fireConsentAngleCheckType>All</fireConsentAngleCheckType>
-        <fireConsentAngleDeg>25</fireConsentAngleDeg>
-      </gunFireSafety>
+      <runsSafetyChecks>True</runsSafetyChecks>
     </SCItemTurretParams>
     <SHealthComponentParams Type="SHealthComponentParams">
       <Health>5000</Health>
@@ -595,7 +595,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -647,6 +646,7 @@
           <y>0</y>
           <z>1</z>
         </explosionUp>
+        <explosionZone>AdamHosted</explosionZone>
         <pressure>5</pressure>
         <holeSize>0</holeSize>
         <terrainHoleSize>1</terrainHoleSize>
@@ -679,6 +679,7 @@
           <density>1</density>
           <resistance>1</resistance>
         </shockwaveParams>
+        <fragmentParams />
         <hitType>explosion</hitType>
         <effect Type="GlobalResourceParticle">
           <path>14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1</path>
@@ -711,14 +712,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
@@ -726,11 +726,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -982,8 +982,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>3</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1016,13 +1019,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>GunTurret</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1079,8 +1082,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>3</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1113,13 +1119,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>GunTurret</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1176,8 +1182,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>3</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1210,13 +1219,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>GunTurret</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1273,8 +1282,11 @@
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>3</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1307,13 +1319,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>GunTurret</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1572,6 +1584,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:13" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1601,6 +1614,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:16" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1640,6 +1654,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:18" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1660,6 +1675,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:19" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1686,8 +1702,6 @@
                       <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.86007fd6-4424-4dab-b19c-d31be968b3c6" RecordId="86007fd6-4424-4dab-b19c-d31be968b3c6" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:21" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -1696,8 +1710,6 @@
                       <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ce7fabba-9db4-46a3-995f-b4dfdc9bf01a" RecordId="ce7fabba-9db4-46a3-995f-b4dfdc9bf01a" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:22" />
                 </SLinkedInteractionStateTags>
               </onChangeStateTagStates>

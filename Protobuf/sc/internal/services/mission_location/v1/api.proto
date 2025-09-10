@@ -17,7 +17,6 @@ service MissionLocationService {
   rpc QueryAllLocations ( .sc.internal.services.mission_location.v1.QueryAllLocationsRequest ) returns (stream .sc.internal.services.mission_location.v1.QueryAllLocationsResponse );
   rpc QueryLocations (stream .sc.internal.services.mission_location.v1.QueryLocationsRequest ) returns (stream .sc.internal.services.mission_location.v1.QueryLocationsResponse );
   rpc QueryLocationsByContract ( .sc.internal.services.mission_location.v1.QueryLocationsByContractRequest ) returns (stream .sc.internal.services.mission_location.v1.QueryLocationsByContractResponse );
-  rpc ReleaseAllAcquisitions ( .sc.internal.services.mission_location.v1.ReleaseAllAcquisitionsRequest ) returns ( .sc.internal.services.mission_location.v1.ReleaseAllAcquisitionsResponse );
 }
 
 message AcquireLocationRequest {
@@ -31,7 +30,6 @@ message AcquireLocationRequest {
     int32 max_contracts_for_slot = 5;
     string acquisition_tag = 6;
     string contract_definition_id = 7;
-    string active_mission_id = 8;
   }
 }
 
@@ -127,18 +125,5 @@ message QueryLocationsByContractRequest {
 
 message QueryLocationsByContractResponse {
   repeated .sc.external.common.mission.v1.MissionLocation locations = 1;
-}
-
-message ReleaseAllAcquisitionsRequest {
-  string active_mission_id = 1;
-}
-
-message ReleaseAllAcquisitionsResponse {
-  repeated .sc.internal.services.mission_location.v1.ReleaseAllAcquisitionsResponse.Body releases = 1;
-
-  message Body {
-    uint64 location_entity_id = 1;
-    repeated string removed_acquisition_tags = 2;
-  }
 }
 

@@ -172,7 +172,16 @@
       </shieldSDFParams>
       <DashboardCanvasConfig ReferencedFile="file://./../../../../../libs/foundry/records/ui/buildingblocks/dashboard/config/tmbl_storm.xml" />
       <inventoryContainerParams ReferencedFile="file://./../../../../../libs/foundry/records/inventorycontainers/ships/tmbl_storm_aa_template.xml" />
-      <spawnBoxScale>0.5</spawnBoxScale>
+      <landingOffset Type="Vec3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingOffset>
+      <landingRotationOffset Type="Ang3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingRotationOffset>
     </VehicleComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
@@ -1450,7 +1459,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -3710,24 +3718,8 @@
     </SEntityComponentEffects>
     <SSCItemControllableManagerParams Type="SSCItemControllableManagerParams">
       <defaultMasterMode>SCM</defaultMasterMode>
-      <masterModes Type="SMasterModeParams" Count="4">
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>False</available>
-          <spoolTime>1</spoolTime>
-        </SMasterModeParams>
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>True</available>
-          <spoolTime>1</spoolTime>
-        </SMasterModeParams>
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>True</available>
-          <spoolTime>0.2</spoolTime>
-        </SMasterModeParams>
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>False</available>
-          <spoolTime>1</spoolTime>
-        </SMasterModeParams>
-      </masterModes>
+      <masterModeSpoolTimeToNAV>1</masterModeSpoolTimeToNAV>
+      <masterModeSpoolTimeToSCM>0.2</masterModeSpoolTimeToSCM>
       <controllerParams />
     </SSCItemControllableManagerParams>
     <SHealthComponentParams Type="SHealthComponentParams">
@@ -3766,7 +3758,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -3783,14 +3774,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SInteractionLinkParams Type="SInteractionLinkParams">
       <vehicleItemPortInteractionLinks Type="SVehicleItemportInteractionLink" Count="0" />
@@ -3819,7 +3809,11 @@
           </crossSection>
         </crossSectionParams>
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="1">
@@ -3838,6 +3832,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSuperGUIDComponentParams Type="SSuperGUIDComponentParams" />
@@ -3845,6 +3842,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -4301,8 +4303,11 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4335,7 +4340,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4390,8 +4395,11 @@
           <RequiredPortTags />
           <Flags>invisible </Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4424,7 +4432,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>LifeSupportGenerator</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4519,7 +4527,6 @@
     </EntityComponentAudioEnvironmentFeedbackParams>
     <EntityComponentVibrationParams Type="EntityComponentVibrationParams">
       <vibrationRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclebase.xml" />
-      <normalizationMassOverride>-1</normalizationMassOverride>
     </EntityComponentVibrationParams>
     <SurfaceRaindropsComponentParams Type="SurfaceRaindropsComponentParams">
       <enable>True</enable>
@@ -4546,6 +4553,7 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>10</fadeOutDuration>
+          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
         <SurfaceRaindrops_Emitter Type="SurfaceRaindrops_Emitter">
           <particleEffect Type="GlobalResourceParticle">
@@ -4561,12 +4569,12 @@
             <maximum>276</maximum>
           </temperatureRange>
           <fadeOutDuration>35</fadeOutDuration>
+          <enableCloudCondensation>False</enableCloudCondensation>
         </SurfaceRaindrops_Emitter>
       </customEmitters>
       <wipeEffect Type="GlobalResourceParticle">
         <path />
       </wipeEffect>
-      <enableCloudCondensation>False</enableCloudCondensation>
       <inactiveDuration>35</inactiveDuration>
       <maximumSpeed>50</maximumSpeed>
       <waterSprayHeightRange Type="Range">
@@ -4931,13 +4939,14 @@
       <entrancesRecord ReferencedFile="file://./../../../../../libs/foundry/records/ui/vehicleentrance/tmbl_storm.xml" />
     </EntranceDisplayComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
+      <perceptionTypes Type="ActorStatusStatModifier" Count="1">
         <EnumChoice>Vehicle</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusAddBuff" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <defaultEntityObservablePoint />
-      <defaultAimingObservablePoint />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
       <observableExtensions Type="IObservableExtender" Count="1">
         <AudioObservableExtender Type="AudioObservableExtender">
           <hearingRadiusAtFullStrength>550</hearingRadiusAtFullStrength>
@@ -5197,6 +5206,7 @@
                   <overrideInterpolation />
                 </AnimationSetVariable>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5223,6 +5233,7 @@
                   <overrideInterpolation />
                 </AnimationSetVariable>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5249,8 +5260,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.9a0672b8-16f1-429f-ba12-54647cb725e6" RecordId="9a0672b8-16f1-429f-ba12-54647cb725e6" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:11" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5259,8 +5268,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.12fa999c-b114-4ae7-8f96-711222f0f17a" RecordId="12fa999c-b114-4ae7-8f96-711222f0f17a" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:12" />
                 </SLinkedInteractionStateTags>
               </onChangeStateTagStates>
@@ -5282,6 +5289,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5302,6 +5310,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5322,6 +5331,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5342,6 +5352,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5368,8 +5379,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6bd67663-b803-4f3b-9c9f-42c591b51b93" RecordId="6bd67663-b803-4f3b-9c9f-42c591b51b93" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:14" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5378,8 +5387,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.5d7b8e59-552f-407f-9df1-8eb582e9c22b" RecordId="5d7b8e59-552f-407f-9df1-8eb582e9c22b" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:15" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5388,8 +5395,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.9057a388-8ac5-40e2-9b0f-657bfab9ff60" RecordId="9057a388-8ac5-40e2-9b0f-657bfab9ff60" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:16" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5398,8 +5403,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.19e014c7-a1cc-4255-b206-94a9d85a3dac" RecordId="19e014c7-a1cc-4255-b206-94a9d85a3dac" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:17" />
                 </SLinkedInteractionStateTags>
               </onChangeStateTagStates>
@@ -5421,6 +5424,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5445,6 +5449,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5471,6 +5476,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5493,6 +5499,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5523,8 +5530,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.9057a388-8ac5-40e2-9b0f-657bfab9ff60" RecordId="9057a388-8ac5-40e2-9b0f-657bfab9ff60" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:19" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5533,8 +5538,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.5d7b8e59-552f-407f-9df1-8eb582e9c22b" RecordId="5d7b8e59-552f-407f-9df1-8eb582e9c22b" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:20" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5543,8 +5546,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6bd67663-b803-4f3b-9c9f-42c591b51b93" RecordId="6bd67663-b803-4f3b-9c9f-42c591b51b93" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:18" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -5553,8 +5554,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.19e014c7-a1cc-4255-b206-94a9d85a3dac" RecordId="19e014c7-a1cc-4255-b206-94a9d85a3dac" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:21" />
                 </SLinkedInteractionStateTags>
               </onChangeStateTagStates>
@@ -5576,6 +5575,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5601,6 +5601,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5627,6 +5628,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5654,6 +5656,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5688,6 +5691,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5713,6 +5717,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5739,6 +5744,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5766,6 +5772,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5800,6 +5807,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5825,6 +5833,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5851,6 +5860,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5878,6 +5888,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5912,6 +5923,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5937,6 +5949,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -5963,6 +5976,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -5990,6 +6004,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -6024,6 +6039,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -6049,6 +6065,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -6075,6 +6092,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -6127,6 +6145,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -6149,6 +6168,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -6175,8 +6195,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.1d093119-511b-4417-8ff0-81ba0386fd38" RecordId="1d093119-511b-4417-8ff0-81ba0386fd38" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:52" />
                 </SLinkedInteractionStateTags>
                 <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
@@ -6185,8 +6203,6 @@
                       <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.db58d3f6-0a41-408b-9b67-1938fa4b4491" RecordId="db58d3f6-0a41-408b-9b67-1938fa4b4491" />
                     </tags>
                   </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
                   <state PointsTo="ptr:53" />
                 </SLinkedInteractionStateTags>
               </onChangeStateTagStates>

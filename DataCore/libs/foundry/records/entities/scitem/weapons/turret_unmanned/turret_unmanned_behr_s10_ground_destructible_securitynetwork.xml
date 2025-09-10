@@ -77,7 +77,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -282,15 +281,16 @@
       <intoxicationModifierRef />
       <hudParamsOverride />
       <autoDeployHelmetTargetingMode>True</autoDeployHelmetTargetingMode>
-      <gunFireSafety Type="SCItemTurretGunSafetyParams">
-        <selfHitCheckType>All</selfHitCheckType>
-        <fireConsentAngleCheckType>All</fireConsentAngleCheckType>
-        <fireConsentAngleDeg>25</fireConsentAngleDeg>
-      </gunFireSafety>
+      <runsSafetyChecks>True</runsSafetyChecks>
     </SCItemTurretParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -396,11 +396,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>False</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -451,24 +451,8 @@
     </SEntityPhysicsControllerParams>
     <SSCItemControllableManagerParams Type="SSCItemControllableManagerParams">
       <defaultMasterMode>SCM</defaultMasterMode>
-      <masterModes Type="SMasterModeParams" Count="4">
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>False</available>
-          <spoolTime>1</spoolTime>
-        </SMasterModeParams>
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>True</available>
-          <spoolTime>1</spoolTime>
-        </SMasterModeParams>
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>True</available>
-          <spoolTime>0.2</spoolTime>
-        </SMasterModeParams>
-        <SMasterModeParams Type="SMasterModeParams">
-          <available>False</available>
-          <spoolTime>1</spoolTime>
-        </SMasterModeParams>
-      </masterModes>
+      <masterModeSpoolTimeToNAV>1</masterModeSpoolTimeToNAV>
+      <masterModeSpoolTimeToSCM>0.2</masterModeSpoolTimeToSCM>
       <controllerParams Type="SCItemControllableGroupParams">
         <priorityGroups Type="SCItemPriorityGroupParam" Count="0" />
       </controllerParams>
@@ -745,7 +729,11 @@
         </baseSignatureParams>
         <crossSectionParams />
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams />
       <scanCustomData />
@@ -760,6 +748,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>True</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SEntityAudioControllerParams Type="SEntityAudioControllerParams">
@@ -811,7 +802,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>True</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -849,14 +839,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SEntityComponentEffects Type="SEntityComponentEffects">
       <entityEffects Type="SEntitityEffectSystem_System">
@@ -1191,8 +1180,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>10</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1225,30 +1217,37 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="7">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>WeaponController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>EnergyController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>Radar</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>CoolerController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>TargetSelector</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>AIModule</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -1306,7 +1305,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1361,8 +1360,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>10</MinSize>
           <MaxSize>10</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1412,7 +1414,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1467,8 +1469,11 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>3</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1510,7 +1515,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>PowerPlant</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1565,8 +1570,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1623,7 +1631,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1700,8 +1708,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1743,7 +1754,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>TargetSelector</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1820,8 +1831,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1873,7 +1887,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>EnergyController</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1950,8 +1964,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2003,7 +2020,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CoolerController</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2080,8 +2097,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2114,7 +2134,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>CoolerController</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2191,8 +2211,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2240,7 +2263,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2295,8 +2318,11 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2338,7 +2364,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cooler</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2415,8 +2441,11 @@
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2458,7 +2487,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Cooler</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2535,8 +2564,11 @@
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2650,8 +2682,11 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>8</MinSize>
           <MaxSize>8</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2701,7 +2736,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileLauncher</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2756,8 +2791,11 @@
           <RequiredPortTags />
           <Flags>$uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>8</MinSize>
           <MaxSize>8</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2807,7 +2845,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileLauncher</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="0" />
+              <SubTypes Type="StatusEffectSetupBase" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -3045,13 +3083,14 @@
     </SInteractionLinkParams>
     <SAudioProxyParams Type="SAudioProxyParams" />
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="MovementSystemComponentParams" Count="1">
+      <perceptionTypes Type="ActorStatusStatModifier" Count="1">
         <EnumChoice>Turret</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SubsumptionEventReceiverComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusAddBuff" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <defaultEntityObservablePoint />
-      <defaultAimingObservablePoint />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
       <observableExtensions Type="IObservableExtender" Count="0" />
     </SObservableComponentParams>
   </Components>

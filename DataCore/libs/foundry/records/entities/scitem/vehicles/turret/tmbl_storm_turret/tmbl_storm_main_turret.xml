@@ -64,7 +64,6 @@
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
         <ignoredAttachAxis>None</ignoredAttachAxis>
-        <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
@@ -249,6 +248,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -480,11 +484,11 @@
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
-        <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
+        <PhysFlagsColliderOverride Type="DiminishingReturnsStatusEffectApplicationType" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>1</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -937,11 +941,7 @@
       <intoxicationModifierRef ReferencedFile="file://./../../../../../../../../libs/foundry/records/intoxication/globalturretintoxicationmodifierparams.xml" />
       <hudParamsOverride />
       <autoDeployHelmetTargetingMode>True</autoDeployHelmetTargetingMode>
-      <gunFireSafety Type="SCItemTurretGunSafetyParams">
-        <selfHitCheckType>All</selfHitCheckType>
-        <fireConsentAngleCheckType>All</fireConsentAngleCheckType>
-        <fireConsentAngleDeg>25</fireConsentAngleDeg>
-      </gunFireSafety>
+      <runsSafetyChecks>True</runsSafetyChecks>
     </SCItemTurretParams>
     <EntityComponentPowerConnection Type="EntityComponentPowerConnection">
       <PowerBase>0</PowerBase>
@@ -1009,6 +1009,7 @@
         <audioTrigger />
       </videoAudioResumeTrigger>
       <dialogueContext />
+      <bypassRealisticMode>False</bypassRealisticMode>
     </UIAudioComponentEntityComponentParams>
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
@@ -1020,8 +1021,11 @@
           <RequiredPortTags>TMBL_Storm</RequiredPortTags>
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>3</MinSize>
           <MaxSize>3</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1054,7 +1058,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponGun</Type>
-              <SubTypes Type="ActorStatusUIWarningEntry" Count="1">
+              <SubTypes Type="StatusEffectSetupBase" Count="1">
                 <EnumChoice>Gun</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1219,7 +1223,6 @@
       <PushDamageUpPartsHeirarchyWhenDead>True</PushDamageUpPartsHeirarchyWhenDead>
       <DetachFromItemPortOnDeath>False</DetachFromItemPortOnDeath>
       <DetachFromEntityOnDeath>False</DetachFromEntityOnDeath>
-      <DestroySelfOnDeath>False</DestroySelfOnDeath>
       <DestroyChildrenOnDeath>False</DestroyChildrenOnDeath>
       <PropagateExplosionDamageToChildren>False</PropagateExplosionDamageToChildren>
       <UseDirtShaderForDamage>False</UseDirtShaderForDamage>
@@ -1236,14 +1239,13 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
-      <duplicateHitToParent>False</duplicateHitToParent>
-      <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
     </SHealthComponentParams>
     <SDialogueComponentParams Type="SDialogueComponentParams" />
     <SAudioProxyParams Type="SAudioProxyParams" />
@@ -1280,6 +1282,7 @@
                   </itemPorts>
                 </SetItemportActiveEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:10" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1319,6 +1322,7 @@
                   </itemPorts>
                 </SetItemportActiveEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:13" />
               <ExitStatePlaySequence />
               <StateAutoChange />

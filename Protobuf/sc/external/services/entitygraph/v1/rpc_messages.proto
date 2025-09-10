@@ -3,10 +3,8 @@ syntax = "proto3";
 package sc.external.services.entitygraph.v1;
 
 import "google/rpc/status.proto";
-import "google/protobuf/timestamp.proto";
 import "google/rpc/error_details.proto";
 import "sc/external/common/api/v1/pagination.proto";
-import "sc/external/common/game/v1/types.proto";
 import "sc/external/services/entitygraph/v1/entity_commands.proto";
 import "sc/external/services/entitygraph/v1/container_commands.proto";
 import "sc/external/services/entitygraph/v1/inventory_commands.proto";
@@ -395,46 +393,4 @@ message MoveAllRequestBody {
 }
 
 message MoveAllResponseBody {}
-
-message GetEntitiesByStowContextRequestBody {
-  oneof identifier {
-    uint64 entity_id = 1;
-    string parent_urn = 2;
-  }
-  uint64 owner_id = 3;
-  bool snapshots = 4;
-}
-
-message GetEntitiesByStowContextResponseBody {
-  repeated .sc.external.services.entitygraph.v1.Node results = 1;
-  repeated .sc.external.services.entitygraph.v1.EntitySnapshot snapshots = 2;
-}
-
-message UpdateEntitiesByStowContextRequestBody {
-  repeated .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate entity_updates = 1;
-  .sc.external.services.entitygraph.v1.TransMutationArguments arguments = 2;
-
-  message EntityUpdate {
-    oneof identifier {
-      uint64 entity_id = 1;
-      string parent_urn = 2;
-    }
-    .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.OwnershipUpdate ownership_update = 3;
-    .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.OwnershipStatusUpdate ownership_status_update = 4;
-    .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.ParentUrnUpdate parent_urn_update = 5;
-
-    message OwnershipUpdate {
-      uint64 owner_id = 1;
-    }
-    message OwnershipStatusUpdate {
-      .sc.external.common.game.v1.OwnershipStatus ownership_status = 1;
-      .google.protobuf.Timestamp ownership_timestamp = 2;
-    }
-    message ParentUrnUpdate {
-      string parent_urn = 1;
-    }
-  }
-}
-
-message UpdateEntitiesByStowContextResponseBody {}
 
