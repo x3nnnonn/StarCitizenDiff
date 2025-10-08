@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="Node_GetPlayerOutOfBed" Description="empty" Group="hc-modules" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="ExitPos" Type="Vec3" Input="0" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_Node_GetPlayerOutOfBed" pos="-220,140,0" flags="0" />
+    <Node Id="2" Class="Module:End_Node_GetPlayerOutOfBed" pos="2430,160,0" flags="0">
+      <Inputs ExitPos="0,0,0" />
+    </Node>
+    <Node Id="5" Class="Entity:GetPos" pos="2070,-210,0" flags="0">
+      <Inputs entityId="0" CoordSys="1" />
+    </Node>
+    <Node Id="64" Class="InteractionSystem:ActivateInteraction" pos="1460,-20,0" flags="0">
+      <Inputs entityId="0" InteractorId="0" InteractionName="Exit" InteractionPointName="empty" />
+    </Node>
+    <Node Id="65" Class="TagRequest:FindObject" pos="580,-50,0" flags="0">
+      <Inputs entityId="0" TagRequest="UsableArchetypes.Bed" Origin="0,0,0" SearchRadius="2" SortType="0" ExcludeSelf="0" OutputType="0" />
+    </Node>
+    <Node Id="69" Class="Time:Delay" pos="1050,-240,0" flags="0">
+      <Inputs delay="3" resetOnInput="1" />
+    </Node>
+    <Node Id="71" Class="Time:FrameDelay" pos="1760,-60,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="94" Class="Actor:GetPlayerFromServer" pos="150,-70,0" flags="0">
+      <Inputs Get="0" />
+    </Node>
+    <Node Id="95" Class="Actor:GetPlayerFromServer" pos="1060,60,0" flags="0">
+      <Inputs Get="0" />
+    </Node>
+    <Node Id="96" Class="Actor:GetPlayerFromServer" pos="1580,-340,0" flags="0">
+      <Inputs Get="0" />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2" nodeOut="1" portIn="Cancel" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="69" nodeOut="1" portIn="in" portOut="Start" enabled="1" />
+    <Edge nodeIn="94" nodeOut="1" portIn="Get" portOut="Start" enabled="1" />
+    <Edge nodeIn="2" nodeOut="5" portIn="ExitPos" portOut="Pos" enabled="1" />
+    <Edge nodeIn="64" nodeOut="65" portIn="entityId" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="95" nodeOut="65" portIn="Get" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="71" nodeOut="69" portIn="in" portOut="out" enabled="1" />
+    <Edge nodeIn="96" nodeOut="69" portIn="Get" portOut="out" enabled="1" />
+    <Edge nodeIn="2" nodeOut="71" portIn="Success" portOut="out" enabled="1" />
+    <Edge nodeIn="65" nodeOut="94" portIn="Find" portOut="EntityID" enabled="1" />
+    <Edge nodeIn="65" nodeOut="94" portIn="entityId" portOut="EntityID" enabled="1" />
+    <Edge nodeIn="64" nodeOut="95" portIn="Activate" portOut="EntityID" enabled="1" />
+    <Edge nodeIn="64" nodeOut="95" portIn="InteractorId" portOut="EntityID" enabled="1" />
+    <Edge nodeIn="5" nodeOut="96" portIn="Get" portOut="EntityID" enabled="1" />
+    <Edge nodeIn="5" nodeOut="96" portIn="entityId" portOut="EntityID" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

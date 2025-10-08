@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="Player_Teleport" Description="empty" Group="hc-internal\node" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="PlayerId" Type="Any" Input="1" />
+    <Port Name="Pos" Type="Vec3" Input="1" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_Player_Teleport" pos="-110,10,0" flags="0" />
+    <Node Id="2" Class="Module:End_Player_Teleport" pos="1120,20,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="4" Class="Actor:LocalPlayer" pos="200,-10,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="5" Class="Time:Delay" pos="360,-70,0" flags="0">
+      <Inputs delay="1" resetOnInput="1" />
+    </Node>
+    <Node Id="8" Class="Time:Delay" pos="900,-50,0" flags="0">
+      <Inputs delay="1" resetOnInput="1" />
+    </Node>
+    <Node Id="9" Class="Actor:Teleport" pos="610,-70,0" flags="0">
+      <Inputs entityId="0" Position="0,0,0" />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2" nodeOut="1" portIn="Cancel" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="4" nodeOut="1" portIn="update" portOut="Start" enabled="1" />
+    <Edge nodeIn="9" nodeOut="1" portIn="Position" portOut="Pos" enabled="1" />
+    <Edge nodeIn="5" nodeOut="4" portIn="in" portOut="entityId" enabled="1" />
+    <Edge nodeIn="9" nodeOut="4" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="9" nodeOut="5" portIn="Start" portOut="out" enabled="1" />
+    <Edge nodeIn="2" nodeOut="8" portIn="Success" portOut="out" enabled="1" />
+    <Edge nodeIn="8" nodeOut="9" portIn="in" portOut="OnComplete" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

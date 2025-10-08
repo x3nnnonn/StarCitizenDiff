@@ -1,0 +1,2178 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Vehicle name="AEGS_Retaliator" displayname="AEGS Retaliator" subType="Vehicle_Spaceship" size="4" requiredItemTags="empty" itemPortTags="AEGS_Retaliator_Base" crossSectionMultiplier="0.52,0.37,0.51" hudPaletteScheme="AEGS" landingOffset="0,0,-5.25">
+  <Physics pushable="0" dampingFreefall="0" comOffset="0.0,2.0,0.0">
+    <Buoyancy waterDensity="15" waterResistance="250" />
+    <Simulation maxTimeStep="0.02" minEnergy="0.16" maxLoggedCollisions="2" />
+  </Physics>
+  <VisorElement element="Visor_HUD" />
+  <Damages collDamageThreshold="10" groundCollisionMinMult="0.01" groundCollisionMaxMult="2" groundCollisionMinSpeed="4" groundCollisionMaxSpeed="60">
+    <DamageMultipliers>
+      <DamageMultiplier damageType="bullet" multiplier="1" multiplier_Energy="1" multiplier_Distortion="1" />
+      <DamageMultiplier damageType="melee" multiplier="0" />
+      <DamageMultiplier damageType="collision" multiplier="1" />
+      <DamageMultiplier damageType="explosion" multiplier="1" />
+    </DamageMultipliers>
+    <DamagesGroups>
+      <DamagesGroup name="Destroy" useTemplate="VehicleDestroy">
+        <DamagesSubGroups>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="Destroy" />
+              <DamageBehavior class="Effect">
+                <Effect effect="VehicleDestroyed" helper="hardpoint_vehicle_destroyed" lifetime="90" />
+              </DamageBehavior>
+              <DamageBehavior class="Explosion">
+                <Explosion helper="hardpoint_vehicle_destroyed" damage="5000" radius="50" minRadius="20" minPhysRadius="20" physRadius="30" pressure="125" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+          <DamagesSubGroup delay="3" randomness="0.25">
+            <DamageBehaviors>
+              <DamageBehavior class="Burn">
+                <Burn helper="hardpoint_vehicle_destroyed" damage="5" selfDamage="10" radius="2" interval="0.5" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+        </DamagesSubGroups>
+      </DamagesGroup>
+    </DamagesGroups>
+  </Damages>
+  <Pipes>
+    <Pipe name="MainPower" class="Power" />
+    <Pipe name="MainHeat" class="Heat" />
+    <Pipe name="MainFuel" class="Fuel" />
+    <Pipe name="IntakeFuel" class="Fuel" />
+    <Pipe name="QuantumFuel" class="Fuel" />
+    <Pipe name="Shield" class="Shield" />
+    <Pipe name="WeaponRegenCrew" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadCrew" class="WeaponAmmoLoad" />
+    <Pipe name="WeaponRegenTurret" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadTurret" class="WeaponAmmoLoad" />
+  </Pipes>
+  <Parts id="xmlParts">
+    <Part name="aegs_retaliator" class="Animated" mass="317870.29" disablePhysics="0" scopeContext="Ship" detachProbability="0">
+      <Animated />
+      <Parts>
+        <Part name="nose" class="AnimatedJoint" damageMax="35000" detachRatio="1" detachBaseForce="0,1.5,0" detachRandomForce="2.2,1.5,2.4" detachRandomRotation="-8.5,2,0.3" detachProbability="1" detachNetworkSync="1">
+          <DamageBehaviors>
+            <DamageBehavior class="DetachPart" damageRatioMin="1">
+              <DetachPart>
+                <Part name="front_right_wing_damage" probability="0.7" />
+                <Part name="front_left_wing_damage" probability="0.5" />
+                <Part name="wing_left_rl_damage" probability="0.4" />
+                <Part name="wing_right_rl_damage" probability="0.6" />
+                <Part name="wing_left_m_damage" probability="0.65" />
+                <Part name="wing_right_m_damage" probability="0.5" />
+                <Part name="right_wing_rs_geom" probability="0.6" />
+                <Part name="left_wing_rs_geom" probability="0.4" />
+                <Part name="wing_left_mlr_damage" probability="0.8" />
+                <Part name="wing_right_mlr_damage" probability="0.45" />
+                <Part name="body" probability="1" />
+                <Part name="nose" probability="1" />
+              </DetachPart>
+            </DamageBehavior>
+            <DamageBehavior class="Group" damageRatioMin="1">
+              <Group name="Destroy" />
+            </DamageBehavior>
+          </DamageBehaviors>
+          <Parts>
+            <Part name="animated_cockpit" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Room" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="animated_liftleft" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Door" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="animated_liftright" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Door" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="body" class="AnimatedJoint" damageMax="50000" detachRatio="0" detachBaseForce="0,-2,0" detachRandomForce="2.2,1.5,2.4" detachRandomRotation="7.5,2,5.3" detachProbability="1" detachNetworkSync="1">
+              <Effects>
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="3.99327,14.3616,-0.655208" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="5.25545,14.348,0.19925" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m006" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="4.61955,14.3617,2.35441" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m007" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.23902,14.3624,2.61537" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m008" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="0.783051,12.7712,2.14384" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m009" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-1.55516,14.4402,2.30065" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m010" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.23902,14.3624,2.61537" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m011" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-5.01126,13.4505,1.14937" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m012" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-5.19751,14.3616,1.04529" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m013" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-5.31921,14.3665,0.279992" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m014" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.82498,14.3616,-0.799616" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m015" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-1.52427,14.3616,-0.972567" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m016" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.947784,11.9377,-1.49806" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m017" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="1.52428,14.3616,-0.972564" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m018" effect="empty" />
+                <DetachFx joint="body" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-4.05199,14.3616,-0.284256" rot_offset="-0.999391,-0.0348995,0.0" helperID="body_SQUIB_.5m019" effect="empty" />
+              </Effects>
+              <Parts>
+                <Part name="animated_engroom" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                    <Types>
+                      <Type type="Room" subtypes="empty" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_armour" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Armor Slot">
+                    <Types>
+                      <Type type="Armor" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_engineer_console" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameSeatEngConsole">
+                    <Types>
+                      <Type type="Seat" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                    <ControllerDef controllableTags="engineerConsole">
+                      <UserDef>
+                        <Observerables>
+                          <Observerable itemType="EnergyController" screensDefault="EngineerScreen" screensAvail="EngineerScreen" />
+                          <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="EngineerScreen" />
+                          <Observerable itemType="ShieldController" screensDefault="empty" screensAvail="EngineerScreen" />
+                          <Observerable itemType="WeaponController" screensDefault="empty" screensAvail="EngineerScreen" />
+                          <Observerable itemType="CommsController" screensDefault="empty" screensAvail="EngineerScreen" />
+                        </Observerables>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="EnergyController" defaultPriority="2" />
+                          <PriorityGroup itemType="CoolerController" defaultPriority="2" />
+                          <PriorityGroup itemType="ShieldController" defaultPriority="2" />
+                          <PriorityGroup itemType="WeaponController" defaultPriority="2" />
+                          <PriorityGroup itemType="CommsController" defaultPriority="2" />
+                        </PriorityGroups>
+                      </UserDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                            <tags tag="engineerConsole">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_engineer_console_access" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="4" flags="empty">
+                    <Types>
+                      <Type type="SeatAccess" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_fueltank_left" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFueltank02">
+                    <Types>
+                      <Type type="FuelTank" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Input" pipe="IntakeFuel" />
+                      <Connection pipeClass="Output" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_fueltank_right" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFueltank01">
+                    <Types>
+                      <Type type="FuelTank" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Input" pipe="IntakeFuel" />
+                      <Connection pipeClass="Output" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_ground_fuel_port" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                    <Types>
+                      <Type type="Door" subtypes="empty" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_quantum_drive" class="ItemPort">
+                  <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameQDrive" requiredTags="empty">
+                    <Types>
+                      <Type type="QuantumDrive" subtypes="QDrive" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="QuantumFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_quantum_fuel_tank" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="2" flags="uneditable" display_name="port_NameQFuelTank" requiredTags="empty">
+                    <Types>
+                      <Type type="QuantumFuelTank" subtypes="QuantumFuel" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Output" pipe="QuantumFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_relay_engineering" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="empty" display_name="empty">
+                    <Types>
+                      <Type type="Relay" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_relay_rear_turret_left" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="empty" display_name="empty">
+                    <Types>
+                      <Type type="Relay" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_relay_rear_turret_right" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="empty" display_name="empty">
+                    <Types>
+                      <Type type="Relay" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_turret_backbottom" class="ItemPort">
+                  <ItemPort minSize="4" maxSize="4" flags="$uneditable lower" display_name="port_NameTurret03" displayTop="1">
+                    <Types>
+                      <Type type="TurretBase" subtypes="MannedTurret" />
+                    </Types>
+                    <Pitch min="-45" max="85" />
+                    <Yaw min="-180" max="180" />
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                      <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                    </Connections>
+                    <ControllerDef controllableTags="turret_backbottom">
+                      <UserDef>
+                        <Observerables>
+                          <Observerable itemType="FlightController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                          <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemTargetSelectorComponent" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                          <Observerable itemType="Radar" screensDefault="Screen_Radar" screensAvail="Screen_Radar" />
+                          <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemSeat" screensDefault="Screen_Turret_HUD" screensAvail="Screen_Turret_HUD" />
+                          <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                          <Observerable itemType="ShieldController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                          <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                          <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemWeaponController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                          <Observerable itemType="CommsController" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" primaryCommsScreen="Screen_Right_Top" />
+                        </Observerables>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="FlightController" defaultPriority="observe_only" />
+                          <PriorityGroup itemType="WeaponGun" defaultPriority="10" />
+                          <PriorityGroup itemType="Turret" defaultPriority="10" />
+                          <PriorityGroup itemType="TurretBase" defaultPriority="10" />
+                          <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                          <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                          <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                          <PriorityGroup itemType="CommsController" defaultPriority="observe_only" />
+                          <PriorityGroup itemType="Display" />
+                          <PriorityGroup itemType="Radar" defaultPriority="observe_only" />
+                        </PriorityGroups>
+                      </UserDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                            <tags tag="turret_backbottom">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                          <PriorityGroup itemType="TurretBase" defaultPriority="no_control">
+                            <tags tag="turret_backbottom">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                          <PriorityGroup itemType="Display" defaultPriority="no_control">
+                            <tags tag="turret_backbottom">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                          <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                            <tags tag="turret_backbottom">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_turret_backbottom_seat_access" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="4" flags="empty">
+                    <Types>
+                      <Type type="SeatAccess" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="body_lower_left" class="AnimatedJoint" damageMax="200">
+                  <Parts>
+                    <Part name="wing_left_rl_geom" class="AnimatedJoint" damageMax="240" detachRatio="0">
+                      <Effects>
+                        <DetachFx joint="wing_left_rl_geom" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire.lt_fire_1m_loop_fixed" pos_offset="-5.2889,-3.22305,0.757039" rot_offset="-0.766045,-0.642788,0.0" helperID="wing_left_rl_geom_PFX_DebrisFX_lt_fire_1m_loop_fixed002" />
+                      </Effects>
+                      <Parts>
+                        <Part name="wing_left_rl_damage" class="AnimatedJoint" damageMax="10000" detachRatio="1" detachBaseForce="-5,0,0" detachRandomForce="-0.5, 0.5, 0.5" detachRandomRotation="15,-155,0.3" detachProbability="1">
+                          <Effects>
+                            <DetachFx joint="wing_left_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="5.42804,2.85828,-0.118473" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_rl_damage_SQUIB_.5m023" effect="empty" />
+                            <DetachFx joint="wing_left_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="6.50742,2.78254,-0.0935804" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_rl_damage_SQUIB_.5m024" effect="empty" />
+                            <DetachFx joint="wing_left_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="4.07561,4.84597,0.140036" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_rl_damage_SQUIB_.5m025" effect="empty" />
+                            <DetachFx joint="wing_left_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.94894,6.64696,0.0823663" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_rl_damage_SQUIB_.5m026" effect="empty" />
+                            <DetachFx joint="wing_left_rl_damage" partName="wing_left_rl_geom" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="4.81748,4.76076,0.37805" rot_offset="-0.766044,-0.642788,0.0" helperID="wing_left_rl_damage_PFX_DetachFX_lt_explode_2m_Fireless007" />
+                            <DetachFx joint="wing_left_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius="1.5" pos_offset="3.87329,6.1454,0.140036" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_rl_damage_SQUIB_1.5m056" />
+                            <DetachFx joint="wing_left_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="5.61939,3.87623,0.140037" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_rl_damage_SQUIB_2m057" />
+                          </Effects>
+                          <Parts>
+                            <Part name="wing_left_rl_fin_geom" class="AnimatedJoint" damageMax="50" detachRatio="1" detachBaseForce="-2,-1,0" detachRandomForce="2.2,1.5,2.4" detachRandomRotation="10.5,0,0.3">
+                              <Effects>
+                                <DetachFx joint="wing_left_rl_fin_geom" partName="wing_left_rl_damage" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_loop_fixed" pos_offset="-0.00946167,-0.146406,0.133831" rot_offset="-0.188513,-0.982071,0.0" helperID="wing_left_rl_fin_geom_PFX_DetachFX_lt_sparks_1m_loop_fixed" />
+                                <DetachFx joint="wing_left_rl_fin_geom" partName="wing_left_rl_damage" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_once_fixed" pos_offset="0.673528,-0.025542,0.171679" rot_offset="-0.0587141,-0.998275,0.0" helperID="wing_left_rl_fin_geom_PFX_DetachFX_lt_sparks_2m_once_fixed" />
+                                <DetachFx joint="wing_left_rl_fin_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="1.2574,-0.0380127,-0.0158546" rot_offset="-0.657822,0.753174,0.0" helperID="wing_left_rl_fin_geom_SQUIB_.5m020" effect="empty" />
+                                <DetachFx joint="wing_left_rl_fin_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="4.53869,-0.158701,0.186975" rot_offset="-0.657822,0.753174,0.0" helperID="wing_left_rl_fin_geom_SQUIB_.5m021" effect="empty" />
+                                <DetachFx joint="wing_left_rl_fin_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-1.92772,-0.10748,-0.0722389" rot_offset="-0.657822,0.753174,0.0" helperID="wing_left_rl_fin_geom_SQUIB_.5m022" effect="empty" />
+                              </Effects>
+                            </Part>
+                          </Parts>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="wing_left_mlr_geom" class="AnimatedJoint" damageMax="480" detachRatio="0">
+                      <Parts>
+                        <Part name="wing_left_mlr_damage" class="AnimatedJoint" damageMax="240" detachRatio="1" detachBaseForce="-3,0,-1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="20.5,70,70.3" detachProbability="1">
+                          <Effects>
+                            <DetachFx joint="wing_left_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="0.649407,3.26437,0.391327" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_mlr_damage_SQUIB_.5m027" effect="empty" />
+                            <DetachFx joint="wing_left_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.5406,2.93682,1.31324" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_mlr_damage_SQUIB_.5m028" effect="empty" />
+                            <DetachFx joint="wing_left_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.39596,-1.0535,1.49391" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_mlr_damage_SQUIB_.5m029" effect="empty" />
+                            <DetachFx joint="wing_left_mlr_damage" partName="wing_left_mlr_geom" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="1.88129,3.42222,0.944802" rot_offset="0.0,-1.0,0.0" helperID="wing_left_mlr_damage_PFX_DetachFX_lt_explode_2m_Fireless012" />
+                            <DetachFx joint="wing_left_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="1.0676,2.29423,0.471345" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_mlr_damage_SQUIB_.5m059" />
+                            <DetachFx joint="wing_left_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="2.2993,4.00077,0.933753" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_mlr_damage_SQUIB_2m060" />
+                          </Effects>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="wing_left_m_geom" class="AnimatedJoint" damageMax="480" detachRatio="0">
+                      <Parts>
+                        <Part name="wing_left_m_damage" class="AnimatedJoint" damageMax="2800" detachRatio="1" detachBaseForce="-3,-3,7" detachRandomForce="2, 2, 2" detachRandomRotation="20,10,30.3" detachProbability="1">
+                          <Effects>
+                            <DetachFx joint="wing_left_m_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="1.38631,7.15949,-1.36376" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_m_damage_SQUIB_.5m030" effect="empty" />
+                            <DetachFx joint="wing_left_m_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="1.31195,6.09801,-1.37539" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_m_damage_SQUIB_.5m031" effect="empty" />
+                            <DetachFx joint="wing_left_m_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.30761,5.76318,-2.2876" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_left_m_damage_SQUIB_.5m032" effect="empty" />
+                            <DetachFx joint="wing_left_m_damage" partName="wing_left_m_geom" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="2.43161,6.17717,-2.00398" rot_offset="-0.188619,-0.966012,0.176756" helperID="wing_left_m_damage_PFX_DetachFX_lt_explode_2m_Fireless011" />
+                          </Effects>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="main_wing_slider_a_left" class="AnimatedJoint" damageMax="4000">
+                      <Parts>
+                        <Part name="large_wing_piston_geom_l" class="AnimatedJoint" damageMax="4000">
+                          <Parts>
+                            <Part name="large_wing_piston_2" class="AnimatedJoint" damageMax="4000" />
+                          </Parts>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="left_wing_rs_geom" class="AnimatedJoint" damageMax="50" detachRatio="1" detachBaseForce="-5.5,-2,-3" detachRandomForce="-0.5, -0.5, -0.5" detachRandomRotation="10.5,0,50" detachProbability="1">
+                      <Effects>
+                        <DetachFx joint="left_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.810283,0.422714,-3.8147e-07" rot_offset="0.0,1.0,0.0" helperID="left_wing_rs_geom_SQUIB_.5m050" effect="empty" />
+                        <DetachFx joint="left_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="0.310524,-1.46946,1.52588e-07" rot_offset="0.0,1.0,0.0" helperID="left_wing_rs_geom_SQUIB_.5m054" effect="empty" />
+                        <DetachFx joint="left_wing_rs_geom" partName="body_lower_left" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_50cm_Fireless" pos_offset="-6.10352e-07,0.0,0.0" rot_offset="0.639497,-0.767207,-0.0493625" helperID="left_wing_rs_geom_PFX_DetachFX_lt_explode_50cm_Fireless014" />
+                        <DetachFx joint="left_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius="1.3" pos_offset="0.107466,0.570343,0.0" rot_offset="0.0,1.0,0.0" helperID="left_wing_rs_geom_SQUIB_1.3m052" />
+                        <DetachFx joint="left_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius="1" pos_offset="0.594117,-0.0595325,2.67029e-07" rot_offset="0.0,1.0,0.0" helperID="left_wing_rs_geom_SQUIB_1m053" />
+                      </Effects>
+                    </Part>
+                    <Part name="hardpoint_turret_backtopleft_seat_access" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="4" flags="empty">
+                        <Types>
+                          <Type type="SeatAccess" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_turret_backtopleft" class="ItemPort">
+                      <ItemPort minSize="4" maxSize="4" flags="$uneditable" display_name="port_NameTurret01" displayTop="1">
+                        <Types>
+                          <Type type="TurretBase" subtypes="MannedTurret" />
+                        </Types>
+                        <Pitch min="-45" max="85" />
+                        <Yaw min="-180" max="180" />
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                          <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                        </Connections>
+                        <ControllerDef controllableTags="turret_backtopleft">
+                          <UserDef>
+                            <Observerables>
+                              <Observerable itemType="FlightController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemTargetSelectorComponent" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="Radar" screensDefault="Screen_Radar" screensAvail="Screen_Radar" />
+                              <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemSeat" screensDefault="Screen_Turret_HUD" screensAvail="Screen_Turret_HUD" />
+                              <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="ShieldController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemWeaponController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="CommsController" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" primaryCommsScreen="Screen_Right_Top" />
+                            </Observerables>
+                            <PriorityGroups>
+                              <PriorityGroup itemType="FlightController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="WeaponGun" defaultPriority="10" />
+                              <PriorityGroup itemType="Turret" defaultPriority="10" />
+                              <PriorityGroup itemType="TurretBase" defaultPriority="10" />
+                              <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="CommsController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="Display" />
+                              <PriorityGroup itemType="Radar" defaultPriority="observe_only" />
+                            </PriorityGroups>
+                          </UserDef>
+                          <UsableDef>
+                            <PriorityGroups>
+                              <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                                <tags tag="turret_backtopleft">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                              <PriorityGroup itemType="TurretBase" defaultPriority="no_control">
+                                <tags tag="turret_backtopleft">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                              <PriorityGroup itemType="Display" defaultPriority="no_control">
+                                <tags tag="turret_backtopleft">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                              <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                                <tags tag="turret_backtopleft">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                            </PriorityGroups>
+                          </UsableDef>
+                        </ControllerDef>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_thruster_vtol_rearleft2" class="ItemPort" damageMax="50">
+                      <ItemPort minSize="5" maxSize="5" flags="uneditable" display_name="port_NameThrustManoeuv09">
+                        <Types>
+                          <Type type="ManneuverThruster" subtypes="JointThruster" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_thruster_vtol_rearleft1" class="ItemPort" damageMax="50">
+                      <ItemPort minSize="5" maxSize="5" flags="uneditable" display_name="port_NameThrustManoeuv08">
+                        <Types>
+                          <Type type="ManneuverThruster" subtypes="JointThruster" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_mainthruster_left" class="ItemPort" damageMax="5000">
+                      <ItemPort minSize="4" maxSize="6" flags="Left uneditable" display_name="port_NameThrustMain01">
+                        <Types>
+                          <Type type="MainThruster" subtypes="empty" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_fuel_intake_rearleft" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelIntake01">
+                        <Types>
+                          <Type type="FuelIntake" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="IntakeFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_countermeasurelauncher_left2" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="3" flags="Left uneditable" display_name="port_NameCountermeasure02">
+                        <Types>
+                          <Type type="WeaponDefensive" subtypes="CountermeasureLauncher" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_countermeasurelauncher_left1" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="3" flags="Left uneditable" display_name="port_NameCountermeasure01">
+                        <Types>
+                          <Type type="WeaponDefensive" subtypes="CountermeasureLauncher" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_cooler_left" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="3" flags="empty" display_name="port_NameCooler01">
+                        <Types>
+                          <Type type="Cooler" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_thruster_maneuver_backbottomleft" class="ItemPort" damageMax="50">
+                      <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable" display_name="port_NameThrustManoeuv07">
+                        <Types>
+                          <Type type="ManneuverThruster" subtypes="empty" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                  </Parts>
+                </Part>
+                <Part name="body_lower_right" class="AnimatedJoint" damageMax="200">
+                  <Parts>
+                    <Part name="wing_right_rl_geom" class="AnimatedJoint" damageMax="240" detachRatio="0">
+                      <Effects>
+                        <DetachFx joint="wing_right_rl_geom" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire.lt_fire_1m_loop_fixed" pos_offset="5.58172,-3.44706,0.757038" rot_offset="0.707107,0.707107,0.0" helperID="wing_right_rl_geom_PFX_DebrisFX_lt_fire_1m_loop_fixed001" />
+                      </Effects>
+                      <Parts>
+                        <Part name="wing_right_rl_damage" class="AnimatedJoint" damageMax="10000" detachRatio="1" detachBaseForce="5,0,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="15,155,0.3" detachProbability="1">
+                          <Effects>
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.84374,7.86603,0.191799" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_.5m001" effect="empty" />
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.67057,6.86467,0.0483388" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_.5m034" effect="empty" />
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-1.99497,7.57837,-0.273018" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_.5m035" effect="empty" />
+                            <DetachFx joint="wing_right_rl_damage" partName="wing_right_rl_geom" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-3.98952,4.53246,0.37805" rot_offset="0.707107,0.707107,0.0" helperID="wing_right_rl_damage_PFX_DetachFX_lt_explode_2m_Fireless006" />
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="-3.58622,5.36622,-0.203211" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_2m033" />
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius="1" pos_offset="-4.64493,3.8054,0.0378816" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_1m036" />
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius="1.3" pos_offset="-5.87445,2.40324,0.191798" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_1.3m037" />
+                            <DetachFx joint="wing_right_rl_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-4.5015,4.62644,0.191799" rot_offset="0.700909,-0.71325,0.0" helperID="wing_right_rl_damage_SQUIB_.5m056" />
+                          </Effects>
+                          <Parts>
+                            <Part name="wing_right_rl_fin_geom" class="AnimatedJoint" damageMax="50" detachRatio="1" detachBaseForce="0,10,0" detachRandomForce="2.2,1.5,2.4" detachRandomRotation="10.5,0,0.3">
+                              <Effects>
+                                <DetachFx joint="wing_right_rl_fin_geom" partName="wing_right_rl_damage" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_once_fixed" pos_offset="1.14,-1.59458,0.180173" rot_offset="-0.999391,-0.0348999,0.0" helperID="wing_right_rl_fin_geom_PFX_DetachFX_lt_sparks_2m_once_fixed002" />
+                                <DetachFx joint="wing_right_rl_fin_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.27613,2.71548,-0.0664178" rot_offset="-0.999391,-0.0348999,0.0" helperID="wing_right_rl_fin_geom_SQUIB_.5m038" effect="empty" />
+                                <DetachFx joint="wing_right_rl_fin_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.751509,0.914951,0.272942" rot_offset="-0.999391,-0.0348999,0.0" helperID="wing_right_rl_fin_geom_SQUIB_.5m039" effect="empty" />
+                                <DetachFx joint="wing_right_rl_fin_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="1.14,-1.59458,0.180173" rot_offset="-0.999391,-0.0348999,0.0" helperID="wing_right_rl_fin_geom_SQUIB_.5m040" effect="empty" />
+                                <DetachFx joint="wing_right_rl_fin_geom" partName="wing_right_rl_damage" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_loop_fixed" pos_offset="0.0,-2.44141e-06,0.0" rot_offset="0.0,1.0,0.0" helperID="wing_right_rl_fin_geom_PFX_DetachFX_lt_sparks_1m_loop_fixed001" />
+                              </Effects>
+                            </Part>
+                          </Parts>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="wing_right_mlr_geom" class="AnimatedJoint" damageMax="480" detachRatio="0">
+                      <Parts>
+                        <Part name="wing_right_mlr_damage" class="AnimatedJoint" damageMax="240" detachRatio="1" detachBaseForce="1,-1,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="15,10,2" detachProbability="1">
+                          <Effects>
+                            <DetachFx joint="wing_right_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.554071,2.25524,0.429506" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_right_mlr_damage_SQUIB_.5m041" effect="empty" />
+                            <DetachFx joint="wing_right_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.637299,3.52037,0.520081" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_right_mlr_damage_SQUIB_.5m042" effect="empty" />
+                            <DetachFx joint="wing_right_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.54622,3.20379,1.31649" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_right_mlr_damage_SQUIB_.5m043" effect="empty" />
+                            <DetachFx joint="wing_right_mlr_damage" partName="wing_right_mlr_geom" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-1.8813,3.48215,0.944781" rot_offset="0.0,-1.0,0.0" helperID="wing_right_mlr_damage_PFX_DetachFX_lt_explode_2m_Fireless013" />
+                            <DetachFx joint="wing_right_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.637298,3.60461,1.56975" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_right_mlr_damage_SQUIB_.5m057" />
+                            <DetachFx joint="wing_right_mlr_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.95489,2.37546,1.81237" rot_offset="-0.999391,-0.0348995,0.0" helperID="wing_right_mlr_damage_SQUIB_.5m058" />
+                          </Effects>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="wing_right_m_geom" class="AnimatedJoint" damageMax="480" detachRatio="0">
+                      <Parts>
+                        <Part name="wing_right_m_damage" class="AnimatedJoint" damageMax="2800" detachRatio="1" detachBaseForce="0,-5,3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="20,10,30.3" detachProbability="1">
+                          <Effects>
+                            <DetachFx joint="wing_right_m_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="0.147343,3.40573,0.184406" rot_offset="0.292372,-0.956305,0.0" helperID="wing_right_m_damage_SQUIB_.5m044" effect="empty" />
+                            <DetachFx joint="wing_right_m_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.29061,5.82421,-2.2727" rot_offset="0.292372,-0.956305,0.0" helperID="wing_right_m_damage_SQUIB_.5m045" effect="empty" />
+                            <DetachFx joint="wing_right_m_damage" partName="wing_right_m_geom" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-2.43161,5.94136,-2.004" rot_offset="0.240954,-0.941003,0.237603" helperID="wing_right_m_damage_PFX_DetachFX_lt_explode_2m_Fireless010" />
+                            <DetachFx joint="wing_right_m_damage" squibPhysical="40" squibEnergy="40" squibRadius="1" pos_offset="-2.95883,9.34018,-2.67132" rot_offset="0.292372,-0.956305,0.0" helperID="wing_right_m_damage_SQUIB_1m057" />
+                          </Effects>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="right_wing_rs_geom" class="AnimatedJoint" damageMax="50" detachRatio="1" detachBaseForce="5,-3,-3" detachRandomForce="0.5, -0.5, -0.5" detachRandomRotation="10.5,10,50" detachProbability="1">
+                      <Effects>
+                        <DetachFx joint="right_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-0.309525,-1.45665,1.52588e-07" rot_offset="0.0,1.0,0.0" helperID="right_wing_rs_geom_SQUIB_.5m051" effect="empty" />
+                        <DetachFx joint="right_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="0.812964,0.354669,-3.8147e-07" rot_offset="0.0,1.0,0.0" helperID="right_wing_rs_geom_SQUIB_.5m055" effect="empty" />
+                        <DetachFx joint="right_wing_rs_geom" partName="body_lower_right" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_50cm_Fireless" pos_offset="9.76562e-06,-9.76563e-05,0.000238953" rot_offset="0.639497,-0.767208,-0.0493624" helperID="right_wing_rs_geom_PFX_DetachFX_lt_explode_50cm_Fireless015" />
+                        <DetachFx joint="right_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius="1" pos_offset="-0.0285315,0.565764,0.0" rot_offset="0.0,1.0,0.0" helperID="right_wing_rs_geom_SQUIB_1m056" />
+                        <DetachFx joint="right_wing_rs_geom" squibPhysical="40" squibEnergy="40" squibRadius="1.3" pos_offset="-0.549607,-0.286047,2.67029e-07" rot_offset="0.0,1.0,0.0" helperID="right_wing_rs_geom_SQUIB_1.3m057" />
+                      </Effects>
+                    </Part>
+                    <Part name="main_wing_slider_a_right" class="AnimatedJoint" damageMax="4000">
+                      <Parts>
+                        <Part name="main_wing_slider_a_left_r" class="AnimatedJoint" damageMax="4000">
+                          <Parts>
+                            <Part name="large_wing_piston_003" class="AnimatedJoint" damageMax="4000" />
+                          </Parts>
+                        </Part>
+                      </Parts>
+                    </Part>
+                    <Part name="hardpoint_turret_backtopright_seat_access" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="4" flags="empty">
+                        <Types>
+                          <Type type="SeatAccess" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_turret_backtopright" class="ItemPort">
+                      <ItemPort minSize="4" maxSize="4" flags="$uneditable" display_name="port_NameTurret02" displayTop="1">
+                        <Types>
+                          <Type type="TurretBase" subtypes="MannedTurret" />
+                        </Types>
+                        <Pitch min="-45" max="85" />
+                        <Yaw min="-180" max="180" />
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                          <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                        </Connections>
+                        <ControllerDef controllableTags="turret_backtopright">
+                          <UserDef>
+                            <Observerables>
+                              <Observerable itemType="FlightController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemTargetSelectorComponent" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="Radar" screensDefault="Screen_Radar" screensAvail="Screen_Radar" />
+                              <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemSeat" screensDefault="Screen_Turret_HUD" screensAvail="Screen_Turret_HUD" />
+                              <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="ShieldController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemWeaponController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                              <Observerable itemType="CommsController" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                            </Observerables>
+                            <PriorityGroups>
+                              <PriorityGroup itemType="FlightController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="WeaponGun" defaultPriority="10" />
+                              <PriorityGroup itemType="Turret" defaultPriority="10" />
+                              <PriorityGroup itemType="TurretBase" defaultPriority="10" />
+                              <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="CommsController" defaultPriority="observe_only" />
+                              <PriorityGroup itemType="Display" />
+                              <PriorityGroup itemType="Radar" defaultPriority="observe_only" />
+                            </PriorityGroups>
+                          </UserDef>
+                          <UsableDef>
+                            <PriorityGroups>
+                              <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                                <tags tag="turret_backtopright">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                              <PriorityGroup itemType="TurretBase" defaultPriority="no_control">
+                                <tags tag="turret_backtopright">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                              <PriorityGroup itemType="Display" defaultPriority="no_control">
+                                <tags tag="turret_backtopright">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                              <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                                <tags tag="turret_backtopright">
+                                  <Priority value="exclusive_control" />
+                                </tags>
+                              </PriorityGroup>
+                            </PriorityGroups>
+                          </UsableDef>
+                        </ControllerDef>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_thruster_vtol_rearright2" class="ItemPort" damageMax="50">
+                      <ItemPort minSize="5" maxSize="5" flags="uneditable" display_name="port_NameThrustManoeuv12">
+                        <Types>
+                          <Type type="ManneuverThruster" subtypes="JointThruster" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_thruster_vtol_rearright1" class="ItemPort" damageMax="50">
+                      <ItemPort minSize="5" maxSize="5" flags="uneditable" display_name="port_NameThrustManoeuv11">
+                        <Types>
+                          <Type type="ManneuverThruster" subtypes="JointThruster" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_shieldgenerator_right_top" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameShieldGen03">
+                        <Types>
+                          <Type type="Shield" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Shield" pipe="Shield" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_shieldgenerator_right_bottom" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameShieldGen04">
+                        <Types>
+                          <Type type="Shield" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Shield" pipe="Shield" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_shieldgenerator_middle_top" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameShieldGen01">
+                        <Types>
+                          <Type type="Shield" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Shield" pipe="Shield" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_shieldgenerator_middle_bottom" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameShieldGen02">
+                        <Types>
+                          <Type type="Shield" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Shield" pipe="Shield" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_shieldgenerator_left_top" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameShieldGen06">
+                        <Types>
+                          <Type type="Shield" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Shield" pipe="Shield" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_shieldgenerator_left_bottom" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NameShieldGen05">
+                        <Types>
+                          <Type type="Shield" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Shield" pipe="Shield" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_mainthruster_right" class="ItemPort" damageMax="5000">
+                      <ItemPort minSize="4" maxSize="6" flags="Right uneditable" display_name="port_NameThrustMain01">
+                        <Types>
+                          <Type type="MainThruster" subtypes="empty" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_fuel_intake_rearright" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelIntake01">
+                        <Types>
+                          <Type type="FuelIntake" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="IntakeFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_countermeasurelauncher_right2" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="3" flags="Right uneditable" display_name="port_NameCountermeasure04">
+                        <Types>
+                          <Type type="WeaponDefensive" subtypes="CountermeasureLauncher" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_countermeasurelauncher_right1" class="ItemPort">
+                      <ItemPort minSize="1" maxSize="3" flags="Right uneditable" display_name="port_NameCountermeasure03">
+                        <Types>
+                          <Type type="WeaponDefensive" subtypes="CountermeasureLauncher" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_cooler_right" class="ItemPort">
+                      <ItemPort minSize="2" maxSize="3" flags="empty" display_name="port_NameCooler02">
+                        <Types>
+                          <Type type="Cooler" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                    <Part name="hardpoint_thruster_maneuver_backbottomright" class="ItemPort" damageMax="50">
+                      <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable" display_name="port_NameThrustManoeuv10">
+                        <Types>
+                          <Type type="ManneuverThruster" subtypes="empty" />
+                        </Types>
+                        <Connections>
+                          <Connection pipeClass="Power" pipe="MainPower" />
+                          <Connection pipeClass="Heat" pipe="MainHeat" />
+                          <Connection pipeClass="Fuel" pipe="MainFuel" />
+                        </Connections>
+                      </ItemPort>
+                    </Part>
+                  </Parts>
+                </Part>
+                <Part name="hardpoint_thruster_maneuver_backtopright" class="ItemPort" damageMax="5000">
+                  <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable rear_top" display_name="port_NameThrustManoeuv13">
+                    <Types>
+                      <Type type="ManneuverThruster" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_thruster_maneuver_backtopleft" class="ItemPort" damageMax="5000">
+                  <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable rear_top" display_name="port_NameThrustManoeuv14">
+                    <Types>
+                      <Type type="ManneuverThruster" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_thruster_maneuver_backright" class="ItemPort" damageMax="5000">
+                  <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable" display_name="port_NameThrustManoeuv15">
+                    <Types>
+                      <Type type="ManneuverThruster" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_thruster_maneuver_backleft" class="ItemPort" damageMax="5000">
+                  <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable" display_name="port_NameThrustManoeuv16">
+                    <Types>
+                      <Type type="ManneuverThruster" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_rear_module" class="ItemPort">
+                  <ItemPort minSize="3" maxSize="3" display_name="port_NameModuleRear" flags="swaponly" requiredTags="$AEGS_Retaliator_Module_Rear" PortTags="AEGS_Retaliator_Module_Rear">
+                    <Types>
+                      <Type type="Module" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+              </Parts>
+            </Part>
+            <Part name="exterior_lighting" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable exterior_lighting">
+                <Types>
+                  <Type type="Interior" subtypes="Retaliator" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="front_left_wing" class="AnimatedJoint" detachRatio="0">
+              <Parts>
+                <Part name="front_left_wing_damage" class="AnimatedJoint" damageMax="100" detachRatio="1" detachBaseForce="-4,0,-1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="100,100,20.3" detachProbability="1">
+                  <Effects>
+                    <DetachFx joint="front_left_wing_damage" partName="front_left_wing" effect="Damage/Metal_FX.Metal_ALL.metal_1m_loop_trail" pos_offset="2.43134,-1.0296,0.0546037" rot_offset="-0.901986,0.322758,0.286788" helperID="front_left_wing_damage_PFX_DetachFX_metal_1m_loop_trail" />
+                    <DetachFx joint="front_left_wing_damage" effect="Damage/Metal_FX.Metal_ALL.metal_1m_loop_trail" pos_offset="2.43134,-1.17485,0.0546037" rot_offset="0.956927,-0.0675918,-0.282349" helperID="front_left_wing_damage_PFX_DebrisFX_metal_1m_loop_trail001" />
+                    <DetachFx joint="front_left_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.42302,-1.96337,0.00545151" rot_offset="-0.999391,-0.0348995,0.0" helperID="front_left_wing_damage_SQUIB_.5m046" effect="empty" />
+                    <DetachFx joint="front_left_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.47025,-0.996917,0.0502707" rot_offset="-0.999391,-0.0348995,0.0" helperID="front_left_wing_damage_SQUIB_.5m047" effect="empty" />
+                    <DetachFx joint="front_left_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.06069,-1.37244,-0.0409846" rot_offset="-0.999391,-0.0348995,0.0" helperID="front_left_wing_damage_SQUIB_.5m048" effect="empty" />
+                    <DetachFx joint="front_left_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="2.48556,-0.192656,0.0169127" rot_offset="-0.999391,-0.0348995,0.0" helperID="front_left_wing_damage_SQUIB_.5m049" effect="empty" />
+                    <DetachFx joint="front_left_wing_damage" partName="front_left_wing" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_50cm_Fireless" pos_offset="2.42915,-1.04388,-0.00492886" rot_offset="-0.866025,0.5,0.0" helperID="front_left_wing_damage_PFX_DetachFX_lt_explode_50cm_Fireless005" />
+                  </Effects>
+                  <Parts>
+                    <Part name="front_left_wing_flp_geom" class="AnimatedJoint" damageMax="100" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="10.5,0,0.3" detachProbability="1">
+                      <Effects>
+                        <DetachFx joint="front_left_wing_flp_geom" effect="Damage/Metal_FX.Metal_ALL.metal_1m_loop_trail" pos_offset="0.431963,0.265211,0.0225618" rot_offset="-0.301114,0.953252,0.0253289" helperID="front_left_wing_flp_geom_PFX_DebrisFX_metal_1m_loop_trail" />
+                        <DetachFx joint="front_left_wing_flp_geom" partName="front_left_wing_damage" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="0.81592,0.321449,0.0709103" rot_offset="0.167308,-0.825532,0.538985" helperID="front_left_wing_flp_geom_PFX_DetachFX_lt_explode_2m_Fireless002" />
+                        <DetachFx joint="front_left_wing_flp_geom" partName="front_left_wing_damage" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-0.159366,0.266206,0.078046" rot_offset="0.167308,-0.825532,0.538985" helperID="front_left_wing_flp_geom_PFX_DetachFX_lt_explode_2m_Fireless001" />
+                        <DetachFx joint="front_left_wing_flp_geom" partName="front_left_wing_damage" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-1.1563,0.314164,0.0548708" rot_offset="-0.177297,-0.799735,0.573576" helperID="front_left_wing_flp_geom_PFX_DetachFX_lt_explode_2m_Fireless" />
+                      </Effects>
+                    </Part>
+                  </Parts>
+                </Part>
+              </Parts>
+            </Part>
+            <Part name="front_right_wing" class="AnimatedJoint" detachRatio="0">
+              <Parts>
+                <Part name="front_right_wing_damage" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="5,0,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="100,100,60.3" detachProbability="1">
+                  <Effects>
+                    <DetachFx joint="front_right_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.34409,-1.98956,-0.0669991" rot_offset="-0.999391,-0.0348996,0.0" helperID="front_right_wing_damage_SQUIB_.5m002" effect="empty" />
+                    <DetachFx joint="front_right_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.49855,-0.996904,0.0502722" rot_offset="-0.999391,-0.0348996,0.0" helperID="front_right_wing_damage_SQUIB_.5m003" effect="empty" />
+                    <DetachFx joint="front_right_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.50134,-1.56702,-0.0364077" rot_offset="-0.999391,-0.0348996,0.0" helperID="front_right_wing_damage_SQUIB_.5m004" effect="empty" />
+                    <DetachFx joint="front_right_wing_damage" squibPhysical="40" squibEnergy="40" squibRadius=".5" pos_offset="-2.50651,-0.189312,-0.00492863" rot_offset="-0.999391,-0.0348996,0.0" helperID="front_right_wing_damage_SQUIB_.5m005" effect="empty" />
+                    <DetachFx joint="front_right_wing_damage" effect="Damage/Metal_FX.Metal_ALL.metal_1m_loop_trail" pos_offset="-2.45058,-1.01014,0.054604" rot_offset="-0.718034,0.636164,-0.28235" helperID="front_right_wing_damage_PFX_DebrisFX_metal_1m_loop_trail003" />
+                    <DetachFx joint="front_right_wing_damage" partName="front_right_wing" effect="Damage/Metal_FX.Metal_ALL.metal_1m_loop_trail" pos_offset="-2.54464,-1.12105,0.0546039" rot_offset="0.519111,-0.805155,0.286788" helperID="front_right_wing_damage_PFX_DetachFX_metal_1m_loop_trail001" />
+                    <DetachFx joint="front_right_wing_damage" partName="front_right_wing" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_50cm_Fireless" pos_offset="-2.83529,-1.04388,-0.0049292" rot_offset="0.870356,0.492423,0.0" helperID="front_right_wing_damage_PFX_DetachFX_lt_explode_50cm_Fireless009" />
+                  </Effects>
+                  <Parts>
+                    <Part name="front_right_wing_flp_geom" class="AnimatedJoint" damageMax="600" detachRatio="1" detachBaseForce="0,10,0" detachRandomForce="2.2,1.5,2.4" detachRandomRotation="10.5,0,0.3">
+                      <Effects>
+                        <DetachFx joint="front_right_wing_flp_geom" effect="Damage/Metal_FX.Metal_ALL.metal_1m_loop_trail" pos_offset="-0.636549,-0.00842285,0.0225609" rot_offset="0.258225,0.965753,0.0253289" helperID="front_right_wing_flp_geom_PFX_DebrisFX_metal_1m_loop_trail002" />
+                        <DetachFx joint="front_right_wing_flp_geom" partName="front_right_wing_damage" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-0.893053,-0.167296,0.0709092" rot_offset="-0.302451,-0.786141,0.538985" helperID="front_right_wing_flp_geom_PFX_DetachFX_lt_explode_2m_Fireless008" />
+                        <DetachFx joint="front_right_wing_flp_geom" partName="front_right_wing_damage" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="-0.027843,0.310134,0.0780453" rot_offset="-0.302451,-0.786141,0.538985" helperID="front_right_wing_flp_geom_PFX_DetachFX_lt_explode_2m_Fireless004" />
+                        <DetachFx joint="front_right_wing_flp_geom" partName="front_right_wing_damage" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_2m_Fireless" pos_offset="0.826201,0.886238,0.0548699" rot_offset="-0.579228,-0.579228,0.573576" helperID="front_right_wing_flp_geom_PFX_DetachFX_lt_explode_2m_Fireless003" />
+                      </Effects>
+                    </Part>
+                  </Parts>
+                </Part>
+              </Parts>
+            </Part>
+            <Part name="glass" class="AnimatedJoint" damageMax="100" />
+            <Part name="hardpoint_avionics_motherboard" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameAvionics">
+                <Types>
+                  <Type type="Avionics" subtypes="Motherboard" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_bed_captain" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameBed">
+                <Types>
+                  <Type type="Usable" />
+                </Types>
+                <ControllerDef controllableTags="CapBed">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Usable" defaultPriority="no_control">
+                        <tags tag="CapBed">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Usable" defaultPriority="no_control">
+                        <tags tag="CapBed">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_container_gameplay" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Room" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_capacitor_assignment" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CapacitorAssignmentController" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_comms" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CommsController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Comms" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_cooler" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CoolerController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Cooler" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_door" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="DoorController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Door" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="SeatAccess" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_energy" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="EnergyController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="energy_controller">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="PowerPlant" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="FuelIntake" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="FuelTank" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_flight" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameComputer">
+                <Types>
+                  <Type type="FlightController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="MainThruster" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="ManneuverThruster" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_light" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="LightController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Light" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_missile" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="MissileController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="MissileLauncher" />
+                      <PriorityGroup itemType="Missile" />
+                      <PriorityGroup itemType="BombLauncher" />
+                      <PriorityGroup itemType="Bomb" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_shield" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="ShieldController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Shield" pipe="Shield" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Shield" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_weapon" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="WeaponController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Turret" />
+                      <PriorityGroup itemType="WeaponGun" />
+                      <PriorityGroup itemType="WeaponDefensive" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_dashboard_pilot" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatDashboard" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="PilotDashBoard">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Display" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_esc_pod_lower_left" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameEscapePod05">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="EscPodLowerLeft">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodLowerLeft">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodLowerLeft">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_esc_pod_lower_right" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameEscapePod02">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="EscPodLowerRight">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodLowerRight">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodLowerRight">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_esc_pod_rear_left" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameEscapePod06">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="EscPodRearLeft">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodRearLeft">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodRearLeft">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_esc_pod_rear_right" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameEscapePod03">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="EscPodRearRight">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodRearRight">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodRearRight">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_esc_pod_upper_left" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameEscapePod01">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="EscPodUpperLeft">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodUpperLeft">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodUpperLeft">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_esc_pod_upper_right" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable" display_name="port_NameEscapePod04">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="EscPodUpperRight">
+                  <UserDef>
+                    <Observerables />
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodUpperRight">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="EscPodUpperRight">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_exterior_docking_door" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable dockingport3" display_name="Interior Docking Door">
+                <Types>
+                  <Type type="Door" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_fuel_intake_frontleft" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelIntake01">
+                <Types>
+                  <Type type="FuelIntake" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="IntakeFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_fuel_intake_frontright" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelIntake02">
+                <Types>
+                  <Type type="FuelIntake" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="IntakeFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_interior_docking_door" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable dockingport3" display_name="Interior Docking Door">
+                <Types>
+                  <Type type="Door" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_lights_ext" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="MultiLight" />
+                </Types>
+                <AttachmentPoints>
+                  <AttachmentPoint name="Prefab_Body_Lights" bone="body" />
+                  <AttachmentPoint name="Prefab_Nose_Lights" bone="nose" />
+                  <AttachmentPoint name="Prefab_Wing_Left_m_Lights" bone="wing_left_m_damage" />
+                  <AttachmentPoint name="Prefab_Wing_Left_rl_Lights" bone="wing_left_rl_damage" />
+                  <AttachmentPoint name="Prefab_Wing_Left_mlr_Lights" bone="wing_left_mlr_damage" />
+                  <AttachmentPoint name="Prefab_Front_Left_Wing_Lights" bone="front_left_wing_damage" />
+                  <AttachmentPoint name="Prefab_Wing_Right_m_Lights" bone="wing_right_m_damage" />
+                  <AttachmentPoint name="Prefab_Wing_Right_mlr_Lights" bone="wing_right_mlr_damage" />
+                  <AttachmentPoint name="Prefab_Wing_Right_rl_Lights" bone="wing_right_rl_damage" />
+                  <AttachmentPoint name="Prefab_Front_Right_Wing_Lights" bone="front_right_wing_damage" />
+                </AttachmentPoints>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_paint" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="empty" portTags="Paint_Retaliator" requiredTags="Paint_Retaliator" display_name="port_NamePaint">
+                <Types>
+                  <Type type="Paints" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_pilot_seat" class="ItemPort">
+              <ItemPort minSize="1" maxSize="3" flags="seat uneditable">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="pilotSeat">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="EnergyController" screensDefault="MFD_Left" screensAvail="MFD_Right, MFD_Left" />
+                      <Observerable itemType="CommsController" screensDefault="empty" screensAvail=" MFD_Left, MFD_Right" primaryCommsScreen="MFD_Right" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail=" MFD_Right, MFD_Left, " />
+                      <Observerable itemType="ShieldController" screensDefault="MFD_Right" screensAvail="MFD_Right, MFD_Left" />
+                      <Observerable itemType="WeaponController" screensDefault="empty" screensAvail="MFD_Right, MFD_Left" />
+                      <Observerable itemType="MissileController" visorScreen="empty" screensDefault="empty" screensAvail="Flight_HUD" />
+                      <Observerable itemType="FlightController" screensDefault="MFD_Left" screensAvail="Flight_HUD, MFD_Right, MFD_Left, VS_Left0, Annunciator_Left, Annunciator_Right" />
+                      <Observerable itemType="LightController" screensDefault="empty" screensAvail="NotUsed_LightController" />
+                      <Observerable itemType="Seat" screensDefault="MFD_Right" screensAvail="MFD_Right, MFD_Left, VS_Right0" />
+                      <Observerable itemType="QuantumDrive" screensDefault="empty" screensAvail="Flight_HUD" />
+                      <Observerable itemType="JumpDrive" screensDefault="Flight_HUD" screensAvail="Flight_HUD" />
+                      <Observerable itemType="CapacitorAssignmentController" visorScreen="empty" screensDefault="empty" screensAvail="Flight_HUD" />
+                      <Observerable itemType="Scanner" screensAvail="NotUsed_Scanner" />
+                      <Observerable itemType="LandingSystem" screensDefault="Screen_Flight_HUD" screensAvail="Screen_Flight_HUD" />
+                      <Observerable itemType="Display" screensDefault="empty" screensAvail="empty" />
+                      <Observerable itemType="Radar" screensAvail="NotUsed_Radar" />
+                      <Observerable itemType="SelfDestruct" screensAvail="NotUsed_SelfDestruct" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="DoorController" defaultPriority="1" />
+                      <PriorityGroup itemType="CoolerController" defaultPriority="1" />
+                      <PriorityGroup itemType="ShieldController" defaultPriority="1" />
+                      <PriorityGroup itemType="WeaponController" defaultPriority="1" />
+                      <PriorityGroup itemType="MissileController" defaultPriority="1" />
+                      <PriorityGroup itemType="FlightController" defaultPriority="1" />
+                      <PriorityGroup itemType="QuantumDrive" defaultPriority="1" />
+                      <PriorityGroup itemType="JumpDrive" defaultPriority="1" />
+                      <PriorityGroup itemType="CommsController" defaultPriority="1" />
+                      <PriorityGroup itemType="LightController" defaultPriority="1" />
+                      <PriorityGroup itemType="LandingSystem" defaultPriority="1" />
+                      <PriorityGroup itemType="QuantumFuelTank" />
+                      <PriorityGroup itemType="MultiLight" defaultPriority="1" />
+                      <PriorityGroup itemType="Scanner" />
+                      <PriorityGroup itemType="Ping" />
+                      <PriorityGroup itemType="Radar" defaultPriority="100" />
+                      <PriorityGroup itemType="CapacitorAssignmentController" />
+                      <PriorityGroup itemType="Display">
+                        <tags tag="PilotDashBoard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                        <tags tag="PilotDashBoard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WeaponController" defaultPriority="2">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SelfDestruct" />
+                      <PriorityGroup itemType="EnergyController">
+                        <tags tag="energy_controller">
+                          <Priority value="1" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                        <tags tag="PilotDashBoard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_ping" class="ItemPort">
+              <ItemPort minSize="2" maxSize="2" flags="invisible uneditable">
+                <Types>
+                  <Type type="Ping" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_rack_fl" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Usable" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_rack_fr" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Usable" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_rack_rl" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Usable" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_rack_rr" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Usable" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_radar" class="ItemPort">
+              <ItemPort minSize="1" maxSize="2" flags="uneditable" display_name="port_NameRadar">
+                <Types>
+                  <Type type="Radar" subtypes="ShortRangeRadar,MidRangeRadar" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_scanner" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="Scanner" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_seat_access" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatAccess" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_selfdestruct" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Self Destruct">
+                <Types>
+                  <Type type="SelfDestruct" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_target_selector_pilot" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="TargetSelector" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_target_selector_turret_front_bottom" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="TargetSelector" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_target_selector_turret_front_top" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="TargetSelector" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_target_selector_turret_rear_bottom" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="TargetSelector" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_target_selector_turret_rear_left" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="TargetSelector" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_target_selector_turret_rear_right" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="TargetSelector" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_vtol_frontleft" class="ItemPort" damageMax="10000">
+              <ItemPort minSize="4" maxSize="4" flags="maneuver uneditable" display_name="port_NameThrustManoeuv07">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_vtol_frontright" class="ItemPort" damageMax="10000">
+              <ItemPort minSize="4" maxSize="4" flags="maneuver uneditable" display_name="port_NameThrustManoeuv08">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_transponder" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="Transponder" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_turret_frontbottom" class="ItemPort">
+              <ItemPort minSize="4" maxSize="4" flags="$uneditable lower" display_name="port_NameTurret04" displayTop="1">
+                <Types>
+                  <Type type="TurretBase" subtypes="MannedTurret" />
+                </Types>
+                <Pitch min="-45" max="85" />
+                <Yaw min="-180" max="180" />
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                </Connections>
+                <ControllerDef controllableTags="turret_frontbottom">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="FlightController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemTargetSelectorComponent" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="Radar" screensDefault="Screen_Radar" screensAvail="Screen_Radar" />
+                      <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemSeat" screensDefault="Screen_Turret_HUD" screensAvail="Screen_Turret_HUD" />
+                      <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="ShieldController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemWeaponController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="CommsController" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" primaryCommsScreen="Screen_Right_Top" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="FlightController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="WeaponGun" defaultPriority="10" />
+                      <PriorityGroup itemType="Turret" defaultPriority="10" />
+                      <PriorityGroup itemType="TurretBase" defaultPriority="10" />
+                      <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="CommsController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="Display" />
+                      <PriorityGroup itemType="Radar" defaultPriority="observe_only" />
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                        <tags tag="turret_frontbottom">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="TurretBase" defaultPriority="no_control">
+                        <tags tag="turret_frontbottom">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Display" defaultPriority="no_control">
+                        <tags tag="turret_frontbottom">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                        <tags tag="turret_frontbottom">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_turret_frontbottom_seat_access" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatAccess" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_turret_fronttop" class="ItemPort">
+              <ItemPort minSize="4" maxSize="4" flags="$uneditable" display_name="port_NameTurret05" displayTop="1">
+                <Types>
+                  <Type type="TurretBase" subtypes="MannedTurret" />
+                </Types>
+                <Pitch min="-45" max="85" />
+                <Yaw min="-180" max="180" />
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                </Connections>
+                <ControllerDef controllableTags="turret_fronttop">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="FlightController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemTargetSelectorComponent" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="Radar" screensDefault="Screen_Radar" screensAvail="Screen_Radar" />
+                      <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemSeat" screensDefault="Screen_Turret_HUD" screensAvail="Screen_Turret_HUD" />
+                      <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="ShieldController" screensDefault="Screen_Left_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="TurretBase" componentTag="Engine.Components.SCItemWeaponController" screensDefault="empty" screensAvail="Screen_Left_Top, Screen_Right_Top" />
+                      <Observerable itemType="CommsController" screensDefault="Screen_Right_Top" screensAvail="Screen_Left_Top, Screen_Right_Top" primaryCommsScreen="Screen_Right_Top" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="FlightController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="WeaponGun" defaultPriority="10" />
+                      <PriorityGroup itemType="Turret" defaultPriority="10" />
+                      <PriorityGroup itemType="TurretBase" defaultPriority="10" />
+                      <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="CommsController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="Display" />
+                      <PriorityGroup itemType="Radar" defaultPriority="observe_only" />
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                        <tags tag="turret_fronttop">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="TurretBase" defaultPriority="no_control">
+                        <tags tag="turret_fronttop">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Display" defaultPriority="no_control">
+                        <tags tag="turret_fronttop">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                        <tags tag="turret_fronttop">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_turret_fronttop_seat_access" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatAccess" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_weapon_regen_pool" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Weapon Regen Pool">
+                <Types>
+                  <Type type="WeaponRegenPool" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenCrew" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadCrew" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_weapon_regen_pool_turrets" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Weapon Regen Pool">
+                <Types>
+                  <Type type="WeaponRegenPool" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="LandingPad_Helper" class="ItemPort" />
+            <Part name="hardpoint_thruster_maneuver_fronttopleft" class="ItemPort" damageMax="5000">
+              <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable front_top_left" display_name="port_NameThrustManoeuv01">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_fronttopright" class="ItemPort" damageMax="5000">
+              <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable front_top_right" display_name="port_NameThrustManoeuv02">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_frontleft" class="ItemPort" damageMax="5000">
+              <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable front_left" display_name="port_NameThrustManoeuv03">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_frontright" class="ItemPort" damageMax="5000">
+              <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable front_right" display_name="port_NameThrustManoeuv04">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_frontbottomright" class="ItemPort" damageMax="5000">
+              <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable" display_name="port_NameThrustManoeuv05">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_frontbottomleft" class="ItemPort" damageMax="5000">
+              <ItemPort minSize="2" maxSize="2" flags="maneuver uneditable" display_name="port_NameThrustManoeuv06">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_frontleftretro" class="ItemPort" damageMax="50">
+              <ItemPort minSize="2" maxSize="2" flags="retro left uneditable" display_name="port_NameThrustRetro01">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_thruster_maneuver_frontrightretro" class="ItemPort" damageMax="50">
+              <ItemPort minSize="2" maxSize="2" flags="retro right uneditable" display_name="port_NameThrustRetro02">
+                <Types>
+                  <Type type="ManneuverThruster" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_powerplant_left" class="ItemPort">
+              <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NamePowerplant02">
+                <Types>
+                  <Type type="PowerPlant" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_powerplant_right" class="ItemPort">
+              <ItemPort minSize="2" maxSize="2" flags="empty" display_name="port_NamePowerplant01">
+                <Types>
+                  <Type type="PowerPlant" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_relay_front" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="empty" display_name="empty">
+                <Types>
+                  <Type type="Relay" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_front_module" class="ItemPort">
+              <ItemPort minSize="3" maxSize="3" display_name="port_NameModuleFront" flags="swaponly" PortTags="AEGS_Retaliator_Module_Front" RequiredTags="$AEGS_Retaliator_Module_Front">
+                <Types>
+                  <Type type="Module" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+          </Parts>
+        </Part>
+      </Parts>
+    </Part>
+  </Parts>
+  <MovementParams>
+    <Spaceship engineWarmupDelay="1" engineIgnitionTime="0" enginePowerMax="2.75" rotationDamping="0" maxEngineThrust="150" maxRetroThrust="120" maxDirectionalThrust="100" maxAngularAcceleration="720,720,720">
+      <AudioParams dmgBufferDecay="0.2">
+        <PassByLoopSound sound="Play_SSPB_AEGS_Shared_Small_Loop" />
+        <PassBySound sound="Play_SSPB_AEGS_Gladius_2500ms_0to200meters" leadinTime="1.3" triggerDistance="270" cooldowntime="15" />
+        <DuressSound sound="Play_SSDD_AEGS_Gladius_Cockpit_Shake" damage_floor="21.0" damage_buffer="80.0" />
+        <SetRtpcSlewRate rtpc="Ship_Acceleration" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_AccelerationStrafeSurge" attack="100" release="100" />
+        <SetRtpcSlewRate rtpc="Ship_AccelerationSurge" attack="100" release="100" />
+        <SetRtpcSlewRate rtpc="Ship_Altitude" attack="10.0" release="10.0" />
+        <SetRtpcSlewRate rtpc="Ship_Deceleration" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_DecelerationStrafeSurge" attack="100" release="100" />
+        <SetRtpcSlewRate rtpc="Ship_DecelerationSurge" attack="100" release="100" />
+        <SetRtpcSlewRate rtpc="Ship_EngineFrontStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_EngineRearStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_EngineStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PitchSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PitchStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PYRSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PYStrain" attack="0.8" release="1.25" />
+        <SetRtpcSlewRate rtpc="Ship_PYSpeed" attack="0.8" release="1.25" />
+        <SetRtpcSlewRate rtpc="Ship_PYRStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_RollSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_RollStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_Speed" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeAny" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeLeftRight" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeStrain" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeUpDown" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_Thrust" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_YawSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_YawStrain" attack="1.0" release="1.0" />
+      </AudioParams>
+    </Spaceship>
+  </MovementParams>
+  <Particles mfxRow="Ships_Surface_Effects_Medium">
+    <DamageEffects>
+      <DamageEffect name="VehicleDestroyed" helper="hardpoint_vehicle_destroyed" effect="spaceships/deathmasks/aegs_retaliator_deathmask.ALL.retaliator_deathmask" scaleMax="1" gravityDirection="0,0,1" pulsePeriod="0" />
+    </DamageEffects>
+    <EnvironmentLayers>
+      <EnvironmentLayer minSpeed="0" minSpeedSizeScale="1" minSpeedCountScale="1" minSpeedSpeedScale="1" maxSpeed="10" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1" minPowerSizeScale="1" minPowerCountScale="1" maxPowerSizeScale="1" maxPowerCountScale="1">
+        <Alignment alignGroundHeight="25" maxHeightSizeScale="0.5" maxHeightCountScale="0.60000002" alignToWater="0" />
+        <Emitters />
+        <Wheels />
+      </EnvironmentLayer>
+    </EnvironmentLayers>
+  </Particles>
+  <GeomVisibility>
+    <PartGeomVisibility animatedPartName="animated_liftright">
+      <Portals>
+        <Portal name="LiftPortalRight" startsActive="0" portalName="portal001-014" />
+      </Portals>
+      <AnimTriggers>
+        <AnimTrigger animationName="LiftRight">
+          <StateTriggers>
+            <StateTrigger stateName="Open" triggerOnStart="1" portalName="LiftPortalRight" portalActive="1" />
+            <StateTrigger stateName="Close" triggerOnEnd="1" portalName="LiftPortalRight" portalActive="0" />
+          </StateTriggers>
+        </AnimTrigger>
+      </AnimTriggers>
+    </PartGeomVisibility>
+    <PartGeomVisibility animatedPartName="animated_liftleft">
+      <Portals>
+        <Portal name="LiftPortalLeft" startsActive="0" portalName="portal001-013" />
+      </Portals>
+      <AnimTriggers>
+        <AnimTrigger animationName="LiftLeft">
+          <StateTriggers>
+            <StateTrigger stateName="Open" triggerOnStart="1" portalName="LiftPortalLeft" portalActive="1" />
+            <StateTrigger stateName="Close" triggerOnEnd="1" portalName="LiftPortalLeft" portalActive="0" />
+          </StateTriggers>
+        </AnimTrigger>
+      </AnimTriggers>
+    </PartGeomVisibility>
+  </GeomVisibility>
+  <Modifications>
+    <Modification name="S42_C17" patchFile="empty" />
+    <Modification name="S42_C18" patchFile="empty" />
+  </Modifications>
+</Vehicle>

@@ -1,0 +1,1140 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Vehicle name="TMBL_Nova" displayname="TMBL Nova" subType="Vehicle_GroundVehicle" size="4" requiredItemTags="empty" itemPortTags="TMBL_Nova" hudPaletteScheme="TMBL" landingOffset="0,0,-1.52" id="modVehicle">
+  <Physics pushable="0" gravityFreefall="0,0,10.5">
+    <Buoyancy waterDensity="30" waterResistance="50" waterDamping="0" />
+    <Simulation maxTimeStep="0.02" minEnergy="0.0" maxLoggedCollisions="2" />
+  </Physics>
+  <VisorElement element="Visor_HUD" />
+  <SoundParams engineProjectName="vehicles:greycat_ptv_engine" functionalityProjectName="vehicles:greycat_ptv_functionality" id="idSound" />
+  <Damages collDamageThreshold="1" groundCollisionMinMult="1.3" groundCollisionMaxMult="1.4" groundCollisionMinSpeed="100" groundCollisionMaxSpeed="100">
+    <DamageMultipliers>
+      <DamageMultiplier damageType="bullet" multiplier="1" multiplier_Energy="1" multiplier_Distortion="1" />
+      <DamageMultiplier damageType="melee" multiplier="0" />
+      <DamageMultiplier damageType="collision" multiplier="0.25" />
+      <DamageMultiplier damageType="explosion" multiplier="1" />
+    </DamageMultipliers>
+    <DamagesGroups>
+      <DamagesGroup name="Destroy" useTemplate="VehicleDestroy">
+        <DamagesSubGroups>
+          <DamagesSubGroup delay="0.0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="Effect">
+                <Effect effect="VehicleDestroyed" helper="hardpoint_vehicle_destroyed" />
+              </DamageBehavior>
+              <DamageBehavior class="Explosion">
+                <Explosion helper="hardpoint_vehicle_destroyed" damage="25" radius="3" minRadius="1" minPhysRadius="2.2" physRadius="3" pressure="10" />
+              </DamageBehavior>
+              <DamageBehavior class="Destroy" />
+            </DamageBehaviors>
+          </DamagesSubGroup>
+        </DamagesSubGroups>
+      </DamagesGroup>
+    </DamagesGroups>
+  </Damages>
+  <Pipes>
+    <Pipe name="MainPower" class="Power" />
+    <Pipe name="MainHeat" class="Heat" />
+    <Pipe name="MainFuel" class="Fuel" />
+    <Pipe name="IntakeFuel" class="Fuel" />
+    <Pipe name="QuantumFuel" class="Fuel" />
+    <Pipe name="Shield" class="Shield" />
+    <Pipe name="WeaponRegenCrew" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadCrew" class="WeaponAmmoLoad" />
+    <Pipe name="WeaponRegenTurret" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadTurret" class="WeaponAmmoLoad" />
+  </Pipes>
+  <Parts id="xmlParts">
+    <Part name="TMBL_Nova" class="Animated" component="Hull" mass="73190" damageMax="40000" disablePhysics="0" isHidden="0" scopeContext="Ship" id="modNode">
+      <Animated id="idAnimatedPart" />
+      <Parts>
+        <Part name="body_mesh" class="AnimatedJoint" damageMax="40000" detachRatio="0" detachBaseForce="0,-1,1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="0">
+          <Effects />
+          <DamageBehaviors>
+            <DamageBehavior class="DetachPart" damageRatioMin="1">
+              <DetachPart>
+                <Part name="primary_turret_debris" probability="0.8" />
+              </DetachPart>
+            </DamageBehavior>
+            <DamageBehavior class="Group" damageRatioMin="1">
+              <Group name="Destroy" />
+            </DamageBehavior>
+          </DamageBehaviors>
+          <Parts>
+            <Part name="hardpoint_co-pilot_dashboard" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="SeatDashboard" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="coPilotSeatDashboard" />
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_co-pilot_seat" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameSeatPassenger">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="coPilotSeat">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="EnergyController" screensDefault="Screen_Driver_MFD_Right" screensAvail="Screen_Driver_MFD_Right, Screen_Driver_MFD_Left" />
+                      <Observerable itemType="ShieldController" screensDefault="empty" screensAvail="Screen_Driver_MFD_Right, Screen_Driver_MFD_Left" />
+                      <Observerable itemType="WeaponController" screensDefault="empty" screensAvail="Screen_Driver_MFD_Right, Screen_Driver_MFD_Left" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Driver_MFD_Right, Screen_Driver_MFD_Left" />
+                      <Observerable itemType="CommsController" screensDefault="Screen_Driver_MFD_Left" screensAvail="Screen_Driver_MFD_Right, Screen_Driver_MFD_Left" primaryCommsScreen="Screen_Driver_MFD_Right" />
+                      <Observerable itemType="Seat" screensDefault="VS_Right0" screensAvail="VS_Right0, Screen_Driver_MFD_Right, Screen_Driver_MFD_Left" />
+                      <Observerable itemType="Radar" screensAvail="NotUsed_Radar" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="WeaponController" defaultPriority="no_control">
+                        <tags tag="weapon_secondary">
+                          <Priority value="50" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="CommsController" />
+                      <PriorityGroup itemType="Radar" defaultPriority="80" />
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="coPilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="coPilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                        <tags tag="coPilotSeatDashboard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_gunner_seat" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameSeatPassenger">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="gunnerSeat">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="WeaponController" screensDefault="empty" screensAvail="Screen_Gunner_MFD_Top" />
+                      <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="Screen_Gunner_MFD_Top" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Gunner_MFD_Top" />
+                      <Observerable itemType="ShieldController" screensDefault="empty" screensAvail="Screen_Gunner_MFD_Top" />
+                      <Observerable itemType="CommsController" screensDefault="empty" screensAvail="Screen_Gunner_MFD_Top" primaryCommsScreen="Screen_Gunner_MFD_Top" />
+                      <Observerable itemType="Seat" screensDefault="Screen_Gunner_MFD_Top, VS_Right0" screensAvail="Screen_Gunner_MFD_Top, VS_Right0" />
+                      <Observerable itemType="Radar" screensDefault="Screen_Gunner_Radar" screensAvail="Screen_Gunner_Radar" />
+                      <Observerable itemType="MissileController" visorScreen="empty" screensDefault="empty" screensAvail="Flight_HUD" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="MissileController" defaultPriority="50" />
+                      <PriorityGroup itemType="CoolerController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="ShieldController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="WeaponController" defaultPriority="no_control">
+                        <tags tag="weapon_primary">
+                          <Priority value="50" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="CommsController" defaultPriority="observe_only" />
+                      <PriorityGroup itemType="Radar" defaultPriority="90" />
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="gunnerSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Display" defaultPriority="no_control">
+                        <tags tag="gunnerSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="gunnerSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                        <tags tag="GunnerSeatDashboard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Display" defaultPriority="no_control">
+                        <tags tag="GunnerSeatDashboard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_interior" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Room" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_tread_left" class="Tread">
+              <Tread filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Tread_Left.cdf" materialName="ext_trim_treads" uvScrollRatio="0.330">
+                <Sprocket name="hardpoint_sprocket_rotate_left" rotationRatio="0.600" />
+                <Wheels>
+                  <Wheel partName="hardpoint_drive_sprocket_left" />
+                  <Wheel partName="hardpoint_wheel_small_left" />
+                  <Wheel partName="hardpoint_wheel_left_hidden_front_08" />
+                  <Wheel partName="hardpoint_wheel_left_hidden_rear_09" />
+                  <Wheel partName="hardpoint_wheel_left_01" />
+                  <Wheel partName="hardpoint_wheel_left_02" />
+                  <Wheel partName="hardpoint_wheel_left_03" />
+                  <Wheel partName="hardpoint_wheel_left_04" />
+                  <Wheel partName="hardpoint_wheel_left_05" />
+                  <Wheel partName="hardpoint_wheel_left_06" />
+                  <Wheel partName="hardpoint_wheel_left_07" />
+                </Wheels>
+              </Tread>
+            </Part>
+            <Part name="hardpoint_dashboard_driver" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="SeatDashboard" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="pilotDashboard">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Display" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_seat_driver" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameSeatDriver">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="pilotSeat">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="EnergyController" screensDefault="Screen_Driver_MFD_Left" screensAvail="Screen_Driver_MFD_Left, Screen_Driver_MFD_Right, Screen_Driver_Support_Far_Left, Screen_Driver_Support_Far_Right" />
+                      <Observerable itemType="ShieldController" screensDefault="Screen_Driver_Support_Far_Left" screensAvail=", Screen_Driver_MFD_Right, Screen_Driver_Support_Far_Left, Screen_Driver_Support_Far_Right" />
+                      <Observerable itemType="CommsController" screensDefault="Screen_Driver_Support_Far_Right" screensAvail="Screen_Driver_MFD_Left, Screen_Driver_MFD_Right, Screen_Driver_Support_Far_Left, Screen_Driver_Support_Far_Right" primaryCommsScreen="Screen_Driver_Support_Far_Right" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Screen_Driver_MFD_Left, Screen_Driver_MFD_Right, Screen_Driver_Support_Far_Left, Screen_Driver_Support_Far_Right" />
+                      <Observerable itemType="WeaponController" screensDefault="empty" screensAvail="Screen_Driver_MFD_Left, Screen_Driver_MFD_Right, Screen_Driver_Support_Far_Left, Screen_Driver_Support_Far_Right" />
+                      <Observerable itemType="MissileController" visorScreen="empty" screensDefault="empty" screensAvail="Flight_HUD" />
+                      <Observerable itemType="WheeledController" screensDefault="empty" screensAvail="Flight_HUD, VS_Left0" />
+                      <Observerable itemType="LightController" screensDefault="empty" screensAvail="NotUsed_LightController" />
+                      <Observerable itemType="Seat" screensDefault="Screen_Driver_MFD_Right, VS_Right0" screensAvail="VS_Right0, Screen_Driver_MFD_Left, Screen_Driver_MFD_Right, Screen_Driver_Support_Far_Left, Screen_Driver_Support_Far_Right" />
+                      <Observerable itemType="CapacitorAssignmentController" visorScreen="empty" screensDefault="empty" screensAvail="Flight_HUD" />
+                      <Observerable itemType="Radar" screensAvail="NotUsed_Radar" />
+                      <Observerable itemType="Scanner" screensAvail="NotUsed_Scanner" />
+                      <Observerable itemType="SelfDestruct" screensAvail="NotUsed_SelfDestruct" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="EnergyController" />
+                      <PriorityGroup itemType="CoolerController" />
+                      <PriorityGroup itemType="MissileController" />
+                      <PriorityGroup itemType="ShieldController" />
+                      <PriorityGroup itemType="WeaponController" defaultPriority="no_control">
+                        <tags tag="weapon_primary">
+                          <Priority value="20" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WheeledController" />
+                      <PriorityGroup itemType="LightController" />
+                      <PriorityGroup itemType="CommsController" />
+                      <PriorityGroup itemType="DoorController" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="Ping" />
+                      <PriorityGroup itemType="MultiLight" />
+                      <PriorityGroup itemType="Radar" defaultPriority="100" />
+                      <PriorityGroup itemType="Scanner" />
+                      <PriorityGroup itemType="AIModule" />
+                      <PriorityGroup itemType="SelfDestruct" />
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                        <tags tag="pilotDashboard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="CapacitorAssignmentController" />
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                        <tags tag="pilotDashboard">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_rear_door" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Door" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_tread_right" class="Tread">
+              <Tread filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Tread_Right.cdf" materialName="ext_trim_treads" uvScrollRatio="0.330">
+                <Sprocket name="hardpoint_sprocket_rotate_right" rotationRatio="0.600" />
+                <Wheels>
+                  <Wheel partName="hardpoint_drive_sprocket_right" />
+                  <Wheel partName="hardpoint_wheel_small_right" />
+                  <Wheel partName="hardpoint_wheel_right_hidden_front_08" />
+                  <Wheel partName="hardpoint_wheel_right_hidden_rear_09" />
+                  <Wheel partName="hardpoint_wheel_right_01" />
+                  <Wheel partName="hardpoint_wheel_right_02" />
+                  <Wheel partName="hardpoint_wheel_right_03" />
+                  <Wheel partName="hardpoint_wheel_right_04" />
+                  <Wheel partName="hardpoint_wheel_right_05" />
+                  <Wheel partName="hardpoint_wheel_right_06" />
+                  <Wheel partName="hardpoint_wheel_right_07" />
+                </Wheels>
+              </Tread>
+            </Part>
+            <Part name="hardpoint_seat_access" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatAccess" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="tread_guard_left" class="AnimatedJoint" />
+            <Part name="tread_guard_right" class="AnimatedJoint" />
+            <Part name="hardpoint_armor" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Armor Slot">
+                <Types>
+                  <Type type="Armor" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_comms" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CommsController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Comms" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_cooler" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CoolerController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Cooler" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_energy" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="EnergyController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="PowerPlant" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="FuelIntake" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="FuelTank" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_weapon_regen_pool" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Weapon Regen Pool">
+                <Types>
+                  <Type type="WeaponRegenPool" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenCrew" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadCrew" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_weapon_regen_pool_turrets" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Weapon Regen Pool">
+                <Types>
+                  <Type type="WeaponRegenPool" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_capacitor_assignment" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CapacitorAssignmentController" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_flight" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="FlightController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="MainThruster" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="ManneuverThruster" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_light" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="LightController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Light" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_shield" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="ShieldController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Shield" pipe="Shield" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Shield" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_weapon_primary" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="WeaponController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="weapon_primary">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                        <tags tag="primary_remote_turret">
+                          <Priority value="25" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                        <tags tag="primary_remote_turret">
+                          <Priority value="25" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WeaponDefensive" />
+                      <PriorityGroup itemType="EMP" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_weapon_secondary" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="WeaponController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="weapon_secondary">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Turret" defaultPriority="no_control">
+                        <tags tag="secondary_remote_turret">
+                          <Priority value="25" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="WeaponGun" defaultPriority="no_control">
+                        <tags tag="secondary_remote_turret">
+                          <Priority value="25" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_wheel" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="WheeledController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_cooler_02" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameCooler02">
+                <Types>
+                  <Type type="Cooler" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_fuel_intake" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelIntake01">
+                <Types>
+                  <Type type="FuelIntake" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="IntakeFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_fuel_tank" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelTank01">
+                <Types>
+                  <Type type="FuelTank" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Input" pipe="IntakeFuel" />
+                  <Connection pipeClass="Output" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_lights" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Room" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_paint" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="empty" portTags="Paint_Nova" requiredTags="Paint_Nova" display_name="port_NamePaint">
+                <Types>
+                  <Type type="Paints" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_ping" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="Ping" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_radar" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="invisible uneditable" display_name="port_NameRadar">
+                <Types>
+                  <Type type="Radar" subtypes="ShortRangeRadar,MidRangeRadar" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_scanner" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="Scanner" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_selfdestruct" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Self Destruct">
+                <Types>
+                  <Type type="SelfDestruct" />
+                </Types>
+                <Controllers>
+                  <Controller port="hardpoint_seat_driver" active="1" priority="-1" />
+                </Controllers>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_shield_generator_01" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameShieldGen01">
+                <Types>
+                  <Type type="Shield" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Shield" pipe="Shield" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_shield_generator_02" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameShieldGen02">
+                <Types>
+                  <Type type="Shield" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Shield" pipe="Shield" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_transponder" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="Transponder" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_drive_sprocket_right" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="8" density="90" damping="-0.25" driving="1" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="300000.00" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Hidden.cga" geometryname="wheel_hidden" />
+            </Part>
+            <Part name="hardpoint_wheel_small_right" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="9" density="100" damping="-0.25" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="300000.00" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Small.cga" geometryname="wheel_small" />
+            </Part>
+            <Part name="hardpoint_drive_sprocket_left" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="8" density="90" damping="-0.25" driving="1" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="300000.00" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Hidden.cga" geometryname="wheel_hidden" />
+            </Part>
+            <Part name="hardpoint_wheel_small_left" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="9" density="100" damping="-0.25" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="300000.00" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Small.cga" geometryname="wheel_small" />
+            </Part>
+            <Part name="hardpoint_controller_door" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="DoorController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Door" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="SeatAccess" defaultPriority="exclusive_control" />
+                      <PriorityGroup itemType="Container" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_power_plant_01" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NamePowerplant01" displayPos="75,290">
+                <Types>
+                  <Type type="PowerPlant" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_power_plant_02" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NamePowerplant02" displayPos="75,290">
+                <Types>
+                  <Type type="PowerPlant" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_power_plant_03" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NamePowerplant03" displayPos="75,290">
+                <Types>
+                  <Type type="PowerPlant" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_seat_access_gunner" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatAccess" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_shield_generator_03" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameShieldGen03">
+                <Types>
+                  <Type type="Shield" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Shield" pipe="Shield" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_dashboard_gunner" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="SeatDashboard" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="GunnerSeatDashboard">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Display" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_weapon_rack" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Usable" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="primary_turret_debris" class="AnimatedJoint" damageMax="30000" detachRatio="0" detachBaseForce="0,-4,12" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="25.0,0,0.3" detachProbability="1">
+              <Effects>
+                <DetachFx joint="primary_turret_debris" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="1.56267,0.307655,-0.175124" rot_offset="0.0,1.0,0.0" helperID="primary_turret_debris_SQUIB_2m002" effect="empty" />
+                <DetachFx joint="primary_turret_debris" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="-0.027019,0.0262288,-0.175124" rot_offset="0.0,1.0,0.0" helperID="primary_turret_debris_SQUIB_2m003" effect="empty" />
+                <DetachFx joint="primary_turret_debris" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="-1.29041,1.04006,-0.23412" rot_offset="0.0,1.0,0.0" helperID="primary_turret_debris_SQUIB_2m004" effect="empty" />
+                <DetachFx joint="primary_turret_debris" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="-0.413429,2.20627,-0.175122" rot_offset="0.0,1.0,0.0" helperID="primary_turret_debris_SQUIB_2m005" effect="empty" />
+                <DetachFx joint="primary_turret_debris" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="-1.64217,-0.378153,-0.234121" rot_offset="0.0,1.0,0.0" helperID="primary_turret_debris_SQUIB_2m006" effect="empty" />
+                <DetachFx joint="primary_turret_debris" squibPhysical="40" squibEnergy="40" squibRadius="2" pos_offset="-0.279696,-1.88739,-0.10284" rot_offset="0.0,1.0,0.0" helperID="primary_turret_debris_SQUIB_2m007" effect="empty" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/Metal_FX.Metal_ALL.metal_4m_once_fixed" pos_offset="-0.027019,0.0262288,-0.175124" rot_offset="-0.999744,-0.00361993,0.0223418" helperID="primary_turret_debris_PFX_DetachFX_metal_4m_once_fixed002" />
+                <DetachFx joint="primary_turret_debris" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_4m_once_fixed" pos_offset="0.14717,0.0354074,-0.165754" rot_offset="-0.109976,0.988695,0.101921" helperID="primary_turret_debris_PFX_DebrisFX_lt_explode_4m_once_fixed007" />
+                <DetachFx joint="primary_turret_debris" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_4m_loop_trail" pos_offset="-0.692014,0.159798,-0.143583" rot_offset="-0.0112676,0.101296,-0.994793" helperID="primary_turret_debris_PFX_DebrisFX_lt_smoke_4m_loop_trail" />
+                <DetachFx joint="primary_turret_debris" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_2m_loop_trail" pos_offset="0.99055,-0.721675,-0.252399" rot_offset="-0.0112676,0.101296,-0.994793" helperID="primary_turret_debris_PFX_DebrisFX_lt_smoke_2m_loop_trail" />
+                <DetachFx joint="primary_turret_debris" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_loop_fixed" pos_offset="-0.857277,-0.927215,-0.252399" rot_offset="-0.0112676,0.101296,-0.994793" helperID="primary_turret_debris_PFX_DebrisFX_lt_sparks_2m_loop_fixed007" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_2m_loop_trail" pos_offset="0.793269,0.243763,-0.175124" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_smoke_2m_loop_traill007" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_4m_loop_fixed" pos_offset="-0.642909,0.957365,-0.175123" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_sparks_4m_loop_fixed012" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_4m_loop_trail" pos_offset="-0.027019,0.0262288,-0.175124" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_smoke_4m_loop_trail" />
+                <DetachFx joint="primary_turret_debris" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire.lt_fire_8m_loop_fixed" pos_offset="0.14717,0.0354074,-0.165754" rot_offset="-0.0112676,0.101296,-0.994793" helperID="primary_turret_debris_PFX_DebrisFX_lt_fire_8m_loop_fixed001" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire.lt_fire_8m_loop_fixed" pos_offset="-0.027019,0.0262288,-0.175124" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_fire_8m_loop_fixed002" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_8m_loop_trail" pos_offset="-0.781533,-0.823877,-0.175125" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_smoke_8m_loop_trail008" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_loop_fixed" pos_offset="1.07769,-0.823877,-0.175125" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_sparks_2m_loop_fixed011" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire.lt_fire_4m_loop_fixed" pos_offset="-0.33598,7.09797,-1.4284" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_fire_4m_loop_fixed003" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_2m_loop_trail" pos_offset="-0.33598,7.09797,-1.4284" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_smoke_2m_loop_trail" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke.lt_smoke_2m_loop_trail" pos_offset="1.24231,7.57253,-1.41832" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_smoke_2m_loop_trail001" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire.lt_fire_4m_loop_fixed" pos_offset="1.24231,7.57253,-1.41832" rot_offset="0.0,0.0,1.0" helperID="primary_turret_debris_PFX_DetachFX_lt_fire_4m_loop_fixed004" />
+                <DetachFx joint="primary_turret_debris" partName="body_mesh" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_loop_fixed" pos_offset="0.656882,1.02411,-0.0708511" rot_offset="-0.0112676,0.101296,-0.994793" helperID="primary_turret_debris_PFX_DetachFX_lt_sparks_2m_loop_fixed008" />
+              </Effects>
+              <Parts>
+                <Part name="hardpoint_primary_turret" class="ItemPort">
+                  <ItemPort minSize="5" maxSize="5" flags="$uneditable" portTags="TMBL_Nova" requiredTags="$TMBL_Nova" defaultWeaponGroup="1" display_name="port_NameTurret01">
+                    <Types>
+                      <Type type="Turret" subtypes="GunTurret" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                      <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                    </Connections>
+                    <ControllerDef controllableTags="primary_remote_turret" />
+                    <Pitch min="-90" max="90" />
+                    <Yaw min="-180" max="180" />
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_secondary_turret" class="ItemPort">
+                  <ItemPort minSize="4" maxSize="4" flags="$uneditable" portTags="TMBL_Nova" requiredTags="$TMBL_Nova" defaultWeaponGroup="1" display_name="port_NameTurret02">
+                    <Types>
+                      <Type type="Turret" subtypes="BallTurret" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="WeaponRegen" pipe="WeaponRegenTurret" />
+                      <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadTurret" />
+                    </Connections>
+                    <ControllerDef controllableTags="secondary_remote_turret" />
+                    <Pitch min="-90" max="90" />
+                    <Yaw min="-180" max="180" />
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_missile" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="MissileController" />
+                    </Types>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="MissileLauncher" />
+                          <PriorityGroup itemType="Missile" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+              </Parts>
+            </Part>
+            <Part name="hardpoint_wheel_right_07" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="7" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_right_06" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="6" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_right_05" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="5" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_right_04" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="4" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_right_03" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="3" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_right_02" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="2" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_right_01" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="1" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_07" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="7" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_06" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="6" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_05" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="5" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_04" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="4" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_03" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="3" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_02" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="2" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_01" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="1" density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Big.cga" geometryname="wheel_big" />
+            </Part>
+            <Part name="hardpoint_wheel_left_hidden_rear_09" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Hidden.cga" geometryname="wheel_hidden" />
+            </Part>
+            <Part name="hardpoint_wheel_left_hidden_front_08" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Hidden.cga" geometryname="wheel_hidden" />
+            </Part>
+            <Part name="hardpoint_wheel_right_hidden_front_08" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="2285000" suspLength="0.15" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Hidden.cga" geometryname="wheel_hidden" />
+            </Part>
+            <Part name="hardpoint_wheel_right_hidden_rear_09" class="SubPartWheel" component="wheelBL" mass="80" damageMax="800" detachRatio="0" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="0">
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel density="100" damping="-0.75" driving="0" canBrake="1" canSteer="0" rotateOnSteer="0" lenMax="0.4" maxFriction="2.5" minFriction="1.5" slipFrictionMod="0.05" stiffness="1755000" suspLength="0" rayCast="0" rimRadius="0.75" torqueScale="1" />
+              <SubPart filename="Objects/Vehicles/TMBL/Nova/TMBL_Nova_Wheel_Hidden.cga" geometryname="wheel_hidden" />
+            </Part>
+            <Part name="hardpoint_cooler_01" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameCooler01">
+                <Types>
+                  <Type type="Cooler" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_cockpit_flair" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" requiredTags="empty" flags="empty" display_name="port_Flair01">
+                <Types>
+                  <Type type="Flair_Cockpit" subtypes="Flair_Static" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_cockpit_flair_hang" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" requiredTags="empty" flags="empty" display_name="port_Flair01">
+                <Types>
+                  <Type type="Flair_Cockpit" subtypes="Flair_Hanging" />
+                </Types>
+              </ItemPort>
+            </Part>
+          </Parts>
+        </Part>
+        <Part name="landingpad_helper" class="ItemPort">
+          <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="Landing System">
+            <Types>
+              <Type type="LandingSystem" />
+            </Types>
+          </ItemPort>
+        </Part>
+        <Part name="massBox" class="MassBox" mass="75000" position="0,0,-2" disablePhysics="0" disableCollision="1" isHidden="0" id="modMassBox">
+          <MassBox size="4,8,1.5" drivingOffset="0" />
+        </Part>
+      </Parts>
+    </Part>
+  </Parts>
+  <Helpers>
+    <Helper name="engineSmokeOut" position="0.4,1.01,0.9001" direction="0,1,0" part="Body" />
+    <Helper name="exhaust_pos_left" position="-0.25,-2.6,0.35" direction="0,-1,0" part="Body" />
+    <Helper name="exhaust_pos_right" position="0.25,-2.6,0.35" direction="0,-1,0" part="Body" />
+    <Helper name="explosion" position="-0.28780001,-0.49020001,1.3601" direction="0,0,1" part="Body" />
+    <Helper name="vehicleBurnPos" position="0,-1.2501,2" direction="0,0,1" part="Body" />
+  </Helpers>
+  <MovementParams id="xmlMovement">
+    <TrackWheeled gravityOverride="12.81" kNeutralSteerLimit="1" enginePower="1750" rpmInterpSpeed="2" rpmGearShiftSpeed="2" rpmRelaxSpeed="2" engineIdleRPM="1000" engineMaxRPM="10000" engineMinRPM="500" engineShiftDownRPM="2000" engineShiftUpRPM="8000" engineStartRPM="2000" gearDirSwitchRPM="5000" clutchSpeed="8" vMaxSteerMax="20" v0SteerMax="40" kvSteerMax="26" steerSpeed="150" steerSpeedMin="110" steerLimit="1" steerRelaxation="100" steeringImpulseMin="100" steeringImpulseMax="150" steeringImpulseRelaxMin="1" steeringImpulseRelaxMax="2" steerTrackNeutralTurn="0.1" engineIgnitionTime="1.5" pedalLimitMax="0.0" isBreakingOnIdle="0" pullTilt="50" axleFriction="1500" axleFrictionMax="3500" dynFriction="1.25" latFriction="0.5" latFricMin="0.4" latFricMax="1.2" latFricMinSteer="0.1" latSlipMin="0.89999998" latSlipMax="2.5999999" damping="-0.25" slipThreshold="0.1" stabilizer="0.1" brakeTorque="1.5" brakeImpulse="1.5" minBrakingFriction="1" maxBrakingFriction="1.2" maxSteer="1.0" maxSpeed="25" maxTimeStep="0.02" minEnergy="0.012" pedalSpeed="7" pedalThreshold="0">
+      <Stabilisation upDamping="45.0" angDamping="45.0" rollDamping="45.0" rollfixAir="22" maxTiltAngleAir="45" maxTiltAngleGround="45" />
+      <GearRatios>
+        <gearRatio value="-50" />
+        <gearRatio value="0" />
+        <gearRatio value="75" />
+        <gearRatio value="35" />
+        <gearRatio value="25" />
+        <gearRatio value="17" />
+      </GearRatios>
+      <AudioParams engineSoundPosition="engineSmokeOut" runSoundDelay="1" roadBumpMinSusp="10" roadBumpMinSpeed="6" roadBumpIntensity="0.3" maxSlipSpeed="11" />
+      <AirDamp dampAngle="1.2,0.75,0" dampAngVel="0.01,0.01,0.01" />
+    </TrackWheeled>
+  </MovementParams>
+  <Particles>
+    <DamageEffects>
+      <DamageEffect name="VehicleDestroyed" helper="hardpoint_vehicle_destroyed" effect="spaceships/deathmasks/TMBL_Nova_Deathmask.all.TMBL_Nova_Deathmask" scaleMax="1" gravityDirection="0,0,1" pulsePeriod="0" />
+    </DamageEffects>
+    <Exhaust insideWater="0" outsideWater="0" id="xmlExhaustVFX">
+      <Helpers>
+        <Helper value="fxBone_vent_left" />
+        <Helper value="fxBone_vent_right" />
+      </Helpers>
+      <EngineStart effect="gadgets/Grin_PTV.exhaust.start" />
+      <EngineStop effect="gadgets/Grin_PTV.exhaust.start" />
+      <EngineRunning effect="empty" boostEffect="empty" baseSizeScale="1" minSpeed="0" minSpeedSizeScale="1" minSpeedCountScale="1" minSpeedSpeedScale="1" maxSpeed="1" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1" minPower="0" minPowerSizeScale="1" minPowerCountScale="1" minPowerSpeedScale="1" maxPower="1" maxPowerSizeScale="1" maxPowerCountScale="1" maxPowerSpeedScale="1" />
+    </Exhaust>
+    <EnvironmentLayers>
+      <EnvironmentLayer minSpeed="0.30000001" minSpeedSizeScale="1" minSpeedCountScale="1" minSpeedSpeedScale="0" minSpeedStrength="0.0" maxSpeed="8" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1" maxSpeedStrength="1" continuous="0">
+        <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="1" />
+        <Emitters />
+        <Wheels>
+          <WheelGroups>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="2" />
+                <Wheel value="5" />
+                <Wheel value="6" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="11" />
+                <Wheel value="21" />
+                <Wheel value="22" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="4" />
+                <Wheel value="12" />
+                <Wheel value="13" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="18" />
+                <Wheel value="19" />
+                <Wheel value="20" />
+              </Wheels>
+            </WheelGroup>
+          </WheelGroups>
+        </Wheels>
+      </EnvironmentLayer>
+      <EnvironmentLayer name="rims" minSpeed="0.1" minSpeedSizeScale="0.25" minSpeedCountScale="1" maxSpeed="10" maxSpeedSizeScale="1" maxSpeedCountScale="1">
+        <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="0" />
+        <Emitters />
+        <Wheels all="1" allActive="0" />
+      </EnvironmentLayer>
+    </EnvironmentLayers>
+  </Particles>
+  <Modifications />
+</Vehicle>

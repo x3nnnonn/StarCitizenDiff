@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="Node_Player_PlayerOutOfBed" Description="empty" Group="hc-modules" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="ExitPos" Type="Vec3" Input="0" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_Node_Player_PlayerOutOfBed" pos="40,80,0" flags="0" />
+    <Node Id="2" Class="Module:End_Node_Player_PlayerOutOfBed" pos="2110,100,0" flags="0">
+      <Inputs ExitPos="0,0,0" />
+    </Node>
+    <Node Id="5" Class="Entity:GetPos" pos="1820,-180,0" flags="0">
+      <Inputs entityId="0" CoordSys="1" />
+    </Node>
+    <Node Id="64" Class="InteractionSystem:ActivateInteraction" pos="1170,0,0" flags="0">
+      <Inputs entityId="0" InteractorId="0" InteractionName="Exit" InteractionPointName="empty" />
+    </Node>
+    <Node Id="65" Class="TagRequest:FindObject" pos="590,-10,0" flags="0">
+      <Inputs entityId="0" TagRequest="UsableArchetypes.Bed" Origin="0,0,0" SearchRadius="2" SortType="0" />
+    </Node>
+    <Node Id="66" Class="Actor:LocalPlayer" pos="960,40,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="67" Name="For_Getting_out_of_bed" Class="_commentbox" pos="400,-88.284531,0" flags="0">
+      <Inputs TextSize="1" Color="0.27451,0.352941,0.705882" DisplayFilled="1" DisplayBox="1" SortPriority="16" />
+      <ResizeBorder X="0" Y="0" Width="1070" Height="160" />
+      <NodeSize Width="1070" Height="215.39354" />
+    </Node>
+    <Node Id="68" Class="Actor:LocalPlayer" pos="430,30,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="69" Class="Time:Delay" pos="1390,-130,0" flags="0">
+      <Inputs delay="3" resetOnInput="1" />
+    </Node>
+    <Node Id="70" Class="Actor:LocalPlayer" pos="1640,-150,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="71" Class="Time:FrameDelay" pos="1764.4211,11.629586,0" flags="0">
+      <Inputs />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2" nodeOut="1" portIn="Cancel" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="68" nodeOut="1" portIn="update" portOut="Start" enabled="1" />
+    <Edge nodeIn="69" nodeOut="1" portIn="in" portOut="Start" enabled="1" />
+    <Edge nodeIn="2" nodeOut="5" portIn="ExitPos" portOut="Pos" enabled="1" />
+    <Edge nodeIn="64" nodeOut="65" portIn="entityId" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="66" nodeOut="65" portIn="update" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="64" nodeOut="66" portIn="Activate" portOut="entityId" enabled="1" />
+    <Edge nodeIn="64" nodeOut="66" portIn="InteractorId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="65" nodeOut="68" portIn="Find" portOut="entityId" enabled="1" />
+    <Edge nodeIn="65" nodeOut="68" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="70" nodeOut="69" portIn="update" portOut="out" enabled="1" />
+    <Edge nodeIn="71" nodeOut="69" portIn="in" portOut="out" enabled="1" />
+    <Edge nodeIn="5" nodeOut="70" portIn="Get" portOut="entityId" enabled="1" />
+    <Edge nodeIn="5" nodeOut="70" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="2" nodeOut="71" portIn="Success" portOut="out" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

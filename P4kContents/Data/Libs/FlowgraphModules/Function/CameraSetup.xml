@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="CameraSetup" Description="empty" Group="function" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="CameraPosition" Type="Vec3" Input="1" />
+    <Port Name="CameraRotation" Type="Vec3" Input="1" />
+    <Port Name="CameraShouldFollow" Type="EntityId" Input="1" />
+    <Port Name="Enable" Type="Bool" Input="1" />
+    <Port Name="Disable" Type="Bool" Input="1" />
+    <Port Name="TagpointForCamera" Type="EntityId" Input="0" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_CameraSetup" pos="-430,130,0" flags="0" />
+    <Node Id="2" Class="Module:End_CameraSetup" pos="970,160,0" flags="0">
+      <Inputs TagpointForCamera="0" />
+    </Node>
+    <Node Id="2199" Class="Entity:Spawn" pos="270,130,0" flags="0">
+      <Inputs Class="TagPoint" Name="empty" Pos="0,0,0" Rot="0,0,0" Scale="1,1,1" />
+    </Node>
+    <Node Id="2201" Class="Camera:View" pos="510,390,0" flags="0">
+      <Inputs entityId="0" Enable="0" Disable="0" FOV="60" Blend="1" BlendFOVSpeed="1000" BlendFOVOffset="0" BlendPosSpeed="1000" BlendPosOffset="0,0,0" BlendRotSpeed="1000" BlendRotOffset="0,0,0" />
+    </Node>
+    <Node Id="2202" Class="Entity:ChildAttach" pos="750,270,0" flags="0">
+      <Inputs entityId="0" Child="0" KeepTransform="1" DisablePhysics="0" />
+    </Node>
+    <Node Id="2203" Class="Time:Delay" pos="520,310,0" flags="0">
+      <Inputs delay="0.1" resetOnInput="0" />
+    </Node>
+    <Node Id="2207" Class="Time:FrameDelay" pos="750,400,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2210" Class="Logic:All" pos="140,10,0" flags="0" InHideMask="127" OutHideMask="1">
+      <Inputs />
+    </Node>
+    <Node Id="2211" Class="Logic:Any" pos="-190,60,0" flags="0" InHideMask="1023" OutHideMask="1">
+      <Inputs />
+    </Node>
+    <Node Id="2212" Class="Time:FrameDelay" pos="-50,10,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2213" Class="Time:FrameDelay" pos="-50,70,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2214" Class="Time:FrameDelay" pos="245.40979,296.88147,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2215" Class="Time:FrameDelay" pos="140,360,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2216" Class="Time:FrameDelay" pos="280,360,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2426" Class="Logic:Any" pos="602.03735,-18.785713,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="2436" Class="TestRunner:AutoTest:StartStop" pos="540,-110,0" flags="0" />
+    <Node Id="2437" Class="Logic:Any" pos="840,10,0" flags="0">
+      <Inputs />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2199" nodeOut="1" portIn="Pos" portOut="CameraPosition" enabled="1" />
+    <Edge nodeIn="2199" nodeOut="1" portIn="Rot" portOut="CameraRotation" enabled="1" />
+    <Edge nodeIn="2202" nodeOut="1" portIn="entityId" portOut="CameraShouldFollow" enabled="1" />
+    <Edge nodeIn="2210" nodeOut="1" portIn="Reset" portOut="Start" enabled="1" />
+    <Edge nodeIn="2211" nodeOut="1" portIn="in1" portOut="Start" enabled="1" />
+    <Edge nodeIn="2211" nodeOut="1" portIn="in2" portOut="Update" enabled="1" />
+    <Edge nodeIn="2213" nodeOut="1" portIn="in" portOut="CameraShouldFollow" enabled="1" />
+    <Edge nodeIn="2214" nodeOut="1" portIn="in" portOut="Enable" enabled="1" />
+    <Edge nodeIn="2215" nodeOut="1" portIn="in" portOut="Disable" enabled="1" />
+    <Edge nodeIn="2437" nodeOut="1" portIn="in1" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="2" nodeOut="2199" portIn="TagpointForCamera" portOut="Succeeded" enabled="1" />
+    <Edge nodeIn="2201" nodeOut="2199" portIn="entityId" portOut="Succeeded" enabled="1" />
+    <Edge nodeIn="2202" nodeOut="2199" portIn="Child" portOut="Succeeded" enabled="1" />
+    <Edge nodeIn="2203" nodeOut="2199" portIn="in" portOut="Done" enabled="1" />
+    <Edge nodeIn="2426" nodeOut="2199" portIn="in1" portOut="Done" enabled="1" />
+    <Edge nodeIn="2426" nodeOut="2199" portIn="in7" portOut="Failed" enabled="1" />
+    <Edge nodeIn="2202" nodeOut="2203" portIn="Attach" portOut="out" enabled="1" />
+    <Edge nodeIn="2207" nodeOut="2203" portIn="in" portOut="out" enabled="1" />
+    <Edge nodeIn="2" nodeOut="2207" portIn="Update" portOut="out" enabled="1" />
+    <Edge nodeIn="2199" nodeOut="2211" portIn="Spawn" portOut="out" enabled="1" />
+    <Edge nodeIn="2212" nodeOut="2211" portIn="in" portOut="out" enabled="1" />
+    <Edge nodeIn="2210" nodeOut="2212" portIn="in1" portOut="out" enabled="1" />
+    <Edge nodeIn="2210" nodeOut="2213" portIn="in2" portOut="out" enabled="1" />
+    <Edge nodeIn="2201" nodeOut="2214" portIn="Enable" portOut="out" enabled="1" />
+    <Edge nodeIn="2216" nodeOut="2215" portIn="in" portOut="out" enabled="1" />
+    <Edge nodeIn="2201" nodeOut="2216" portIn="Disable" portOut="out" enabled="1" />
+    <Edge nodeIn="2437" nodeOut="2436" portIn="in2" portOut="Stop" enabled="1" />
+    <Edge nodeIn="2" nodeOut="2437" portIn="Cancel" portOut="out" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

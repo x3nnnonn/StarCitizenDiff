@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Vehicle name="ARGO_CSV" displayname="ARGO CSV" subType="Vehicle_GroundVehicle" size="1" requiredItemTags="empty" itemPortTags="ARGO_CSV" hudPaletteScheme="ARGO" landingOffset="0,0,-1.52" id="modVehicle">
+  <Physics pushable="0">
+    <Buoyancy waterDensity="30" waterResistance="50" waterDamping="0" />
+    <Simulation maxTimeStep="0.02" minEnergy="0.0" maxLoggedCollisions="2" />
+  </Physics>
+  <VisorElement element="Visor_HUD" />
+  <SoundParams engineProjectName="vehicles:greycat_ptv_engine" functionalityProjectName="vehicles:greycat_ptv_functionality" id="idSound" />
+  <Damages collDamageThreshold="1" groundCollisionMinMult="1.3" groundCollisionMaxMult="1.4" groundCollisionMinSpeed="100" groundCollisionMaxSpeed="100">
+    <DamageMultipliers>
+      <DamageMultiplier damageType="bullet" multiplier="1" multiplier_Energy="1" multiplier_Distortion="1" />
+      <DamageMultiplier damageType="collision" multiplier="0.25" />
+      <DamageMultiplier damageType="explosion" multiplier="1" />
+      <DamageMultiplier damageType="melee" multiplier="1" />
+    </DamageMultipliers>
+    <DamagesGroups>
+      <DamagesGroup name="Destroy" useTemplate="VehicleDestroy">
+        <DamagesSubGroups>
+          <DamagesSubGroup delay="0.0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="Effect">
+                <Effect effect="VehicleDestroyed" helper="hardpoint_vehicle_destroyed" />
+              </DamageBehavior>
+              <DamageBehavior class="Explosion">
+                <Explosion helper="hardpoint_vehicle_destroyed" damage="20" radius="8" minRadius="1" minPhysRadius="1" physRadius="3" pressure="5" />
+              </DamageBehavior>
+              <DamageBehavior class="Destroy" />
+            </DamageBehaviors>
+          </DamagesSubGroup>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="HitPassenger">
+                <HitPassenger damage="40" isDamagePercent="1" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+        </DamagesSubGroups>
+      </DamagesGroup>
+    </DamagesGroups>
+  </Damages>
+  <Pipes>
+    <Pipe name="MainPower" class="Power" />
+    <Pipe name="MainHeat" class="Heat" />
+    <Pipe name="MainFuel" class="Fuel" />
+    <Pipe name="IntakeFuel" class="Fuel" />
+    <Pipe name="QuantumFuel" class="Fuel" />
+    <Pipe name="Shield" class="Shield" />
+    <Pipe name="WeaponRegenCrew" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadCrew" class="WeaponAmmoLoad" />
+    <Pipe name="WeaponRegenTurret" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadTurret" class="WeaponAmmoLoad" />
+  </Pipes>
+  <Parts id="xmlParts">
+    <Part name="argo_csv" class="Animated" component="Hull" mass="1000" disablePhysics="0" isHidden="0" scopeContext="Ship" idRef="Node">
+      <Animated damageMapFlag="1" damageMapScale="1.0, 1.0" damageMapOffset="0.0,0.0" />
+      <Parts>
+        <Part name="massBox" class="MassBox" mass="8000.00" position="0,-0.1,-0.4" disablePhysics="0" disableCollision="0" isHidden="0">
+          <MassBox size="2.5,3.4,1.15" drivingOffset="0" />
+        </Part>
+        <Part name="body" class="AnimatedJoint" mass="3000" damageMax="3500" idRef="body" detachRatio="1" detachBaseForce="0,4,2" detachRandomForce="2.2,1.5,0.4" detachRandomRotation="-40, 11.2, 13.3" detachProbability="1">
+          <Effects />
+          <DamageBehaviors>
+            <DamageBehavior class="DetachPart" damageRatioMin="1">
+              <DetachPart>
+                <Part name="front_barbreakbottom_right" probability=".3" />
+                <Part name="front_panelbreak_bumper_left" probability=".3" />
+                <Part name="front_panelbreak_bumper_right" probability=".3" />
+                <Part name="front_barbreakbottom_left" probability=".3" />
+                <Part name="rear_panelbreak_left" probability=".3" />
+                <Part name="body_panelbreak_right" probability=".3" />
+                <Part name="AAsus_wheel_RR" probability=".3" />
+                <Part name="wheel_rl_mudguard" probability=".3" />
+                <Part name="AAsus_wheel_RL" probability=".3" />
+                <Part name="wheel_rr_mudguard" probability=".3" />
+                <Part name="AAsus_wheel_FL" probability=".3" />
+                <Part name="wheel_fl_mudguard" probability=".3" />
+                <Part name="AAsus_wheel_FR" probability=".3" />
+                <Part name="wheel_fr_mudguard" probability=".3" />
+                <Part name="AEsus_piston_lower_FR" probability=".3" />
+                <Part name="ADsus_piston_upper_FL" probability=".3" />
+                <Part name="AAsus_wheel_RL" probability=".3" />
+                <Part name="AEsus_upper_brace_RL" probability=".3" />
+                <Part name="ACsus_hub_RR" probability=".3" />
+                <Part name="AEsus_piston_lower_RR" probability=".3" />
+                <Part name="AAsus_wheel_FR" probability=".3" />
+                <Part name="AEsus_shaft_RR" probability=".3" />
+              </DetachPart>
+            </DamageBehavior>
+            <DamageBehavior class="Group" damageRatioMin="1">
+              <Group name="Destroy" />
+            </DamageBehavior>
+          </DamageBehaviors>
+          <Parts>
+            <Part name="front" class="AnimatedJoint" damageMax="2500">
+              <Parts>
+                <Part name="hardpoint_power_plant" class="ItemPort">
+                  <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NamePowerplant01" displayPos="75,290">
+                    <Types>
+                      <Type type="PowerPlant" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_armor" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Armor Slot">
+                    <Types>
+                      <Type type="Armor" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_capacitor_assignment" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="CapacitorAssignmentController" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_comms" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="CommsController" />
+                    </Types>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Comms" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_cooler" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="CoolerController" />
+                    </Types>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Cooler" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_door" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="DoorController" />
+                    </Types>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Door" />
+                          <PriorityGroup itemType="SeatAccess" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_energy" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="EnergyController" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="PowerPlant" />
+                          <PriorityGroup itemType="FuelIntake" />
+                          <PriorityGroup itemType="FuelTank" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_light" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="LightController" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="MainFuel" />
+                    </Connections>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Light" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_shield" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="ShieldController" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Shield" pipe="Shield" />
+                    </Connections>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Shield" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_weapon" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="WeaponController" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                    <ControllerDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="WeaponDefensive" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_controller_wheel" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="WheeledController" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Fuel" pipe="MainFuel" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_dashboard_driver" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                    <Types>
+                      <Type type="SeatDashboard" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                    <ControllerDef controllableTags="pilotDashboard">
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Display" />
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_paint" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="empty" display_name="port_NamePaint" portTags="Paint_CSV" requiredTags="Paint_CSV">
+                    <Types>
+                      <Type type="Paints" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_personal_inventory" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="selfphys uneditable">
+                    <Types>
+                      <Type type="Cargo" subtypes="empty" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_ping" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                    <Types>
+                      <Type type="Ping" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_seat_access" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="empty">
+                    <Types>
+                      <Type type="SeatAccess" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_seat_driver" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameSeatDriver">
+                    <Types>
+                      <Type type="Seat" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                    <ControllerDef controllableTags="pilotSeat">
+                      <UserDef>
+                        <Observerables>
+                          <Observerable itemType="EnergyController" screensDefault="Mule_MFD_Upper_Left" screensAvail="Mule_MFD_Upper_Right, Mule_MFD_Upper_Left" />
+                          <Observerable itemType="CommsController" screensDefault="Mule_MFD_Upper_Right" screensAvail="Mule_MFD_Upper_Right, Mule_MFD_Upper_Left" primaryCommsScreen="Mule_MFD_Upper_Left" />
+                          <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="Mule_MFD_Upper_Right, Mule_MFD_Upper_Left" />
+                          <Observerable itemType="WheeledController" screensDefault="Screen_Speedometer" screensAvail="Screen_Speedometer" />
+                          <Observerable itemType="LightController" screensDefault="empty" screensAvail="NotUsed_LightController" />
+                          <Observerable itemType="Radar" screensDefault="Mule_Screen_UI_Radar" screensAvail="Mule_Screen_UI_Radar" />
+                          <Observerable itemType="Seat" screensDefault="empty" screensAvail="Mule_MFD_Upper_Right, Mule_MFD_Upper_Left" />
+                          <Observerable itemType="Scanner" screensAvail="NotUsed_Scanner" />
+                          <Observerable itemType="Display" screensAvail="empty" />
+                          <Observerable itemType="CapacitorAssignmentController" visorScreen="empty" screensDefault="empty" screensAvail="empty" />
+                          <Observerable itemType="SelfDestruct" screensAvail="NotUsed_SelfDestruct" />
+                        </Observerables>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="EnergyController" />
+                          <PriorityGroup itemType="CoolerController" />
+                          <PriorityGroup itemType="ShieldController" />
+                          <PriorityGroup itemType="WeaponController" />
+                          <PriorityGroup itemType="WheeledController" />
+                          <PriorityGroup itemType="LightController" />
+                          <PriorityGroup itemType="CommsController" />
+                          <PriorityGroup itemType="DoorController" />
+                          <PriorityGroup itemType="Scanner" />
+                          <PriorityGroup itemType="Display" />
+                          <PriorityGroup itemType="Ping" />
+                          <PriorityGroup itemType="MultiLight" />
+                          <PriorityGroup itemType="Radar" />
+                          <PriorityGroup itemType="AIModule" />
+                          <PriorityGroup itemType="SelfDestruct" />
+                          <PriorityGroup itemType="CapacitorAssignmentController" />
+                          <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                            <tags tag="pilotSeat">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                        </PriorityGroups>
+                      </UserDef>
+                      <UsableDef>
+                        <PriorityGroups>
+                          <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                            <tags tag="pilotSeat">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                          <PriorityGroup itemType="SeatDashboard" defaultPriority="no_control">
+                            <tags tag="pilotDashboard">
+                              <Priority value="exclusive_control" />
+                            </tags>
+                          </PriorityGroup>
+                        </PriorityGroups>
+                      </UsableDef>
+                    </ControllerDef>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_selfdestruct" class="ItemPort">
+                  <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Self Destruct">
+                    <Types>
+                      <Type type="SelfDestruct" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="front_barbreakbottom_right" class="AnimatedJoint" damageMax="250" detachRatio="1" detachBaseForce="0.9,1.2,.4" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1">
+                  <Effects>
+                    <DetachFx joint="front_barbreakbottom_right" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="0.00133698,0.330282,0.210647" rot_offset="0.73429,0.573235,0.363621" helperID="front_barbreakbottom_right_PFX_DetachFX_lt_sparks_1m_once_fixed020" />
+                    <DetachFx joint="front_barbreakbottom_right" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="0.242913,0.050145,0.217124" rot_offset="0.73429,0.573235,0.363621" helperID="front_barbreakbottom_right_PFX_DetachFX_lt_sparks_1m_once_fixed021" />
+                    <DetachFx joint="front_barbreakbottom_right" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="0.252465,0.0544115,-0.254564" rot_offset="0.73429,0.573235,0.363621" helperID="front_barbreakbottom_right_PFX_DetachFX_lt_sparks_1m_once_fixed022" />
+                    <DetachFx joint="front_barbreakbottom_right" partName="front" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="0.0266267,0.352275,-0.268082" rot_offset="0.73429,0.573235,0.363621" helperID="front_barbreakbottom_right_PFX_DetachFX_lt_explode_5cm_once_fixed012" />
+                  </Effects>
+                </Part>
+                <Part name="front_panelbreak_bumper_left" class="AnimatedJoint" damageMax="250" detachRatio="1" detachBaseForce="-1,1,.3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1">
+                  <Effects>
+                    <DetachFx joint="front_panelbreak_bumper_left" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="-0.369049,-0.448613,0.0269604" rot_offset="-0.681676,0.10888,0.723507" helperID="front_panelbreak_bumper_left_PFX_DetachFX_lt_sparks_1m_once_fixed" />
+                    <DetachFx joint="front_panelbreak_bumper_left" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="-0.15912,-0.0821574,0.0045768" rot_offset="-0.543058,0.5482,0.636053" helperID="front_panelbreak_bumper_left_PFX_DetachFX_lt_sparks_1m_once_fixed001" />
+                    <DetachFx joint="front_panelbreak_bumper_left" partName="front" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="-0.322032,-0.292675,-0.0258746" rot_offset="-0.820383,0.501805,0.274158" helperID="front_panelbreak_bumper_left_PFX_DetachFX_lt_explode_5cm_once_fixed008" />
+                    <DetachFx joint="front_panelbreak_bumper_left" partName="front" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_Int.lt_smoke_int_1m_loop_constant" pos_offset="0.07075,0.102361,0.0236615" rot_offset="-0.824038,-0.566226,-0.0186628" helperID="front_panelbreak_bumper_left_PFX_DetachFX_lt_smoke_int_1m_loop_constant" />
+                    <DetachFx joint="front_panelbreak_bumper_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.116368,0.221156,-0.196897" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_left_SQUIB_.2m006" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.351636,-0.297838,0.162352" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_left_SQUIB_.2m007" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.339021,-0.272361,-0.224864" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_left_SQUIB_.2m008" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.198011,0.220881,0.161886" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_left_SQUIB_.2m009" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.387125,-0.68526,-0.13034" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_left_SQUIB_.2m010" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.140931,-0.0857359,0.218287" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_left_SQUIB_.2m011" effect="empty" />
+                  </Effects>
+                </Part>
+                <Part name="hardpoint_weapon_storage_multitool" class="ItemPort">
+                  <ItemPort minsize="1" maxsize="1" flags="uneditable">
+                    <Types>
+                      <Type type="Door" subtypes="empty" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="front_panelbreak_bumper_right" class="AnimatedJoint" damageMax="250" detachRatio="1" detachBaseForce="1.2,2.1,.4" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1">
+                  <Effects>
+                    <DetachFx joint="front_panelbreak_bumper_right" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="2.0098,-0.0833539,-0.00987698" rot_offset="0.663668,0.508015,0.549058" helperID="front_panelbreak_bumper_right_PFX_DetachFX_lt_sparks_1m_once_fixed002" />
+                    <DetachFx joint="front_panelbreak_bumper_right" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="2.2068,-0.465659,0.0125738" rot_offset="0.946095,0.00543448,0.323843" helperID="front_panelbreak_bumper_right_PFX_DetachFX_lt_sparks_1m_once_fixed003" />
+                    <DetachFx joint="front_panelbreak_bumper_right" partName="front" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="2.16816,-0.290766,-0.0182347" rot_offset="0.736389,0.395304,0.549058" helperID="front_panelbreak_bumper_right_PFX_DetachFX_lt_explode_5cm_once_fixed0010" />
+                    <DetachFx joint="front_panelbreak_bumper_right" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks_Int.lt_sparks_int_2m_loop_constant_gpu" pos_offset="1.40023,-0.240042,-0.0561326" rot_offset="-0.945193,0.18818,0.266832" helperID="front_panelbreak_bumper_right_PFX_DetachFX_lt_sparks_int_2m_loop_constant_gpu" />
+                    <DetachFx joint="front_panelbreak_bumper_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="2.19499,-0.693364,0.213713" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_right_SQUIB_.2m012" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="2.17814,-0.454256,0.218123" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_right_SQUIB_.2m013" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="1.74642,0.212168,-0.211668" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_right_SQUIB_.2m014" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="2.03378,-0.0963834,-0.220623" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_right_SQUIB_.2m015" effect="empty" />
+                    <DetachFx joint="front_panelbreak_bumper_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="1.71994,0.177158,0.159199" rot_offset="0.0,1.0,0.0" helperID="front_panelbreak_bumper_right_SQUIB_.2m016" effect="empty" />
+                  </Effects>
+                </Part>
+                <Part name="front_barbreakbottom_left" class="AnimatedJoint" damageMax="250" detachRatio="1" detachBaseForce="-2.5,1.2,.4" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1">
+                  <Effects>
+                    <DetachFx joint="front_barbreakbottom_left" partName="front" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="-0.136594,-0.122234,0.427948" rot_offset="-0.669516,0.708579,0.222855" helperID="front_barbreakbottom_left_PFX_DetachFX_lt_explode_5cm_once_fixed013" />
+                    <DetachFx joint="front_barbreakbottom_left" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="-0.388269,-0.398644,0.432059" rot_offset="-0.669516,0.708579,0.222855" helperID="front_barbreakbottom_left_PFX_DetachFX_lt_sparks_1m_once_fixed023" />
+                    <DetachFx joint="front_barbreakbottom_left" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="-0.405122,-0.380333,-0.0477822" rot_offset="-0.612813,0.585727,-0.530457" helperID="front_barbreakbottom_left_PFX_DetachFX_lt_sparks_1m_once_fixed012" />
+                    <DetachFx joint="front_barbreakbottom_left" partName="front" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="-0.147969,-0.106377,-0.0423605" rot_offset="-0.612813,0.585727,-0.530457" helperID="front_barbreakbottom_left_PFX_DetachFX_lt_sparks_1m_once_fixed013" />
+                  </Effects>
+                </Part>
+                <Part name="hardpoint_shield_generator" class="ItemPort">
+                  <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameShieldGen01">
+                    <Types>
+                      <Type type="Shield" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                      <Connection pipeClass="Shield" pipe="Shield" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_battery" class="ItemPort">
+                  <ItemPort minSize="0" maxSize="0" flags="empty">
+                    <Types>
+                      <Type type="Battery" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_cooler" class="ItemPort">
+                  <ItemPort minSize="0" maxSize="0" flags="empty" display_name="port_NameCooler01">
+                    <Types>
+                      <Type type="Cooler" subtypes="empty" />
+                    </Types>
+                    <Connections>
+                      <Connection pipeClass="Power" pipe="MainPower" />
+                      <Connection pipeClass="Heat" pipe="MainHeat" />
+                    </Connections>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_item_roof" class="ItemPort" skipPart="0" id="modPart_TopSlot">
+                  <ItemPort minSize="1" maxSize="1" flags="uneditable" requiredTags="empty" portTags="empty">
+                    <Types>
+                      <Type type="Misc" subtypes="empty" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+                <Part name="hardpoint_entrancedoor" class="ItemPort">
+                  <ItemPort minsize="1" maxsize="1" flags="uneditable">
+                    <Types>
+                      <Type type="Door" subtypes="empty" />
+                    </Types>
+                  </ItemPort>
+                </Part>
+              </Parts>
+            </Part>
+            <Part name="hardpoint_fuel_port" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="dockingport1 uneditable" portTags="Ship_Dock_Refuel">
+                <Types>
+                  <Type type="Door" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_modular_slot" class="ItemPort" skipPart="0" id="modPart_RearSlot">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" requiredTags="empty" portTags="empty">
+                <Types>
+                  <Type type="Container" subtypes="Cargo" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_modular_bed" class="ItemPort" detachRatio="0">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable">
+                <Types>
+                  <Type type="Misc" subtypes="empty" id="modPart_FlatBed" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_comp_radar" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="$uneditable" requiredTags="empty" portTags="empty">
+                <Types>
+                  <Type type="Misc" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_comp_lifesupport" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="$uneditable" requiredTags="empty" portTags="empty">
+                <Types>
+                  <Type type="Misc" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_comp_computer" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="$uneditable" requiredTags="empty" portTags="empty">
+                <Types>
+                  <Type type="Misc" subtypes="empty" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="AEsus_upper_brace_RR" class="SuspensionPart" component="AEsus_upper_brace_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,-1.5,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="upper_brace_mesh_rr" />
+              <IK target="AAsus_wheel_RR" offset="-0.221,0,0.258" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_shaft_RR" class="SuspensionPart" component="AEsus_shaft_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,-1,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="drive_shaft_mesh_rr" />
+              <IK target="AAsus_wheel_RR" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_piston_lower_RR" class="SuspensionPart" component="AEsus_piston_lower_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,-1,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="piston_lower_mesh_rr" />
+              <IK target="AAsus_wheel_RR" offset="-0.135,-0.001,0.381" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_lower_brace_RR" class="SuspensionPart" component="AEsus_lower_brace_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,-1,-1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="lower_brace_mesh_rr" />
+              <IK target="AAsus_wheel_RR" offset="-0.251,0,-0.217" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ADsus_piston_upper_RR" class="SuspensionPart" component="ADsus_piston_upper_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="1.2,-1.1,1.2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="piston_upper_mesh_rr" />
+              <IK target="AAsus_wheel_RR" offset="-0.135,-0.001,0.381" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ACsus_hub_RR" class="SuspensionPart" component="ACsus_hub_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="1.5,-1,.4" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="hub_rr" />
+              <IK target="AAsus_wheel_RR" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ABsus_spindle_RR" class="SuspensionPart" component="ABsus_spindle_RR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="1.5,-1.2,.3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="spindle_mesh_rr" />
+              <IK target="AAsus_wheel_RR" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="AAsus_wheel_RR" class="SubPartWheel" component="AAsus_wheel_RR" mass="500" damagemax="2000" detachRatio="1" detachBaseForce="2.5,-1,1.1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="12.5, 11.2, 13.3" detachProbability="3">
+              <Effects />
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="3" stiffness="150000.000000" density="100" damping="-0.25" driving="1" canSteer="0" wheelOffset="0,0,0" lenMax="0.2" maxFriction="1.5" minFriction="1" slipFrictionMod="0.0" suspLength="0.125" rimRadius="0.467" torqueScale="3" />
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="tire_rr" />
+            </Part>
+            <Part name="AAsus_wheel_RL" class="SubPartWheel" component="AAsus_wheel_RL" mass="500" damagemax="2000" detachRatio="1" detachBaseForce="-2.5,-1.5,.5" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <Effects />
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="2" stiffness="150000.000000" density="100" damping="-0.25" driving="1" canSteer="0" wheelOffset="0,0,0" lenMax="0.2" maxFriction="1.5" minFriction="1" slipFrictionMod="0.0" suspLength="0.125" rimRadius="0.467" torqueScale="3" />
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="tire_rl" />
+            </Part>
+            <Part name="ABsus_spindle_RL" class="SuspensionPart" component="ABsus_spindle_RL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2.5,-1.5,1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="spindle_mesh_rl" />
+              <IK target="AAsus_wheel_RL" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="ACsus_hub_RL" class="SuspensionPart" component="ACsus_hub_RL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2.5,-1.5,.3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="hub_rl" />
+              <IK target="AAsus_wheel_RL" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ADsus_piston_upper_RL" class="SuspensionPart" component="ADsus_piston_upper_RL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2.5,-1.5,.2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="piston_upper_mesh_rl" />
+              <IK target="AAsus_wheel_RL" offset="0.135,-0.001,0.381" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_lower_brace_RL" class="SuspensionPart" component="AEsus_lower_brace_RL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2.5,-1.5,.1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="lower_brace_mesh_rl" />
+              <IK target="AAsus_wheel_RL" offset="0.251,0,-0.217" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_shaft_RL" class="SuspensionPart" component="AEsus_shaft_RL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-1.2,-1.5,.5" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="drive_shaft_mesh_rl" />
+              <IK target="AAsus_wheel_RL" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_upper_brace_RL" class="SuspensionPart" component="AEsus_upper_brace_RL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-1.2,-1.5,1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="upper_brace_mesh_rl" />
+              <IK target="AAsus_wheel_RL" offset="0.221,0,0.258" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="wheel_rl_mudguard" class="SuspensionPart" damageMax="150" component="empty" mass="19.9" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2.2,-1.5,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rl.cga" geometryname="mudguard_rl" />
+              <IK target="AAsus_wheel_RL" offset="-0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="wheel_rr_mudguard" class="SuspensionPart" damageMax="150" component="empty" mass="19.9" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.2,-1.5,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_rr.cga" geometryname="mudguard_rr" />
+              <IK target="ABsus_spindle_RR" offset="-0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="rear_panelbreak_left" class="AnimatedJoint" damageMax="250" detachRatio="1" detachBaseForce="-4.5,-2.5,2.8" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-8,-3.5,2" detachProbability="1">
+              <Effects>
+                <DetachFx joint="rear_panelbreak_left" partName="body" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="0.275026,1.00756,-0.0500574" rot_offset="-0.410865,0.732707,-0.542522" helperID="rear_panelbreak_left_PFX_DetachFX_lt_explode_5cm_once_fixed006" />
+                <DetachFx joint="rear_panelbreak_left" partName="body" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_Int.lt_smoke_int_1m_loop_constant" pos_offset="0.0651107,-0.315496,-0.385561" rot_offset="-0.153339,-0.866638,-0.47479" helperID="rear_panelbreak_left_PFX_DetachFX_lt_smoke_int_1m_loop_constant012" />
+                <DetachFx joint="rear_panelbreak_left" partName="body" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_loop_fixed" pos_offset="0.0466475,0.725292,-0.244221" rot_offset="-0.122908,0.962195,0.24305" helperID="rear_panelbreak_left_PFX_DetachFX_lt_sparks_2m_loop_fixed020" />
+                <DetachFx joint="rear_panelbreak_left" partName="body" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="0.186234,-0.263345,-0.339184" rot_offset="-0.195452,-0.839975,-0.506202" helperID="rear_panelbreak_left_PFX_DetachFX_lt_explode_5cm_once_fixed015" />
+                <DetachFx joint="rear_panelbreak_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.136414,-0.376129,-0.149418" rot_offset="0.0,1.0,0.0" helperID="rear_panelbreak_left_SQUIB_.2m021" effect="empty" />
+                <DetachFx joint="rear_panelbreak_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.136415,0.296093,0.223833" rot_offset="0.0,1.0,0.0" helperID="rear_panelbreak_left_SQUIB_.2m022" effect="empty" />
+                <DetachFx joint="rear_panelbreak_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.13853,1.06417,-0.295413" rot_offset="0.0,1.0,0.0" helperID="rear_panelbreak_left_SQUIB_.2m023" effect="empty" />
+                <DetachFx joint="rear_panelbreak_left" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="-0.164853,0.634997,0.082774" rot_offset="0.0,1.0,0.0" helperID="rear_panelbreak_left_SQUIB_.2m024" effect="empty" />
+                <DetachFx joint="rear_panelbreak_left" partName="body" effect="Damage/LT_Damage/LT_Fire_FX.LT_Fire_Int.lt_fire_int_25cm_fixed" pos_offset="0.284414,2.05078,-0.0383325" rot_offset="-0.889021,-0.431104,-0.154242" helperID="rear_panelbreak_left_PFX_DetachFX_lt_fire_int_25cm_fixed" />
+              </Effects>
+            </Part>
+            <Part name="body_panelbreak_right" class="AnimatedJoint" damageMax="250" detachRatio="1" detachBaseForce="4.5,-2.4,3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="8,-4,-2" detachProbability="1">
+              <Effects>
+                <DetachFx joint="body_panelbreak_right" partName="body" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_1m_once_fixed" pos_offset="-0.00160301,-1.07271,-0.321954" rot_offset="0.185365,-0.944348,0.271747" helperID="body_panelbreak_right_PFX_DetachFX_lt_sparks_1m_once_fixed010" />
+                <DetachFx joint="body_panelbreak_right" partName="body" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="-0.212809,-0.399131,-0.37277" rot_offset="0.0854945,-0.898262,-0.431063" helperID="body_panelbreak_right_PFX_DetachFX_lt_explode_5cm_once_fixed004" />
+                <DetachFx joint="body_panelbreak_right" partName="body" effect="Damage/LT_Damage/LT_Sparks_FX.LT_Sparks.lt_sparks_2m_loop_fixed" pos_offset="-0.0534367,-0.176332,-0.405366" rot_offset="0.317964,-0.921782,0.221849" helperID="body_panelbreak_right_PFX_DetachFX_lt_sparks_2m_loop_fixed016" />
+                <DetachFx joint="body_panelbreak_right" partName="body" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_5cm_once_fixed" pos_offset="-0.383607,1.12542,-0.27706" rot_offset="0.535791,0.725363,-0.432176" helperID="body_panelbreak_right_PFX_DetachFX_lt_explode_5cm_once_fixed014" />
+                <DetachFx joint="body_panelbreak_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.138535,0.0612115,0.185418" rot_offset="0.0,1.0,0.0" helperID="body_panelbreak_right_SQUIB_.2m001" effect="empty" />
+                <DetachFx joint="body_panelbreak_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.138535,-0.275907,-0.0214346" rot_offset="0.0,1.0,0.0" helperID="body_panelbreak_right_SQUIB_.2m002" effect="empty" />
+                <DetachFx joint="body_panelbreak_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.111351,1.20487,-0.412512" rot_offset="0.0,1.0,0.0" helperID="body_panelbreak_right_SQUIB_.2m003" effect="empty" />
+                <DetachFx joint="body_panelbreak_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.106486,-1.26292,0.135141" rot_offset="0.0,1.0,0.0" helperID="body_panelbreak_right_SQUIB_.2m004" effect="empty" />
+                <DetachFx joint="body_panelbreak_right" squibPhysical="40" squibEnergy="40" squibRadius=".2" pos_offset="0.111351,0.737576,0.121236" rot_offset="0.0,1.0,0.0" helperID="body_panelbreak_right_SQUIB_.2m005" effect="empty" />
+              </Effects>
+            </Part>
+            <Part name="AAsus_wheel_FL" class="SubPartWheel" component="AAsus_wheel_FL" mass="500" damagemax="2000" detachRatio="1" detachBaseForce="-2.4,1.2,1" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="3">
+              <Effects />
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="0" stiffness="150000.000000" density="100" damping="-0.25" driving="1" canSteer="1" wheelOffset="0,0,0" lenMax="0.2" maxFriction="1.5" minFriction="1" slipFrictionMod="0.0" suspLength="0.125" rimRadius="0.467" torqueScale="3" />
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="tire_fl" />
+            </Part>
+            <Part name="AAsus_wheel_FR" class="SubPartWheel" component="AAsus_wheel_FR" mass="500" damagemax="2000" detachRatio="1" detachBaseForce="2.2,1.4,0.3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="12.5, 11.2, 13.3" detachProbability="1">
+              <Effects />
+              <DamageMultipliers>
+                <DamageMultiplier damageType="collision" multiplier="0.25" />
+              </DamageMultipliers>
+              <SubPartWheel axle="1" stiffness="150000.000000" density="100" damping="-0.25" driving="1" canSteer="1" wheelOffset="0,0,0" lenMax="0.2" maxFriction="1.5" minFriction="1" slipFrictionMod="0.0" suspLength="0.125" rimRadius="0.467" torqueScale="3" />
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="tire_fr" />
+            </Part>
+            <Part name="ABsus_spindle_FL" class="SuspensionPart" component="ABsus_spindle_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2.2,1.4,0.3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="spindle_mesh_fl" />
+              <IK target="AAsus_wheel_FL" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="ABsus_spindle_FR" class="SuspensionPart" component="ABsus_spindle_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2,1.2,0.4" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="spindle_mesh_fr" />
+              <IK target="AAsus_wheel_FR" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="ACsus_hub_FL" class="SuspensionPart" component="ACsus_hub_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2,2,0.4" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="hub_fl" />
+              <IK target="AAsus_wheel_FL" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ACsus_hub_FR" class="SuspensionPart" component="ACsus_hub_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2,2.2,0.3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="hub_fr" />
+              <IK target="AAsus_wheel_FR" offset="0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ADsus_piston_upper_FL" class="SuspensionPart" component="ADsus_piston_upper_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2,2,3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="piston_upper_mesh_fl" />
+              <IK target="AAsus_wheel_FL" offset="0.144,0.006,0.375" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="ADsus_piston_upper_FR" class="SuspensionPart" component="ADsus_piston_upper_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,2,3" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="piston_upper_mesh_fr" />
+              <IK target="AAsus_wheel_FR" offset="-0.144,0.006,0.375" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_lower_brace_FL" class="SuspensionPart" component="AEsus_lower_brace_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2,2,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="lower_brace_mesh_fl" />
+              <IK target="AAsus_wheel_FL" offset="0,-0.006,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_lower_brace_FR" class="SuspensionPart" component="AEsus_lower_brace_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,2,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="lower_brace_mesh_fr" />
+              <IK target="AAsus_wheel_FR" offset="0,-0.006,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_piston_lower_FL" class="SuspensionPart" component="AEsus_piston_lower_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-1,1.2,0.5" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="piston_lower_mesh_fl" />
+              <IK target="AAsus_wheel_FL" offset="0.144,0.006,0.375" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_piston_lower_FR" class="SuspensionPart" component="AEsus_piston_lower_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="1,1.2,0.5" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="piston_lower_mesh_fr" />
+              <IK target="AAsus_wheel_FR" offset="-0.144,0.006,0.375" targetHelper=" " mode="translate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_shaft_FL" class="SuspensionPart" component="AEsus_shaft_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-1.1,1.2,0.5" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="drive_shaft_mesh_fl" />
+              <IK target="AAsus_wheel_FL" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_shaft_FR" class="SuspensionPart" component="AEsus_shaft_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="1,1.2,0.5" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="drive_shaft_mesh_fr" />
+              <IK target="AAsus_wheel_FR" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_upper_brace_FL" class="SuspensionPart" component="AEsus_upper_brace_FL" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-2,2,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="upper_brace_mesh_fl" />
+              <IK target="AAsus_wheel_FL" offset="0,-0.006,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="AEsus_upper_brace_FR" class="SuspensionPart" component="AEsus_upper_brace_FR" mass="25" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="2.5,2,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="upper_brace_mesh_fr" />
+              <IK target="AAsus_wheel_FR" offset="0,-0.006,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+            </Part>
+            <Part name="wheel_fl_mudguard" class="SuspensionPart" damageMax="150" component="empty" mass="19.9" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="-1,2,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fl.cga" geometryname="mudguard_fl" />
+              <IK target="AAsus_wheel_FL" offset="-0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+            <Part name="wheel_fr_mudguard" class="SuspensionPart" damageMax="150" component="empty" mass="19.9" disablePhysics="0" disableCollision="0" isHidden="0" detachRatio="1" detachBaseForce="1,2,2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+              <SubPart filename="Objects/Vehicles/ARGO/argo_csv/argo_csv_wheel_fr.cga" geometryname="mudguard_fr" />
+              <IK target="AAsus_wheel_FR" offset="-0,0,0" targetHelper=" " mode="translate" ignoreTargetRotation="0" />
+            </Part>
+          </Parts>
+        </Part>
+      </Parts>
+    </Part>
+  </Parts>
+  <Helpers />
+  <MovementParams id="xmlMovement">
+    <PhysicalWheeled steerSpeed="20.000000" steerSpeedMin="50.000000" steerSpeedScale="0.200000" steerSpeedScaleMin="1.000000" kvSteerMax="0.000000" v0SteerMax="50.000000" vMaxSteerMax="50.000000" steerRelaxation="80.000000">
+      <PhysicsParams kLongitudinalFriction="1.800000" kLateralFriction="1.8000000" brakeTorque="16000.000000" wWheelsMax="28.000000" gravityStrength="9.800000" gravityFreefallStrength="9.800000">
+        <PacejkaLong stiffness="1.590000" shape="1.500000" peak="1.500000" curvature="1.226000" />
+        <PacejkaLat stiffness="3.500000" shape="1.450000" peak="1.500000" curvature="1.255000" />
+        <Gears reverse="0.300000" neutral="0.000000" first="0.4" />
+        <Engine RPMmax="3600.000000" torqueScale="42.00000" RPMmin="850.000000" RPMidle="1400.000000" RPMshiftUp="3400.000000" RPMshiftDown="850.000000" RPMstart="2400.000000">
+          <RPMTorqueTable>
+            <entry RPM="800.000000" torque="116.000000" />
+            <entry RPM="1300.000000" torque="141.000000" />
+            <entry RPM="1800.000000" torque="149.000000" />
+            <entry RPM="2300.000000" torque="155.000000" />
+            <entry RPM="2800.000000" torque="165.000000" />
+            <entry RPM="3300.000000" torque="171.000000" />
+            <entry RPM="3800.000000" torque="175.000000" />
+            <entry RPM="4300.000000" torque="184.000000" />
+            <entry RPM="4800.000000" torque="190.000000" />
+            <entry RPM="5300.000000" torque="187.000000" />
+            <entry RPM="5800.000000" torque="183.000000" />
+            <entry RPM="6300.000000" torque="171.000000" />
+          </RPMTorqueTable>
+        </Engine>
+      </PhysicsParams>
+    </PhysicalWheeled>
+  </MovementParams>
+  <Particles>
+    <DamageEffects>
+      <DamageEffect name="VehicleDestroyed" helper="hardpoint_vehicle_destroyed" effect="706d924f-5a2f-9cdc-f0df-3aec957a8b4a|Spaceships/Deathmasks/argo_csv_deathmask.argo_csv_deathmask" scaleMax="1" gravityDirection="0,0,1" pulsePeriod="0" />
+    </DamageEffects>
+    <Exhaust insideWater="0" outsideWater="0" id="xmlExhaustVFX" />
+    <EnvironmentLayers>
+      <EnvironmentLayer minSpeed="0.30000001" minSpeedSizeScale="1" minSpeedCountScale="1" minSpeedSpeedScale="0" minSpeedStrength="0.0" maxSpeed="30" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1" maxSpeedStrength="1" continuous="0">
+        <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="1" />
+        <Emitters />
+        <Wheels>
+          <WheelGroups>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="1" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="2" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="3" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="4" />
+              </Wheels>
+            </WheelGroup>
+          </WheelGroups>
+        </Wheels>
+      </EnvironmentLayer>
+      <EnvironmentLayer name="rims" minSpeed="0.1" minSpeedSizeScale="0.25" minSpeedCountScale="1" maxSpeed="10" maxSpeedSizeScale="1" maxSpeedCountScale="1">
+        <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="0" />
+        <Emitters />
+        <Wheels all="1" allActive="0" />
+      </EnvironmentLayer>
+    </EnvironmentLayers>
+  </Particles>
+  <Modifications>
+    <Modification name="Cargo">
+      <Elems>
+        <Elem idRef="modVehicle" name="displayname" value="ARGO CSV Cargo" />
+        <Elem idRef="modPart_FlatBed" name="type" value="Container" />
+        <Elem idRef="modPart_FlatBed" name="subtypes" value="Cargo" />
+        <Elem idRef="modPart_RearSlot" name="skipPart" value="1" />
+      </Elems>
+    </Modification>
+  </Modifications>
+</Vehicle>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Vehicle name="EA_destructable_satellite_dish" displayname="ea_destructable_probe" subType="Vehicle_Spaceship" size="3" itemPortTags="ea_destructable_probe" hudPaletteScheme="empty" landingOffset="0,0,0" id="modVehicle">
+  <Physics pushable="0" dampingFreefall="0">
+    <Buoyancy waterDensity="150" waterResistance="2500" />
+    <Simulation maxTimeStep="0.02" minEnergy="0.16" maxLoggedCollisions="2" />
+  </Physics>
+  <VisorElement element="Visor_HUD" />
+  <Damages collDamageThreshold="10" groundCollisionMinMult="0.01" groundCollisionMaxMult="2" groundCollisionMinSpeed="4" groundCollisionMaxSpeed="60">
+    <DamageMultipliers>
+      <DamageMultiplier damageType="bullet" multiplier="1" multiplier_Energy="1" multiplier_Distortion="1" />
+      <DamageMultiplier damageType="melee" multiplier="0" />
+      <DamageMultiplier damageType="collision" multiplier="1" parentMultiplier="1" />
+      <DamageMultiplier damageType="explosion" multiplier="0.4" splash="0.4" multiplier_Energy="0.4" />
+    </DamageMultipliers>
+    <DamagesGroups>
+      <DamagesGroup name="GlobalHitReactions" global="1">
+        <DamagesSubGroups>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="CameraShake">
+                <ShakeTable>
+                  <Shake hitType="default" minDamage="1" maxDamage="20" minAngleMagnitude="5,5,5" maxAngleMagnitude="30,30,30" minShiftMagnitude="1" maxShiftMagnitude="2" frequency="4" cooldown="0.2" duration="0.15" />
+                  <Shake hitType="default" minDamage="21" maxDamage="100" minAngleMagnitude="5,5,5" maxAngleMagnitude="30,30,30" minShiftMagnitude="2" maxShiftMagnitude="4" frequency="4" cooldown="0.2" duration="0.15" />
+                  <Shake hitType="default" minDamage="101" maxDamage="1000" minAngleMagnitude="5,5,5" maxAngleMagnitude="30,30,30" minShiftMagnitude="4" maxShiftMagnitude="7" frequency="4" cooldown="0.2" duration="0.15" />
+                </ShakeTable>
+              </DamageBehavior>
+              <DamageBehavior class="AudioFeedback" damageRatioMin="0.1" damageRatioMax="0.95">
+                <Sound sound="empty" cooldown="1" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+        </DamagesSubGroups>
+      </DamagesGroup>
+      <DamagesGroup name="Destroy">
+        <DamagesSubGroups>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="Destroy" />
+              <DamageBehavior class="Effect">
+                <Effect effect="VehicleDestroyed" helper="Body" lifetime="90" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="Explosion">
+                <Explosion helper="Body" damage="500" radius="15" minRadius="10" minPhysRadius="10" physRadius="15" pressure="100000" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="HitPassenger">
+                <HitPassenger damage="100" isDamagePercent="1" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+          <DamagesSubGroup delay="3" randomness="0.25">
+            <DamageBehaviors>
+              <DamageBehavior class="Burn">
+                <Burn helper="Body" damage="5" selfDamage="10" radius="2" interval="0.5" />
+              </DamageBehavior>
+            </DamageBehaviors>
+          </DamagesSubGroup>
+        </DamagesSubGroups>
+      </DamagesGroup>
+    </DamagesGroups>
+  </Damages>
+  <Pipes>
+    <Pipe name="MainPower" class="Power" />
+    <Pipe name="MainHeat" class="Heat" />
+    <Pipe name="MainFuel" class="Fuel" />
+    <Pipe name="IntakeFuel" class="Fuel" />
+    <Pipe name="QuantumFuel" class="Fuel" />
+    <Pipe name="Shield" class="Shield" />
+  </Pipes>
+  <Parts id="xmlParts">
+    <Part name="EA_destructable_satellite_dish" class="Animated" mass="200000" disablePhysics="0" scopeContext="Ship" id="modMass">
+      <Animated />
+      <Parts>
+        <Part name="Body" class="AnimatedJoint" damageMax="450000" detachRatio="1" detachBaseForce="0,7,-6" detachRandomForce="0.0, 0.0, 0.0" detachRandomRotation="0.0, 0.0, 0.0" id="modBody">
+          <Effects>
+            <HitFx joint="Body" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-2.73078,3.88111,20.5713" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_50to100_lt_smoke_HitFx_4m_linger002" />
+            <HitFx joint="Body" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="-18.065,-5.74201,-18.3931" rot_offset="0.0,0.0,-12.2771" helperID="Body_PFX_HitFX_99to100_lt_explode_10m_once_fixed009" />
+            <HitFx joint="Body" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="12.5494,-7.3711,-8.8103" rot_offset="5.36883,-0.856414,11.0077" helperID="Body_PFX_HitFX_75to100_mt_sparks_HitFx_16m007" />
+            <HitFx joint="Body" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="-11.7299,-4.83723,-15.4407" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_75to100_mt_fire_patch_HitFx_16m018" />
+            <HitFx joint="Body" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="2.05848,0.0156998,40.2701" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_75to100_mt_sparks_HitFx_16m009" />
+            <HitFx joint="Body" minDamageRatio="0.80" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="-1.93465,2.26347,76.4385" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_80to100_mt_fire_patch_HitFx_16m018" />
+            <HitFx joint="Body" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="-7.3909,-6.92317,-10.8473" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_60to100_mt_fire_patch_HitFx_16m023" />
+            <HitFx joint="Body" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="4.94805,2.3949,13.4525" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_15to100_lt_smoke_HitFx_4m_linger005" />
+            <HitFx joint="Body" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="-0.959375,7.5901,20.5713" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_55to100_lt_explode_10m_once_fixed002" />
+            <HitFx joint="Body" minDamageRatio="0.98" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="-4.09395,0.0702387,14.0587" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_98to100_lt_explode_10m_once_fixed005" />
+            <HitFx joint="Body" minDamageRatio="0.20" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="4.94805,2.3949,20.5713" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_20to100_lt_smoke_HitFx_4m_linger001" />
+            <HitFx joint="Body" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-1.36004,-6.02053,-5.75469" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger003" />
+            <HitFx joint="Body" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="-0.614805,4.01152,56.558" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_60to100_lt_explode_10m_once_fixed003" />
+            <HitFx joint="Body" minDamageRatio="0.80" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="-5.49129,7.69263,-10.8473" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_80to100_mt_fire_patch_HitFx_16m020" />
+            <HitFx joint="Body" minDamageRatio="0.66" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="6.87137,7.69263,-10.8473" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_66to100_mt_fire_patch_HitFx_16m021" />
+            <HitFx joint="Body" minDamageRatio="0.70" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="3.57395,-2.50088,0.149443" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_70to100_mt_fire_patch_HitFx_16m024" />
+            <HitFx joint="Body" minDamageRatio="0.30" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="19.9655,15.1149,-15.0913" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_30to100_lt_smoke_HitFx_4m_linger005" />
+            <HitFx joint="Body" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="18.4288,58.6651,-2.93694" rot_offset="0.0,1.07002,-12.2304" helperID="Body_PFX_HitFX_99to100_lt_explode_10m_once_fixed011" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="-43.8592,4.47074,-10.0245" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_97to100_lt_explode_10m_once_fixed018" />
+            <HitFx joint="Body" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="20.1832,-45.7827,-8.61144" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_99to100_lt_explode_10m_once_fixed020" />
+            <HitFx joint="Body" minDamageRatio="0.98" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="-2.87453,-61.4345,-2.93693" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_98to100_lt_explode_10m_once_fixed021" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_10m_once_fixed" pos_offset="43.7863,4.47166,-10.6228" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_97to100_lt_explode_10m_once_fixed022" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-31.4311,58.9976,0.0297363" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_97to100_xt_explode_4m_once_fixed006" />
+            <HitFx joint="Body" minDamageRatio="0.95" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="-38.8248,40.2501,-6.02688" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_95to100_mt_fire_patch_HitFx_16m023" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="-32.8629,-29.3799,-10.0245" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_97to100_mt_fire_patch_HitFx_16m025" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="7.65816,-56.4923,-3.44231" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_97to100_mt_fire_patch_HitFx_16m030" />
+            <HitFx joint="Body" minDamageRatio="0.98" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="61.8967,-23.3731,-0.23666" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_98to100_mt_fire_patch_HitFx_16m033" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="48.8738,9.61317,-8.08495" rot_offset="0.0,12.2771,0.0" helperID="Body_PFX_HitFX_97to100_mt_fire_patch_HitFx_16m035" />
+            <HitFx joint="Body" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="10.477,48.7222,-8.08495" rot_offset="0.0,0.0,12.2771" helperID="Body_PFX_HitFX_99to100_lt_smoke_HitFx_4m_linger004" />
+            <HitFx joint="Body" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-60.6446,-16.8073,-2.00499" rot_offset="0.0,0.0,12.2771" helperID="Body_PFX_HitFX_97to100_lt_smoke_HitFx_4m_linger008" />
+            <HitFx joint="Body" minDamageRatio="0.98" maxDamageRatio="1" effect="Damage/MT_Damage/mt_fire_fx.mt_fire_HitFX.mt_fire_patch_HitFx_16m" pos_offset="28.1439,52.3062,-3.3544" rot_offset="0.0,-1.07002,12.2304" helperID="Body_PFX_HitFX_98to100_mt_fire_patch_HitFx_16m038" />
+          </Effects>
+          <DamageBehaviors>
+            <DamageBehavior class="Group" damageRatioMin="1">
+              <Group name="Destroy" />
+            </DamageBehavior>
+          </DamageBehaviors>
+          <Parts>
+            <Part name="OuterPetals_Panel04" class="AnimatedJoint" damageMax="50000" detachRatio="0" detachBaseForce="0,7,-6" detachRandomForce="0.0, 0.0, 0.0" detachRandomRotation="0.0, 0.0, 0.0" detachProbability="0">
+              <Effects>
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="51.5371,-30.9614,-3.61015" rot_offset="-0.951489,-0.327625,11.5022" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m027" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="67.7389,12.4525,2.07687" rot_offset="-1.89573,-0.652751,11.3707" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m028" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="54.3749,11.6405,-5.51095" rot_offset="10.9171,3.75906,0.0" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m029" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="70.5631,3.92067,3.2086" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m030" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="33.9546,-31.821,-9.03497" rot_offset="-2.08308,-0.717265,11.334" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m031" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="26.4856,-30.6299,-9.93131" rot_offset="-3.91233,-1.34713,10.7792" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m032" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="39.9486,-1.37746,-11.425" rot_offset="1.23819,3.75905,10.8466" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m033" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="39.7331,7.35967,-8.5606" rot_offset="10.9171,3.75906,0.0" helperID="OuterPetals_Panel04_PFX_HitFX_15to100_metal_trail_HitFX_16m034" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.20" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="35.315,-22.2866,-10.3451" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_20to100_lt_smoke_HitFx_4m_linger005" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="46.4794,-35.3293,-4.2097" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger010" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="44.6964,-18.7348,-8.61796" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger011" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="43.6556,-48.0942,-1.05577" rot_offset="0.571353,0.196732,11.5303" helperID="OuterPetals_Panel04_PFX_HitFX_25to100_metal_trail_HitFX_16m005" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.30" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="41.0785,-8.96509,-10.6293" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_30to100_lt_smoke_HitFx_4m_linger008" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="47.218,-45.4314,-0.688271" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel04_PFX_HitFX_35to100_metal_trail_HitFX_16m011" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="58.3692,-27.9028,0.623711" rot_offset="-0.761533,-0.26222,11.518" helperID="OuterPetals_Panel04_PFX_HitFX_35to100_metal_trail_HitFX_16m012" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="54.0442,-13.7501,-5.06033" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_50to100_lt_explode_100cm_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="63.2561,-14.2454,-0.0898535" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_50to100_mt_sparks_HitFx_16m010" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="53.0431,-41.2887,0.458799" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_55to100_mt_sparks_HitFx_16m012" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="63.8681,-6.39157,-1.22899" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_55to100_mt_sparks_HitFx_16m013" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="59.1346,14.0511,-4.47089" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_60to100_lt_explode_100cm_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.65" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="60.0612,4.8736,-3.07596" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_65to100_xt_explode_4m_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="48.2896,-24.424,-5.80667" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_75to100_xt_explode_4m_once_fixed010" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="36.515,-41.8525,-6.32063" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_75to100_xt_explode_4m_once_fixed011" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="47.0361,6.85451,-8.78349" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_75to100_xt_explode_4m_once_fixed012" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.95" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="47.5435,-8.41192,-8.90723" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_95to100_ht_explode_4m_once_fixed006" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="53.0166,-0.338566,-6.31564" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_97to100_ht_explode_4m_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="40.5617,-29.2191,-7.78848" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_99to100_ht_explode_4m_once_fixed006" />
+                <HitFx joint="OuterPetals_Panel04" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="62.0893,-21.8065,0.0329199" rot_offset="0.236158,0.081311,14.3092" helperID="OuterPetals_Panel04_PFX_HitFX_99to100_ht_explode_4m_once_fixed007" />
+              </Effects>
+              <DamageBehaviors>
+                <DamageBehavior class="DamagePart">
+                  <DamageParts>
+                    <Part name="Body" linkType="HitDamage" />
+                  </DamageParts>
+                </DamageBehavior>
+              </DamageBehaviors>
+            </Part>
+            <Part name="OuterPetals_Panel03" class="AnimatedJoint" damageMax="50000" detachRatio="0" detachBaseForce="0,7,-6" detachRandomForce="0.0, 0.0, 0.0" detachRandomRotation="0.0, 0.0, 0.0" detachProbability="0">
+              <Effects>
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="53.1318,30.9118,-2.93694" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger001" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="30.5352,54.4976,-1.9488" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_50to100_lt_explode_100cm_once_fixed001" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="47.7817,43.6371,-1.10103" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_75to100_xt_explode_4m_once_fixed001" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="40.7719,38.7867,-4.57497" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_99to100_ht_explode_4m_once_fixed" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="37.9224,51.677,0.0329199" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_99to100_ht_explode_4m_once_fixed001" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="4.64838,53.3039,-6.28915" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger005" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="28.5974,56.2034,-1.65405" rot_offset="0.0,-9.1419,11.0109" helperID="OuterPetals_Panel03_PFX_HitFX_50to100_mt_sparks_HitFx_16m007" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.20" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="30.5352,30.9118,-10.3451" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_20to100_lt_smoke_HitFx_4m_linger002" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="62.3516,34.6791,1.81139" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_55to100_mt_sparks_HitFx_16m006" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.30" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="21.7896,46.408,-7.79146" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_30to100_lt_smoke_HitFx_4m_linger004" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="12.7026,61.5016,-2.35575" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_60to100_lt_explode_100cm_once_fixed002" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.65" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="40.8121,22.9707,-9.5422" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_65to100_xt_explode_4m_once_fixed002" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="26.1698,39.1064,-9.00232" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_97to100_ht_explode_4m_once_fixed002" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.95" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="14.885,66.4855,0.614111" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_95to100_ht_explode_4m_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="55.7572,25.8739,-2.93694" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_75to100_xt_explode_4m_once_fixed002" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="14.686,42.2183,-9.36469" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_75to100_xt_explode_4m_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="58.5868,34.3826,1.20755" rot_offset="0.0,-1.00631,11.5022" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m003" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="65.0413,25.0455,3.00308" rot_offset="0.0,0.604276,11.5303" helperID="OuterPetals_Panel03_PFX_HitFX_25to100_metal_trail_HitFX_16m002" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="60.5948,28.1172,0.0329199" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel03_PFX_HitFX_35to100_metal_trail_HitFX_16m005" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="53.1226,41.8739,0.894229" rot_offset="0.0,-0.805418,11.518" helperID="OuterPetals_Panel03_PFX_HitFX_35to100_metal_trail_HitFX_16m006" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="44.7042,35.6651,-4.78048" rot_offset="0.0,0.249755,14.3092" helperID="OuterPetals_Panel03_PFX_HitFX_55to100_mt_sparks_HitFx_16m007" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="5.54232,69.7826,2.07687" rot_offset="0.0,-2.00496,11.3707" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m004" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="22.868,34.6527,-10.2882" rot_offset="0.0,11.5461,0.0" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m005" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="28.0329,65.0254,3.2086" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m006" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="36.3536,15.7841,-11.4021" rot_offset="0.0,-2.20311,11.334" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m007" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="45.1623,20.4956,-8.74567" rot_offset="0.0,-4.13776,10.7792" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m008" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="7.44611,43.8289,-9.59729" rot_offset="0.0,11.5461,0.0" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m009" />
+                <HitFx joint="OuterPetals_Panel03" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="15.95,49.7149,-6.64444" rot_offset="0.0,11.5461,0.0" helperID="OuterPetals_Panel03_PFX_HitFX_15to100_metal_trail_HitFX_16m010" />
+              </Effects>
+              <DamageBehaviors>
+                <DamageBehavior class="DamagePart">
+                  <DamageParts>
+                    <Part name="Body" linkType="HitDamage" />
+                  </DamageParts>
+                </DamageBehavior>
+              </DamageBehaviors>
+            </Part>
+            <Part name="OuterPetals_Panel02" class="AnimatedJoint" damageMax="50000" detachRatio="0" detachBaseForce="0,7,-6" detachRandomForce="0.0, 0.0, 0.0" detachRandomRotation="0.0, 0.0, 0.0" detachProbability="0">
+              <Effects>
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-37.5037,54.1806,0.0329199" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_99to100_ht_explode_4m_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-15.7304,47.5238,-7.78848" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_99to100_ht_explode_4m_once_fixed002" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-37.4605,37.4132,-6.99283" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_97to100_ht_explode_4m_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.95" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-61.6101,28.9898,-0.358154" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_95to100_ht_explode_4m_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-31.4854,25.0627,-11.964" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_75to100_xt_explode_4m_once_fixed006" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-24.5104,55.5788,-3.09259" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_75to100_xt_explode_4m_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-29.8151,51.8299,-3.34958" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_75to100_xt_explode_4m_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.65" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-51.5452,31.4038,-3.07596" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_65to100_xt_explode_4m_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="-49.0419,22.5078,-6.41439" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_60to100_lt_explode_100cm_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-57.6685,40.4953,3.16384" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_55to100_mt_sparks_HitFx_16m009" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-14.9393,69.8476,1.81139" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_55to100_mt_sparks_HitFx_16m008" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-43.5651,46.8286,-1.65405" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_50to100_mt_sparks_HitFx_16m008" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="-35.7305,42.934,-5.06033" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_50to100_lt_explode_100cm_once_fixed002" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-23.146,62.7283,0.0221387" rot_offset="0.77022,-0.235476,11.518" helperID="OuterPetals_Panel02_PFX_HitFX_35to100_metal_trail_HitFX_16m008" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-9.17775,66.249,0.0329199" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel02_PFX_HitFX_35to100_metal_trail_HitFX_16m007" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.30" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-28.0537,31.4418,-10.6293" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_30to100_lt_smoke_HitFx_4m_linger006" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-4.94018,69.6033,3.00308" rot_offset="-0.577872,0.176673,11.5303" helperID="OuterPetals_Panel02_PFX_HitFX_25to100_metal_trail_HitFX_16m003" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-42.3688,25.1533,-8.04869" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger007" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-14.0322,59.9292,-2.93694" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger006" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.20" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-20.6387,38.32,-10.3451" rot_offset="-0.238837,0.0730211,14.3092" helperID="OuterPetals_Panel02_PFX_HitFX_20to100_lt_smoke_HitFx_4m_linger003" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-38.4826,31.8395,-8.01499" rot_offset="-11.0416,3.37575,0.0" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m018" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-36.733,19.5482,-10.7445" rot_offset="-11.0416,3.37575,0.0" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m017" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-3.58076,43.0942,-10.3836" rot_offset="3.95695,-1.20976,10.7792" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m016" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-12.4125,39.4613,-10.8217" rot_offset="2.10685,-0.644125,11.334" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m015" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-53.9934,45.901,3.2086" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m014" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-45.1072,30.1442,-5.39196" rot_offset="-11.0416,3.37575,0.0" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m013" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-65.1184,25.7839,2.07687" rot_offset="1.91736,-0.586189,11.3707" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m012" />
+                <HitFx joint="OuterPetals_Panel02" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-6.3367,53.1575,-6.02197" rot_offset="0.962336,-0.294214,11.5022" helperID="OuterPetals_Panel02_PFX_HitFX_15to100_metal_trail_HitFX_16m011" />
+              </Effects>
+              <DamageBehaviors>
+                <DamageBehavior class="DamagePart">
+                  <DamageParts>
+                    <Part name="Body" linkType="HitDamage" />
+                  </DamageParts>
+                </DamageBehavior>
+              </DamageBehaviors>
+            </Part>
+            <Part name="OuterPetals_Panel01" class="AnimatedJoint" damageMax="50000" detachRatio="0" detachBaseForce="0,7,-6" detachRandomForce="0.0, 0.0, 0.0" detachRandomRotation="0.0, 0.0, 0.0" detachProbability="0">
+              <Effects>
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-62.441,-9.87376,0.0329199" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_99to100_ht_explode_4m_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-50.0406,-1.99282,-7.78848" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_99to100_ht_explode_4m_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-59.5973,-18.5028,-2.02642" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_97to100_ht_explode_4m_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.95" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-48.7957,-47.6061,0.614111" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_95to100_ht_explode_4m_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-32.7922,-23.3284,-11.964" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_75to100_xt_explode_4m_once_fixed009" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-60.9554,8.71417,-2.93694" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_75to100_xt_explode_4m_once_fixed008" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-58.0621,-3.13096,-3.34958" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_75to100_xt_explode_4m_once_fixed007" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.65" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-44.4169,-40.8633,-3.07596" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_65to100_xt_explode_4m_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="-37.496,-32.9627,-8.56807" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_60to100_lt_explode_100cm_once_fixed004" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-46.8654,-27.7552,-6.17464" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_55to100_mt_sparks_HitFx_16m011" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-71.2814,4.92103,1.81139" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_55to100_mt_sparks_HitFx_16m010" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-52.647,-35.5186,-1.65405" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_50to100_mt_sparks_HitFx_16m009" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="-51.1413,-11.2693,-7.7365" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_50to100_lt_explode_100cm_once_fixed003" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-71.3957,-3.58366,3.00278" rot_offset="0.43866,0.675479,11.518" helperID="OuterPetals_Panel01_PFX_HitFX_35to100_metal_trail_HitFX_16m010" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-53.2252,9.46746,-6.29944" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel01_PFX_HitFX_35to100_metal_trail_HitFX_16m009" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.30" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-37.9782,-18.2714,-10.6293" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_30to100_lt_smoke_HitFx_4m_linger007" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-68.2905,14.4655,3.00308" rot_offset="-0.329117,-0.506796,11.5303" helperID="OuterPetals_Panel01_PFX_HitFX_25to100_metal_trail_HitFX_16m004" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-37.1095,-30.4572,-5.9678" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger009" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-61.4973,3.05912,-2.93694" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger008" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.20" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-42.5462,-5.25272,-10.3451" rot_offset="-0.136029,-0.209458,14.3092" helperID="OuterPetals_Panel01_PFX_HitFX_20to100_lt_smoke_HitFx_4m_linger004" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-54.5213,-21.0217,-5.02328" rot_offset="-6.28847,-9.68341,0.0" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m026" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-25.0011,-31.0216,-11.8314" rot_offset="-6.28847,-9.68341,0.0" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m025" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-49.1405,7.4544,-8.74567" rot_offset="2.25358,3.47021,10.7792" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m024" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-39.1868,6.60819,-11.4021" rot_offset="1.1999,1.84768,11.334" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m023" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-59.0272,-39.2207,3.2086" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m022" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-35.7699,-42.6949,-5.51095" rot_offset="-6.28847,-9.68341,0.0" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m021" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-46.0796,-53.2665,2.07687" rot_offset="1.09197,1.6815,11.3707" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m020" />
+                <HitFx joint="OuterPetals_Panel01" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-67.9626,9.78433,1.20755" rot_offset="0.548071,0.843958,11.5022" helperID="OuterPetals_Panel01_PFX_HitFX_15to100_metal_trail_HitFX_16m019" />
+              </Effects>
+              <DamageBehaviors>
+                <DamageBehavior class="DamagePart">
+                  <DamageParts>
+                    <Part name="Body" linkType="HitDamage" />
+                  </DamageParts>
+                </DamageBehavior>
+              </DamageBehaviors>
+            </Part>
+            <Part name="OuterPetals_Panel00" class="AnimatedJoint" damageMax="50000" detachRatio="0" detachBaseForce="0,7,-6" detachRandomForce="0.0, 0.0, 0.0" detachRandomRotation="0.0, 0.0, 0.0" detachProbability="0">
+              <Effects>
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="5.82318,-65.8594,-0.886201" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_99to100_ht_explode_4m_once_fixed009" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.99" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-7.87895,-47.676,-8.7076" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_99to100_ht_explode_4m_once_fixed008" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.97" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="1.8623,-49.1486,-9.00232" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_97to100_ht_explode_4m_once_fixed006" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.95" maxDamageRatio="1" effect="Damage/HT_Damage/HT_Explode_FX.HT_Explode.ht_explode_4m_once_fixed" pos_offset="-9.40846,-62.1068,0.614111" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_95to100_ht_explode_4m_once_fixed007" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-1.77559,-38.765,-11.964" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_75to100_xt_explode_4m_once_fixed015" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-21.6732,-54.2706,-3.85606" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_75to100_xt_explode_4m_once_fixed014" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.75" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="-18.8602,-59.4385,-3.34958" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_75to100_xt_explode_4m_once_fixed013" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.65" maxDamageRatio="1" effect="Damage/XT_Damage/XT_Explode_FX.XT_Explode.xt_explode_4m_once_fixed" pos_offset="16.0775,-51.5709,-6.03321" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_65to100_xt_explode_4m_once_fixed006" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.60" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="31.4055,-51.9659,-2.35576" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_60to100_lt_explode_100cm_once_fixed006" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="22.7976,-66.6403,3.16384" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_55to100_mt_sparks_HitFx_16m015" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.55" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="-29.0238,-65.2712,1.81139" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_55to100_mt_sparks_HitFx_16m014" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/MT_Damage/mt_sparks_fx.MT_Sparks_HitFX.mt_sparks_HitFx_16m" pos_offset="15.3504,-61.5917,-1.65405" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_50to100_mt_sparks_HitFx_16m011" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.50" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_100cm_once_fixed" pos_offset="3.61621,-55.7185,-5.06033" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_50to100_lt_explode_100cm_once_fixed005" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-21.0711,-68.2874,3.00278" rot_offset="-0.484711,0.643231,11.518" helperID="OuterPetals_Panel00_PFX_HitFX_35to100_metal_trail_HitFX_16m014" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.35" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-31.5698,-58.9734,0.0329199" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel00_PFX_HitFX_35to100_metal_trail_HitFX_16m013" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.30" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="4.16035,-41.9087,-10.6293" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_30to100_lt_smoke_HitFx_4m_linger009" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-36.9697,-59.1963,3.00308" rot_offset="0.363658,-0.48259,11.5303" helperID="OuterPetals_Panel00_PFX_HitFX_25to100_metal_trail_HitFX_16m006" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="23.7048,-39.3624,-9.36653" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger013" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.25" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-31.7887,-51.6279,-2.93694" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_25to100_lt_smoke_HitFx_4m_linger012" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.20" maxDamageRatio="1" effect="Damage/LT_Damage/LT_Smoke_FX.LT_Smoke_HitFx.lt_smoke_HitFx_4m_linger" pos_offset="-5.88129,-43.1149,-10.3451" rot_offset="0.150299,-0.199454,14.3092" helperID="OuterPetals_Panel00_PFX_HitFX_20to100_lt_smoke_HitFx_4m_linger006" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="18.4271,-40.015,-10.0245" rot_offset="6.94864,-9.22114,0.0" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m042" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="20.5801,-34.075,-11.8314" rot_offset="6.94864,-9.22114,0.0" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m041" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-23.8317,-43.599,-8.74567" rot_offset="-2.49017,3.30457,10.7792" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m040" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-19.6321,-34.5351,-11.4021" rot_offset="-1.32587,1.75948,11.334" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m039" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="16.6471,-68.8534,3.2086" rot_offset="0.0,0.0,11.5461" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m038" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="27.8663,-48.1869,-5.51095" rot_offset="6.94864,-9.22114,0.0" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m037" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="37.4719,-59.1175,2.07687" rot_offset="-1.20662,1.60123,11.3707" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m036" />
+                <HitFx joint="OuterPetals_Panel00" minDamageRatio="0.15" maxDamageRatio="1" effect="Damage/Metal_FX.Metal_HitFX.metal_trail_HitFX_16m" pos_offset="-12.6425,-54.1749,1.20755" rot_offset="-0.605614,0.803676,11.5022" helperID="OuterPetals_Panel00_PFX_HitFX_15to100_metal_trail_HitFX_16m035" />
+              </Effects>
+              <DamageBehaviors>
+                <DamageBehavior class="DamagePart">
+                  <DamageParts>
+                    <Part name="Body" linkType="HitDamage" />
+                  </DamageParts>
+                </DamageBehavior>
+              </DamageBehaviors>
+            </Part>
+            <Part name="Glow" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+          </Parts>
+        </Part>
+      </Parts>
+    </Part>
+  </Parts>
+  <MovementParams id="xmlMovement">
+    <Spaceship engineWarmupDelay="1" engineIgnitionTime="0" enginePowerMax="2.75" rotationDamping="26" maxCruiseSpeed="225" maxEngineThrust="150" maxRetroThrust="120" maxDirectionalThrust="80" maxAngularVelocity="110,160,110" maxAngularAcceleration="950,950,50" maxJerk="100.0" maxAngJerk="60.0" maxTorqueAlpha="100.5,100.5,100.5" maxTorqueAngle="18,18,18">
+      <AudioParams dmgBufferDecay="0.2">
+        <EngineStartSound sound="empty" />
+        <EngineRunSound sound="empty" />
+        <EngineStopSound sound="empty" />
+        <AmbienceSound sound="empty" />
+        <PassByLoopSound sound="empty" />
+        <PassBySound sound="empty" leadinTime="0.6" triggerDistance="100" cooldowntime="15" />
+        <DuressSound sound="empty" damage_floor="21.0" damage_buffer="80.0" />
+        <SetRtpcSlewRate rtpc="Ship_GoalVelocityAlignment" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_Acceleration" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_AccelerationStrafeSurge" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_AccelerationSurge" attack="2.0" release="2.0" />
+        <SetRtpcSlewRate rtpc="Ship_Deceleration" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_DecelerationStrafeSurge" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_DecelerationSurge" attack="2.0" release="2.0" />
+        <SetRtpcSlewRate rtpc="Ship_EngineFrontStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_EngineRearStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_EngineStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PitchSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PitchStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_PYRSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_SurgeMax" attack="5.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeSurgeMax" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_PYRSpeed_Delayed" attack="0.3" release="0.3" />
+        <SetRtpcSlewRate rtpc="Ship_PYStrain" attack="0.8" release="1.25" />
+        <SetRtpcSlewRate rtpc="Ship_PYSpeed" attack="0.8" release="1.25" />
+        <SetRtpcSlewRate rtpc="Ship_PYRStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_RollSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_RollStrain" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_Speed" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeAny" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeLeftRight" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeStrain" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_StrafeUpDown" attack="1.0" release="0.5" />
+        <SetRtpcSlewRate rtpc="Ship_Thrust" attack="5.0" release="5.0" />
+        <SetRtpcSlewRate rtpc="Ship_Thrust_Delayed" attack="0.3" release="0.3" />
+        <SetRtpcSlewRate rtpc="Ship_YawSpeed" attack="1.0" release="1.0" />
+        <SetRtpcSlewRate rtpc="Ship_YawStrain" attack="1.0" release="1.0" />
+      </AudioParams>
+      <Animations />
+      <Contrails />
+    </Spaceship>
+  </MovementParams>
+  <Particles>
+    <DamageEffects>
+      <DamageEffect name="VehicleDestroyed" helper="Body" effect="Spaceships/Deathmasks/rsi_aurora_deathmask.ALL.rsi_aurora_deathmask" scaleMax="1" gravityDirection="0,0,1" pulsePeriod="0" />
+    </DamageEffects>
+    <EnvironmentLayers>
+      <EnvironmentLayer minSpeed="0" minSpeedSizeScale="1" minSpeedCountScale="1" minSpeedSpeedScale="1" maxSpeed="10" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1" minPowerSizeScale="1" minPowerCountScale="1" maxPowerSizeScale="1" maxPowerCountScale="1">
+        <Alignment alignGroundHeight="25" maxHeightSizeScale="0.5" maxHeightCountScale="0.60000002" alignToWater="0" />
+        <Emitters />
+        <Wheels />
+      </EnvironmentLayer>
+    </EnvironmentLayers>
+  </Particles>
+  <Modifications>
+    <Modification name="Disused">
+      <Elems>
+        <Elem idRef="modVehicle" name="displayname" value="probe_comms_1_b" />
+        <Elem idRef="modBody" name="damageMax" value="1000" />
+        <Elem idRef="modTail" name="damageMax" value="1000" />
+        <Elem idRef="modLeft_Wing" name="damageMax" value="1000" />
+        <Elem idRef="modRight_Wing" name="damageMax" value="1000" />
+        <Elem idRef="modCockpit" name="damageMax" value="1000" />
+        <Elem idRef="modNose" name="damageMax" value="1000" />
+        <Elem idRef="modReceiver_01" name="damageMax" value="1000" />
+        <Elem idRef="modReceiver_02" name="damageMax" value="1000" />
+        <Elem idRef="modReceiver_03" name="damageMax" value="1000" />
+        <Elem idRef="modMass" name="mass" value="80000" />
+      </Elems>
+    </Modification>
+  </Modifications>
+</Vehicle>

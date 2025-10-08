@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Vehicle name="GRIN_PTV" displayname="GRIN PTV" subType="Vehicle_GroundVehicle" size="1" itemPortTags="GRIN_PTV_Base" landingOffset="0,0,-1.1">
+  <Physics pushable="0">
+    <Buoyancy waterDensity="30" waterResistance="50" waterDamping="0" />
+    <Simulation maxTimeStep="0.02" minEnergy="0.002" maxLoggedCollisions="2" />
+  </Physics>
+  <SoundParams engineProjectName="vehicles:greycat_ptv_engine" functionalityProjectName="vehicles:greycat_ptv_functionality" />
+  <Damages collDamageThreshold="1" groundCollisionMinMult="1.3" groundCollisionMaxMult="1.4" groundCollisionMinSpeed="100" groundCollisionMaxSpeed="100">
+    <DamageMultipliers>
+      <DamageMultiplier damageType="bullet" multiplier="0.62" multiplier_Energy="1" multiplier_Distortion="1" />
+      <DamageMultiplier damageType="collision" multiplier="1" />
+    </DamageMultipliers>
+    <DamagesGroups>
+      <DamagesGroup name="Destroy" useTemplate="VehicleDestroy">
+        <DamagesSubGroups>
+          <DamagesSubGroup delay="0" randomness="0">
+            <DamageBehaviors>
+              <DamageBehavior class="Effect">
+                <Effect effect="VehicleDestroyed" helper="body" lifetime="90" />
+              </DamageBehavior>
+              <DamageBehavior class="Explosion">
+                <Explosion helper="impulsePos" damage="0" radius="3" minRadius="1" minPhysRadius="2.2" physRadius="3" pressure="50" />
+              </DamageBehavior>
+              <DamageBehavior class="Destroy" />
+            </DamageBehaviors>
+          </DamagesSubGroup>
+        </DamagesSubGroups>
+      </DamagesGroup>
+    </DamagesGroups>
+  </Damages>
+  <Pipes>
+    <Pipe name="BatteryPower" class="Power" priority="1" />
+    <Pipe name="MainPower" class="Power" priority="0" />
+    <Pipe name="Avionics" class="Avionics" />
+    <Pipe name="MainHeat" class="Heat" />
+    <Pipe name="MainFuel" class="Fuel" priority="1" />
+    <Pipe name="BatteryFuel" class="Fuel" priority="0" />
+    <Pipe name="WeaponRegenCrew" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadCrew" class="WeaponAmmoLoad" />
+    <Pipe name="WeaponRegenTurret" class="WeaponRegen" />
+    <Pipe name="WeaponAmmoLoadTurret" class="WeaponAmmoLoad" />
+  </Pipes>
+  <Parts>
+    <Part name="GRIN_PTV" class="Animated" component="Hull" mass="1500" damageMax="1500" disablePhysics="0" isHidden="0" scopeContext="Vehicle">
+      <Animated filenameDestroyed="empty" />
+      <Parts>
+        <Part name="wheel1" class="SubPartWheel" component="wheel1" mass="80" damageMax="900" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+          <SubPartWheel axle="0" density="100" stiffness="80000.000000" damping="-0.300000" torqueScale="1.000000" driving="1" lenMax="0.3" maxFriction="1" minFriction="0.1" slipFrictionMod="0.30000001" suspLength="0.11" rimRadius="0.32" />
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="wheel" />
+        </Part>
+        <Part name="wheel1_damper" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="damper" />
+          <IK target="wheel1" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel1_top_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="top_a_arm" />
+          <IK target="wheel1" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel1_bottom_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="bottom_a_arm" />
+          <IK target="wheel1" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel2_top_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="top_a_arm" />
+          <IK target="wheel2" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel2_bottom_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="bottom_a_arm" />
+          <IK target="wheel2" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel2_damper" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="damper" />
+          <IK target="wheel2" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel2" class="SubPartWheel" component="wheel2" mass="80" damageMax="900" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+          <SubPartWheel axle="0" density="100" stiffness="80000.000000" damping="-0.300000" torqueScale="1.000000" driving="1" lenMax="0.3" maxFriction="1" minFriction="0.1" slipFrictionMod="0.30000001" suspLength="0.11" rimRadius="0.32" />
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="wheel" />
+        </Part>
+        <Part name="wheel4_bottom_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="bottom_a_arm" />
+          <IK target="wheel4" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="0" />
+        </Part>
+        <Part name="wheel4_top_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="top_a_arm" />
+          <IK target="wheel4" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="0" />
+        </Part>
+        <Part name="wheel4_damper" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="damper" />
+          <IK target="wheel4" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="wheel4" class="SubPartWheel" component="wheel4" mass="80" damageMax="900" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+          <SubPartWheel axle="1" density="100" stiffness="80000.000000" damping="-0.300000" torqueScale="1.000000" driving="1" lenMax="0.3" maxFriction="2" minFriction="0.1" slipFrictionMod="0.34999999" suspLength="0.1" rimRadius="0.32" />
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_a.cga" geometryname="wheel" />
+        </Part>
+        <Part name="wheel3_top_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="top_a_arm" />
+          <IK target="wheel3" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="0" />
+        </Part>
+        <Part name="wheel3" class="SubPartWheel" component="wheel3" mass="80" damageMax="900" detachRatio="1" detachBaseForce="-2,0,-2" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="-12.5, 11.2, 13.3" detachProbability="1">
+          <SubPartWheel axle="1" density="100" stiffness="80000.000000" damping="-0.300000" torqueScale="1.000000" driving="1" lenMax="0.3" maxFriction="2" minFriction="0.1" slipFrictionMod="0.34999999" suspLength="0.1" rimRadius="0.32" />
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="wheel" />
+        </Part>
+        <Part name="wheel3_bottom_wishbone" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="bottom_a_arm" />
+          <IK target="wheel3" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="0" />
+        </Part>
+        <Part name="wheel3_damper" class="SuspensionPart" component="empty" mass="10" disablePhysics="0" disableCollision="0" isHidden="0">
+          <SubPart filename="objects/vehicles/Greycat/PTV/PTV_wheel_b.cga" geometryname="damper" />
+          <IK target="wheel3" offset="0,0,0" targetHelper=" " mode="rotate" ignoreTargetRotation="1" />
+        </Part>
+        <Part name="body" class="AnimatedJoint" damageMax="1200" detachRatio="0" detachBaseForce="0,0,2" detachRandomForce="0.1,.1,0.4" detachRandomRotation="0.2,-.2,.8" detachProbability="1">
+          <DamageBehaviors>
+            <DamageBehavior class="DetachPart" damageRatioMin="1">
+              <DetachPart>
+                <Part name="body" recurseChildren="1" probability="1" />
+              </DetachPart>
+            </DamageBehavior>
+            <DamageBehavior class="DamagePart" damageRatioMin="1">
+              <DamageParts>
+                <DamagePart name="wheel1" />
+                <DamagePart name="wheel2" />
+                <DamagePart name="wheel3" />
+                <DamagePart name="wheel4" />
+              </DamageParts>
+            </DamageBehavior>
+            <DamageBehavior class="Group" damageRatioMin="1">
+              <Group name="Destroy" />
+            </DamageBehavior>
+          </DamageBehaviors>
+          <Effects>
+            <HitFx joint="body" minDamageRatio="0.15" maxDamageRatio="0.9" effect="Gadgets/Grin_PTV.damage.hull_sparking" pos_offset="0,0.8,1.22" rot_offset="-0.4,0.5,1.0" helperID="body_PFX_HitFX_26to50_smoke_4m_loop_trail" />
+            <HitFx joint="body" minDamageRatio="0.25" maxDamageRatio="0.9" effect="Gadgets/Grin_PTV.damage.hull_sparking" pos_offset="-0.3,0.7,1.15" rot_offset="0.4,-0.5,1.0" helperID="body_PFX_HitFX_26to50_smoke_4m_loop_trail" />
+            <HitFx joint="body" minDamageRatio="0.7" maxDamageRatio="1" effect="Gadgets/Grin_PTV.damage.hull_damage75" pos_offset="0,-1,0.7" rot_offset="0.0,-1.0,0" helperID="body_PFX_HitFX_51to75_fire_4m_loop_fixed" />
+            <HitFx joint="body" minDamageRatio="0.5" maxDamageRatio="1" effect="Gadgets/Grin_PTV.damage.small_fire" pos_offset="0.65,0.68,1.0" rot_offset="0.0,1.0,1" helperID="body_PFX_HitFX_51to75_fire_4m_loop_fixed" />
+            <HitFx joint="body" minDamageRatio="0.25" maxDamageRatio="0.60" effect="Gadgets/Grin_PTV.damage.hull_damage25" pos_offset="0,-1,1" rot_offset="0.0,0.0,0.0" helperID="body_PFX_HitFX_0to25_electric_4m_loop_fixed" />
+            <HitFx joint="body" minDamageRatio="0.9" maxDamageRatio="1" effect="Gadgets/Grin_PTV.damage.hull_damage75" pos_offset="0,1.2,0.4" rot_offset="0.0,1.0,0" helperID="body_PFX_HitFX_51to75_fire_4m_loop_fixed" />
+          </Effects>
+          <Parts>
+            <Part name="body_100_debris_wheel3" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris1" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris_wheel4" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris_wheel1" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris2" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris_wheel2" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris3" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="body_100_debris_steering" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+            <Part name="glass" class="AnimatedJoint" damageMax="200">
+              <Parts>
+                <Part name="glass_100_debris2" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+                <Part name="glass_100_debris1" class="AnimatedJoint" damageMax="1" detachRatio="1" detachBaseForce="0,1,0" detachRandomForce="0.5, 0.5, 0.5" detachRandomRotation="0.5,0,0.3" detachProbability="1" />
+              </Parts>
+            </Part>
+            <Part name="hardpoint_seat_driver" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameSeatDriver">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="pilotSeat">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="EnergyController" screensDefault="empty" screensAvail="MFD_Centre, Support_Screen_Left, Support_Screen_Right" />
+                      <Observerable itemType="ShieldController" screensDefault="empty" screensAvail="MFD_Centre, Support_Screen_Left, Support_Screen_Right" />
+                      <Observerable itemType="CommsController" screensDefault="Support_Screen_Left" screensAvail="MFD_Centre, Support_Screen_Left, Support_Screen_Right" primaryCommsScreen="Support_Screen_Right" />
+                      <Observerable itemType="CoolerController" screensDefault="empty" screensAvail="MFD_Centre, Support_Screen_Left, Support_Screen_Right" />
+                      <Observerable itemType="WeaponController" screensDefault="empty" screensAvail="MFD_Centre, Support_Screen_Left, Support_Screen_Right" />
+                      <Observerable itemType="WheeledController" screensDefault="Support_Speedo" screensAvail="Support_Speedo" />
+                      <Observerable itemType="LightController" screensDefault="empty" screensAvail="NotUsed_LightController" />
+                      <Observerable itemType="Seat" screensDefault="MFD_Centre" screensAvail="MFD_Centre, Support_Screen_Left, Support_Screen_Right" />
+                      <Observerable itemType="CapacitorAssignmentController" visorScreen="empty" screensDefault="empty" screensAvail="Flight_HUD" />
+                      <Observerable itemType="Radar" screensDefault="Support_Radar_2D" screensAvail="Support_Radar_2D" />
+                      <Observerable itemType="SelfDestruct" screensAvail="NotUsed_SelfDestruct" />
+                      <Observerable itemType="Display" screensDefault="Radar" screensAvail="Radar" />
+                      <Observerable itemType="Radar" screensAvail="NotUsed_Radar" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="EnergyController" />
+                      <PriorityGroup itemType="CoolerController" />
+                      <PriorityGroup itemType="ShieldController" />
+                      <PriorityGroup itemType="WeaponController" defaultPriority="1" />
+                      <PriorityGroup itemType="WheeledController" />
+                      <PriorityGroup itemType="DoorController" />
+                      <PriorityGroup itemType="LightController" />
+                      <PriorityGroup itemType="CommsController" />
+                      <PriorityGroup itemType="MultiLight" />
+                      <PriorityGroup itemType="Radar" defaultPriority="no_control">
+                        <tags tag="pilot_radar">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="SelfDestruct" />
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="CapacitorAssignmentController" />
+                      <PriorityGroup itemType="Display" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                      <PriorityGroup itemType="Display" defaultPriority="no_control">
+                        <tags tag="pilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_seat_passenger" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NameSeatPassenger">
+                <Types>
+                  <Type type="Seat" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="coPilotSeat">
+                  <UserDef>
+                    <Observerables>
+                      <Observerable itemType="EnergyController" screensDefault="Copilot_FlightHUD" screensAvail="Copilot_FlightHUD" />
+                    </Observerables>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="WeaponController" />
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="coPilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UserDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Seat" defaultPriority="no_control">
+                        <tags tag="coPilotSeat">
+                          <Priority value="exclusive_control" />
+                        </tags>
+                      </PriorityGroup>
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_seat_access" class="ItemPort">
+              <ItemPort minSize="1" maxSize="4" flags="empty">
+                <Types>
+                  <Type type="SeatAccess" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_wheel" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="WheeledController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_energy" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="EnergyController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+                <ControllerDef controllableTags="energy_controller">
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="PowerPlant" defaultPriority="exclusive_control" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_powerplant" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="invisible" display_name="port_NamePowerplant01" displayPos="75,290">
+                <Types>
+                  <Type type="PowerPlant" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_fuel_tank" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelTank01">
+                <Types>
+                  <Type type="FuelTank" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Input" pipe="IntakeFuel" />
+                  <Connection pipeClass="Output" pipe="MainFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_fuel_intake" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="port_NameFuelIntake01">
+                <Types>
+                  <Type type="FuelIntake" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="IntakeFuel" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_cooler" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CoolerController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Cooler" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_heat_sink" class="ItemPort" />
+            <Part name="hardpoint_cooler" class="ItemPort">
+              <ItemPort minSize="0" maxSize="0" flags="invisible" display_name="port_NameCooler01">
+                <Types>
+                  <Type type="Cooler" subtypes="empty" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_light" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="LightController" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="Power" pipe="MainPower" />
+                  <Connection pipeClass="Heat" pipe="MainHeat" />
+                  <Connection pipeClass="Fuel" pipe="MainFuel" />
+                </Connections>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Light" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_controller_comms" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+                <Types>
+                  <Type type="CommsController" />
+                </Types>
+                <ControllerDef>
+                  <UsableDef>
+                    <PriorityGroups>
+                      <PriorityGroup itemType="Comms" />
+                    </PriorityGroups>
+                  </UsableDef>
+                </ControllerDef>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_weapon_regen_pool" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" flags="invisible uneditable" display_name="Weapon Regen Pool">
+                <Types>
+                  <Type type="WeaponRegenPool" />
+                </Types>
+                <Connections>
+                  <Connection pipeClass="WeaponRegen" pipe="WeaponRegenCrew" />
+                  <Connection pipeClass="WeaponAmmoLoad" pipe="WeaponAmmoLoadCrew" />
+                </Connections>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_cockpit_flair_hang" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" requiredTags="empty" flags="empty" display_name="port_Flair02">
+                <Types>
+                  <Type type="Flair_Cockpit" subtypes="Flair_Hanging" />
+                </Types>
+              </ItemPort>
+            </Part>
+            <Part name="hardpoint_cockpit_flair" class="ItemPort">
+              <ItemPort minSize="1" maxSize="1" requiredTags="empty" flags="empty" display_name="port_Flair01">
+                <Types>
+                  <Type type="Flair_Cockpit" subtypes="Flair_Static" />
+                </Types>
+              </ItemPort>
+            </Part>
+          </Parts>
+        </Part>
+        <Part name="hardpoint_paint" class="ItemPort">
+          <ItemPort minSize="1" maxSize="1" flags="uneditable" display_name="port_NamePaint" requiredTags="PTV_Paint">
+            <Types>
+              <Type type="Paints" />
+            </Types>
+          </ItemPort>
+        </Part>
+        <Part name="massBox" class="MassBox" mass="12750" position="0,-0.2,-0.5" disablePhysics="0" disableCollision="0" isHidden="0">
+          <MassBox size="1.5,2.0,1.0" drivingOffset="0" />
+        </Part>
+        <Part name="headLightRight" class="AnimatedJoint" damageMax="200" />
+        <Part name="headLightRightFlare" class="AnimatedJoint" damageMax="200" />
+        <Part name="headLightLeft" class="AnimatedJoint" damageMax="200" />
+        <Part name="headLightLeftFlare" class="AnimatedJoint" damageMax="200" />
+        <Part name="brakeLightRight" class="AnimatedJoint" damageMax="200" />
+        <Part name="brakeLightRightFlare" class="AnimatedJoint" damageMax="200" />
+        <Part name="brakeLightLeft" class="AnimatedJoint" damageMax="200" />
+        <Part name="brakeLightLeftFlare" class="AnimatedJoint" damageMax="200" />
+        <Part name="reverseLightRight" class="AnimatedJoint" damageMax="200" />
+        <Part name="reverseLightLeft" class="AnimatedJoint" damageMax="200" />
+        <Part name="hardpoint_ObjectContainer" class="ItemPort">
+          <ItemPort minSize="1" maxSize="1" flags="uneditable">
+            <Types>
+              <Type type="Room" subtypes="empty" />
+            </Types>
+          </ItemPort>
+        </Part>
+        <Part name="hardpoint_controller_weapon" class="ItemPort">
+          <ItemPort minSize="1" maxSize="1" flags="invisible uneditable">
+            <Types>
+              <Type type="WeaponController" />
+            </Types>
+            <Connections>
+              <Connection pipeClass="Power" pipe="MainPower" />
+              <Connection pipeClass="Heat" pipe="MainHeat" />
+            </Connections>
+            <ControllerDef>
+              <UsableDef>
+                <PriorityGroups>
+                  <PriorityGroup itemType="Turret" />
+                  <PriorityGroup itemType="WeaponGun" />
+                  <PriorityGroup itemType="WeaponDefensive" />
+                </PriorityGroups>
+              </UsableDef>
+            </ControllerDef>
+          </ItemPort>
+        </Part>
+      </Parts>
+    </Part>
+  </Parts>
+  <Helpers>
+    <Helper name="wheel1_top_ik" position="0,0,0" direction="0,1,0" part="wheel1" />
+    <Helper name="wheel1_bottom_ik" position="0,0,0" direction="0,1,0" part="wheel1" />
+    <Helper name="wheel1_damper_term" position="0,0,0" direction="0,1,0" part="wheel1_bottom_wishbone" />
+    <Helper name="wheel2_top_ik" position="0,0,0" direction="0,1,0" part="wheel2" />
+    <Helper name="wheel2_bottom_ik" position="0,0,0" direction="0,1,0" part="wheel2" />
+    <Helper name="wheel2_damper_term" position="0,0,0" direction="0,1,0" part="wheel2_bottom_wishbone" />
+    <Helper name="wheel3_top_ik" position="0,0,0" direction="0,1,0" part="wheel3" />
+    <Helper name="wheel3_bottom_ik" position="0,0,0" direction="0,1,0" part="wheel3" />
+    <Helper name="wheel3_damper_term" position="0,0,0" direction="0,1,0" part="wheel3_bottom_wishbone" />
+    <Helper name="wheel4_top_ik" position="0,0,0" direction="0,1,0" part="wheel4" />
+    <Helper name="wheel4_bottom_ik" position="0,0,0" direction="0,1,0" part="wheel4" />
+    <Helper name="wheel4_damper_term" position="0,0,0" direction="0,1,0" part="wheel4_bottom_wishbone" />
+    <Helper name="engineSmokeOut" position="0.4,1.01,0.9001" direction="0,1,0" part="body" />
+    <Helper name="exhaust_pos_left" position="-0.25,-1.1,-0.5" direction="0,-1,0" part="body" />
+    <Helper name="exhaust_pos_right" position="0.25,-1.1,-0.5" direction="0,-1,0" part="body" />
+    <Helper name="explosion" position="-0.28780001,-0.49020001,1.3601" direction="0,0,1" part="body" />
+    <Helper name="vehicleBurnPos" position="0,-1.2501,2" direction="0,0,1" part="body" />
+    <Helper name="headLightRight" position="0.606,1.176,1.06" direction="0,1,0" part="body" />
+    <Helper name="headLightLeft" position="-0.606,1.176,1.06" direction="0,1,0" part="body" />
+    <Helper name="brakeLightRight" position="0.6,-1.16,1.01" direction="0,-1,0" part="body" />
+    <Helper name="brakeLightLeft" position="-0.6,-1.16,1.01" direction="0,-1,0" part="body" />
+    <Helper name="reverseLightRight" position="0.125,-1.165,0.885" direction="0,-1,0" part="body" />
+    <Helper name="reverseLightLeft" position="-0.125,-1.165,0.885" direction="0,-1,0" part="body" />
+    <Helper direction="0,1,0" name="debugview1" position="0,-3.5,1" part="body" />
+    <Helper direction="0,-1,0" name="debugview2" position="0,3.5,1" part="body" />
+    <Helper direction="-1,0,0" name="debugview3" position="3.5,0,1" part="body" />
+  </Helpers>
+  <MovementParams>
+    <PhysicalWheeled steerSpeed="20.000000" steerSpeedMin="175.000000" steerSpeedScale="0.200000" steerSpeedScaleMin="1.000000" kvSteerMax="14.000000" v0SteerMax="45.000000" vMaxSteerMax="40.000000" steerRelaxation="150.000000">
+      <Handling>
+        <Power acceleration="8" decceleration="5" topSpeed="15" reverseSpeed="7" />
+        <WheelSpin grip1="0.2" grip2="0.5" gripRecoverSpeed="0.25" accelMultiplier1="1" accelMultiplier2="0.5" />
+        <HandBrake decceleration="10" deccelerationPowerLock="1" lockBack="1" lockFront="0" frontFrictionScale="1" backFrictionScale="0.1" angCorrectionScale="1.0" lateralSpringScale="0" />
+        <SpeedReduction reductionAmount="0.2" reductionRate="0.5" />
+        <Friction back="0.1" front="0.1" offset="-1.0" />
+        <Correction lateralSpring="0" angSpring="2" />
+        <Compression frictionBoost="0.1" frictionBoostHandBrake="3.5" />
+        <Inertia radius="2.3" />
+        <PowerSlide lateralSpeedFraction="0.05" lateralSpeedFractionHB="0.1" spring="8" />
+        <Stabilisation upDamping="0.1" angDamping="0.1" rollDamping="7.5" rollfixAir="2" maxTiltAngleAir="25" />
+      </Handling>
+      <Boost endurance="0" regeneration="0" strength="0" />
+      <FakeGears minChangeDownTime="0.7" rpmRelaxSpeed="1" rpmInterpSpeed="1" rpmLoadChangeSpeedUp="1.8" rpmLoadChangeSpeedDown="0.8" rpmLoadFactor="0.35" rpmLoadDefaultValue="0.2" rpmLoadFromBraking="0.3" rpmLoadFromThrottle="0.3" gearChangeSpeed="3" gearChangeSpeed2="1.6" gearOscillationFrequency="3.8" gearOscillationAmp="0.15" gearOscillationAmp2="0.5">
+        <Ratios />
+      </FakeGears>
+      <ViewAdjustment lateral="0.05" lateralCent="0.05" rotate="3" rotateCent="1.9" maxRotate="11" maxLateralDisp="0.10" rotateSpeed="2.0" dispSpeed="4.2" maxForwardDisp="0.03" forwardResponse="0.10" vibrationAmpSpeed="0.004" vibrationSpeedResponse="0.3" vibrationAmpAccel="0.05" vibrationAccelResponse="1.0" vibrationFrequency="8" suspensionAmp="0.05" suspensionResponse="0.8" suspensionSharpness="8" />
+      <ViewAdjustmentPowerLock lateral="0.2" lateralCent="8" rotate="15" rotateCent="7" maxRotate="35" maxLateralDisp="0.17" rotateSpeed="2.9" dispSpeed="5.7" maxForwardDisp="0.05" forwardResponse="0.08" />
+      <WheeledLegacy damping="0.01" engineIdleRPM="1000" engineMaxRPM="5000" engineMinRPM="1000" stabilizer="0.49999999" maxTimeStep="0.050000001" minEnergy="66" suspDampingMin="0" suspDampingMax="0" suspDampingMaxSpeed="3" damagedWheelSpeedInfluenceFactor="0.2" />
+      <PhysicsParams kLongitudinalFriction="1.200000" kLateralFriction="2.000000" brakeTorque="6500.000000" wWheelsMax="135.00" gravityStrength="9.800000" gravityFreefallStrength="7.800000">
+        <PacejkaLong stiffness="1.590000" shape="1.500000" peak="1.500000" curvature="1.226000" />
+        <PacejkaLat stiffness="3.500000" shape="1.450000" peak="1.500000" curvature="1.255000" />
+        <Gears reverse="2.900000" neutral="0.000000" first="3.000000" />
+        <Engine RPMmax="5000.000000" torqueScale="3.000000" RPMmin="850.000000" RPMidle="1000.000000" RPMshiftUp="4000.000000" RPMshiftDown="900.000000" RPMstart="2000.000000">
+          <RPMTorqueTable>
+            <entry RPM="800.000000" torque="116.000000" />
+            <entry RPM="1300.000000" torque="141.000000" />
+            <entry RPM="1800.000000" torque="149.000000" />
+            <entry RPM="2300.000000" torque="155.000000" />
+            <entry RPM="2800.000000" torque="165.000000" />
+            <entry RPM="3300.000000" torque="171.000000" />
+            <entry RPM="3800.000000" torque="175.000000" />
+            <entry RPM="4300.000000" torque="184.000000" />
+            <entry RPM="4800.000000" torque="190.000000" />
+            <entry RPM="5300.000000" torque="187.000000" />
+            <entry RPM="5800.000000" torque="183.000000" />
+            <entry RPM="6300.000000" torque="171.000000" />
+          </RPMTorqueTable>
+        </Engine>
+      </PhysicsParams>
+    </PhysicalWheeled>
+  </MovementParams>
+  <Particles>
+    <Exhaust insideWater="0" outsideWater="0">
+      <Helpers>
+        <Helper value="exhaust_pos_left" />
+        <Helper value="exhaust_pos_right" />
+      </Helpers>
+      <EngineStart effect="gadgets/Grin_PTV.exhaust.start" />
+      <EngineStop effect="gadgets/Grin_PTV.exhaust.start" />
+      <EngineRunning effect="gadgets/Grin_PTV.exhaust.running" boostEffect="empty" baseSizeScale="1" minSpeed="0" minSpeedSizeScale="0.5" minSpeedCountScale="1" minSpeedSpeedScale="0.3" maxSpeed="15" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1.2" minPower="0" minPowerSizeScale="1" minPowerCountScale="1" minPowerSpeedScale="1" maxPower="1" maxPowerSizeScale="1" maxPowerCountScale="1" maxPowerSpeedScale="1" />
+    </Exhaust>
+    <DamageEffects>
+      <DamageEffect name="VehicleDestroyed" helper="hardpoint_seat_driver" effect="spaceships/deathmasks/grin_ptv_deathmask.all.grin_ptv_deathmask" scaleMax="1" gravityDirection="0,0,1" />
+      <DamageEffect name="VehicleFlipped" helper="body" effect="empty" />
+      <DamageEffect name="TireShot" helper="body" effect="Gadgets/Grin_PTV.damage.tire_burst" gravityDirection="0,0,1" />
+      <DamageEffect name="HullDamaged25" helper="body" effect="empty" scaleMax="0.60000002" gravityDirection="0,0,1" pulsePeriod="0" />
+      <DamageEffect name="HullDamaged75" helper="body" effect="empty" scaleMax="0.5" gravityDirection="0,0,1" pulsePeriod="0" />
+    </DamageEffects>
+    <EnvironmentLayers>
+      <EnvironmentLayer minSpeed="0.2" minSpeedSizeScale="0.6" minSpeedCountScale="1" minSpeedSpeedScale="0" minSpeedStrength="0.0" maxSpeed="30" maxSpeedSizeScale="1" maxSpeedCountScale="1" maxSpeedSpeedScale="1" maxSpeedStrength="0.8" continuous="0">
+        <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="1" />
+        <Emitters />
+        <Wheels>
+          <WheelGroups>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="1" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="2" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="3" />
+              </Wheels>
+            </WheelGroup>
+            <WheelGroup>
+              <Wheels>
+                <Wheel value="4" />
+              </Wheels>
+            </WheelGroup>
+          </WheelGroups>
+        </Wheels>
+      </EnvironmentLayer>
+      <EnvironmentLayer name="rims" minSpeed="0.1" minSpeedSizeScale="0.25" minSpeedCountScale="1" maxSpeed="10" maxSpeedSizeScale="1" maxSpeedCountScale="1">
+        <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="0" />
+        <Emitters />
+        <Wheels all="1" allActive="0" />
+      </EnvironmentLayer>
+    </EnvironmentLayers>
+  </Particles>
+</Vehicle>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="ASOP_SpawnShip" Description="empty" Group="hc-modules\node" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="ASOP_Range" Type="Float" Input="1" />
+    <Port Name="ShipName" Type="String" Input="1" />
+    <Port Name="RandomShip" Type="Bool" Input="1" />
+    <Port Name="ShipId" Type="EntityId" Input="0" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_ASOP_SpawnShip" pos="280,-40,0" flags="0" />
+    <Node Id="2" Class="Module:End_ASOP_SpawnShip" pos="3030,160,0" flags="0">
+      <Inputs ShipId="0" />
+    </Node>
+    <Node Id="60" Class="InteractionSystem:ActivateInteraction" pos="2910,-180,0" flags="0">
+      <Inputs entityId="0" InteractorId="0" InteractionName="LOGIN" InteractionPointName="empty" />
+    </Node>
+    <Node Id="63" Class="Time:Delay" pos="2160,-460,0" flags="0">
+      <Inputs delay="3" resetOnInput="0" />
+    </Node>
+    <Node Id="72" Class="Actor:LocalPlayer" pos="2510,-220,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="73" Class="Actor:LocalPlayer" pos="510,-130,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="76" Class="Game:Headless:HeadlessClientSpawnASOPVehicle" pos="2440,-640,0" flags="0">
+      <Inputs entityId="0" ShipName="empty" ShipNumber="0" RandomShip="0" />
+    </Node>
+    <Node Id="78" Class="Time:Delay" pos="2220,580,0" flags="0">
+      <Inputs delay="5" resetOnInput="0" />
+    </Node>
+    <Node Id="202" Class="Module:Call_Player_Teleport" pos="2000,-260,0" flags="0">
+      <Inputs Instanced="1" InstanceID="4294967295" Pos="0,0,0" />
+    </Node>
+    <Node Id="205" Class="Vec3:AddVec3" pos="1710,-200,0" flags="0">
+      <Inputs A="0,0,0" B="0,0,0" />
+    </Node>
+    <Node Id="206" Class="Vec3:ScaleVec3" pos="1390,-180,0" flags="0">
+      <Inputs vector="0,0,0" scale="2" />
+    </Node>
+    <Node Id="208" Class="SpaceTransformation:GetPositionInEntityZone" pos="1060,-250,0" flags="0">
+      <Inputs entityId="0" TargetEntity="0" />
+    </Node>
+    <Node Id="536" Class="Entity:EntityInfo" pos="2840,430,0" flags="0">
+      <Inputs entityId="0" />
+    </Node>
+    <Node Id="537" Class="Debug:Log" pos="3020,450,0" flags="0">
+      <Inputs message="empty" />
+    </Node>
+    <Node Id="538" Class="ComponentRequest:FindASOPTerminalEntity" pos="680,-310,0" flags="0">
+      <Inputs entityId="0" Origin="0,0,0" SearchRadius="0" SortType="0" ShipName="empty" RandomShip="0" />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2" nodeOut="1" portIn="Cancel" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="73" nodeOut="1" portIn="update" portOut="Start" enabled="1" />
+    <Edge nodeIn="538" nodeOut="1" portIn="SearchRadius" portOut="ASOP_Range" enabled="1" />
+    <Edge nodeIn="538" nodeOut="1" portIn="RandomShip" portOut="RandomShip" enabled="1" />
+    <Edge nodeIn="538" nodeOut="1" portIn="ShipName" portOut="ShipName" enabled="1" />
+    <Edge nodeIn="76" nodeOut="63" portIn="Spawn" portOut="out" enabled="1" />
+    <Edge nodeIn="60" nodeOut="72" portIn="Activate" portOut="entityId" enabled="1" />
+    <Edge nodeIn="60" nodeOut="72" portIn="InteractorId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="63" nodeOut="72" portIn="in" portOut="entityId" enabled="1" />
+    <Edge nodeIn="202" nodeOut="73" portIn="PlayerId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="208" nodeOut="73" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="538" nodeOut="73" portIn="Find" portOut="entityId" enabled="1" />
+    <Edge nodeIn="538" nodeOut="73" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="2" nodeOut="76" portIn="ShipId" portOut="OnResult" enabled="1" />
+    <Edge nodeIn="78" nodeOut="76" portIn="in" portOut="OnResult" enabled="1" />
+    <Edge nodeIn="536" nodeOut="76" portIn="Get" portOut="OnResult" enabled="1" />
+    <Edge nodeIn="536" nodeOut="76" portIn="entityId" portOut="OnResult" enabled="1" />
+    <Edge nodeIn="538" nodeOut="76" portIn="Retry" portOut="ShipUnavailable" enabled="1" />
+    <Edge nodeIn="2" nodeOut="78" portIn="Success" portOut="out" enabled="1" />
+    <Edge nodeIn="72" nodeOut="202" portIn="update" portOut="Done" enabled="1" />
+    <Edge nodeIn="202" nodeOut="205" portIn="Call" portOut="out" enabled="1" />
+    <Edge nodeIn="202" nodeOut="205" portIn="Pos" portOut="out" enabled="1" />
+    <Edge nodeIn="205" nodeOut="206" portIn="B" portOut="out" enabled="1" />
+    <Edge nodeIn="205" nodeOut="208" portIn="A" portOut="VectorInEntitySpace" enabled="1" />
+    <Edge nodeIn="206" nodeOut="208" portIn="vector" portOut="VectorInEntitySpaceFORWARD" enabled="1" />
+    <Edge nodeIn="537" nodeOut="536" portIn="input" portOut="Name" enabled="1" />
+    <Edge nodeIn="537" nodeOut="536" portIn="message" portOut="Name" enabled="1" />
+    <Edge nodeIn="60" nodeOut="538" portIn="entityId" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="76" nodeOut="538" portIn="entityId" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="76" nodeOut="538" portIn="ShipName" portOut="ShipName" enabled="1" />
+    <Edge nodeIn="208" nodeOut="538" portIn="OnStart" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="208" nodeOut="538" portIn="TargetEntity" portOut="FoundEntity" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

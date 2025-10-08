@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="Node_GetPlayerOutOfSeat" Description="empty" Group="hc-modules" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="TimeItTakesToGetOutOfSeat" Type="Float" Input="1" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_Node_GetPlayerOutOfSeat" pos="-130,50,0" flags="0" />
+    <Node Id="2" Class="Module:End_Node_GetPlayerOutOfSeat" pos="2050,70,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="78" Class="Time:Time" pos="710,-10,0" flags="0">
+      <Inputs paused="1" />
+    </Node>
+    <Node Id="79" Class="Actor:LocalPlayer" pos="940,0,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="80" Class="Vehicle:GetLinkedVehicle" pos="1140,-50,0" flags="0">
+      <Inputs entityId="0" />
+    </Node>
+    <Node Id="81" Class="Entity:ValidEntityId" pos="1550,-10,0" flags="0">
+      <Inputs Entity="0" />
+    </Node>
+    <Node Id="82" Class="Math:BooleanTo" pos="570,-10,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="191" Class="FeatureTest:SimulateInput" pos="290,-110,0" flags="0">
+      <Inputs ActionInput="v_exit" Value="1" />
+    </Node>
+    <Node Id="193" Class="Time:FrameDelay" pos="1330,-40,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="194" Class="Time:Delay" pos="1760,40,0" flags="0">
+      <Inputs delay="1" resetOnInput="0" />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2" nodeOut="1" portIn="Cancel" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="82" nodeOut="1" portIn="false" portOut="Start" enabled="1" />
+    <Edge nodeIn="191" nodeOut="1" portIn="Press" portOut="Start" enabled="1" />
+    <Edge nodeIn="194" nodeOut="1" portIn="delay" portOut="TimeItTakesToGetOutOfSeat" enabled="1" />
+    <Edge nodeIn="79" nodeOut="78" portIn="update" portOut="tick" enabled="1" />
+    <Edge nodeIn="80" nodeOut="79" portIn="Trigger" portOut="entityId" enabled="1" />
+    <Edge nodeIn="80" nodeOut="79" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="81" nodeOut="80" portIn="Entity" portOut="Vehicle Id" enabled="1" />
+    <Edge nodeIn="193" nodeOut="80" portIn="in" portOut="Vehicle Id" enabled="1" />
+    <Edge nodeIn="194" nodeOut="81" portIn="in" portOut="isInvalid" enabled="1" />
+    <Edge nodeIn="78" nodeOut="82" portIn="paused" portOut="out" enabled="1" />
+    <Edge nodeIn="81" nodeOut="193" portIn="Check" portOut="out" enabled="1" />
+    <Edge nodeIn="2" nodeOut="194" portIn="Success" portOut="out" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

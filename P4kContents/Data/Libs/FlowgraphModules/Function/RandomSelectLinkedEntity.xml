@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="RandomSelectLinkedEntity" Description="empty" Group="function" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="HostEntity" Type="EntityId" Input="1" />
+    <Port Name="UpperLimit" Type="Int" Input="1" />
+    <Port Name="TargetEntity" Type="EntityId" Input="0" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_RandomSelectLinkedEntity" pos="-120,30,0" flags="0" />
+    <Node Id="2" Class="Module:End_RandomSelectLinkedEntity" pos="960,60,0" flags="0">
+      <Inputs TargetEntity="0" />
+    </Node>
+    <Node Id="360" Class="Iterator:GetLinkedChildrenEntities" pos="450,180,0" flags="0">
+      <Inputs entityId="0" Limit="0" Immediate="1" />
+    </Node>
+    <Node Id="373" Class="Math:Sub" pos="600,560,0" flags="0">
+      <Inputs A="0" B="1" />
+    </Node>
+    <Node Id="381" Class="Math:Random" pos="210,290,0" flags="0">
+      <Inputs min="1" max="0" />
+    </Node>
+    <Node Id="383" Class="Math:EqualCheck" pos="750,460,0" flags="0">
+      <Inputs A="0" B="0" />
+    </Node>
+    <Node Id="385" Class="Entity:ValidEntityId" pos="920,390,0" flags="0">
+      <Inputs Entity="0" />
+    </Node>
+    <Node Id="387" Class="Math:EqualCheck" pos="-180,300,0" flags="0">
+      <Inputs A="0" B="0" />
+    </Node>
+    <Node Id="389" Class="Logic:Any" pos="-30,410,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="391" Class="Math:SetNumber" pos="-190,430,0" flags="0">
+      <Inputs in="0" />
+    </Node>
+    <Node Id="392" Class="Iterator:GetLinkedChildrenEntities" pos="-360,570,0" flags="1">
+      <Inputs entityId="0" Limit="0" Immediate="1" />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="360" nodeOut="1" portIn="entityId" portOut="HostEntity" enabled="1" />
+    <Edge nodeIn="387" nodeOut="1" portIn="Check" portOut="Start" enabled="1" />
+    <Edge nodeIn="387" nodeOut="1" portIn="A" portOut="UpperLimit" enabled="1" />
+    <Edge nodeIn="391" nodeOut="1" portIn="in" portOut="UpperLimit" enabled="1" />
+    <Edge nodeIn="392" nodeOut="1" portIn="entityId" portOut="HostEntity" enabled="1" />
+    <Edge nodeIn="383" nodeOut="360" portIn="A" portOut="Count" enabled="1" />
+    <Edge nodeIn="383" nodeOut="360" portIn="Check" portOut="Count" enabled="1" />
+    <Edge nodeIn="385" nodeOut="360" portIn="Entity" portOut="Entity" enabled="1" />
+    <Edge nodeIn="383" nodeOut="373" portIn="B" portOut="out" enabled="1" />
+    <Edge nodeIn="360" nodeOut="381" portIn="Start" portOut="outRounded" enabled="1" />
+    <Edge nodeIn="373" nodeOut="381" portIn="A" portOut="outRounded" enabled="1" />
+    <Edge nodeIn="385" nodeOut="383" portIn="Check" portOut="true" enabled="1" />
+    <Edge nodeIn="2" nodeOut="385" portIn="Success" portOut="isValid" enabled="1" />
+    <Edge nodeIn="2" nodeOut="385" portIn="TargetEntity" portOut="isValid" enabled="1" />
+    <Edge nodeIn="391" nodeOut="387" portIn="set" portOut="false" enabled="1" />
+    <Edge nodeIn="392" nodeOut="387" portIn="Start" portOut="true" enabled="1" />
+    <Edge nodeIn="381" nodeOut="389" portIn="generate" portOut="out" enabled="1" />
+    <Edge nodeIn="381" nodeOut="389" portIn="max" portOut="out" enabled="1" />
+    <Edge nodeIn="389" nodeOut="391" portIn="in1" portOut="out" enabled="1" />
+    <Edge nodeIn="389" nodeOut="392" portIn="in2" portOut="Done" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>

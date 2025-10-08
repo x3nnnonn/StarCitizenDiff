@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Graph isModule="1" moduleName="Node_Player_TeleportToBed" Description="empty" Group="hc-modules" enabled="1" MultiPlayer="ClientServer">
+  <ModuleInputsOutputs>
+    <Port Name="DistanceToSearchIn" Type="Float" Input="1" />
+  </ModuleInputsOutputs>
+  <Nodes>
+    <Node Id="1" Class="Module:Start_Node_Player_TeleportToBed" pos="80,10,0" flags="0" />
+    <Node Id="2" Class="Module:End_Node_Player_TeleportToBed" pos="2260,20,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="59" Class="TagRequest:FindObject" pos="630,-150,0" flags="0">
+      <Inputs entityId="0" TagRequest="UsableArchetypes.Bed" Origin="0,0,0" SearchRadius="10000" SortType="0" />
+    </Node>
+    <Node Id="61" Class="Actor:LocalPlayer" pos="420,0,0" flags="0">
+      <Inputs />
+    </Node>
+    <Node Id="202" Class="Module:Call_Player_Teleport" pos="1970,-80,0" flags="0">
+      <Inputs Instanced="1" InstanceID="-1" Pos="0,0,0" />
+    </Node>
+    <Node Id="205" Class="Vec3:AddVec3" pos="1730,-100,0" flags="0">
+      <Inputs A="0,0,0" B="0,0,0" />
+    </Node>
+    <Node Id="206" Class="Vec3:ScaleVec3" pos="1570,-60,0" flags="0">
+      <Inputs vector="0,0,0" scale="1" />
+    </Node>
+    <Node Id="208" Class="SpaceTransformation:GetPositionInEntityZone" pos="1090,-130,0" flags="0">
+      <Inputs entityId="0" TargetEntity="0" />
+    </Node>
+  </Nodes>
+  <Edges>
+    <Edge nodeIn="2" nodeOut="1" portIn="Cancel" portOut="Cancel" enabled="1" />
+    <Edge nodeIn="59" nodeOut="1" portIn="SearchRadius" portOut="DistanceToSearchIn" enabled="1" />
+    <Edge nodeIn="61" nodeOut="1" portIn="update" portOut="Start" enabled="1" />
+    <Edge nodeIn="208" nodeOut="59" portIn="OnStart" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="208" nodeOut="59" portIn="TargetEntity" portOut="FoundEntity" enabled="1" />
+    <Edge nodeIn="59" nodeOut="61" portIn="Find" portOut="entityId" enabled="1" />
+    <Edge nodeIn="59" nodeOut="61" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="202" nodeOut="61" portIn="PlayerId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="208" nodeOut="61" portIn="entityId" portOut="entityId" enabled="1" />
+    <Edge nodeIn="2" nodeOut="202" portIn="Success" portOut="Done" enabled="1" />
+    <Edge nodeIn="202" nodeOut="205" portIn="Call" portOut="out" enabled="1" />
+    <Edge nodeIn="202" nodeOut="205" portIn="Pos" portOut="out" enabled="1" />
+    <Edge nodeIn="205" nodeOut="206" portIn="B" portOut="out" enabled="1" />
+    <Edge nodeIn="205" nodeOut="208" portIn="A" portOut="VectorInEntitySpace" enabled="1" />
+    <Edge nodeIn="206" nodeOut="208" portIn="vector" portOut="VectorInEntitySpaceFORWARD" enabled="1" />
+  </Edges>
+  <GraphTokens />
+</Graph>
