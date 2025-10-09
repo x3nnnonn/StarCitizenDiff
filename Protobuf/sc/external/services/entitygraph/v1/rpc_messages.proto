@@ -397,12 +397,16 @@ message MoveAllRequestBody {
 message MoveAllResponseBody {}
 
 message GetEntitiesByStowContextRequestBody {
-  oneof identifier {
-    uint64 entity_id = 1;
-    string parent_urn = 2;
-  }
   uint64 owner_id = 3;
   bool snapshots = 4;
+  repeated .sc.external.services.entitygraph.v1.GetEntitiesByStowContextRequestBody.EntityIdentifier identifiers = 5;
+
+  message EntityIdentifier {
+    oneof identifier {
+      uint64 entity_id = 1;
+      string parent_urn = 2;
+    }
+  }
 }
 
 message GetEntitiesByStowContextResponseBody {
@@ -422,6 +426,7 @@ message UpdateEntitiesByStowContextRequestBody {
     .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.OwnershipUpdate ownership_update = 3;
     .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.OwnershipStatusUpdate ownership_status_update = 4;
     .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.ParentUrnUpdate parent_urn_update = 5;
+    bool update_ltp_records = 6;
 
     message OwnershipUpdate {
       uint64 owner_id = 1;

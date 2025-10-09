@@ -374,6 +374,38 @@ message EntityPreCondition {
   .sc.external.services.entitygraph.v1.ScalarValue value = 3;
 }
 
+message ItemPort {
+  uint64 parent_geid = 1;
+  string item_port_name = 2;
+}
+
+message ShardDestination {
+  string shard_id = 1;
+  uint64 parent_geid = 2;
+  oneof parent_attach {
+    .sc.external.services.entitygraph.v1.ShardDestination.ZonePosition zone_position = 3;
+    .sc.external.services.entitygraph.v1.ItemPort item_port = 4;
+  }
+
+  message ZonePosition {
+    uint64 zone_geid = 1;
+    .sc.external.common.types.v1.Quatd orientation = 2;
+    .sc.external.common.types.v1.Vec3d position = 3;
+  }
+}
+
+message InventoryDestination {
+  string inventory_id = 1;
+  .sc.external.services.entitygraph.v1.ItemPort parent_attach = 2;
+}
+
+message EntityGraphDestination {
+  oneof destination {
+    .sc.external.services.entitygraph.v1.InventoryDestination inventory_destination = 1;
+    .sc.external.services.entitygraph.v1.ShardDestination shard_destination = 2;
+  }
+}
+
 enum ScopeType {
   SCOPE_TYPE_UNSPECIFIED = 0;
   SCOPE_TYPE_SHARD = 1;
