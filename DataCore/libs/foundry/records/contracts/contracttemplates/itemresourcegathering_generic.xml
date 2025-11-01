@@ -38,7 +38,7 @@
     <preShowObjectives>True</preShowObjectives>
   </contractDisplayInfo>
   <modifiers Type="BaseMissionModifier" Count="0" />
-  <contractProperties Type="MissionProperty" Count="6">
+  <contractProperties Type="MissionProperty" Count="7">
     <MissionProperty Pointer="ptr:2" Type="MissionProperty">
       <missionVariableName />
       <extendedTextToken>Contractor</extendedTextToken>
@@ -121,34 +121,46 @@
         <logErrorOnSearchFail>True</logErrorOnSearchFail>
       </value>
     </MissionProperty>
+    <MissionProperty Pointer="ptr:3" Type="MissionProperty">
+      <missionVariableName>HaulingOverride</missionVariableName>
+      <extendedTextToken />
+      <value Type="MissionPropertyValue_HaulingOrders">
+        <haulingOrderContent Type="HaulingOrderContentBase" Count="0" />
+      </value>
+    </MissionProperty>
   </contractProperties>
   <objectiveTokens Type="ObjectiveToken" Count="1">
-    <ObjectiveToken Pointer="ptr:6" Type="ObjectiveToken">
+    <ObjectiveToken Pointer="ptr:8" Type="ObjectiveToken">
       <id>eacd0014-8c17-4950-b0bc-c483ef44a459</id>
       <debugName>ItemResourceGathering</debugName>
       <startsActive>True</startsActive>
-      <properties Type="ObjectivePropertyBase" Count="3">
-        <ObjectiveProperty_Referenced Pointer="ptr:5" Type="ObjectiveProperty_Referenced">
+      <properties Type="ObjectivePropertyBase" Count="4">
+        <ObjectiveProperty_Referenced Pointer="ptr:6" Type="ObjectiveProperty_Referenced">
           <missionVariableName>DropoffLocation_BP</missionVariableName>
           <extendedTextToken>Destination</extendedTextToken>
           <property PointsTo="ptr:1" />
         </ObjectiveProperty_Referenced>
-        <ObjectiveProperty_Output Pointer="ptr:4" Type="ObjectiveProperty_Output">
+        <ObjectiveProperty_Output Pointer="ptr:5" Type="ObjectiveProperty_Output">
           <property Type="MissionProperty">
             <missionVariableName>CollectedCargo</missionVariableName>
             <extendedTextToken />
             <value Type="MissionPropertyValue_Object" />
           </property>
         </ObjectiveProperty_Output>
-        <ObjectiveProperty_Referenced Pointer="ptr:3" Type="ObjectiveProperty_Referenced">
+        <ObjectiveProperty_Referenced Pointer="ptr:4" Type="ObjectiveProperty_Referenced">
           <missionVariableName>Organization</missionVariableName>
           <extendedTextToken>Contractor</extendedTextToken>
           <property PointsTo="ptr:2" />
         </ObjectiveProperty_Referenced>
+        <ObjectiveProperty_Referenced Pointer="ptr:7" Type="ObjectiveProperty_Referenced">
+          <missionVariableName>HaulingOverride</missionVariableName>
+          <extendedTextToken />
+          <property PointsTo="ptr:3" />
+        </ObjectiveProperty_Referenced>
       </properties>
       <objectiveHandler Type="ObjectiveHandler_Hauling">
-        <organization PointsTo="ptr:3" />
-        <collectedCargoOutput PointsTo="ptr:4" />
+        <organization PointsTo="ptr:4" />
+        <collectedCargoOutput PointsTo="ptr:5" />
         <objectiveSettings Type="Hauling_ObjectiveSettings">
           <collectObjective Type="ObjectiveDisplayInfo">
             <shortDescription>@LOC_UNINITIALIZED</shortDescription>
@@ -187,15 +199,13 @@
         </objectiveSettings>
         <hideMarkers>False</hideMarkers>
         <haulingOrders Type="HaulingOrderBase" Count="1">
-          <HaulingOrder_EntityClass Type="HaulingOrder_EntityClass">
+          <HaulingOrder_Property Type="HaulingOrder_Property">
             <pickUpLocation />
-            <dropOffLocation PointsTo="ptr:5" />
+            <dropOffLocation PointsTo="ptr:6" />
             <pickUpTargetTypes Type="DeliveryTarget" Count="0" />
             <dropOffTargetTypes Type="DeliveryTarget" Count="0" />
-            <entityClass ReferencedFile="file://./../../../../../libs/foundry/records/entities/scitem/carryables/2h/carryable_2h_fl_vlk_pearl_super_01.xml" />
-            <minAmount>1</minAmount>
-            <maxAmount>0</maxAmount>
-          </HaulingOrder_EntityClass>
+            <haulingOrdersProperty PointsTo="ptr:7" />
+          </HaulingOrder_Property>
         </haulingOrders>
         <haulingLimitProperty />
       </objectiveHandler>
@@ -220,7 +230,7 @@
       <MissionFlowTrigger Type="MissionFlowTrigger">
         <description>When [Hauling] completed -&amp;gt; Mission Completed</description>
         <condition Type="MissionFlowCondition_TokenState">
-          <objectiveToken PointsTo="ptr:6" />
+          <objectiveToken PointsTo="ptr:8" />
           <tokenState>Completed</tokenState>
         </condition>
         <action Type="MissionFlowAction_StateChange">
@@ -230,7 +240,7 @@
       <MissionFlowTrigger Type="MissionFlowTrigger">
         <description>When [Hauling] failed -&amp;gt; Mission Failed</description>
         <condition Type="MissionFlowCondition_TokenState">
-          <objectiveToken PointsTo="ptr:6" />
+          <objectiveToken PointsTo="ptr:8" />
           <tokenState>Failed</tokenState>
         </condition>
         <action Type="MissionFlowAction_StateChange">
@@ -243,7 +253,7 @@
           <conditions Type="MissionFlowConditionBase" Count="0" />
         </condition>
         <action Type="MissionFlowAction_TokenStateChange">
-          <objectiveToken PointsTo="ptr:6" />
+          <objectiveToken PointsTo="ptr:8" />
           <toState>Abandoned</toState>
         </action>
       </MissionFlowTrigger>
