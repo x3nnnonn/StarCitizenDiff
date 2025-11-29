@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="3">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.68b3fe59-d53f-4e20-8c82-92dca83846ad" RecordId="68b3fe59-d53f-4e20-8c82-92dca83846ad" />
@@ -1150,9 +1155,15 @@
             <z>0</z>
           </angularThrustModifier>
           <hoverMaxRange>20</hoverMaxRange>
-          <pitchAnimationVariable>pitchDeflection</pitchAnimationVariable>
-          <yawAnimationVariable>yawDeflection</yawAnimationVariable>
-          <rollAnimationVariable>rollDeflection</rollAnimationVariable>
+          <surfaceAnimations Type="SSurfaceAnimationParams">
+            <pitchVariable>pitchDeflection</pitchVariable>
+            <yawVariable>yawDeflection</yawVariable>
+            <rollVariable>rollDeflection</rollVariable>
+            <pitchAddRollVariable>pitchAddRollDeflection</pitchAddRollVariable>
+            <pitchMinusRollVariable>pitchMinusRollDeflection</pitchMinusRollVariable>
+            <pitchAddYawVariable>pitchAddYawDeflection</pitchAddYawVariable>
+            <pitchMinusYawVariable>pitchMinusYawDeflection</pitchMinusYawVariable>
+          </surfaceAnimations>
           <turbulence Type="STurbulenceParams">
             <groundTurbulenceAmplitude>0.4</groundTurbulenceAmplitude>
             <groundTurbulenceAltitudeMin>20</groundTurbulenceAltitudeMin>
@@ -1778,9 +1789,9 @@
       <forceOn>False</forceOn>
       <asopSpawnState>Off</asopSpawnState>
       <throttleParams Type="ItemThrottleParamsBase" Count="1">
-        <ItemPowerSegmentThrottleParams Type="ItemPowerSegmentThrottleParams">
-          <default>4</default>
-        </ItemPowerSegmentThrottleParams>
+        <ItemPowerSimpleSegmentThrottleParams Type="ItemPowerSimpleSegmentThrottleParams">
+          <defaultFull>False</defaultFull>
+        </ItemPowerSimpleSegmentThrottleParams>
       </throttleParams>
       <masterModeExclusionsOverride />
     </ItemControlComponentParams>
@@ -1826,7 +1837,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -1834,10 +1861,20 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">

@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../../../../../libs/foundry/records/densityclasses/fpsitemsdensityclass.xml" />
   <tags Type="Tag" Count="11">
     <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.8f77e0fc-4086-4d66-ae9e-8601b0a3c7f4" RecordId="8f77e0fc-4086-4d66-ae9e-8601b0a3c7f4" />
@@ -41,10 +46,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -61,13 +67,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -161,6 +170,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -660,15 +674,18 @@
       <Ports Type="SItemPortDef" Count="13">
         <SItemPortDef Type="SItemPortDef">
           <Name>wep_stocked_2</Name>
-          <DisplayName>wep_stocked_2</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory invis_p1 transferable</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -701,19 +718,19 @@
           <Types Type="SItemPortDefTypes" Count="3">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Medium</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>FPS_Deployable</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Medium</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -770,7 +787,7 @@
                     <y>0.06</y>
                   </Capsule>
                   <ProjectionType>PS1_ShortarcRotation</ProjectionType>
-                  <AvailableCollisionProxies Type="LinkedStatSetupBase" Count="0" />
+                  <AvailableCollisionProxies Type="SActorForceReactionLeanFilterDef" Count="0" />
                 </SimulationParams>
               </Helper>
               <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
@@ -799,15 +816,18 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:20" Type="SItemPortDef">
           <Name>wep_stocked_3</Name>
-          <DisplayName>wep_stocked_3</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory invis_p1 transferable</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -840,20 +860,20 @@
           <Types Type="SItemPortDefTypes" Count="3">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Medium</EnumChoice>
                 <EnumChoice>Large</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>FPS_Deployable</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Medium</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -910,7 +930,7 @@
                     <y>0.06</y>
                   </Capsule>
                   <ProjectionType>PS1_ShortarcRotation</ProjectionType>
-                  <AvailableCollisionProxies Type="LinkedStatSetupBase" Count="0" />
+                  <AvailableCollisionProxies Type="SActorForceReactionLeanFilterDef" Count="0" />
                 </SimulationParams>
               </Helper>
               <SubHelpers Type="SItemPortDefHelperNode" Count="1">
@@ -962,7 +982,7 @@
                         <y>0.06</y>
                       </Capsule>
                       <ProjectionType>PS1_ShortarcRotation</ProjectionType>
-                      <AvailableCollisionProxies Type="LinkedStatSetupBase" Count="0" />
+                      <AvailableCollisionProxies Type="SActorForceReactionLeanFilterDef" Count="0" />
                     </SimulationParams>
                   </Helper>
                   <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
@@ -993,15 +1013,18 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:17" Type="SItemPortDef">
           <Name>magazine_attach_1</Name>
-          <DisplayName>magazine_attach_1</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1034,7 +1057,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Magazine</EnumChoice>
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
@@ -1087,15 +1110,18 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:19" Type="SItemPortDef">
           <Name>magazine_attach_2</Name>
-          <DisplayName>magazine_attach_2</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1128,7 +1154,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Magazine</EnumChoice>
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
@@ -1181,15 +1207,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>magazine_attach_3</Name>
-          <DisplayName>magazine_attach_3</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1222,7 +1251,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Magazine</EnumChoice>
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
@@ -1275,15 +1304,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>magazine_attach_4</Name>
-          <DisplayName>magazine_attach_4</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1316,7 +1348,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Magazine</EnumChoice>
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
@@ -1369,15 +1401,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>magazine_attach_5</Name>
-          <DisplayName>magazine_attach_5</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1410,7 +1445,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Magazine</EnumChoice>
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
@@ -1463,15 +1498,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>magazine_attach_6</Name>
-          <DisplayName>magazine_attach_6</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1504,7 +1542,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Magazine</EnumChoice>
                 <EnumChoice>Rocket</EnumChoice>
               </SubTypes>
@@ -1557,15 +1595,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>grenade_attach_1</Name>
-          <DisplayName>grenade_attach_1</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1598,14 +1639,14 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Grenade</EnumChoice>
                 <EnumChoice />
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>FPS_Deployable</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1660,7 +1701,7 @@
                     <y>0.035</y>
                   </Capsule>
                   <ProjectionType>PS1_NoProjection</ProjectionType>
-                  <AvailableCollisionProxies Type="LinkedStatSetupBase" Count="0" />
+                  <AvailableCollisionProxies Type="SActorForceReactionLeanFilterDef" Count="0" />
                 </SimulationParams>
               </Helper>
               <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
@@ -1689,15 +1730,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>grenade_attach_2</Name>
-          <DisplayName>grenade_attach_2</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1730,14 +1774,14 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Grenade</EnumChoice>
                 <EnumChoice />
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>FPS_Deployable</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1792,7 +1836,7 @@
                     <y>0.035</y>
                   </Capsule>
                   <ProjectionType>PS1_NoProjection</ProjectionType>
-                  <AvailableCollisionProxies Type="LinkedStatSetupBase" Count="0" />
+                  <AvailableCollisionProxies Type="SActorForceReactionLeanFilterDef" Count="0" />
                 </SimulationParams>
               </Helper>
               <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
@@ -1821,15 +1865,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>grenade_attach_3</Name>
-          <DisplayName>grenade_attach_3</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach inventory</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1862,13 +1909,13 @@
           <Types Type="SItemPortDefTypes" Count="2">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Grenade</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>FPS_Deployable</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1923,7 +1970,7 @@
                     <y>0.035</y>
                   </Capsule>
                   <ProjectionType>PS1_NoProjection</ProjectionType>
-                  <AvailableCollisionProxies Type="LinkedStatSetupBase" Count="0" />
+                  <AvailableCollisionProxies Type="SActorForceReactionLeanFilterDef" Count="0" />
                 </SimulationParams>
               </Helper>
               <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
@@ -1952,7 +1999,7 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>backpack</Name>
-          <DisplayName>backpack</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>utility combat</PortTags>
           <RequiredPortTags>$backpack</RequiredPortTags>
           <Flags>body_attach inventory</Flags>
@@ -1960,8 +2007,11 @@
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.27893aeb-650b-4c1b-9c96-a5ae9b0da261" RecordId="27893aeb-650b-4c1b-9c96-a5ae9b0da261" />
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1994,7 +2044,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Armor_Backpack</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2044,15 +2094,18 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>gadget_attach_1</Name>
-          <DisplayName>gadget_attach_1</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>body_attach nophys inventory transferable</Flags>
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.201aae5c-92c9-43f9-8c6c-b50c279080f8" RecordId="201aae5c-92c9-43f9-8c6c-b50c279080f8" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2085,7 +2138,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Gadget</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2141,6 +2194,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -2406,6 +2460,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -2508,6 +2564,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>TopBoundingBoxZSurface</InteractionPromptBound>
@@ -2720,7 +2778,7 @@
           </SCarryableGrip>
         </grips>
       </gripData>
-      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="6">
+      <abilityLocks Type="ActivityBehaviorRequest" Count="6">
         <EnumChoice>Climb</EnumChoice>
         <EnumChoice>Sprint</EnumChoice>
         <EnumChoice>Vault</EnumChoice>
@@ -2818,6 +2876,7 @@
       <ikInteractionsRecord />
       <carryableSequences Type="SCarryableSequenceRef" Count="0" />
       <canBeCarriedInProne>False</canBeCarriedInProne>
+      <disableRotation>False</disableRotation>
     </SEntityComponentCarryableParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
       <StateTypes Type="SInteractionStateType" Count="1">
@@ -2835,6 +2894,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2878,6 +2938,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2925,6 +2986,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2945,6 +3007,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2980,6 +3043,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3000,6 +3064,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -3056,6 +3121,7 @@
         </ItemSuitArmorSignatureParams>
       </signatureParams>
       <restrictedMoveViewPenalty ReferencedFile="file://./../../../../../../../../../../../libs/foundry/records/moveviewrestrictionpenalties/armor/moveviewrestriction_armor_medium.xml" />
+      <integrityMilestoneToBreak>0.1</integrityMilestoneToBreak>
     </SCItemSuitArmorParams>
     <SEntityComponentEffects Type="SEntityComponentEffects">
       <entityEffects Type="SEntitityEffectSystem_System">
@@ -3203,7 +3269,7 @@
       <Thrusters Type="SCItemSuitThrusterParams" Count="8">
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_front_r_upper_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeBack</EnumChoice>
             <EnumChoice>StrafeLeft</EnumChoice>
             <EnumChoice>StrafeDown</EnumChoice>
@@ -3214,7 +3280,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_front_l_upper_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeBack</EnumChoice>
             <EnumChoice>StrafeRight</EnumChoice>
             <EnumChoice>StrafeDown</EnumChoice>
@@ -3225,7 +3291,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_front_l_bottom_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeBack</EnumChoice>
             <EnumChoice>StrafeRight</EnumChoice>
             <EnumChoice>StrafeUp</EnumChoice>
@@ -3236,7 +3302,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_front_r_bottom_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeBack</EnumChoice>
             <EnumChoice>StrafeLeft</EnumChoice>
             <EnumChoice>StrafeUp</EnumChoice>
@@ -3247,7 +3313,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_back_l_bottom_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeForward</EnumChoice>
             <EnumChoice>StrafeRight</EnumChoice>
             <EnumChoice>StrafeUp</EnumChoice>
@@ -3258,7 +3324,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_back_r_bottom_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeForward</EnumChoice>
             <EnumChoice>StrafeLeft</EnumChoice>
             <EnumChoice>StrafeUp</EnumChoice>
@@ -3269,7 +3335,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_back_r_upper_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeForward</EnumChoice>
             <EnumChoice>StrafeLeft</EnumChoice>
             <EnumChoice>StrafeDown</EnumChoice>
@@ -3280,7 +3346,7 @@
         </SCItemSuitThrusterParams>
         <SCItemSuitThrusterParams Type="SCItemSuitThrusterParams">
           <HelperName>thruster_back_l_upper_override</HelperName>
-          <ActivationInputs Type="BuildingBlocks_BindingsBooleanComponentParameter" Count="6">
+          <ActivationInputs Type="SEntityComponentUpdateProxyParams" Count="6">
             <EnumChoice>StrafeForward</EnumChoice>
             <EnumChoice>StrafeRight</EnumChoice>
             <EnumChoice>StrafeDown</EnumChoice>
@@ -3425,6 +3491,7 @@
         </PointAlignmentSlot>
       </alignmentSlots>
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
+      <freeItemPortsForDirectInteraction Type="SItemPortDef" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="3">
         <UsableSlottingSetup Type="UsableSlottingSetup">
           <name />
@@ -3461,13 +3528,15 @@
         </UsableSlottingSetup>
       </slottingSetups>
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="0" />
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
       </specializedData>
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
+      <lowEnergyThreshold>0</lowEnergyThreshold>
+      <highEnergyThreshold>2</highEnergyThreshold>
     </SActorUsableParams>
     <SubsumptionMissionLinkComponentParams Type="SubsumptionMissionLinkComponentParams" />
     <ResourceContainer Type="ResourceContainer">

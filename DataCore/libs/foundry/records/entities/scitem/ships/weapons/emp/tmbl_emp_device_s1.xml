@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>True</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../../libs/foundry/records/densityclasses/vehicleitemsdensityclass.xml" />
   <tags Type="Tag" Count="1">
     <Tag RecordReference="file://./../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.980ce6e8-afa2-4084-b13b-b0d01e5d7848" RecordId="980ce6e8-afa2-4084-b13b-b0d01e5d7848" />
@@ -414,6 +419,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -479,10 +489,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -499,13 +510,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -592,10 +606,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -617,13 +632,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -690,6 +710,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -746,7 +767,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -754,6 +791,11 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
   </Components>
 </EntityClassDefinition.TMBL_EMP_Device_S1>

@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
@@ -11,6 +16,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -354,6 +364,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -439,6 +451,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -670,9 +684,10 @@
         </PointAlignmentSlot>
       </alignmentSlots>
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
+      <freeItemPortsForDirectInteraction Type="SItemPortDef" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="0" />
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="1">
         <SSequencerUsableFillConsumableTaskParams Type="SSequencerUsableFillConsumableTaskParams">
           <itemPortTag>Vending_Port_01</itemPortTag>
@@ -687,6 +702,8 @@
       </specializedData>
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
+      <lowEnergyThreshold>0</lowEnergyThreshold>
+      <highEnergyThreshold>2</highEnergyThreshold>
     </SActorUsableParams>
     <SSpawnerParams Type="SSpawnerParams">
       <spawnRules Type="SSpawnOnTimer">
@@ -708,6 +725,8 @@
           <PortRefillData Type="PortRefillData">
             <Port PointsTo="ptr:4" />
             <Delay>5</Delay>
+            <useRandomSelection>False</useRandomSelection>
+            <randomEntitySelection Type="EntityClassDefinition" Count="0" />
           </PortRefillData>
         </portRefillData>
       </portRefillData>
@@ -776,13 +795,16 @@
       <Ports Type="SItemPortDef" Count="1">
         <SItemPortDef Pointer="ptr:4" Type="SItemPortDef">
           <Name>Vending_Port_01</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>Vending_Port_01</PortTags>
           <RequiredPortTags />
           <Flags>nophys</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -866,6 +888,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -1101,6 +1124,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -1108,6 +1132,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/props/usables/vendingmachine/screen_vendingmachine_paymentscreen.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -1115,6 +1140,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/props/usables/vendingmachine/screen_vendingmachine_vendingscreen.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -1122,6 +1148,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/props/usables/vendingmachine/screen_vendingmachine_vendcompletescreen.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -1129,6 +1156,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/props/usables/vendingmachine/screen_vendingmachine_errorscreen.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -1136,6 +1164,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/props/usables/vendingmachine/screen_vendingmachine_selectionscreen.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
           </views>
@@ -1161,6 +1190,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1194,6 +1224,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1227,6 +1258,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1264,6 +1296,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1293,6 +1326,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1338,6 +1372,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1377,6 +1412,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1402,6 +1438,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1441,6 +1478,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1470,6 +1508,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1505,6 +1544,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1534,6 +1574,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -1560,6 +1601,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">

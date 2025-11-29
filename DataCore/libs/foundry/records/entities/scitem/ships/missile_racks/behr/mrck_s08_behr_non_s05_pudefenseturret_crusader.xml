@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>True</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../../libs/foundry/records/densityclasses/vehicleitemsdensityclass.xml" />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="1">
@@ -41,7 +46,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -49,6 +70,11 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <ItemControlComponentParams Type="ItemControlComponentParams">
       <turnedOnByDefault>False</turnedOnByDefault>
@@ -148,6 +174,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -341,10 +372,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -357,10 +389,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -377,13 +410,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -449,13 +485,16 @@
       <Ports Type="SItemPortDef" Count="9">
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_01_attach</Name>
-          <DisplayName>port_NameMissileRackSlot01</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -488,7 +527,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -541,13 +580,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_02_attach</Name>
-          <DisplayName>port_NameMissileRackSlot02</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -580,7 +622,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -633,13 +675,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_03_attach</Name>
-          <DisplayName>port_NameMissileRackSlot03</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -672,7 +717,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -725,13 +770,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_04_attach</Name>
-          <DisplayName>port_NameMissileRackSlot04</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -764,7 +812,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -817,13 +865,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_05_attach</Name>
-          <DisplayName>port_NameMissileRackSlot05</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -856,7 +907,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -909,13 +960,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_06_attach</Name>
-          <DisplayName>port_NameMissileRackSlot06</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -948,7 +1002,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -1001,13 +1055,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_07_attach</Name>
-          <DisplayName>port_NameMissileRackSlot07</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1040,7 +1097,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -1093,13 +1150,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_08_attach</Name>
-          <DisplayName>port_NameMissileRackSlot08</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1132,7 +1192,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -1185,13 +1245,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>missile_09_attach</Name>
-          <DisplayName>port_NameMissileRackSlot09</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1224,7 +1287,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Missile</Type>
-              <SubTypes Type="ActorStatusPreset" Count="2">
+              <SubTypes Type="StatusEffect" Count="2">
                 <EnumChoice>Missile</EnumChoice>
                 <EnumChoice>Torpedo</EnumChoice>
               </SubTypes>
@@ -1283,6 +1346,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />

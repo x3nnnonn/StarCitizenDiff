@@ -4,6 +4,11 @@
   <Icon>Usable.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
@@ -102,6 +107,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -167,10 +177,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -187,13 +198,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -3429,6 +3443,7 @@
         </PointAlignmentSlot>
       </alignmentSlots>
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
+      <freeItemPortsForDirectInteraction Type="SItemPortDef" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="19">
         <UsableSlottingSetup Type="UsableSlottingSetup">
           <name />
@@ -3641,13 +3656,15 @@
         </UsableSlottingSetup>
       </slottingSetups>
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="0" />
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
       </specializedData>
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
+      <lowEnergyThreshold>0</lowEnergyThreshold>
+      <highEnergyThreshold>2</highEnergyThreshold>
     </SActorUsableParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
@@ -3662,13 +3679,16 @@
       <Ports Type="SItemPortDef" Count="19">
         <SItemPortDef Pointer="ptr:2" Type="SItemPortDef">
           <Name>$proxy_pistol_01</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_01</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3701,7 +3721,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3753,13 +3773,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:4" Type="SItemPortDef">
           <Name>$proxy_pistol_02</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_02</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_02</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3792,7 +3815,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3844,13 +3867,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:6" Type="SItemPortDef">
           <Name>$proxy_pistol_03</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_03</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_03</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3883,7 +3909,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3935,13 +3961,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:8" Type="SItemPortDef">
           <Name>$proxy_pistol_04</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_04</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_05</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -3974,7 +4003,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -4026,13 +4055,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:10" Type="SItemPortDef">
           <Name>$proxy_pistol_05</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_05</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_05</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4065,7 +4097,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -4117,13 +4149,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:12" Type="SItemPortDef">
           <Name>$proxy_pistol_06</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_06</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_06</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4156,7 +4191,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Small</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -4208,13 +4243,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:18" Type="SItemPortDef">
           <Name>$proxy_rifle_03</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_09</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_09</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4247,7 +4285,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4297,13 +4335,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:14" Type="SItemPortDef">
           <Name>$proxy_rifle_01</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_07</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_07</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4336,7 +4377,9 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="1">
+                <EnumChoice>Small</EnumChoice>
+              </SubTypes>
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4386,13 +4429,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:16" Type="SItemPortDef">
           <Name>$proxy_rifle_02</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_08</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_08</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4425,7 +4471,9 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="1">
+                <EnumChoice>Small</EnumChoice>
+              </SubTypes>
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4475,13 +4523,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:20" Type="SItemPortDef">
           <Name>$proxy_rifle_04</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_10</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_10</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4514,7 +4565,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4564,13 +4615,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:22" Type="SItemPortDef">
           <Name>$proxy_rifle_05</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_11</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_11</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4603,7 +4657,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4653,13 +4707,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:24" Type="SItemPortDef">
           <Name>$proxy_rifle_06</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_12</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_12</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4692,7 +4749,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4742,13 +4799,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:26" Type="SItemPortDef">
           <Name>$proxy_heavy</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_13</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_13</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>5</MinSize>
           <MaxSize>5</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4781,7 +4841,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4831,13 +4891,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:28" Type="SItemPortDef">
           <Name>$IP_multitool_01</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_14</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_14</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4870,7 +4933,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -4922,13 +4985,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:30" Type="SItemPortDef">
           <Name>$IP_multitool_02</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_15</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_15</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4961,7 +5027,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5013,13 +5079,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:32" Type="SItemPortDef">
           <Name>$IP_multitool_03</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_16</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_16</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5052,7 +5121,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5104,13 +5173,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:34" Type="SItemPortDef">
           <Name>$IP_multitool_04</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_17</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_17</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5143,7 +5215,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5195,13 +5267,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:36" Type="SItemPortDef">
           <Name>$IP_multitool_05</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_18</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_18</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5234,7 +5309,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5286,13 +5361,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:38" Type="SItemPortDef">
           <Name>$IP_multitool_06</Name>
-          <DisplayName>hardpoint_Weapon_Cabinet_19</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>weapon_port_19</PortTags>
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5325,7 +5403,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponPersonal</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Gadget</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -5383,6 +5461,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />

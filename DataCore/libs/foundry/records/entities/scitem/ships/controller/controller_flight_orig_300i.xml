@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="3">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.68b3fe59-d53f-4e20-8c82-92dca83846ad" RecordId="68b3fe59-d53f-4e20-8c82-92dca83846ad" />
@@ -400,16 +405,16 @@
       <linkPlugs Type="Tag" Count="0" />
     </SInteractionLinkParams>
     <IFCSParams Type="IFCSParams">
-      <scmSpeed>260</scmSpeed>
-      <boostSpeedForward>610</boostSpeedForward>
-      <boostSpeedBackward>230</boostSpeedBackward>
-      <maxSpeed>1425</maxSpeed>
+      <scmSpeed>258</scmSpeed>
+      <boostSpeedForward>550</boostSpeedForward>
+      <boostSpeedBackward>270</boostSpeedBackward>
+      <maxSpeed>1440</maxSpeed>
       <maxSpeedPrecisionModeFullProximityAssist>10</maxSpeedPrecisionModeFullProximityAssist>
       <maxSpeedPrecisionModeZeroProximityAssist>30</maxSpeedPrecisionModeZeroProximityAssist>
       <maxAngularVelocity Type="Vec3">
-        <x>52</x>
-        <y>180</y>
-        <z>48</z>
+        <x>50</x>
+        <y>175</y>
+        <z>46</z>
       </maxAngularVelocity>
       <pitchYawLimiterType>Ellipsoid</pitchYawLimiterType>
       <linearLimiterType>NormalizedUniformWithMaxRadius</linearLimiterType>
@@ -1150,9 +1155,15 @@
             <z>0</z>
           </angularThrustModifier>
           <hoverMaxRange>20</hoverMaxRange>
-          <pitchAnimationVariable>pitchDeflection</pitchAnimationVariable>
-          <yawAnimationVariable>yawDeflection</yawAnimationVariable>
-          <rollAnimationVariable>rollDeflection</rollAnimationVariable>
+          <surfaceAnimations Type="SSurfaceAnimationParams">
+            <pitchVariable>pitchDeflection</pitchVariable>
+            <yawVariable>yawDeflection</yawVariable>
+            <rollVariable>rollDeflection</rollVariable>
+            <pitchAddRollVariable>pitchAddRollDeflection</pitchAddRollVariable>
+            <pitchMinusRollVariable>pitchMinusRollDeflection</pitchMinusRollVariable>
+            <pitchAddYawVariable>pitchAddYawDeflection</pitchAddYawVariable>
+            <pitchMinusYawVariable>pitchMinusYawDeflection</pitchMinusYawVariable>
+          </surfaceAnimations>
           <turbulence Type="STurbulenceParams">
             <groundTurbulenceAmplitude>0.4</groundTurbulenceAmplitude>
             <groundTurbulenceAltitudeMin>20</groundTurbulenceAltitudeMin>
@@ -1769,19 +1780,19 @@
         <z>1</z>
       </positiveLinearScale>
       <negativeLinearScale Type="Vec3">
-        <x>1</x>
+        <x>0.991</x>
         <y>1</y>
         <z>1</z>
       </negativeLinearScale>
       <positiveAngularScale Type="Vec3">
-        <x>0.18</x>
-        <y>0.242</y>
-        <z>0.24</z>
+        <x>0.175</x>
+        <y>0.178</y>
+        <z>0.156</z>
       </positiveAngularScale>
       <negativeAngularScale Type="Vec3">
-        <x>0.195</x>
-        <y>0.243</y>
-        <z>0.24</z>
+        <x>0.184</x>
+        <y>0.178</y>
+        <z>0.1584</z>
       </negativeAngularScale>
       <intoxicationModifierRef ReferencedFile="file://./../../../../../../../libs/foundry/records/intoxication/globalifcsintoxicationmodifierparams.xml" />
       <authoredMotionLimits Type="SIFCSAuthoredMotionLimits">
@@ -1810,9 +1821,9 @@
       <forceOn>False</forceOn>
       <asopSpawnState>Off</asopSpawnState>
       <throttleParams Type="ItemThrottleParamsBase" Count="1">
-        <ItemPowerSegmentThrottleParams Type="ItemPowerSegmentThrottleParams">
-          <default>4</default>
-        </ItemPowerSegmentThrottleParams>
+        <ItemPowerSimpleSegmentThrottleParams Type="ItemPowerSimpleSegmentThrottleParams">
+          <defaultFull>False</defaultFull>
+        </ItemPowerSimpleSegmentThrottleParams>
       </throttleParams>
       <masterModeExclusionsOverride />
     </ItemControlComponentParams>
@@ -1858,7 +1869,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -1866,10 +1893,20 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">

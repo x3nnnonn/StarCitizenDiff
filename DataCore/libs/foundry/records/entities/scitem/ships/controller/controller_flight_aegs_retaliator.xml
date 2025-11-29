@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="3">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.68b3fe59-d53f-4e20-8c82-92dca83846ad" RecordId="68b3fe59-d53f-4e20-8c82-92dca83846ad" />
@@ -1150,9 +1155,15 @@
             <z>0</z>
           </angularThrustModifier>
           <hoverMaxRange>20</hoverMaxRange>
-          <pitchAnimationVariable>pitchDeflection</pitchAnimationVariable>
-          <yawAnimationVariable>yawDeflection</yawAnimationVariable>
-          <rollAnimationVariable>rollDeflection</rollAnimationVariable>
+          <surfaceAnimations Type="SSurfaceAnimationParams">
+            <pitchVariable>pitchDeflection</pitchVariable>
+            <yawVariable>yawDeflection</yawVariable>
+            <rollVariable>rollDeflection</rollVariable>
+            <pitchAddRollVariable>pitchAddRollDeflection</pitchAddRollVariable>
+            <pitchMinusRollVariable>pitchMinusRollDeflection</pitchMinusRollVariable>
+            <pitchAddYawVariable>pitchAddYawDeflection</pitchAddYawVariable>
+            <pitchMinusYawVariable>pitchMinusYawDeflection</pitchMinusYawVariable>
+          </surfaceAnimations>
           <turbulence Type="STurbulenceParams">
             <groundTurbulenceAmplitude>0.4</groundTurbulenceAmplitude>
             <groundTurbulenceAltitudeMin>20</groundTurbulenceAltitudeMin>
@@ -1810,9 +1821,9 @@
       <forceOn>False</forceOn>
       <asopSpawnState>Off</asopSpawnState>
       <throttleParams Type="ItemThrottleParamsBase" Count="1">
-        <ItemPowerSegmentThrottleParams Type="ItemPowerSegmentThrottleParams">
-          <default>4</default>
-        </ItemPowerSegmentThrottleParams>
+        <ItemPowerSimpleSegmentThrottleParams Type="ItemPowerSimpleSegmentThrottleParams">
+          <defaultFull>False</defaultFull>
+        </ItemPowerSimpleSegmentThrottleParams>
       </throttleParams>
       <masterModeExclusionsOverride />
     </ItemControlComponentParams>
@@ -1858,7 +1869,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -1866,67 +1893,12 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
-    <SGeometryResourceParams Type="SGeometryResourceParams">
-      <ModelTag />
-      <cacheResources>False</cacheResources>
-      <Geometry Type="SGeometryNodeParams">
-        <Tags />
-        <Geometry Type="SGeometryDataParams">
-          <Geometry Type="GlobalResourceGeometry">
-            <path>Data/Objects/Spaceships/blades/s01/blad_mite_s01_pl01.cga</path>
-          </Geometry>
-          <Material Type="GlobalResourceMaterial">
-            <path />
-          </Material>
-          <SimulationGeometry />
-          <Palette Type="TintPaletteRef">
-            <RootRecord />
-            <ChildPath />
-            <SwizzleOverride />
-          </Palette>
-          <Slot>Main</Slot>
-          <MaterialAttachments />
-          <ProxyCDFPath />
-          <ModifiersPath />
-          <AttachFlags>0</AttachFlags>
-          <DeformerType>Standard</DeformerType>
-          <ProtosBShapeExclude>0</ProtosBShapeExclude>
-          <VisTP>True</VisTP>
-          <VisFP>True</VisFP>
-          <VisShadow>True</VisShadow>
-          <VisSecondaryViews>True</VisSecondaryViews>
-          <WrinkleMap>False</WrinkleMap>
-          <EnableDecalProjection>False</EnableDecalProjection>
-          <BBoxJoint />
-          <BBoxRadius>0</BBoxRadius>
-          <Wear>0</Wear>
-          <Dirt>0</Dirt>
-          <Interference>0</Interference>
-          <Damage>0</Damage>
-          <RenderLayer>Default</RenderLayer>
-          <VisAreaMode>AABB_Center</VisAreaMode>
-          <SunShadowMode>Upto_400m</SunShadowMode>
-          <viewDistRatio />
-          <LodRatio>100</LodRatio>
-        </Geometry>
-        <ScaleMultiplier>1</ScaleMultiplier>
-        <SubGeometry Type="SGeometryNodeParams" Count="0" />
-      </Geometry>
-      <Material Type="SMaterialNodeParams">
-        <Tags />
-        <Material Type="GlobalResourceMaterial">
-          <path />
-        </Material>
-        <Palette Type="TintPaletteRef">
-          <RootRecord />
-          <ChildPath />
-          <SwizzleOverride />
-        </Palette>
-        <materialVariants Type="SMaterialNodeParams" Count="0" />
-      </Material>
-      <rootOverridePaint>False</rootOverridePaint>
-      <inheritModelTagFromHost>True</inheritModelTagFromHost>
-    </SGeometryResourceParams>
+    <DataForgeComponentParams />
   </Components>
 </EntityClassDefinition.Controller_Flight_AEGS_Retaliator>

@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../libs/foundry/records/densityclasses/groundvehiclesdensityclass.xml" />
   <tags Type="Tag" Count="6">
     <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7131f390-96b2-4ea3-8a7a-78c7a3a12528" RecordId="7131f390-96b2-4ea3-8a7a-78c7a3a12528" />
@@ -173,6 +178,18 @@
       <DashboardCanvasConfig />
       <inventoryContainerParams ReferencedFile="file://./../../../../../libs/foundry/records/inventorycontainers/groundvehicles/argo_csv_cargogrid_template.xml" />
       <spawnBoxScale>0.5</spawnBoxScale>
+      <landingOffset Type="Vec3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingOffset>
+      <landingRotationOffset Type="Ang3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingRotationOffset>
+      <fusePenetrationDamageMultiplier>2.727273</fusePenetrationDamageMultiplier>
+      <componentPenetrationDamageMultiplier>1</componentPenetrationDamageMultiplier>
     </VehicleComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
@@ -950,10 +967,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -986,7 +1004,11 @@
           </crossSection>
         </crossSectionParams>
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="1">
@@ -1005,6 +1027,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSuperGUIDComponentParams Type="SSuperGUIDComponentParams" />
@@ -1012,6 +1037,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -1295,13 +1325,16 @@
       <Ports Type="SItemPortDef" Count="2">
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_relay_cockpit</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1334,7 +1367,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1384,13 +1417,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_lifesupport_tank</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1423,7 +1459,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>LifeSupportTank</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1602,6 +1638,7 @@
       </InternalHardpointLinks>
       <LinkAllItemsToResourceNetwork>True</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>True</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="7">
@@ -1611,21 +1648,27 @@
           </FixedPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>Shield</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>WheeledController</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>TractorBeam</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>TowingBeam</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>WeaponMining</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>SalvageHead</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
         </itemPools>
         <maxDefaultDistribution>False</maxDefaultDistribution>
@@ -1639,10 +1682,11 @@
     <EntityComponentAudioEnvironmentFeedbackParams Type="EntityComponentAudioEnvironmentFeedbackParams">
       <audioObjects Type="EnvironmentFeedbackAudioObject" Count="0" />
     </EntityComponentAudioEnvironmentFeedbackParams>
-    <EntityComponentVibrationParams Type="EntityComponentVibrationParams">
+    <EntityComponentVibrationVehicleParams Type="EntityComponentVibrationVehicleParams">
       <vibrationRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclebase.xml" />
       <normalizationMassOverride>-1</normalizationMassOverride>
-    </EntityComponentVibrationParams>
+      <vibrationVehicleRecord ReferencedFile="file://./../../../../../libs/foundry/records/vibrations/vibrations_vehiclespecifics.xml" />
+    </EntityComponentVibrationVehicleParams>
     <SurfaceRaindropsComponentParams Type="SurfaceRaindropsComponentParams">
       <enable>True</enable>
       <surfaceParticleRtt Type="SurfaceParticleRTTParams">
@@ -2019,13 +2063,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -2055,13 +2104,14 @@
       <entrancesRecord ReferencedFile="file://./../../../../../libs/foundry/records/ui/vehicleentrance/argo_csv.xml" />
     </EntranceDisplayComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="SRadarSenseComponentParams" Count="1">
+      <perceptionTypes Type="ActorStatusUIWarning" Count="1">
         <EnumChoice>Vehicle</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SHearingComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusPreset" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <defaultEntityObservablePoint />
-      <defaultAimingObservablePoint />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
       <observableExtensions Type="IObservableExtender" Count="1">
         <AudioObservableExtender Type="AudioObservableExtender">
           <hearingRadiusAtFullStrength>550</hearingRadiusAtFullStrength>
@@ -2106,7 +2156,11 @@
     <AnnunciatorProviderParams Type="AnnunciatorProviderParams">
       <shotAlertTime>1</shotAlertTime>
     </AnnunciatorProviderParams>
-    <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams" />
+    <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams">
+      <normalState />
+      <auxState />
+      <criticalState />
+    </EntityComponentResourceNetworkUIProviderParams>
     <PositionTrackerComponentParams Type="PositionTrackerComponentParams" />
     <EntityPhysicalAudioParams Type="EntityPhysicalAudioParams">
       <collisionTriggers Type="PhysicalAudioCollisionTrigger" Count="1">
@@ -2148,6 +2202,18 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
+      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamPickupTrigger>
+      <tractorBeamDropTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamDropTrigger>
+      <detachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </detachBreakTrigger>
+      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity_Vehicle_GRIN_ROC</rtpc>
       </rtpcSlideVelocity>
@@ -2181,12 +2247,16 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
+      <rtpcSize Type="AudioRtpc">
+        <rtpc />
+      </rtpcSize>
       <minimumImpulseContinuous>40</minimumImpulseContinuous>
       <minimumImpulseTransient>10</minimumImpulseTransient>
       <minimumVelocityNoImpulse>10</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
+      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>True</useAABBCentre>
       <oneShotTag />
       <oneShotCooldown>0.5</oneShotCooldown>

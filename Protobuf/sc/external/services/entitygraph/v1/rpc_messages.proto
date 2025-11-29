@@ -380,21 +380,32 @@ message GetEntitiesRootsResponseBody {
   }
 }
 
-message GetEntityStowContextsRequestBody {
-  .sc.external.services.entitygraph.v1.EntityStowContextQuery query = 1;
-}
-
-message GetEntityStowContextsResponseBody {
-  .sc.external.common.api.v1.PaginationInfo page_info = 1;
-  repeated .sc.external.services.entitygraph.v1.EntityStowContext results = 2;
-}
-
 message MoveAllRequestBody {
   .sc.external.services.entitygraph.v1.MutationArguments arguments = 1;
   .sc.external.services.entitygraph.v1.MoveAllCommand move = 2;
 }
 
 message MoveAllResponseBody {}
+
+message GetEntityStowContextsByGeidsRequestBody {
+  repeated uint64 geids = 1;
+  uint64 owner_id = 2;
+  repeated uint32 entity_class_crcs = 3;
+}
+
+message GetEntityStowContextsByGeidsResponseBody {
+  repeated .sc.external.services.entitygraph.v1.EntityStowContext results = 1;
+}
+
+message GetEntityStowContextsByParentUrnsRequestBody {
+  repeated string parent_urns = 1;
+  uint64 owner_id = 2;
+  repeated uint32 entity_class_crcs = 3;
+}
+
+message GetEntityStowContextsByParentUrnsResponseBody {
+  repeated .sc.external.services.entitygraph.v1.EntityStowContext results = 1;
+}
 
 message GetEntitiesByStowContextRequestBody {
   uint64 owner_id = 3;
@@ -417,6 +428,7 @@ message GetEntitiesByStowContextResponseBody {
 message UpdateEntitiesByStowContextRequestBody {
   repeated .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate entity_updates = 1;
   .sc.external.services.entitygraph.v1.TransMutationArguments arguments = 2;
+  uint64 owner_id = 3;
 
   message EntityUpdate {
     oneof identifier {
@@ -427,6 +439,7 @@ message UpdateEntitiesByStowContextRequestBody {
     .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.OwnershipStatusUpdate ownership_status_update = 4;
     .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.ParentUrnUpdate parent_urn_update = 5;
     bool update_ltp_records = 6;
+    .sc.external.services.entitygraph.v1.UpdateEntitiesByStowContextRequestBody.EntityUpdate.LocationUpdate location_update = 7;
 
     message OwnershipUpdate {
       uint64 owner_id = 1;
@@ -436,10 +449,42 @@ message UpdateEntitiesByStowContextRequestBody {
       .google.protobuf.Timestamp ownership_timestamp = 2;
     }
     message ParentUrnUpdate {
-      string parent_urn = 1;
+      oneof parent_urn_update {
+        string parent_urn = 1;
+        bool clear = 2;
+      }
+    }
+    message LocationUpdate {
+      uint32 location_id = 1;
     }
   }
 }
 
 message UpdateEntitiesByStowContextResponseBody {}
+
+message SnapshotQueryByStowContextRequestBody {
+  .sc.external.services.entitygraph.v1.SnapshotQuery query = 1;
+  uint64 owner_id = 2;
+}
+
+message SnapshotQueryByStowContextResponseBody {
+  repeated .sc.external.services.entitygraph.v1.SnapshotQueryByStowContextResponseBody.EntitySnapshotResults results = 1;
+
+  message EntitySnapshotResults {
+    .sc.external.services.entitygraph.v1.EntitySnapshot snapshot = 1;
+  }
+}
+
+message ChangeSnapshotsByStowContextRequestBody {
+  repeated .sc.external.services.entitygraph.v1.ChangeSnapshotsByStowContextRequestBody.Changes changes = 1;
+  .sc.external.services.entitygraph.v1.TransMutationArguments arguments = 2;
+
+  message Changes {
+    uint64 entity_id = 1;
+    .sc.external.services.entitygraph.v1.EntitySnapshot snapshot = 2;
+    uint64 owner_id = 3;
+  }
+}
+
+message ChangeSnapshotsByStowContextResponseBody {}
 

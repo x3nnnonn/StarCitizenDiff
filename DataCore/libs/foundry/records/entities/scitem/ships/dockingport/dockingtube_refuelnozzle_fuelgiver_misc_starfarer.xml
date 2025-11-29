@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../libs/foundry/records/densityclasses/vehicleitemsdensityclass.xml" />
   <tags Type="Tag" Count="1">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.dc810059-af06-4985-81b1-1a908ff4ff78" RecordId="dc810059-af06-4985-81b1-1a908ff4ff78" />
@@ -107,13 +112,16 @@
       <Ports Type="SItemPortDef" Count="2">
         <SItemPortDef Pointer="ptr:10" Type="SItemPortDef">
           <Name>itemport_vehicle_attach</Name>
-          <DisplayName>ItemportVehicleAttach</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags>Ship_Dock_Refuel</RequiredPortTags>
           <Flags>Docking_Request_Accepting</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>8</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -146,7 +154,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>NOITEM_Vehicle</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -159,8 +167,8 @@
             <constraintParams Type="SAttachmentConstraintParams">
               <damping>0</damping>
               <noSelfCollisions>True</noSelfCollisions>
-              <maxPullForce>8000000</maxPullForce>
-              <maxBendTorque>80000000</maxBendTorque>
+              <maxPullForce>0</maxPullForce>
+              <maxBendTorque>0</maxBendTorque>
               <constrainToLine>False</constrainToLine>
               <constrainToPlane>False</constrainToPlane>
               <constrainFully>True</constrainFully>
@@ -218,13 +226,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>itemport_camera_test</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -308,6 +319,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -358,6 +370,7 @@
       <EnableCubemapBackdrop>True</EnableCubemapBackdrop>
       <EnableSkyboxRendering>True</EnableSkyboxRendering>
       <EnableLightWeightNodesRendering>True</EnableLightWeightNodesRendering>
+      <EnableParticleRendering>True</EnableParticleRendering>
       <imageSource>FuelCamera</imageSource>
       <IsStaticContent>False</IsStaticContent>
       <EnableSSDO>False</EnableSSDO>
@@ -447,6 +460,7 @@
           <y>0</y>
           <z>1</z>
         </explosionUp>
+        <explosionZone>AdamHosted</explosionZone>
         <pressure>400</pressure>
         <holeSize>0</holeSize>
         <terrainHoleSize>3</terrainHoleSize>
@@ -479,6 +493,7 @@
           <density>0.2</density>
           <resistance>0</resistance>
         </shockwaveParams>
+        <fragmentParams />
         <hitType>explosion</hitType>
         <effect Type="GlobalResourceParticle">
           <path>01ffc89c-76d5-7b74-f284-ebb98336dc7a|Damage/LT_Damage/LT_Explode_FX.LT_Explode.lt_explode_1m_once_fixed</path>
@@ -511,10 +526,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -523,6 +539,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -588,10 +609,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -608,13 +630,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -1155,6 +1180,7 @@
                   <enabled>False</enabled>
                 </SendDockingEnableEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1184,6 +1210,7 @@
                   <enabled>True</enabled>
                 </SendDockingEnableEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence PointsTo="ptr:5" />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1211,6 +1238,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence PointsTo="ptr:5" />
               <StateAutoChange Type="SStateAutoChange">
@@ -1244,6 +1272,7 @@
                   <enabled>False</enabled>
                 </SendDockingEnableEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence PointsTo="ptr:9" />
               <StateAutoChange Type="SStateAutoChange">
@@ -1273,6 +1302,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence PointsTo="ptr:9" />
               <StateAutoChange Type="SStateAutoChange">
@@ -1307,6 +1337,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1336,6 +1367,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1361,8 +1393,8 @@
               <onEntityAttachedState PointsTo="ptr:11" />
               <onEntityDetachedState PointsTo="ptr:12" />
               <onPortDestroyedState PointsTo="ptr:12" />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -1380,6 +1412,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1400,6 +1433,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1436,6 +1470,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1458,6 +1493,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1480,6 +1516,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1503,6 +1540,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1559,6 +1597,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1579,6 +1618,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1889,7 +1929,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -1897,6 +1953,11 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
   </Components>
 </EntityClassDefinition.DockingTube_RefuelNozzle_FuelGiver_MISC_Starfarer>

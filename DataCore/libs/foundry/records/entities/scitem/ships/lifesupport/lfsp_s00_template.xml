@@ -4,12 +4,26 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../libs/foundry/records/densityclasses/vehicleitemsdensityclass.xml" />
   <tags Type="Tag" Count="1">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.622f4a57-5338-4dce-b474-c70b69a1aa97" RecordId="622f4a57-5338-4dce-b474-c70b69a1aa97" />
   </tags>
-  <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="18">
+  <StaticEntityClassData Type="EntityClassStaticDataParams" Count="1">
+    <CustomMaterialsEntityParams Type="CustomMaterialsEntityParams">
+      <customMaterials Type="CustomMaterialEntryParams" Count="1">
+        <CustomMaterialEntryParams Type="CustomMaterialEntryParams">
+          <percentage>100</percentage>
+          <surfaceType>metal_atlasium</surfaceType>
+        </CustomMaterialEntryParams>
+      </customMaterials>
+    </CustomMaterialsEntityParams>
+  </StaticEntityClassData>
+  <Components Type="DataForgeComponentParams" Count="19">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>LifeSupportGenerator</Type>
@@ -74,6 +88,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -139,10 +158,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -159,22 +179,27 @@
         <temperature Type="EntityTemperature">
           <enable>True</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>500</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationRateAtTemperatureDifference">
+            <coolingEqualizationRate>3.75</coolingEqualizationRate>
+            <temperatureDifference>400</temperatureDifference>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>True</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>2.5</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
-            <enableOverheat>False</enableOverheat>
+            <enableOverheat>True</enableOverheat>
             <overheatTemperature>600</overheatTemperature>
             <overheatWarningTemperature>450</overheatWarningTemperature>
             <overheatRecoveryTemperature>430</overheatRecoveryTemperature>
             <stateHeatGenerationValues Type="EntityTemperatureResourceHeatGeneration" Count="1">
               <EntityTemperatureResourceHeatGeneration Type="EntityTemperatureResourceHeatGeneration">
                 <state PointsTo="ptr:1" />
+                <resource>Power</resource>
                 <baselineTemperatureChange>10</baselineTemperatureChange>
               </EntityTemperatureResourceHeatGeneration>
             </stateHeatGenerationValues>
@@ -197,7 +222,7 @@
       </PhysType>
     </SEntityPhysicsControllerParams>
     <SHealthComponentParams Type="SHealthComponentParams">
-      <Health>140</Health>
+      <Health>55</Health>
       <DamageCap>0</DamageCap>
       <DamageResistances Type="DamageResistance">
         <IgnoreMeleeDamage>False</IgnoreMeleeDamage>
@@ -257,10 +282,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -271,9 +297,9 @@
       <forceOn>False</forceOn>
       <asopSpawnState>None</asopSpawnState>
       <throttleParams Type="ItemThrottleParamsBase" Count="1">
-        <ItemPowerSegmentThrottleParams Type="ItemPowerSegmentThrottleParams">
-          <default>0</default>
-        </ItemPowerSegmentThrottleParams>
+        <ItemPowerSimpleSegmentThrottleParams Type="ItemPowerSimpleSegmentThrottleParams">
+          <defaultFull>False</defaultFull>
+        </ItemPowerSimpleSegmentThrottleParams>
       </throttleParams>
       <masterModeExclusionsOverride />
     </ItemControlComponentParams>
@@ -288,11 +314,11 @@
           <name>Online</name>
           <deltas Type="ItemResourceDeltaBase" Count="2">
             <ItemResourceDeltaConversion Type="ItemResourceDeltaConversion">
-              <minimumConsumptionFraction>0</minimumConsumptionFraction>
+              <minimumConsumptionFraction>1</minimumConsumptionFraction>
               <consumption Type="ItemResourceDeltaAmount">
                 <resource>Power</resource>
                 <resourceAmountPerSecond Type="SPowerSegmentResourceUnit">
-                  <units>0</units>
+                  <units>1</units>
                 </resourceAmountPerSecond>
               </consumption>
               <generation Type="ItemResourceDeltaAmount">
@@ -323,7 +349,7 @@
               <consumptionComposition Type="ItemResourceComposition">
                 <values Type="ItemResourceCompositionValue" Count="0" />
               </consumptionComposition>
-              <dynamicAmountOverride />
+              <dynamicAmountOverride Type="ItemResourceDynamicAmountCoolant" />
             </ItemResourceDeltaConsumption>
           </deltas>
           <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="0" />
@@ -339,7 +365,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>0.7</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>0.85</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>1</start>
+              <modifier>1</modifier>
+              <registerRange>True</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -347,6 +389,11 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>22.9</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <EntityComponentMisfireParams Type="EntityComponentMisfireParams">
       <itemLocId>@LOC_PLACEHOLDER</itemLocId>
@@ -365,49 +412,13 @@
           <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="0" />
         </SMisfireLevelParams>
         <SMisfireLevelParams Type="SMisfireLevelParams">
-          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="1">
-            <SMisfireProbabilityParams Type="SMisfireProbabilityParams">
-              <weight>0.5</weight>
-              <misfireArray Type="SMisfireEffect" Count="1">
-                <SDamageMisfireEffect PointsTo="ptr:2" />
-              </misfireArray>
-            </SMisfireProbabilityParams>
-          </misfireProbabilityArray>
+          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="0" />
         </SMisfireLevelParams>
         <SMisfireLevelParams Type="SMisfireLevelParams">
-          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="2">
-            <SMisfireProbabilityParams Type="SMisfireProbabilityParams">
-              <weight>1</weight>
-              <misfireArray Type="SMisfireEffect" Count="1">
-                <SSpreadMisfireEffect PointsTo="ptr:3" />
-              </misfireArray>
-            </SMisfireProbabilityParams>
-            <SMisfireProbabilityParams Type="SMisfireProbabilityParams">
-              <weight>0.25</weight>
-              <misfireArray Type="SMisfireEffect" Count="1">
-                <SFireMisfireEffect PointsTo="ptr:4" />
-              </misfireArray>
-            </SMisfireProbabilityParams>
-          </misfireProbabilityArray>
+          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="0" />
         </SMisfireLevelParams>
       </misfireLevels>
-      <misfires Type="SMisfireEffect" Count="3">
-        <SSpreadMisfireEffect Pointer="ptr:3" Type="SSpreadMisfireEffect">
-          <effectTrigger />
-          <effectTag />
-        </SSpreadMisfireEffect>
-        <SDamageMisfireEffect Pointer="ptr:2" Type="SDamageMisfireEffect">
-          <effectTrigger />
-          <effectTag />
-          <damageValue Type="SMisfireDamageValue">
-            <health>15</health>
-          </damageValue>
-        </SDamageMisfireEffect>
-        <SFireMisfireEffect Pointer="ptr:4" Type="SFireMisfireEffect">
-          <effectTrigger />
-          <effectTag />
-        </SFireMisfireEffect>
-      </misfires>
+      <misfires Type="SMisfireEffect" Count="0" />
     </EntityComponentMisfireParams>
     <EntityComponentFireIgniter Type="EntityComponentFireIgniter">
       <igniteOnLoad>False</igniteOnLoad>
@@ -434,13 +445,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -455,10 +471,10 @@
     </SDegradationParams>
     <SDistortionParams Type="SDistortionParams">
       <DecayDelay>1.5</DecayDelay>
-      <DecayRate>40</DecayRate>
-      <Maximum>1000</Maximum>
+      <DecayRate>0.6666667</DecayRate>
+      <Maximum>10</Maximum>
       <WarningRatio>0.75</WarningRatio>
-      <RecoveryRatio>0.7</RecoveryRatio>
+      <RecoveryRatio>0</RecoveryRatio>
       <PowerRatioAtMaxDistortion>0</PowerRatioAtMaxDistortion>
       <PowerChangeOnlyAtMaxDistortion>False</PowerChangeOnlyAtMaxDistortion>
     </SDistortionParams>
@@ -470,13 +486,16 @@
       <Ports Type="SItemPortDef" Count="3">
         <SItemPortDef Type="SItemPortDef">
           <Name>$slot_01</Name>
-          <DisplayName>$slot_01</DisplayName>
+          <DisplayName>@ui_shiploadout_slot</DisplayName>
           <PortTags>filter</PortTags>
           <RequiredPortTags>filter</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -509,7 +528,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Utility</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -561,13 +580,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>$slot_02</Name>
-          <DisplayName>$slot_02</DisplayName>
+          <DisplayName>@ui_shiploadout_slot</DisplayName>
           <PortTags>filter</PortTags>
           <RequiredPortTags>filter</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -600,7 +622,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Utility</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -652,13 +674,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>$slot_03</Name>
-          <DisplayName>$slot_03</DisplayName>
+          <DisplayName>@ui_shiploadout_slot</DisplayName>
           <PortTags>filter</PortTags>
           <RequiredPortTags>filter</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -691,7 +716,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Utility</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -749,6 +774,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -790,11 +816,11 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>filter_1_attachment</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:5" />
+          <DefaultState PointsTo="ptr:2" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:2" Type="SInteractionState">
               <StateName>filter_1_connected</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -805,6 +831,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -818,7 +845,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:3" Type="SInteractionState">
               <StateName>filter_1_disconnected</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -829,6 +856,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -846,22 +874,22 @@
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
               <itemPort />
-              <onEntityAttachedState PointsTo="ptr:5" />
-              <onEntityDetachedState PointsTo="ptr:6" />
-              <onPortDestroyedState PointsTo="ptr:6" />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <onEntityAttachedState PointsTo="ptr:2" />
+              <onEntityDetachedState PointsTo="ptr:3" />
+              <onPortDestroyedState PointsTo="ptr:3" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>filter_2_attachment</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:7" />
+          <DefaultState PointsTo="ptr:4" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:4" Type="SInteractionState">
               <StateName>filter_2_connected</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -872,6 +900,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.d222dafe-4ea3-4ba6-8775-fe2ed10e28e9" RecordId="d222dafe-4ea3-4ba6-8775-fe2ed10e28e9" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -885,7 +914,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
               <StateName>filter_2_disconnected</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -896,6 +925,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.65dbcbfc-422d-425a-a260-695396e478f5" RecordId="65dbcbfc-422d-425a-a260-695396e478f5" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -913,22 +943,22 @@
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
               <itemPort />
-              <onEntityAttachedState PointsTo="ptr:7" />
-              <onEntityDetachedState PointsTo="ptr:8" />
-              <onPortDestroyedState PointsTo="ptr:8" />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <onEntityAttachedState PointsTo="ptr:4" />
+              <onEntityDetachedState PointsTo="ptr:5" />
+              <onPortDestroyedState PointsTo="ptr:5" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>filter_3_attachment</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:9" />
+          <DefaultState PointsTo="ptr:6" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
               <StateName>filter_3_connected</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -939,6 +969,76 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6b616b29-201b-4d76-bf07-00fb90cd963d" RecordId="6b616b29-201b-4d76-bf07-00fb90cd963d" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
+              <StateName>filter_3_disconnected</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="1">
+                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6b616b29-201b-4d76-bf07-00fb90cd963d" RecordId="6b616b29-201b-4d76-bf07-00fb90cd963d" />
+              </enterStateEffectTags>
+              <exitStateEffectTags Type="Tag" Count="1">
+                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.83ccad4f-98b0-4049-8f17-b01971abb17d" RecordId="83ccad4f-98b0-4049-8f17-b01971abb17d" />
+              </exitStateEffectTags>
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <SItemPortStateModifier Type="SItemPortStateModifier">
+              <itemPort />
+              <onEntityAttachedState PointsTo="ptr:6" />
+              <onEntityDetachedState PointsTo="ptr:7" />
+              <onPortDestroyedState PointsTo="ptr:7" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
+            </SItemPortStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>filter_1_degradation</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:8" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+              <StateName>filter_1_usable</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="1">
+                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
+              </enterStateEffectTags>
+              <exitStateEffectTags Type="Tag" Count="1">
+                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
+              </exitStateEffectTags>
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -953,16 +1053,17 @@
               </entityTags>
             </SInteractionState>
             <SInteractionState Pointer="ptr:10" Type="SInteractionState">
-              <StateName>filter_3_disconnected</StateName>
+              <StateName>filter_1_expired</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.6b616b29-201b-4d76-bf07-00fb90cd963d" RecordId="6b616b29-201b-4d76-bf07-00fb90cd963d" />
+                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.83ccad4f-98b0-4049-8f17-b01971abb17d" RecordId="83ccad4f-98b0-4049-8f17-b01971abb17d" />
+                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -978,25 +1079,45 @@
             </SInteractionState>
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
-            <SItemPortStateModifier Type="SItemPortStateModifier">
-              <itemPort />
-              <onEntityAttachedState PointsTo="ptr:9" />
-              <onEntityDetachedState PointsTo="ptr:10" />
-              <onPortDestroyedState PointsTo="ptr:10" />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
-            </SItemPortStateModifier>
+            <SLinkedInteractionStateChangedStateModifier Type="SLinkedInteractionStateChangedStateModifier">
+              <context Type="SEntityTraversalTargetPathContext">
+                <targetPath PointsTo="ptr:9" />
+              </context>
+              <onChangeStateTagStates Type="SLinkedInteractionStateTags" Count="2">
+                <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
+                  <stateTags Type="TagList">
+                    <tags Type="Tag" Count="1">
+                      <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.deb2688d-9c99-4865-b0ec-51073bcc99ac" RecordId="deb2688d-9c99-4865-b0ec-51073bcc99ac" />
+                    </tags>
+                  </stateTags>
+                  <isANDList>False</isANDList>
+                  <checkAllEntities>False</checkAllEntities>
+                  <state PointsTo="ptr:8" />
+                </SLinkedInteractionStateTags>
+                <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
+                  <stateTags Type="TagList">
+                    <tags Type="Tag" Count="1">
+                      <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a5eb0624-776c-4a6f-b398-793c17624ff3" RecordId="a5eb0624-776c-4a6f-b398-793c17624ff3" />
+                    </tags>
+                  </stateTags>
+                  <isANDList>False</isANDList>
+                  <checkAllEntities>False</checkAllEntities>
+                  <state PointsTo="ptr:10" />
+                </SLinkedInteractionStateTags>
+              </onChangeStateTagStates>
+              <nullEntityState PointsTo="ptr:10" />
+            </SLinkedInteractionStateChangedStateModifier>
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
-          <StateTypeName>filter_1_degradation</StateTypeName>
+          <StateTypeName>filter_2_degradation</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
           <DefaultState PointsTo="ptr:11" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
             <SInteractionState Pointer="ptr:11" Type="SInteractionState">
-              <StateName>filter_1_usable</StateName>
+              <StateName>filter_2_usable</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="1">
@@ -1006,6 +1127,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1020,7 +1142,7 @@
               </entityTags>
             </SInteractionState>
             <SInteractionState Pointer="ptr:13" Type="SInteractionState">
-              <StateName>filter_1_expired</StateName>
+              <StateName>filter_2_expired</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="1">
@@ -1030,6 +1152,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1076,14 +1199,14 @@
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
-          <StateTypeName>filter_2_degradation</StateTypeName>
+          <StateTypeName>filter_3_degradation</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
           <DefaultState PointsTo="ptr:14" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
             <SInteractionState Pointer="ptr:14" Type="SInteractionState">
-              <StateName>filter_2_usable</StateName>
+              <StateName>filter_3_usable</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="1">
@@ -1093,6 +1216,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1107,7 +1231,7 @@
               </entityTags>
             </SInteractionState>
             <SInteractionState Pointer="ptr:16" Type="SInteractionState">
-              <StateName>filter_2_expired</StateName>
+              <StateName>filter_3_expired</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="1">
@@ -1117,6 +1241,7 @@
                 <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
               </exitStateEffectTags>
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1163,100 +1288,13 @@
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
-          <StateTypeName>filter_3_degradation</StateTypeName>
-          <bindingsMethod>None</bindingsMethod>
+          <StateTypeName>Functional</StateTypeName>
+          <bindingsMethod>Name</bindingsMethod>
           <DefaultState PointsTo="ptr:17" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:17" Type="SInteractionState">
-              <StateName>filter_3_usable</StateName>
-              <EnterStateEffectGroup />
-              <ExitStateEffectGroup />
-              <enterStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
-              </enterStateEffectTags>
-              <exitStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
-              </exitStateEffectTags>
-              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence />
-              <ExitStatePlaySequence />
-              <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
-              <interactionPoints Type="SInteractionPointParams" Count="0" />
-              <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </stateTags>
-              <enterGeometryTags />
-              <entityTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </entityTags>
-            </SInteractionState>
-            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
-              <StateName>filter_3_expired</StateName>
-              <EnterStateEffectGroup />
-              <ExitStateEffectGroup />
-              <enterStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" RecordId="a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac" />
-              </enterStateEffectTags>
-              <exitStateEffectTags Type="Tag" Count="1">
-                <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.33129b2d-d5d2-408b-aacf-342ab92258fb" RecordId="33129b2d-d5d2-408b-aacf-342ab92258fb" />
-              </exitStateEffectTags>
-              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence />
-              <ExitStatePlaySequence />
-              <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
-              <interactionPoints Type="SInteractionPointParams" Count="0" />
-              <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </stateTags>
-              <enterGeometryTags />
-              <entityTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </entityTags>
-            </SInteractionState>
-          </States>
-          <StateModifiers Type="SStateModifier" Count="1">
-            <SLinkedInteractionStateChangedStateModifier Type="SLinkedInteractionStateChangedStateModifier">
-              <context Type="SEntityTraversalTargetPathContext">
-                <targetPath PointsTo="ptr:18" />
-              </context>
-              <onChangeStateTagStates Type="SLinkedInteractionStateTags" Count="2">
-                <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
-                  <stateTags Type="TagList">
-                    <tags Type="Tag" Count="1">
-                      <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.deb2688d-9c99-4865-b0ec-51073bcc99ac" RecordId="deb2688d-9c99-4865-b0ec-51073bcc99ac" />
-                    </tags>
-                  </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
-                  <state PointsTo="ptr:17" />
-                </SLinkedInteractionStateTags>
-                <SLinkedInteractionStateTags Type="SLinkedInteractionStateTags">
-                  <stateTags Type="TagList">
-                    <tags Type="Tag" Count="1">
-                      <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a5eb0624-776c-4a6f-b398-793c17624ff3" RecordId="a5eb0624-776c-4a6f-b398-793c17624ff3" />
-                    </tags>
-                  </stateTags>
-                  <isANDList>False</isANDList>
-                  <checkAllEntities>False</checkAllEntities>
-                  <state PointsTo="ptr:19" />
-                </SLinkedInteractionStateTags>
-              </onChangeStateTagStates>
-              <nullEntityState PointsTo="ptr:19" />
-            </SLinkedInteractionStateChangedStateModifier>
-          </StateModifiers>
-        </SInteractionStateType>
-        <SInteractionStateType Type="SInteractionStateType">
-          <StateTypeName>Functional</StateTypeName>
-          <bindingsMethod>Name</bindingsMethod>
-          <DefaultState PointsTo="ptr:20" />
-          <asopReset>False</asopReset>
-          <networkAuthority>Server</networkAuthority>
-          <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:21" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
               <StateName>Functional</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1267,6 +1305,7 @@
                   <enable>True</enable>
                 </SendItemResourceNetworkedStateEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1280,7 +1319,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:17" Type="SInteractionState">
               <StateName>Non Functional</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1291,6 +1330,7 @@
                   <enable>False</enable>
                 </SendItemResourceNetworkedStateEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1310,32 +1350,32 @@
               <aggregateStateParams Type="AggregateStateParams" Count="4">
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="3">
+                    <SInteractionState PointsTo="ptr:10" />
                     <SInteractionState PointsTo="ptr:13" />
                     <SInteractionState PointsTo="ptr:16" />
-                    <SInteractionState PointsTo="ptr:19" />
                   </aggregateStates>
-                  <state PointsTo="ptr:20" />
+                  <state PointsTo="ptr:17" />
                 </AggregateStateParams>
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="2">
-                    <SInteractionState PointsTo="ptr:5" />
+                    <SInteractionState PointsTo="ptr:2" />
+                    <SInteractionState PointsTo="ptr:8" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:18" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:4" />
                     <SInteractionState PointsTo="ptr:11" />
                   </aggregateStates>
-                  <state PointsTo="ptr:21" />
+                  <state PointsTo="ptr:18" />
                 </AggregateStateParams>
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="2">
-                    <SInteractionState PointsTo="ptr:7" />
+                    <SInteractionState PointsTo="ptr:6" />
                     <SInteractionState PointsTo="ptr:14" />
                   </aggregateStates>
-                  <state PointsTo="ptr:21" />
-                </AggregateStateParams>
-                <AggregateStateParams Type="AggregateStateParams">
-                  <aggregateStates Type="SInteractionState" Count="2">
-                    <SInteractionState PointsTo="ptr:9" />
-                    <SInteractionState PointsTo="ptr:17" />
-                  </aggregateStates>
-                  <state PointsTo="ptr:21" />
+                  <state PointsTo="ptr:18" />
                 </AggregateStateParams>
               </aggregateStateParams>
             </AggregateStateModifier>
@@ -1348,13 +1388,14 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:22" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
               <StateName>Working</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1368,7 +1409,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:23" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
               <StateName>Destroyed</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1381,7 +1422,7 @@
                 <FireHazardIgniteEvent Type="FireHazardIgniteEvent">
                   <ignitionStrength>100</ignitionStrength>
                   <ignitionRadius>0.125</ignitionRadius>
-                  <ignitionChance>100</ignitionChance>
+                  <ignitionChance>20</ignitionChance>
                   <offset Type="Vec3">
                     <x>0</x>
                     <y>0</y>
@@ -1389,6 +1430,7 @@
                   </offset>
                 </FireHazardIgniteEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1407,12 +1449,12 @@
             <SHealthStateModifier Type="SHealthStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:22" />
+                  <state PointsTo="ptr:19" />
                   <min>0.01</min>
                   <max>1</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:23" />
+                  <state PointsTo="ptr:20" />
                   <min>0</min>
                   <max>0.01</max>
                 </SRangeStateLevel>
@@ -1426,7 +1468,7 @@
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
         <SharedInteractions Type="SSharedInteractionParams" Count="1">
-          <SSharedInteractionParams Pointer="ptr:24" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:21" Type="SSharedInteractionParams">
             <Name>Place</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -1486,7 +1528,7 @@
       <lootInventoryParams />
       <itemPortRules Type="SLootableItemPortRuleParams" Count="0" />
       <tagsOnAllItemPortsEmpty Type="Tag" Count="0" />
-      <placeIntoPortInteraction PointsTo="ptr:24" />
+      <placeIntoPortInteraction PointsTo="ptr:21" />
       <bespokePlace>False</bespokePlace>
       <bespokePlaceTags Type="Tag" Count="0" />
       <bespokeTake>False</bespokeTake>
@@ -1497,7 +1539,7 @@
     </SEntityLootableContainerParams>
     <SEntityTraversingTreeParams Type="SEntityTraversingTreeParams">
       <TraversingNodes Type="SEntityTraversingNodeBase" Count="3">
-        <SEntityTraversingNodeBase Pointer="ptr:25" Type="SEntityTraversingNodeBase">
+        <SEntityTraversingNodeBase Pointer="ptr:22" Type="SEntityTraversingNodeBase">
           <name>Filter_1</name>
           <id />
           <entityTraversingType Type="SEntityTraversingNodeTypeItemPort">
@@ -1506,7 +1548,7 @@
           <executeNodes Type="SEntityTraversingExecuteNodeBase" Count="0" />
           <nextNodes Type="SEntityTraversingNodeBase" Count="0" />
         </SEntityTraversingNodeBase>
-        <SEntityTraversingNodeBase Pointer="ptr:26" Type="SEntityTraversingNodeBase">
+        <SEntityTraversingNodeBase Pointer="ptr:23" Type="SEntityTraversingNodeBase">
           <name>Filter_2</name>
           <id />
           <entityTraversingType Type="SEntityTraversingNodeTypeItemPort">
@@ -1515,7 +1557,7 @@
           <executeNodes Type="SEntityTraversingExecuteNodeBase" Count="0" />
           <nextNodes Type="SEntityTraversingNodeBase" Count="0" />
         </SEntityTraversingNodeBase>
-        <SEntityTraversingNodeBase Pointer="ptr:27" Type="SEntityTraversingNodeBase">
+        <SEntityTraversingNodeBase Pointer="ptr:24" Type="SEntityTraversingNodeBase">
           <name>Filter_3</name>
           <id />
           <entityTraversingType Type="SEntityTraversingNodeTypeItemPort">
@@ -1526,31 +1568,75 @@
         </SEntityTraversingNodeBase>
       </TraversingNodes>
       <TraversingTargets Type="SEntityTraversingTarget" Count="3">
-        <SEntityTraversingTarget Pointer="ptr:12" Type="SEntityTraversingTarget">
+        <SEntityTraversingTarget Pointer="ptr:9" Type="SEntityTraversingTarget">
           <name>Filter_1</name>
           <paths Type="SEntityTraversingTargetPath" Count="1">
             <SEntityTraversingTargetPath Type="SEntityTraversingTargetPath">
-              <node PointsTo="ptr:25" />
+              <node PointsTo="ptr:22" />
+            </SEntityTraversingTargetPath>
+          </paths>
+        </SEntityTraversingTarget>
+        <SEntityTraversingTarget Pointer="ptr:12" Type="SEntityTraversingTarget">
+          <name>Filter_2</name>
+          <paths Type="SEntityTraversingTargetPath" Count="1">
+            <SEntityTraversingTargetPath Type="SEntityTraversingTargetPath">
+              <node PointsTo="ptr:23" />
             </SEntityTraversingTargetPath>
           </paths>
         </SEntityTraversingTarget>
         <SEntityTraversingTarget Pointer="ptr:15" Type="SEntityTraversingTarget">
-          <name>Filter_2</name>
-          <paths Type="SEntityTraversingTargetPath" Count="1">
-            <SEntityTraversingTargetPath Type="SEntityTraversingTargetPath">
-              <node PointsTo="ptr:26" />
-            </SEntityTraversingTargetPath>
-          </paths>
-        </SEntityTraversingTarget>
-        <SEntityTraversingTarget Pointer="ptr:18" Type="SEntityTraversingTarget">
           <name>Filter_3</name>
           <paths Type="SEntityTraversingTargetPath" Count="1">
             <SEntityTraversingTargetPath Type="SEntityTraversingTargetPath">
-              <node PointsTo="ptr:27" />
+              <node PointsTo="ptr:24" />
             </SEntityTraversingTargetPath>
           </paths>
         </SEntityTraversingTarget>
       </TraversingTargets>
     </SEntityTraversingTreeParams>
+    <SSCSignatureSystemParams Type="SSCSignatureSystemParams">
+      <bindingURLPrefix />
+      <radarProperties Type="SSCRadarContactProperites">
+        <contactType RecordReference="file://./../../../../../../../libs/foundry/records/radarsystem/radarcontacttypes.xml" RecordName="RadarContactTypeEntry.bdad3073-c7ad-425d-9542-30918962501f" RecordId="bdad3073-c7ad-425d-9542-30918962501f" />
+        <baseSignatureParams Type="SSCSignatureSystemBaseSignatureParams">
+          <signatures Type="ActivityBehaviorRequestCondition" Count="8">
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>10</Single>
+          </signatures>
+          <signatureCategories Type="SSignaturesCategoryEntry" Count="0" />
+          <taggedSignatures Type="STaggedSignaturesEntry" Count="0" />
+        </baseSignatureParams>
+        <crossSectionParams />
+        <emissionModifierParams />
+        <deathParams />
+        <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
+      </radarProperties>
+      <audioParams />
+      <scanCustomData />
+      <embeddedScanInfo />
+      <scanDisplayLayoutOverride />
+      <detectionTags Type="Tag" Count="0" />
+      <isOverridden>False</isOverridden>
+      <overriddenSize Type="Vec3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </overriddenSize>
+      <enableDetectionOnItemPort>True</enableDetectionOnItemPort>
+      <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
+      <isObjectOfInterest>False</isObjectOfInterest>
+    </SSCSignatureSystemParams>
   </Components>
 </EntityClassDefinition.LFSP_S00_Template>

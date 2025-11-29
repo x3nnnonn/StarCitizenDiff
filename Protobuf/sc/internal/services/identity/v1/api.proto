@@ -31,6 +31,7 @@ service IdentityService {
   rpc SetRepairLockedKey ( .sc.internal.services.identity.v1.SetRepairLockedKeyRequest ) returns ( .sc.internal.services.identity.v1.SetRepairLockedKeyResponse );
   rpc SaveCharacterCustomizations ( .sc.internal.services.identity.v1.SaveCharacterCustomizationsRequest ) returns ( .sc.internal.services.identity.v1.SaveCharacterCustomizationsResponse );
   rpc GetCharacterCustomizations ( .sc.internal.services.identity.v1.GetCharacterCustomizationsRequest ) returns ( .sc.internal.services.identity.v1.GetCharacterCustomizationsResponse );
+  rpc CheckAuthToken ( .sc.internal.services.identity.v1.CheckAuthTokenRequest ) returns ( .sc.internal.services.identity.v1.CheckAuthTokenResponse );
 }
 
 message QueryAccountsRequest {
@@ -203,5 +204,16 @@ message GetCharacterCustomizationsRequest {
 
 message GetCharacterCustomizationsResponse {
   .sc.external.common.types.v1.CharacterCustomization character_customizations = 1;
+}
+
+message CheckAuthTokenRequest {
+  string token = 1;
+}
+
+message CheckAuthTokenResponse {
+  .sc.internal.services.identity.v1.Account account = 1;
+  repeated .sc.external.services.identity.v1.PlayerRanking ranking = 2;
+  string citizen_id = 3;
+  string username = 4;
 }
 

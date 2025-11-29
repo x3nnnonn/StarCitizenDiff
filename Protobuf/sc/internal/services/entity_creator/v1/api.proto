@@ -9,6 +9,7 @@ import "sc/internal/services/entity_creator/v1/types.proto";
 import "sc/external/services/entitlement/v1/types.proto";
 import "sc/external/common/game/v1/types.proto";
 import "sc/external/services/entitygraph/v1/types.proto";
+import "sc/external/services/reputation/v1/types.proto";
 import "sc/external/common/types/v1/customization.proto";
 
 service EntityCreatorService {
@@ -19,6 +20,7 @@ service EntityCreatorService {
   rpc CreateFromEntitlements ( .sc.internal.services.entity_creator.v1.CreateFromEntitlementsRequest ) returns ( .sc.internal.services.entity_creator.v1.CreateFromEntitlementsResponse );
   rpc RepairPlayer ( .sc.internal.services.entity_creator.v1.RepairPlayerRequest ) returns ( .sc.internal.services.entity_creator.v1.RepairPlayerResponse );
   rpc GetCurrentGeneration ( .sc.internal.services.entity_creator.v1.GetCurrentGenerationRequest ) returns ( .sc.internal.services.entity_creator.v1.GetCurrentGenerationResponse );
+  rpc GetReputationStandingsSeeds ( .sc.internal.services.entity_creator.v1.GetReputationStandingsSeedsRequest ) returns ( .sc.internal.services.entity_creator.v1.GetReputationStandingsSeedsResponse );
 }
 
 message CreatePlayerRequest {
@@ -51,15 +53,15 @@ message CreateEntityRequest {
   .sc.external.common.command.v1.CommandArguments arguments = 1;
   repeated .sc.internal.services.entity_creator.v1.CreateEntityRequest.Body creates = 2;
   .sc.external.services.entitygraph.v1.Purpose purpose = 3;
+  uint64 owner_id = 4;
+  string target_inventory = 5;
 
   message Body {
     string entity_class_guid = 1;
-    uint64 owner_id = 2;
     uint32 stack_size = 3;
     string parent_urn = 5;
     .sc.external.common.game.v1.Game game = 6;
     .sc.internal.services.entity_creator.v1.NewEntityOwnershipType ownership_type = 7;
-    string target_inventory = 8;
     .sc.external.services.entitlement.v1.NewEntityConfiguration entity_config = 9;
   }
 }
@@ -70,10 +72,12 @@ message CreateFromEntitlementsRequest {
   .sc.external.common.command.v1.CommandArguments arguments = 1;
   repeated .sc.internal.services.entity_creator.v1.CreateFromEntitlementsRequest.Body fulfills = 2;
   .sc.external.services.entitygraph.v1.Purpose purpose = 3;
+  string target_inventory = 4;
+  string player_urn = 5;
+  string account_urn = 6;
 
   message Body {
     .sc.external.services.entitlement.v1.Entitlement entitlement = 1;
-    string target_inventory = 2;
   }
 }
 
@@ -105,5 +109,11 @@ message GetCurrentGenerationRequest {}
 
 message GetCurrentGenerationResponse {
   string generation = 1;
+}
+
+message GetReputationStandingsSeedsRequest {}
+
+message GetReputationStandingsSeedsResponse {
+  repeated .sc.external.services.reputation.v1.StandingsSeed standing_seeds = 1;
 }
 

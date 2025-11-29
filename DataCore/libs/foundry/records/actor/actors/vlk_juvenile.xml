@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="8">
     <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.f8fa3fb7-2121-455d-8b17-4d16afcb484b" RecordId="f8fa3fb7-2121-455d-8b17-4d16afcb484b" />
@@ -26,7 +31,7 @@
       <trackerProperties Type="SActorEntryTrackerParams" />
     </EntityUIDisplayParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="72">
+  <Components Type="DataForgeComponentParams" Count="71">
     <SActorComponentParams Type="SActorComponentParams">
       <character />
       <isAIControlled>True</isAIControlled>
@@ -142,6 +147,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -240,7 +250,11 @@
         </baseSignatureParams>
         <crossSectionParams Type="SSCSignatureSystemActorCrossSectionParams" />
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="1">
@@ -259,6 +273,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSCActorRotationComponentParams Type="SSCActorRotationComponentParams" />
@@ -413,21 +430,24 @@
       </mastergraphStateOverrides>
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="SRadarSenseComponentParams" Count="1">
+      <perceptionTypes Type="ActorStatusUIWarning" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SHearingComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusPreset" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
-        <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
+        <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Head</helperName>
+          <accuracyMultiplier>0.6</accuracyMultiplier>
           <relativePositionOffset Type="Vec3">
             <x>0</x>
             <y>0</y>
             <z>0</z>
           </relativePositionOffset>
         </SObservablePointDef>
-        <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
+        <SObservablePointDef Pointer="ptr:3" Type="SObservablePointDef">
           <helperName>Spine3</helperName>
+          <accuracyMultiplier>1</accuracyMultiplier>
           <relativePositionOffset Type="Vec3">
             <x>0</x>
             <y>0</y>
@@ -435,8 +455,14 @@
           </relativePositionOffset>
         </SObservablePointDef>
       </observablePoints>
-      <defaultEntityObservablePoint PointsTo="ptr:2" />
-      <defaultAimingObservablePoint PointsTo="ptr:3" />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="2">
+        <SObservablePointDef PointsTo="ptr:2" />
+        <SObservablePointDef PointsTo="ptr:3" />
+      </visionObservablePointOrdering>
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="2">
+        <SObservablePointDef PointsTo="ptr:3" />
+        <SObservablePointDef PointsTo="ptr:2" />
+      </aimingObservablePointOrdering>
       <observableExtensions Type="IObservableExtender" Count="1">
         <ActorObservableExtender Type="ActorObservableExtender" />
       </observableExtensions>
@@ -444,7 +470,7 @@
     <SCommunicationUserComponentParams Type="SCommunicationUserComponentParams">
       <voiceBundle />
       <voiceSingle />
-      <communicationConfig />
+      <communicationConfig ReferencedFile="file://./../../../../../libs/foundry/records/communicationconfig/blank_comms_config.xml" />
       <contextualDialog />
     </SCommunicationUserComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
@@ -862,6 +888,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -953,6 +981,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -1492,11 +1522,6 @@
       <outfitHangerGroups Type="SOutfitHangerGroup" Count="0" />
       <coreInventoryItems Type="SCoreInventoryItem" Count="0" />
     </SEntityLootableContainerParams>
-    <AudioRayOcclusionParams Type="AudioRayOcclusionParams">
-      <occlusionType>MultiRayRadius</occlusionType>
-      <occlusionCalcRule>Average</occlusionCalcRule>
-      <rayTargetBoneName>HeadCam</rayTargetBoneName>
-    </AudioRayOcclusionParams>
     <SEntityAudioControllerParams Type="SEntityAudioControllerParams">
       <audioControllerEntityType>Actor</audioControllerEntityType>
       <randomSeedCount>4</randomSeedCount>
@@ -1558,6 +1583,18 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
+      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamPickupTrigger>
+      <tractorBeamDropTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamDropTrigger>
+      <detachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </detachBreakTrigger>
+      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity</rtpc>
       </rtpcSlideVelocity>
@@ -1591,12 +1628,16 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
+      <rtpcSize Type="AudioRtpc">
+        <rtpc />
+      </rtpcSize>
       <minimumImpulseContinuous>40</minimumImpulseContinuous>
       <minimumImpulseTransient>20</minimumImpulseTransient>
       <minimumVelocityNoImpulse>100</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
+      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag />
       <oneShotCooldown>0.2</oneShotCooldown>
@@ -1623,15 +1664,18 @@
       <Ports Type="SItemPortDef" Count="5">
         <SItemPortDef Type="SItemPortDef">
           <Name>Body_ItemPort</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="1">
             <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.27893aeb-650b-4c1b-9c96-a5ae9b0da261" RecordId="27893aeb-650b-4c1b-9c96-a5ae9b0da261" />
           </Tags>
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1664,7 +1708,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -1714,13 +1758,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:14" Type="SItemPortDef">
           <Name>Fang_Top_ItemPort</Name>
-          <DisplayName>Fang_Top_ItemPort</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1753,7 +1800,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Harvestable</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1805,13 +1852,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:19" Type="SItemPortDef">
           <Name>Fang_Left_ItemPort</Name>
-          <DisplayName>Fang_Left_ItemPort</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1844,7 +1894,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Harvestable</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1896,13 +1946,16 @@
         </SItemPortDef>
         <SItemPortDef Pointer="ptr:24" Type="SItemPortDef">
           <Name>Fang_Right_ItemPort</Name>
-          <DisplayName>Fang_Right_ItemPort</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -1935,7 +1988,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Misc</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Harvestable</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -1987,13 +2040,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>wep_stocked_3</Name>
-          <DisplayName>body3</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2082,6 +2138,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -2139,6 +2196,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2161,6 +2219,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2198,6 +2257,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2220,6 +2280,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2240,8 +2301,8 @@
               <onEntityAttachedState PointsTo="ptr:13" />
               <onEntityDetachedState PointsTo="ptr:15" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -2259,6 +2320,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2281,6 +2343,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2301,8 +2364,8 @@
               <onEntityAttachedState PointsTo="ptr:16" />
               <onEntityDetachedState PointsTo="ptr:17" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -2320,6 +2383,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2342,6 +2406,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2362,8 +2427,8 @@
               <onEntityAttachedState PointsTo="ptr:18" />
               <onEntityDetachedState PointsTo="ptr:20" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -2381,6 +2446,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2403,6 +2469,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2423,8 +2490,8 @@
               <onEntityAttachedState PointsTo="ptr:21" />
               <onEntityDetachedState PointsTo="ptr:22" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -2442,6 +2509,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2464,6 +2532,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2484,8 +2553,8 @@
               <onEntityAttachedState PointsTo="ptr:23" />
               <onEntityDetachedState PointsTo="ptr:25" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -2503,6 +2572,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2525,6 +2595,7 @@
               </enterStateEffectTags>
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -2545,8 +2616,8 @@
               <onEntityAttachedState PointsTo="ptr:26" />
               <onEntityDetachedState PointsTo="ptr:27" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStatData" Count="0" />
-              <itemSubTypes Type="ActorStatusPreset" Count="0" />
+              <itemTypes Type="ProbabilisticStatusEffect" Count="0" />
+              <itemSubTypes Type="StatusEffect" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -2599,7 +2670,7 @@
     <AbilityComponentParams Type="AbilityComponentParams" />
     <SHearingComponentParams Type="SHearingComponentParams">
       <movementSoundOriginFilter />
-      <soundTypeFilter Type="ActivityBehaviorRequestCondition" Count="6">
+      <soundTypeFilter Type="EVAConnection" Count="6">
         <EnumChoice>Vehicle</EnumChoice>
         <EnumChoice>Movement</EnumChoice>
         <EnumChoice>Weapon</EnumChoice>

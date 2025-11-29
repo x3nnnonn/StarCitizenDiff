@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass />
   <tags Type="Tag" Count="1">
     <Tag RecordReference="file://./../../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.cd007f95-7c11-4329-9b40-2d22d29f9137" RecordId="cd007f95-7c11-4329-9b40-2d22d29f9137" />
@@ -74,6 +79,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -139,10 +149,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -159,13 +170,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -200,7 +214,7 @@
           <tasks Type="FloatUserVariableTask" Count="0" />
         </FloatUserVariable>
       </floats>
-      <ints Type="IntUserVariable" Count="3">
+      <ints Type="IntUserVariable" Count="4">
         <IntUserVariable Type="IntUserVariable">
           <name>selectedIndex</name>
           <defaultValue>0</defaultValue>
@@ -216,8 +230,13 @@
           <defaultValue>-1</defaultValue>
           <tasks Type="IntUserVariableTask" Count="0" />
         </IntUserVariable>
+        <IntUserVariable Type="IntUserVariable">
+          <name>resourcenetworkui/tabListSelectedIndex</name>
+          <defaultValue>0</defaultValue>
+          <tasks Type="IntUserVariableTask" Count="0" />
+        </IntUserVariable>
       </ints>
-      <bools Type="BoolUserVariable" Count="15">
+      <bools Type="BoolUserVariable" Count="16">
         <BoolUserVariable Type="BoolUserVariable">
           <name>FilterItems</name>
           <defaultValue>True</defaultValue>
@@ -291,6 +310,11 @@
         <BoolUserVariable Type="BoolUserVariable">
           <name>proto/resourceNetworkUI/boxout/isVisible</name>
           <defaultValue>False</defaultValue>
+          <tasks Type="BoolUserVariableTask" Count="0" />
+        </BoolUserVariable>
+        <BoolUserVariable Type="BoolUserVariable">
+          <name>resourceNetworkUI/interiorMapDisplay/showIcons</name>
+          <defaultValue>True</defaultValue>
           <tasks Type="BoolUserVariableTask" Count="0" />
         </BoolUserVariable>
       </bools>
@@ -536,6 +560,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../../../libs/foundry/records/ui/buildingblocks/i_interactivescreens/ter/i_ter_resourcenetwork_main.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -543,6 +568,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../../../libs/foundry/records/ui/buildingblocks/shipprofessionscreens/shipengineering/i_ind_engineering_lowpower.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -550,6 +576,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../../../libs/foundry/records/ui/buildingblocks/i_interactivescreens/ter/i_ter_resourcenetwork_main.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
             <BuildingBlocksView Type="BuildingBlocksView">
@@ -557,6 +584,7 @@
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../../../libs/foundry/records/ui/buildingblocks/i_interactivescreens/ter/i_ter_resourcenetwork_main.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
           </views>
@@ -589,7 +617,7 @@
       <interactionDistance>50</interactionDistance>
     </UIBindingsInteractionsComponentParams>
     <UIAudioComponentEntityComponentParams Type="UIAudioComponentEntityComponentParams">
-      <UIAudioDef ReferencedFile="file://./../../../../../../../../libs/foundry/records/audio/ui/buildingblocks/refinery_terminal.xml" />
+      <UIAudioDef ReferencedFile="file://./../../../../../../../../libs/foundry/records/audio/ui/buildingblocks/resourcenetworkterminal.xml" />
       <UIAudioManufacturers Type="UIAudioManufacturer" Count="0" />
       <useEntityClass />
       <offset Type="UIAudioComponent_ManualOffset">
@@ -619,22 +647,23 @@
         <audioTrigger />
       </videoAudioResumeTrigger>
       <dialogueContext />
+      <bypassRealisticMode>False</bypassRealisticMode>
     </UIAudioComponentEntityComponentParams>
     <KioskInteractionEntityComponentParams Type="KioskInteractionEntityComponentParams">
       <onlyShowCursorWhenLockedByKiosk>False</onlyShowCursorWhenLockedByKiosk>
-      <initialForceLookAtLerpTime>0.4</initialForceLookAtLerpTime>
+      <initialForceLookAtLerpTime>0.1</initialForceLookAtLerpTime>
       <defaultForceLookAtLerpTime>0.05</defaultForceLookAtLerpTime>
       <forceLookAtDecayFactor>2</forceLookAtDecayFactor>
       <forceLookAtIncreaseFactor>1</forceLookAtIncreaseFactor>
-      <forceLookAtThreshold>0.8</forceLookAtThreshold>
-      <FOVSpeedFactor>0.5</FOVSpeedFactor>
-      <FOVHaltDistanceMax>0.1</FOVHaltDistanceMax>
-      <FOVHaltDistanceMin>0.075</FOVHaltDistanceMin>
+      <forceLookAtThreshold>0.3</forceLookAtThreshold>
+      <FOVSpeedFactor>0.1</FOVSpeedFactor>
+      <FOVHaltDistanceMax>0.2</FOVHaltDistanceMax>
+      <FOVHaltDistanceMin>0.2</FOVHaltDistanceMin>
       <FOVMax>0.25</FOVMax>
       <FOVMin>0.25</FOVMin>
       <lookInputFactor>0.8</lookInputFactor>
       <inActivityTimer>999999</inActivityTimer>
-      <autoCloseRadiusInNonFoucseMode>3</autoCloseRadiusInNonFoucseMode>
+      <autoCloseRadiusInNonFoucseMode>0</autoCloseRadiusInNonFoucseMode>
       <blockLookInputs>False</blockLookInputs>
       <supportWalkToAlign>True</supportWalkToAlign>
       <openInteraction PointsTo="ptr:1" />
@@ -656,7 +685,7 @@
           <viewName>StateMachine.LoggedOut</viewName>
         </UIOwnerContextTransitionPair>
       </powerOffTransitions>
-      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="5">
+      <abilityLocks Type="ActivityBehaviorRequest" Count="5">
         <EnumChoice>Crouch</EnumChoice>
         <EnumChoice>Jump</EnumChoice>
         <EnumChoice>Prone</EnumChoice>
@@ -669,6 +698,7 @@
         <y>0</y>
         <z>0</z>
       </lookAtOffset>
+      <preventForceReactions>True</preventForceReactions>
     </KioskInteractionEntityComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
@@ -760,6 +790,8 @@
                 <z>0.125</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -800,6 +832,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -820,6 +853,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -840,6 +874,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
@@ -867,18 +902,19 @@
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Powered</StateTypeName>
-          <bindingsMethod>None</bindingsMethod>
+          <bindingsMethod>States</bindingsMethod>
           <DefaultState />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="3">
-            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
               <StateName>Unpowered</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -899,6 +935,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -912,13 +949,14 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
               <StateName>Lowpowered</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -947,7 +985,7 @@
                   <max>0.9</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:4" />
+                  <state PointsTo="ptr:5" />
                   <min>0</min>
                   <max>0.2</max>
                 </SRangeStateLevel>
@@ -963,13 +1001,14 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
               <StateName>Off</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -988,13 +1027,14 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
               <StateName>On</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1016,25 +1056,26 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <SEntityOnlineStateModifier Type="SEntityOnlineStateModifier">
-              <onEntityOnlineState PointsTo="ptr:5" />
-              <onEntityOfflineState PointsTo="ptr:6" />
+              <onEntityOnlineState PointsTo="ptr:6" />
+              <onEntityOfflineState PointsTo="ptr:7" />
             </SEntityOnlineStateModifier>
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>BB_StateMachine</StateTypeName>
           <bindingsMethod>States</bindingsMethod>
-          <DefaultState PointsTo="ptr:7" />
+          <DefaultState PointsTo="ptr:8" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
               <StateName>BB_ScreenOff</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1048,13 +1089,14 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
               <StateName>BB_ScreenOn</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1074,21 +1116,21 @@
               <aggregateStateParams Type="AggregateStateParams" Count="3">
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="1">
-                    <SInteractionState PointsTo="ptr:8" />
+                    <SInteractionState PointsTo="ptr:5" />
                   </aggregateStates>
-                  <state PointsTo="ptr:7" />
+                  <state PointsTo="ptr:9" />
                 </AggregateStateParams>
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="1">
-                    <SInteractionState PointsTo="ptr:9" />
+                    <SInteractionState PointsTo="ptr:10" />
                   </aggregateStates>
-                  <state PointsTo="ptr:10" />
+                  <state PointsTo="ptr:9" />
                 </AggregateStateParams>
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="1">
                     <SInteractionState PointsTo="ptr:4" />
                   </aggregateStates>
-                  <state PointsTo="ptr:10" />
+                  <state PointsTo="ptr:9" />
                 </AggregateStateParams>
               </aggregateStateParams>
             </AggregateStateModifier>
@@ -1108,6 +1150,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1128,6 +1171,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1148,6 +1192,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1168,6 +1213,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1188,6 +1234,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1218,6 +1265,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1238,6 +1286,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1258,6 +1307,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1288,6 +1338,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1308,6 +1359,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1328,6 +1380,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1348,6 +1401,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1378,6 +1432,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1398,6 +1453,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1428,6 +1484,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1448,6 +1505,7 @@
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -1543,7 +1601,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -1551,6 +1625,11 @@
       <defaultPriority>1</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>120</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
@@ -1562,6 +1641,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -1609,17 +1689,25 @@
           <visible>True</visible>
           <materialPath>materials/ui/map/interiormap/renderlayeroverrides/engineering/interiormap_wall.mtl</materialPath>
         </wallRenderLayerParams>
+        <hangarFloorRenderLayerParams Type="MapDisplayRenderLayerParams">
+          <visible>True</visible>
+          <materialPath>materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_floor.mtl</materialPath>
+        </hangarFloorRenderLayerParams>
+        <hangarWallRenderLayerParams Type="MapDisplayRenderLayerParams">
+          <visible>True</visible>
+          <materialPath>materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_wall.mtl</materialPath>
+        </hangarWallRenderLayerParams>
         <bulkheadRenderLayerParams Type="MapDisplayRenderLayerParams">
           <visible>True</visible>
           <materialPath>Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_bulkhead.mtl</materialPath>
         </bulkheadRenderLayerParams>
         <unlockedDoorRenderLayerParams Type="MapDisplayRenderLayerParams">
           <visible>True</visible>
-          <materialPath>materials/ui/map/interiormap/renderlayeroverrides/engineering/interiormap_floor.mtl</materialPath>
+          <materialPath>Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_doorunlocked.mtl</materialPath>
         </unlockedDoorRenderLayerParams>
         <lockedDoorRenderLayerParams Type="MapDisplayRenderLayerParams">
           <visible>True</visible>
-          <materialPath>materials/ui/map/interiormap/renderlayeroverrides/engineering/interiormap_floor.mtl</materialPath>
+          <materialPath>Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_doorlocked.mtl</materialPath>
         </lockedDoorRenderLayerParams>
         <exteriorRenderLayerParams Type="MapDisplayRenderLayerParams">
           <visible>True</visible>
@@ -1645,6 +1733,10 @@
           <visible>True</visible>
           <materialPath>materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_disabled.mtl</materialPath>
         </disabledRenderLayerParams>
+        <playerVehicleRenderLayerParams Type="MapDisplayRenderLayerParams">
+          <visible>False</visible>
+          <materialPath>materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_playership.mtl</materialPath>
+        </playerVehicleRenderLayerParams>
         <fixedOrientation Type="DegYPR">
           <yaw>-90</yaw>
           <pitch>0</pitch>
@@ -1656,9 +1748,12 @@
           <yawMin>-360</yawMin>
           <yawMax>360</yawMax>
         </controlLimits>
+        <allowPanning>True</allowPanning>
       </interiorMapParams>
+      <radarMapParams />
       <displayParams Type="MapDisplayOverrideParams">
         <radius>0</radius>
+        <newRadarRadius>0</newRadarRadius>
         <orientation Type="Deg3">
           <x>0</x>
           <y>0</y>

@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>True</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../libs/foundry/records/densityclasses/vehicleitemsdensityclass.xml" />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="1">
@@ -14,12 +19,12 @@
   </StaticEntityClassData>
   <Components Type="DataForgeComponentParams" Count="18">
     <SHealthComponentParams Type="SHealthComponentParams">
-      <Health>1050</Health>
+      <Health>137</Health>
       <DamageCap>0</DamageCap>
       <DamageResistances Type="DamageResistance">
         <IgnoreMeleeDamage>False</IgnoreMeleeDamage>
         <PhysicalResistance Type="DamageResistanceEntry">
-          <Multiplier>1</Multiplier>
+          <Multiplier>0.6</Multiplier>
           <Threshold>0</Threshold>
           <DamageCap>0</DamageCap>
         </PhysicalResistance>
@@ -74,10 +79,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -95,17 +101,22 @@
           <AccumulationEventThreshold>1</AccumulationEventThreshold>
           <PortTags />
           <RequiredPortTags />
-          <MaxLifetimeHours>20</MaxLifetimeHours>
+          <MaxLifetimeHours>47.7</MaxLifetimeHours>
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -119,8 +130,8 @@
       </accumulators>
     </SDegradationParams>
     <SAmmoContainerComponentParams Type="SAmmoContainerComponentParams">
-      <initialAmmoCount>80</initialAmmoCount>
-      <maxAmmoCount>80</maxAmmoCount>
+      <initialAmmoCount>84</initialAmmoCount>
+      <maxAmmoCount>84</maxAmmoCount>
       <maxRestockCount>3</maxRestockCount>
       <lowAmmoWarningPercentage>0.1</lowAmmoWarningPercentage>
       <ammoParamsRecord ReferencedFile="file://./../../../../../../../libs/foundry/records/ammoparams/vehicle/ammoparams.apar_massdriver_s2_ammo.xml" />
@@ -264,7 +275,8 @@
             <useLUT>False</useLUT>
           </timePrecisionCurve>
         </shootingTimeAccuracyData>
-        <idealCombatRange>50</idealCombatRange>
+        <idealCombatRange>30</idealCombatRange>
+        <maxFiringRange>50</maxFiringRange>
         <CombatRangeCategory>Medium</CombatRangeCategory>
         <baseAccuracy>1</baseAccuracy>
         <impactRadiusForFriendlyFire>0</impactRadiusForFriendlyFire>
@@ -277,10 +289,31 @@
         <aiFiringActionParams Type="SWeaponActionAIParams" Count="0" />
       </weaponAIData>
       <connectionParams Type="SWeaponConnectionParams">
-        <powerActiveCooldown>0.43</powerActiveCooldown>
-        <heatRateOnline>31</heatRateOnline>
+        <powerActiveCooldown>1</powerActiveCooldown>
+        <heatRateOnline>0</heatRateOnline>
         <lockOnOnverheat>False</lockOnOnverheat>
-        <simplifiedHeatParams />
+        <simplifiedHeatParams Type="SWeaponSimplifiedHeatParams">
+          <minTemperature>0</minTemperature>
+          <overheatTemperature>100</overheatTemperature>
+          <coolingPerSecond>28</coolingPerSecond>
+          <temperatureAfterOverheatFix>99</temperatureAfterOverheatFix>
+          <timeTillCoolingStarts>1.24</timeTillCoolingStarts>
+          <overheatFixTime>6.71</overheatFixTime>
+          <temperatureCurveParams />
+          <glowParams Type="SWeaponSimplifiedHeatGlowParams">
+            <glowCurve />
+            <glowColor Type="RGB">
+              <r>1</r>
+              <g>1</g>
+              <b>1</b>
+            </glowColor>
+            <maxGlowValue>100000</maxGlowValue>
+            <fadeoutTime>2</fadeoutTime>
+          </glowParams>
+          <heatModifierCurve />
+          <heatRangeAudioTriggers Type="SWeaponSimplifiedHeatAudioParams" Count="0" />
+          <whitelistFPSOverheat>False</whitelistFPSOverheat>
+        </simplifiedHeatParams>
         <noPowerStats Type="SWeaponStats">
           <fireRate>0</fireRate>
           <fireRateMultiplier>0</fireRateMultiplier>
@@ -296,6 +329,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -310,6 +344,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -508,6 +543,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -522,6 +558,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -720,6 +757,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -734,6 +772,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -932,6 +971,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -946,6 +986,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1144,6 +1185,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -1158,6 +1200,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1402,6 +1445,7 @@
             <chargeTimeMultiplier>1</chargeTimeMultiplier>
             <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
             <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+            <disableMisfire>False</disableMisfire>
             <recoilModifier Type="SRecoilModifier">
               <decayMultiplier>1</decayMultiplier>
               <endDecayMultiplier>1</endDecayMultiplier>
@@ -1416,6 +1460,7 @@
               <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
               <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
               <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+              <disableRecoil>False</disableRecoil>
               <headRotationMultiplier Type="Vec3">
                 <x>1</x>
                 <y>1</y>
@@ -1653,6 +1698,20 @@
             <cooldownStopTrigger Type="GlobalResourceAudio">
               <audioTrigger />
             </cooldownStopTrigger>
+            <NLPCAudioTriggers Type="SWeaponActionFireSingleNLPCAudioTriggers">
+              <fireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </fireAudioTrigger>
+              <dryFireAudioTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </dryFireAudioTrigger>
+              <cooldownStartTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </cooldownStartTrigger>
+              <cooldownStopTrigger Type="GlobalResourceAudio">
+                <audioTrigger />
+              </cooldownStopTrigger>
+            </NLPCAudioTriggers>
             <fireEffects Type="SWeaponParticleEffectParams" Count="1">
               <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
                 <firstPerson Type="GlobalResourceParticle">
@@ -1668,6 +1727,7 @@
                 <scale>0.75</scale>
                 <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
                 <isMuzzleFlash>False</isMuzzleFlash>
+                <effectCondition />
               </SWeaponParticleEffectParams>
             </fireEffects>
             <vibrationParams Type="SWeaponVibrationParams">
@@ -1675,6 +1735,7 @@
             </vibrationParams>
             <explosionParams />
             <signatureEmitterParams />
+            <adaptiveTriggerParams />
           </weaponAction>
           <chargeFragment Type="SFragmentParams">
             <fragment />
@@ -1708,6 +1769,8 @@
           <overchargedEffects Type="SWeaponParticleEffectParams" Count="0" />
           <fireEffects Type="SWeaponParticleEffectParams" Count="0" />
           <maxChargeFireEffects Type="SWeaponParticleEffectParams" Count="0" />
+          <weaponIdleEffects Type="SWeaponParticleEffectParams" Count="0" />
+          <adaptiveTriggerParams />
         </SWeaponActionFireChargedParams>
       </fireActions>
       <audioParams Type="SWeaponAudioParams">
@@ -1721,6 +1784,9 @@
         <switchFireModeAudioTrigger Type="GlobalResourceAudio">
           <audioTrigger />
         </switchFireModeAudioTrigger>
+        <switchWeaponPresetAudioTrigger Type="GlobalResourceAudio">
+          <audioTrigger />
+        </switchWeaponPresetAudioTrigger>
         <weaponHeatRTPC Type="AudioRtpc">
           <rtpc>Weapon_Heat_Level</rtpc>
         </weaponHeatRTPC>
@@ -1928,6 +1994,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -2022,15 +2093,16 @@
     </SCItemPurchasableParams>
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
-        <Mass>160</Mass>
+        <Mass>600</Mass>
         <compoundingAllowed>True</compoundingAllowed>
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -2047,13 +2119,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -2122,13 +2197,16 @@
       <Ports Type="SItemPortDef" Count="4">
         <SItemPortDef Type="SItemPortDef">
           <Name>BAR1</Name>
-          <DisplayName>Barrel Attachment 1</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2161,7 +2239,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Barrel</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2213,13 +2291,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>MEC</Name>
-          <DisplayName>Firing Mechanism Attachment</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2252,7 +2333,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>FiringMechanism</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2304,13 +2385,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>POW</Name>
-          <DisplayName>Power Array Attachment</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2343,7 +2427,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>PowerArray</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2395,13 +2479,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>VEN</Name>
-          <DisplayName>Ventilation Attachment</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2434,7 +2521,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Ventilation</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2492,6 +2579,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -2508,7 +2596,7 @@
           <max>1</max>
           <default>1</default>
           <scalingMinimum>True</scalingMinimum>
-          <affectedResources Type="LinkedStatSetupPreset" Count="1">
+          <affectedResources Type="BuildingBlocks_BindingsNumberAtan2" Count="1">
             <EnumChoice>Power</EnumChoice>
           </affectedResources>
         </ItemThrottleParams>
@@ -2551,7 +2639,7 @@
           <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="0" />
           <signatureParams Type="ItemResourceSignatureParams">
             <EMSignature Type="ItemResourceSignatureEntry">
-              <nominalSignature>0</nominalSignature>
+              <nominalSignature>792</nominalSignature>
               <decayRate>0.15</decayRate>
               <functionalityCurve />
             </EMSignature>
@@ -2561,7 +2649,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -2569,6 +2673,11 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>37.3</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <InteriorMapEntityVisiblityEntityComponentParams Type="InteriorMapEntityVisiblityEntityComponentParams">
       <show>True</show>

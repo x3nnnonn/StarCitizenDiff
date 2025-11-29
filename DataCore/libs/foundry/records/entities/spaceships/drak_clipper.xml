@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../libs/foundry/records/densityclasses/spaceshipdensityclass.xml" />
   <tags Type="Tag" Count="5">
     <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.5f12dd31-4ff9-41a5-b5e2-916270351ba9" RecordId="5f12dd31-4ff9-41a5-b5e2-916270351ba9" />
@@ -57,11 +62,15 @@
       </displayParams>
     </SEntityInsuranceProperties>
     <EAEntityDataParams Type="EAEntityDataParams">
-      <inclusionMode>DoNotInclude</inclusionMode>
+      <inclusionMode>ReadyToInclude</inclusionMode>
       <inclusionParams Type="EAEntityInclusionParams">
         <tags Type="TagList">
-          <tags Type="Tag" Count="1">
+          <tags Type="Tag" Count="5">
             <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2efe0a5d-9b0f-484f-be7f-a666686bcb5a" RecordId="2efe0a5d-9b0f-484f-be7f-a666686bcb5a" />
+            <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.f07ed549-0968-4475-92bc-344797a30d43" RecordId="f07ed549-0968-4475-92bc-344797a30d43" />
+            <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.44e0e86a-1727-40bb-8c8d-06b10efb3bf7" RecordId="44e0e86a-1727-40bb-8c8d-06b10efb3bf7" />
+            <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.449df0f9-b23e-4fb1-8a8c-966fef87753c" RecordId="449df0f9-b23e-4fb1-8a8c-966fef87753c" />
+            <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.de58fe96-d9cf-4a17-966f-c4015dffc4d0" RecordId="de58fe96-d9cf-4a17-966f-c4015dffc4d0" />
           </tags>
         </tags>
       </inclusionParams>
@@ -101,9 +110,9 @@
       <vehicleRole>@vehicle_class_generalist</vehicleRole>
       <vehicleRoleRef ReferencedFile="file://./../../../../../libs/foundry/records/vehicle/roles/generalist.xml" />
       <maxBoundingBoxSize Type="Vec3">
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
+        <x>18</x>
+        <y>26.5</y>
+        <z>21</z>
       </maxBoundingBoxSize>
       <cargoEntrySize Type="Vec2">
         <x>0</x>
@@ -179,6 +188,18 @@
       <DashboardCanvasConfig />
       <inventoryContainerParams ReferencedFile="file://./../../../../../libs/foundry/records/inventorycontainers/ships/ship_small.xml" />
       <spawnBoxScale>0.5</spawnBoxScale>
+      <landingOffset Type="Vec3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingOffset>
+      <landingRotationOffset Type="Ang3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingRotationOffset>
+      <fusePenetrationDamageMultiplier>0.05</fusePenetrationDamageMultiplier>
+      <componentPenetrationDamageMultiplier>1</componentPenetrationDamageMultiplier>
     </VehicleComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
@@ -909,7 +930,7 @@
           </SItemPortLoadoutEntryParams>
           <SItemPortLoadoutEntryParams Type="SItemPortLoadoutEntryParams">
             <itemPortName>hardpoint_engineering_screen</itemPortName>
-            <entityClassName>SoftLock_EngineeringScreen_Template</entityClassName>
+            <entityClassName>SoftLock_EngineeringScreen_StandardShip</entityClassName>
             <entityClassReference />
             <inventoryContainer />
             <loadout />
@@ -1217,7 +1238,7 @@
       <AttachDef Type="SItemDefinition">
         <Type>NOITEM_Vehicle</Type>
         <SubType>Vehicle_Spaceship</SubType>
-        <Size>1</Size>
+        <Size>2</Size>
         <Grade>1</Grade>
         <Manufacturer ReferencedFile="file://./../../../../../libs/foundry/records/scitemmanufacturer/scitemmanufacturer.drak.xml" />
         <inheritParentManufacturer>False</inheritParentManufacturer>
@@ -2393,10 +2414,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -2429,7 +2451,11 @@
           </crossSection>
         </crossSectionParams>
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="0" />
@@ -2446,6 +2472,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSuperGUIDComponentParams Type="SSuperGUIDComponentParams" />
@@ -3560,6 +3589,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -3945,6 +3979,18 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
+      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamPickupTrigger>
+      <tractorBeamDropTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamDropTrigger>
+      <detachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </detachBreakTrigger>
+      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity_Vehicles</rtpc>
       </rtpcSlideVelocity>
@@ -3978,12 +4024,16 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
+      <rtpcSize Type="AudioRtpc">
+        <rtpc />
+      </rtpcSize>
       <minimumImpulseContinuous>10</minimumImpulseContinuous>
       <minimumImpulseTransient>5</minimumImpulseTransient>
       <minimumVelocityNoImpulse>100</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
+      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7f3a1138-ec2c-4dac-9c5a-2598090c79ec" RecordId="7f3a1138-ec2c-4dac-9c5a-2598090c79ec" />
       <oneShotCooldown>0.08</oneShotCooldown>
@@ -4018,13 +4068,16 @@
       <Ports Type="SItemPortDef" Count="5">
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_controller_fuel</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4102,13 +4155,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_fuel_port</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>Ship_Dock_Refuel</PortTags>
           <RequiredPortTags />
           <Flags>dockingport1</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4141,7 +4197,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>DockingCollar</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4213,13 +4269,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_air_traffic_controller</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4252,7 +4311,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AirTrafficController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4324,13 +4383,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_cockpit_flair_dash</Name>
-          <DisplayName>port_Flair01</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4363,7 +4425,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Flair_Cockpit</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4413,13 +4475,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_cockpit_flair_table</Name>
-          <DisplayName>port_DeskFlair01</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -4452,7 +4517,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Flair_Cockpit</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -4505,7 +4570,7 @@
       <PortTags />
       <RequiredItemTags />
       <InternalResourceLinks Type="SInternalResourceLink" Count="0" />
-      <InternalHardpointLinks Type="SInternalHardpointLink" Count="62">
+      <InternalHardpointLinks Type="SInternalHardpointLink" Count="63">
         <SInternalHardpointLink Type="SInternalHardpointLink">
           <port1>hardpoint_relay</port1>
           <port2>hardpoint_seat_pilot</port2>
@@ -4754,9 +4819,14 @@
           <port1>hardpoint_relay</port1>
           <port2>hardpoint_lifesupport</port2>
         </SInternalHardpointLink>
+        <SInternalHardpointLink Type="SInternalHardpointLink">
+          <port1>hardpoint_relay</port1>
+          <port2>hardpoint_engineering_screen</port2>
+        </SInternalHardpointLink>
       </InternalHardpointLinks>
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>True</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="8">
@@ -4766,21 +4836,27 @@
           </FixedPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>Shield</itemType>
+            <maxItemCount>2</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>FlightController</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>TractorBeam</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>TowingBeam</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>WeaponMining</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>SalvageHead</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <PowerPool />
         </itemPools>
@@ -4814,7 +4890,88 @@
     </LegalRegistrationComponentParams>
     <RangeEventDispatcherComponentParams Type="RangeEventDispatcherComponentParams" />
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="0" />
+      <StateTypes Type="SInteractionStateType" Count="1">
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>Engineering State</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState />
+          <asopReset>False</asopReset>
+          <networkAuthority>Local</networkAuthority>
+          <States Type="SInteractionState" Count="3">
+            <SInteractionState Pointer="ptr:1" Type="SInteractionState">
+              <StateName>Normal</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4618d2e7-da8f-4efa-86e8-b46f17ef1782" RecordId="4618d2e7-da8f-4efa-86e8-b46f17ef1782" />
+                </tags>
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:2" Type="SInteractionState">
+              <StateName>Aux/Warning</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="2">
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.9532d63b-ccf1-44ec-a7cb-ee33a48b4fe7" RecordId="9532d63b-ccf1-44ec-a7cb-ee33a48b4fe7" />
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2adc6204-38a1-4285-9d4e-64e4047b37c4" RecordId="2adc6204-38a1-4285-9d4e-64e4047b37c4" />
+                </tags>
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:3" Type="SInteractionState">
+              <StateName>Critical</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4f631b3d-0f77-4d59-9105-4d565be46532" RecordId="4f631b3d-0f77-4d59-9105-4d565be46532" />
+                </tags>
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="0" />
+        </SInteractionStateType>
+      </StateTypes>
     </SInteractionStateMachineParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="0" />
@@ -4976,7 +5133,7 @@
     </RParticleFieldNodeComponentParams>
     <EAScoringVehicleComponentParamsDef Type="EAScoringVehicleComponentParamsDef">
       <baseComponent Type="EAScoringComponentParamsDef">
-        <totalScore>1000</totalScore>
+        <totalScore>1200</totalScore>
         <timeSinceLastHitForAssist>60</timeSinceLastHitForAssist>
         <awardKill>20</awardKill>
         <awardKillAssist>10</awardKillAssist>
@@ -5030,13 +5187,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1.5</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -5063,14 +5225,15 @@
       </adapters>
     </AINavigationDynamicTriggerComponent>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="SRadarSenseComponentParams" Count="2">
+      <perceptionTypes Type="ActorStatusUIWarning" Count="2">
         <EnumChoice>Vehicle</EnumChoice>
         <EnumChoice>Spaceship</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SHearingComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusPreset" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <defaultEntityObservablePoint />
-      <defaultAimingObservablePoint />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
       <observableExtensions Type="IObservableExtender" Count="1">
         <AudioObservableExtender Type="AudioObservableExtender">
           <hearingRadiusAtFullStrength>800</hearingRadiusAtFullStrength>
@@ -5093,7 +5256,11 @@
     <AnnunciatorProviderParams Type="AnnunciatorProviderParams">
       <shotAlertTime>1</shotAlertTime>
     </AnnunciatorProviderParams>
-    <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams" />
+    <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams">
+      <normalState PointsTo="ptr:1" />
+      <auxState PointsTo="ptr:2" />
+      <criticalState PointsTo="ptr:3" />
+    </EntityComponentResourceNetworkUIProviderParams>
     <AtmosphericFlightDataParams Type="AtmosphericFlightDataParams" />
     <PositionTrackerComponentParams Type="PositionTrackerComponentParams" />
   </Components>

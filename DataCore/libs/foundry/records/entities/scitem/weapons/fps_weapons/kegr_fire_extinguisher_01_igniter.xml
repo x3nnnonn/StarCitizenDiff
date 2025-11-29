@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../libs/foundry/records/densityclasses/fpsitemsdensityclass.xml" />
   <tags Type="Tag" Count="10">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a0191226-abf0-4677-b249-c3111aa7222f" RecordId="a0191226-abf0-4677-b249-c3111aa7222f" />
@@ -23,7 +28,7 @@
       <canEntitleThroughWebsite>True</canEntitleThroughWebsite>
     </DefaultEntitlementEntityParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="27">
+  <Components Type="DataForgeComponentParams" Count="30">
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
         <Mass>3.2</Mass>
@@ -31,10 +36,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -51,13 +57,16 @@
         <temperature Type="EntityTemperature">
           <enable>False</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationMultiplier">
+            <coolingEqualizationMultiplier>1</coolingEqualizationMultiplier>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>False</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>6</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -148,9 +157,880 @@
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
       <entityAttachParams />
     </SAttachableComponentParams>
+    <SEntityComponentCarryableParams Type="SEntityComponentCarryableParams">
+      <carryInteraction PointsTo="ptr:1" />
+      <placeInteraction PointsTo="ptr:2" />
+      <dropInteraction PointsTo="ptr:3" />
+      <equipToItemportInteraction PointsTo="ptr:4" />
+      <offHandEquipToItemportInteraction PointsTo="ptr:5" />
+      <storeInteraction PointsTo="ptr:6" />
+      <offHandStoreInteraction PointsTo="ptr:7" />
+      <holdReadyInteraction PointsTo="ptr:8" />
+      <equipWearableInteraction />
+      <inspectInteraction PointsTo="ptr:9" />
+      <flipInteraction />
+      <swapAttachmentsInteraction PointsTo="ptr:10" />
+      <attachToHeldItemInteraction />
+      <interactionMetadata ReferencedFile="file://./../../../../../../../libs/foundry/records/globalinteractionparams/carryableinteractionsmetadata_globaldefault.xml" />
+      <carryableStatesParams Type="SCarryableStatesParams">
+        <settledState PointsTo="ptr:11" />
+        <carriedState PointsTo="ptr:12" />
+        <equippedToSuitState PointsTo="ptr:13" />
+        <inspectingState PointsTo="ptr:14" />
+        <droppedState PointsTo="ptr:15" />
+        <offeredState />
+        <heldReadyState PointsTo="ptr:16" />
+        <equippedWornState />
+        <storedState />
+        <hangingOnOutfitHangerState />
+      </carryableStatesParams>
+      <enslavementAnimationDatabase>Animations/Mannequin/ADB/Players/Items/Gadgets/kegr_fire_extinguisher_01.adb</enslavementAnimationDatabase>
+      <interactionPointToMoveOnEquip PointsTo="ptr:17" />
+      <interactionPointOffsets Type="SCarryableInteractionPointOffsets">
+        <interactionOffsetEquipped Type="QuatT">
+          <Rotation Type="Ang3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Position Type="Vec3">
+            <x>0.125</x>
+            <y>0.2</y>
+            <z>0.15</z>
+          </Position>
+        </interactionOffsetEquipped>
+        <interactionOffsetCarried Type="QuatT">
+          <Rotation Type="Ang3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Position Type="Vec3">
+            <x>0.05</x>
+            <y>0.05</y>
+            <z>0</z>
+          </Position>
+        </interactionOffsetCarried>
+        <interactionOffsetInspected Type="QuatT">
+          <Rotation Type="Ang3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Position Type="Vec3">
+            <x>0.4</x>
+            <y>0.2</y>
+            <z>0</z>
+          </Position>
+        </interactionOffsetInspected>
+      </interactionPointOffsets>
+      <gripData Type="SGripContainer">
+        <gripOverrideUsingLOS>False</gripOverrideUsingLOS>
+        <grips Type="SCarryableGrip" Count="2">
+          <SCarryableGrip Type="SCarryableGrip">
+            <carryStyleID>Right</carryStyleID>
+            <canBeUsedBy>All</canBeUsedBy>
+            <handMode>RightHand</handMode>
+            <gripAction>None</gripAction>
+            <handGrip Type="SGrip">
+              <gripID />
+              <optionalHelper>root</optionalHelper>
+              <gripShapeParameters Type="SGripShapeParams">
+                <gripShape>gs_none</gripShape>
+                <dimension>0</dimension>
+                <wristRotation>0</wristRotation>
+              </gripShapeParameters>
+              <offset Type="QuatT">
+                <Rotation Type="Ang3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Rotation>
+                <Position Type="Vec3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Position>
+              </offset>
+            </handGrip>
+            <offHandGrip Type="SGrip">
+              <gripID>BarrelGrip</gripID>
+              <optionalHelper>L_IkGripTarget</optionalHelper>
+              <gripShapeParameters Type="SGripShapeParams">
+                <gripShape>gs_none</gripShape>
+                <dimension>0</dimension>
+                <wristRotation>0</wristRotation>
+              </gripShapeParameters>
+              <offset Type="QuatT">
+                <Rotation Type="Ang3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Rotation>
+                <Position Type="Vec3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Position>
+              </offset>
+            </offHandGrip>
+            <animationParameters Type="SCarryAnimationParams">
+              <motionBase>1hr</motionBase>
+              <handTag />
+            </animationParameters>
+            <carryParameters Type="SCarryParams">
+              <width>0</width>
+              <height>0</height>
+              <depth>0</depth>
+            </carryParameters>
+          </SCarryableGrip>
+          <SCarryableGrip Type="SCarryableGrip">
+            <carryStyleID>Left</carryStyleID>
+            <canBeUsedBy>All</canBeUsedBy>
+            <handMode>LeftHand</handMode>
+            <gripAction>None</gripAction>
+            <handGrip Type="SGrip">
+              <gripID />
+              <optionalHelper>root</optionalHelper>
+              <gripShapeParameters Type="SGripShapeParams">
+                <gripShape>gs_none</gripShape>
+                <dimension>0</dimension>
+                <wristRotation>0</wristRotation>
+              </gripShapeParameters>
+              <offset Type="QuatT">
+                <Rotation Type="Ang3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Rotation>
+                <Position Type="Vec3">
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                </Position>
+              </offset>
+            </handGrip>
+            <offHandGrip />
+            <animationParameters Type="SCarryAnimationParams">
+              <motionBase>1hl</motionBase>
+              <handTag />
+            </animationParameters>
+            <carryParameters Type="SCarryParams">
+              <width>0</width>
+              <height>0</height>
+              <depth>0</depth>
+            </carryParameters>
+          </SCarryableGrip>
+        </grips>
+      </gripData>
+      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
+      <carryableTasks Type="SSequencerCarryableTaskParams" Count="9">
+        <SSequencerMoveToAnimateCarryableTaskParams Type="SSequencerMoveToAnimateCarryableTaskParams">
+          <fragmentId>Take</fragmentId>
+          <fragTag />
+          <bForceExactPositioning>False</bForceExactPositioning>
+        </SSequencerMoveToAnimateCarryableTaskParams>
+        <SSequencerBespokeTakeCarryableTaskParams Type="SSequencerBespokeTakeCarryableTaskParams">
+          <fragmentId>Take</fragmentId>
+          <fragTag />
+        </SSequencerBespokeTakeCarryableTaskParams>
+        <SSequencerMoveToAnimateCarryableTaskParams Type="SSequencerMoveToAnimateCarryableTaskParams">
+          <fragmentId>Place</fragmentId>
+          <fragTag />
+          <bForceExactPositioning>False</bForceExactPositioning>
+        </SSequencerMoveToAnimateCarryableTaskParams>
+        <SSequencerBespokePlaceCarryableTaskParams Type="SSequencerBespokePlaceCarryableTaskParams">
+          <fragmentId>Place</fragmentId>
+          <fragTag />
+        </SSequencerBespokePlaceCarryableTaskParams>
+        <SSequencerSetInteractionStateCarryableTaskParams Type="SSequencerSetInteractionStateCarryableTaskParams">
+          <state PointsTo="ptr:11" />
+        </SSequencerSetInteractionStateCarryableTaskParams>
+        <SSequencerMoveToAnimateCarryableTaskParams Type="SSequencerMoveToAnimateCarryableTaskParams">
+          <fragmentId>Take</fragmentId>
+          <fragTag>first_select</fragTag>
+          <bForceExactPositioning>False</bForceExactPositioning>
+        </SSequencerMoveToAnimateCarryableTaskParams>
+        <SSequencerBespokeTakeCarryableTaskParams Type="SSequencerBespokeTakeCarryableTaskParams">
+          <fragmentId>Take</fragmentId>
+          <fragTag>first_select</fragTag>
+        </SSequencerBespokeTakeCarryableTaskParams>
+        <SSequencerFirstSelectCarryableTaskParams Type="SSequencerFirstSelectCarryableTaskParams" />
+        <SSequencerStowHeldEntityCarryableTaskParams Type="SSequencerStowHeldEntityCarryableTaskParams" />
+      </carryableTasks>
+      <throwableParams Type="SThrowableParams">
+        <reticle>none</reticle>
+        <throwModes Type="SThrowMode" Count="4">
+          <SThrowMode Type="SThrowMode">
+            <mode>Drop</mode>
+            <angularVelocity Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </angularVelocity>
+            <offset Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </offset>
+          </SThrowMode>
+          <SThrowMode Type="SThrowMode">
+            <mode>Place</mode>
+            <angularVelocity Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </angularVelocity>
+            <offset Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </offset>
+          </SThrowMode>
+          <SThrowMode Type="SThrowMode">
+            <mode>OverhandThrow</mode>
+            <angularVelocity Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </angularVelocity>
+            <offset Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </offset>
+          </SThrowMode>
+          <SThrowMode Type="SThrowMode">
+            <mode>InteractionMode</mode>
+            <angularVelocity Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </angularVelocity>
+            <offset Type="Vec3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </offset>
+          </SThrowMode>
+        </throwModes>
+        <faceUpWhenSettled>False</faceUpWhenSettled>
+        <allowHologramTiltRotation>False</allowHologramTiltRotation>
+        <audioParams Type="SThrowAudioParams">
+          <onThrownAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </onThrownAudioTrigger>
+          <onCollisionAudioTrigger Type="GlobalResourceAudio">
+            <audioTrigger />
+          </onCollisionAudioTrigger>
+          <collisionSpeedAudioRTPC Type="AudioRtpc">
+            <rtpc />
+          </collisionSpeedAudioRTPC>
+          <onCollisionAudioPerceptionInfo>SmallSound</onCollisionAudioPerceptionInfo>
+          <onCollisionAudioPerceptionRadius>20</onCollisionAudioPerceptionRadius>
+        </audioParams>
+        <placementRange>3</placementRange>
+        <placementRangeHysteresis>0.5</placementRangeHysteresis>
+        <defaultPlacementUpDirection Type="Vec3">
+          <x>-1</x>
+          <y>0</y>
+          <z>0</z>
+        </defaultPlacementUpDirection>
+        <yawOffset>0</yawOffset>
+        <applyBoundingBoxPlacementOffset>False</applyBoundingBoxPlacementOffset>
+        <combatThrowable>False</combatThrowable>
+        <knockdownThrowUpForce>0.5</knockdownThrowUpForce>
+      </throwableParams>
+      <equipWearableParams Type="SCEquipableParams">
+        <itemPort />
+      </equipWearableParams>
+      <ikInteractionsRecord ReferencedFile="file://./../../../../../../../libs/foundry/records/scarryableikinteractionlist/stockedikinteractionlist.xml" />
+      <carryableSequences Type="SCarryableSequenceRef" Count="0" />
+      <canBeCarriedInProne>False</canBeCarriedInProne>
+      <disableRotation>False</disableRotation>
+    </SEntityComponentCarryableParams>
+    <SEntityInteractableParams Type="SEntityInteractableParams">
+      <Interactable Type="SInteractableParams">
+        <SharedInteractions Type="SSharedInteractionParams" Count="13">
+          <SSharedInteractionParams Pointer="ptr:8" Type="SSharedInteractionParams">
+            <Name>HoldReady</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_equip</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="2">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/carryitem_raisedready.xml" />
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/actor/actornotinusableorshipseat.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:4" Type="SSharedInteractionParams">
+            <Name>Holster</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_holster</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/holster_aka-attach_itemtoself.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
+            <Name>OffHandHolster</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_holster</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/holster_aka-attach_itemtoself.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
+            <Name>Store</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_store</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/personalinventory/canstoreinpersonalinventory.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:7" Type="SSharedInteractionParams">
+            <Name>OffHandStore</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_store</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/personalinventory/canstoreinpersonalinventory.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:3" Type="SSharedInteractionParams">
+            <Name>Drop</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_drop</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/dropitem.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:1" Type="SSharedInteractionParams">
+            <Name>CarryLowered</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_carry_lowered</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="2">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/carryitem_lowered.xml" />
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/actor/actornotinusableorshipseat.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:9" Type="SSharedInteractionParams">
+            <Name>Inspect</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@innerthought_inspect</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/inspectitem.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
+            <Name>Place</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_place</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/placeitem.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Type="SSharedInteractionParams">
+            <Name>ChakmaFirstSelectTake</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_pickup</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Type="SSharedInteractionParams">
+            <Name>ChakmaTake</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_pickup</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:10" Type="SSharedInteractionParams">
+            <Name>Customize</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_customize</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/fpsitems/customizefpsweapon.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Type="SSharedInteractionParams">
+            <Name>BespokePlace</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_place</DisplayName>
+            <DisplayType>Hide</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+        </SharedInteractions>
+        <InteractionPoints Type="SInteractionPointParams" Count="2">
+          <SInteractionPointParams Pointer="ptr:17" Type="SInteractionPointParams">
+            <Interactions Type="SInteractionParams" Count="10">
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:8" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>True</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:4" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:5" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:6" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:7" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:1" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:3" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:9" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:2" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:10" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+            </Interactions>
+            <HelperName>HighlightOnRayHitEntity</HelperName>
+            <Tags Type="Tag" Count="1">
+              <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.758266cd-be99-4915-9013-dec85cd6d6a7" RecordId="758266cd-be99-4915-9013-dec85cd6d6a7" />
+            </Tags>
+            <Primitive />
+            <PlayerAnimatedInteractionParams />
+            <HighlightBehaviors Type="SHighlightBehaviorNode" Count="1">
+              <SHighlightBehaviorNode Type="SHighlightBehaviorNode">
+                <HighlightBehaviorNodeParams Type="SEntityandAttachmentsHighlightNode" />
+                <nextNodes Type="SHighlightBehaviorNode" Count="0" />
+              </SHighlightBehaviorNode>
+            </HighlightBehaviors>
+            <AdditionalCollisionBones Type="ActivityBehaviorRequestCondition" Count="0" />
+            <InteractionPointModifiers Type="SInteractionPointModifier" Count="0" />
+            <InteractionPointInternalSettingTemplateRef />
+            <FirstInteractionPrimary>True</FirstInteractionPrimary>
+            <UseHelperLocation>True</UseHelperLocation>
+            <ApplyToEntireSkeleton>False</ApplyToEntireSkeleton>
+            <longRangeIP>False</longRangeIP>
+            <Radius>1.85</Radius>
+            <ShowHighlight>True</ShowHighlight>
+            <HighlightOnRayHitEntity>True</HighlightOnRayHitEntity>
+            <Offset Type="QuatT">
+              <Rotation Type="Ang3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Position Type="Vec3">
+                <x>0</x>
+                <y>0.1</y>
+                <z>-0.1</z>
+              </Position>
+            </Offset>
+            <TextJustification>Middle</TextJustification>
+            <TextOrientation>RotateToPlayer</TextOrientation>
+            <TextScale>1</TextScale>
+            <ShowInteractionTextAtCursorPos>False</ShowInteractionTextAtCursorPos>
+            <ScalePromptOffsetWithEntity>False</ScalePromptOffsetWithEntity>
+            <InteractionPromptOffset Type="QuatT">
+              <Rotation Type="Ang3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Position Type="Vec3">
+                <x>0</x>
+                <y>0.1</y>
+                <z>-0.1</z>
+              </Position>
+            </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
+            <InteractionPromptScale>1</InteractionPromptScale>
+            <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
+            <InteractionPromptBound>TopBoundingBoxZSurface</InteractionPromptBound>
+            <UseHorizontalDistance>True</UseHorizontalDistance>
+            <MaxCursorScreenDistance>0.75</MaxCursorScreenDistance>
+            <ShowInnerThoughtsOffScreen>True</ShowInnerThoughtsOffScreen>
+            <OnlySelectableInLookDir>True</OnlySelectableInLookDir>
+            <AngleConstraint Type="SAngleConstraint">
+              <forwardDirOffset Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </forwardDirOffset>
+              <angleRange>181</angleRange>
+              <viewAngleLimit>110</viewAngleLimit>
+            </AngleConstraint>
+          </SInteractionPointParams>
+          <SInteractionPointParams Pointer="ptr:21" Type="SInteractionPointParams">
+            <Interactions Type="SInteractionParams" Count="10">
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:8" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>True</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:4" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:5" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:6" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:7" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:1" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:3" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:9" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:2" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:10" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+            </Interactions>
+            <HelperName>HighlightOnRayHitEntity_WeaponRack</HelperName>
+            <Tags Type="Tag" Count="1">
+              <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.758266cd-be99-4915-9013-dec85cd6d6a7" RecordId="758266cd-be99-4915-9013-dec85cd6d6a7" />
+            </Tags>
+            <Primitive />
+            <PlayerAnimatedInteractionParams />
+            <HighlightBehaviors Type="SHighlightBehaviorNode" Count="1">
+              <SHighlightBehaviorNode Type="SHighlightBehaviorNode">
+                <HighlightBehaviorNodeParams Type="SEntityandAttachmentsHighlightNode" />
+                <nextNodes Type="SHighlightBehaviorNode" Count="0" />
+              </SHighlightBehaviorNode>
+            </HighlightBehaviors>
+            <AdditionalCollisionBones Type="ActivityBehaviorRequestCondition" Count="0" />
+            <InteractionPointModifiers Type="SInteractionPointModifier" Count="0" />
+            <InteractionPointInternalSettingTemplateRef />
+            <FirstInteractionPrimary>True</FirstInteractionPrimary>
+            <UseHelperLocation>True</UseHelperLocation>
+            <ApplyToEntireSkeleton>False</ApplyToEntireSkeleton>
+            <longRangeIP>False</longRangeIP>
+            <Radius>1.85</Radius>
+            <ShowHighlight>True</ShowHighlight>
+            <HighlightOnRayHitEntity>True</HighlightOnRayHitEntity>
+            <Offset Type="QuatT">
+              <Rotation Type="Ang3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Position Type="Vec3">
+                <x>0</x>
+                <y>0.1</y>
+                <z>-0.1</z>
+              </Position>
+            </Offset>
+            <TextJustification>Middle</TextJustification>
+            <TextOrientation>RotateToPlayer</TextOrientation>
+            <TextScale>1</TextScale>
+            <ShowInteractionTextAtCursorPos>False</ShowInteractionTextAtCursorPos>
+            <ScalePromptOffsetWithEntity>False</ScalePromptOffsetWithEntity>
+            <InteractionPromptOffset Type="QuatT">
+              <Rotation Type="Ang3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Position Type="Vec3">
+                <x>0</x>
+                <y>0.1</y>
+                <z>-0.1</z>
+              </Position>
+            </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
+            <InteractionPromptScale>1</InteractionPromptScale>
+            <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
+            <InteractionPromptBound>NearestBoundingBoxIgnoreFurthestSurfaces</InteractionPromptBound>
+            <UseHorizontalDistance>True</UseHorizontalDistance>
+            <MaxCursorScreenDistance>0.75</MaxCursorScreenDistance>
+            <ShowInnerThoughtsOffScreen>True</ShowInnerThoughtsOffScreen>
+            <OnlySelectableInLookDir>True</OnlySelectableInLookDir>
+            <AngleConstraint Type="SAngleConstraint">
+              <forwardDirOffset Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </forwardDirOffset>
+              <angleRange>181</angleRange>
+              <viewAngleLimit>110</viewAngleLimit>
+            </AngleConstraint>
+          </SInteractionPointParams>
+        </InteractionPoints>
+        <interactionTasks Type="SSequencerInteractionTask" Count="1">
+          <SSequencerInteractionTask Type="SSequencerInteractionTask">
+            <interaction>Customize</interaction>
+            <triggerType>Self</triggerType>
+          </SSequencerInteractionTask>
+        </interactionTasks>
+        <actionHandlerTasks Type="SSequencerActorActionHandlerTask" Count="0" />
+        <itemActionTasks Type="SSequencerItemActionTask" Count="0" />
+        <menuTitle Type="SInteractableMenuTitleParams">
+          <titleColor ReferencedFile="file://./../../../../../../../libs/foundry/records/ui/innerthought/colors/title.xml" />
+        </menuTitle>
+      </Interactable>
+    </SEntityInteractableParams>
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -210,7 +1090,7 @@
       <inheritModelTagFromHost>True</inheritModelTagFromHost>
     </SGeometryResourceParams>
     <SCItemInspectableParams Type="SCItemInspectableParams">
-      <inspectInteraction />
+      <inspectInteraction PointsTo="ptr:9" />
       <stopInspectInteraction />
       <flipInteraction />
       <inspectAnimations Type="SInspectAnimationParams" Count="0" />
@@ -229,6 +1109,484 @@
         <itemTag />
       </firstSelect>
     </SCItemInspectableParams>
+    <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
+      <StateTypes Type="SInteractionStateType" Count="3">
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>CarryableStates</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:11" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="7">
+            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+              <StateName>Settled</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="6">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:8" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:4" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:5" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:7" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:9" />
+                  <NextState />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
+              <StateName>CarriedLowered</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="6">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:8" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:4" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:9" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:3" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:2" />
+                  <NextState />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.ba576025-1c42-4e4e-80d0-1b902f3351b1" RecordId="ba576025-1c42-4e4e-80d0-1b902f3351b1" />
+                </tags>
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
+              <StateName>EquippedToSuit</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:14" Type="SInteractionState">
+              <StateName>Inspecting</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="6">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:8" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:4" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:1" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:3" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:2" />
+                  <NextState />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.005f0164-d979-4436-b1c9-0f509fc9101c" RecordId="005f0164-d979-4436-b1c9-0f509fc9101c" />
+                </tags>
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
+              <StateName>Dropped</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:16" Type="SInteractionState">
+              <StateName>HeldReady</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="6">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:1" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:4" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:9" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:3" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:2" />
+                  <NextState />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.234eebec-3640-40a6-9e57-9e812bfd1c69" RecordId="234eebec-3640-40a6-9e57-9e812bfd1c69" />
+                </tags>
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:24" Type="SInteractionState">
+              <StateName>Stored</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="5">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:6" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:4" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:5" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:9" />
+                  <NextState />
+                </SInteractionStateTransition>
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:8" />
+                  <NextState />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.158faf59-73f2-42e6-a7cf-a55c3e46040d" RecordId="158faf59-73f2-42e6-a7cf-a55c3e46040d" />
+                </tags>
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="0" />
+        </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>AttachedToAnItemPortStates</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
+              <StateName>Unattached</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
+              <StateName>Attached</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <SAttachableStateModifier Type="SAttachableStateModifier">
+              <portTag />
+              <onSetItemPortState PointsTo="ptr:18" />
+              <onClearItemPortState PointsTo="ptr:19" />
+            </SAttachableStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>InteractionPointState</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:20" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="3">
+            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
+              <StateName>TopZ_BoundingBox</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="1">
+                <SInteractionPointParams PointsTo="ptr:17" />
+              </interactionPoints>
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:23" Type="SInteractionState">
+              <StateName>ClosestBoundingBox</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="1">
+                <SInteractionPointParams PointsTo="ptr:21" />
+              </interactionPoints>
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:22" Type="SInteractionState">
+              <StateName>NoInteractionPoint</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <AggregateStateModifier Type="AggregateStateModifier">
+              <aggregateStateParams Type="AggregateStateParams" Count="7">
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="1">
+                    <SInteractionState PointsTo="ptr:19" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:20" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:18" />
+                    <SInteractionState PointsTo="ptr:13" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:22" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:18" />
+                    <SInteractionState PointsTo="ptr:11" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:23" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:18" />
+                    <SInteractionState PointsTo="ptr:12" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:23" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:18" />
+                    <SInteractionState PointsTo="ptr:14" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:23" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:18" />
+                    <SInteractionState PointsTo="ptr:16" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:23" />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="2">
+                    <SInteractionState PointsTo="ptr:18" />
+                    <SInteractionState PointsTo="ptr:24" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:23" />
+                </AggregateStateParams>
+              </aggregateStateParams>
+            </AggregateStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
+      </StateTypes>
+    </SInteractionStateMachineParams>
     <SPersistentComponentParams Type="SPersistentComponentParams" />
     <SARDataComponentParams Type="SARDataComponentParams">
       <dataType>ShopItem</dataType>
@@ -299,6 +1657,18 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger>Play_PHOB_Weapons_FireExtinguisher_Place</audioTrigger>
       </placeTrigger>
+      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamPickupTrigger>
+      <tractorBeamDropTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamDropTrigger>
+      <detachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </detachBreakTrigger>
+      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity</rtpc>
       </rtpcSlideVelocity>
@@ -332,12 +1702,16 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
+      <rtpcSize Type="AudioRtpc">
+        <rtpc />
+      </rtpcSize>
       <minimumImpulseContinuous>5</minimumImpulseContinuous>
       <minimumImpulseTransient>8</minimumImpulseTransient>
       <minimumVelocityNoImpulse>3</minimumVelocityNoImpulse>
       <slideThreshold>0.5</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
+      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.01580479-c8a5-4bb8-85df-56b5edc32c14" RecordId="01580479-c8a5-4bb8-85df-56b5edc32c14" />
       <oneShotCooldown>0.1</oneShotCooldown>
@@ -366,8 +1740,8 @@
             <UsableUseChannelInstance Type="UsableUseChannelInstance">
               <useChannelArchetype RecordReference="file://./../../../../../../../libs/foundry/records/entities/scitem/usables/usablearchetypes.xml" RecordName="UseChannelArchetype.Carryable_Take" RecordId="68319952-3bd9-46ae-ad11-883fa32c8365" />
               <alignmentSlots Type="AlignmentSlotBase" Count="2">
-                <PointAlignmentSlot PointsTo="ptr:1" />
-                <PointAlignmentSlot PointsTo="ptr:2" />
+                <PointAlignmentSlot PointsTo="ptr:25" />
+                <PointAlignmentSlot PointsTo="ptr:26" />
               </alignmentSlots>
               <conditionList />
               <useChannelInstancesToEnable Type="UsableUseChannelInstance" Count="0" />
@@ -389,7 +1763,7 @@
           </useChannelInstances>
           <usableItemPorts Type="UsableItemPort" Count="1">
             <UsableItemPort Type="UsableItemPort">
-              <itemPort PointsTo="ptr:3" />
+              <itemPort PointsTo="ptr:27" />
               <itemPortFragmentTag />
               <conditionTags Type="TagsDNF">
                 <terms Type="TagsDNFTerm" Count="0" />
@@ -425,8 +1799,8 @@
             <UsableUseChannelInstance Type="UsableUseChannelInstance">
               <useChannelArchetype RecordReference="file://./../../../../../../../libs/foundry/records/entities/scitem/usables/usablearchetypes.xml" RecordName="UseChannelArchetype.Carryable_Loot" RecordId="987e1845-e90d-4be1-9c73-9168725a292f" />
               <alignmentSlots Type="AlignmentSlotBase" Count="2">
-                <PointAlignmentSlot PointsTo="ptr:1" />
-                <PointAlignmentSlot PointsTo="ptr:2" />
+                <PointAlignmentSlot PointsTo="ptr:25" />
+                <PointAlignmentSlot PointsTo="ptr:26" />
               </alignmentSlots>
               <conditionList />
               <useChannelInstancesToEnable Type="UsableUseChannelInstance" Count="0" />
@@ -448,7 +1822,7 @@
           </useChannelInstances>
           <usableItemPorts Type="UsableItemPort" Count="1">
             <UsableItemPort Type="UsableItemPort">
-              <itemPort PointsTo="ptr:3" />
+              <itemPort PointsTo="ptr:27" />
               <itemPortFragmentTag />
               <conditionTags Type="TagsDNF">
                 <terms Type="TagsDNFTerm" Count="0" />
@@ -479,7 +1853,7 @@
         </UsableUseSlot>
       </useSlots>
       <alignmentSlots Type="AlignmentSlotBase" Count="2">
-        <PointAlignmentSlot Pointer="ptr:1" Type="PointAlignmentSlot">
+        <PointAlignmentSlot Pointer="ptr:25" Type="PointAlignmentSlot">
           <id>98922060-88a1-4775-b1b5-04de82ac45b8</id>
           <name>BodyPoint0</name>
           <available>True</available>
@@ -545,7 +1919,7 @@
             <interiorOnly>False</interiorOnly>
           </additionalAttachmentFlags>
         </PointAlignmentSlot>
-        <PointAlignmentSlot Pointer="ptr:2" Type="PointAlignmentSlot">
+        <PointAlignmentSlot Pointer="ptr:26" Type="PointAlignmentSlot">
           <id>b7d121d3-5e81-424b-aeab-f77f8a792748</id>
           <name>BodyPoint1</name>
           <available>True</available>
@@ -613,15 +1987,18 @@
         </PointAlignmentSlot>
       </alignmentSlots>
       <exclusivityGroups Type="AlignmentSlotExclusivityGroup" Count="0" />
+      <freeItemPortsForDirectInteraction Type="SItemPortDef" Count="0" />
       <slottingSetups Type="UsableSlottingSetup" Count="0" />
       <views Type="Camera" Count="0" />
-      <abilityLocks Type="ActivityBehaviorRequest_Animate" Count="0" />
+      <abilityLocks Type="ActivityBehaviorRequest" Count="0" />
       <usableSequencerTasks Type="SSequencerUsableTask" Count="0" />
       <specializedData Type="SSpecializedData">
         <specializedDataEntry Type="SSpecializedDataEntry" Count="0" />
       </specializedData>
       <isExterior>False</isExterior>
       <allowDeadOrUnconscious>False</allowDeadOrUnconscious>
+      <lowEnergyThreshold>0</lowEnergyThreshold>
+      <highEnergyThreshold>2</highEnergyThreshold>
     </SActorUsableParams>
     <SCItemPurchasableParams Type="SCItemPurchasableParams">
       <Display />
@@ -636,7 +2013,7 @@
       <disabledLoadoutInteractions Type="DisabledLoadoutInteraction" Count="0" />
       <tutorialParams />
       <interactionPoints Type="SInteractionPointParams" Count="1">
-        <SInteractionPointParams />
+        <SInteractionPointParams PointsTo="ptr:21" />
       </interactionPoints>
     </SCItemPurchasableParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
@@ -786,7 +2163,8 @@
             <useLUT>False</useLUT>
           </timePrecisionCurve>
         </shootingTimeAccuracyData>
-        <idealCombatRange>50</idealCombatRange>
+        <idealCombatRange>30</idealCombatRange>
+        <maxFiringRange>50</maxFiringRange>
         <CombatRangeCategory>Medium</CombatRangeCategory>
         <baseAccuracy>1</baseAccuracy>
         <impactRadiusForFriendlyFire>0</impactRadiusForFriendlyFire>
@@ -818,6 +2196,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -832,6 +2211,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1030,6 +2410,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -1044,6 +2425,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1242,6 +2624,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -1256,6 +2639,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1454,6 +2838,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -1468,6 +2853,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1666,6 +3052,7 @@
           <chargeTimeMultiplier>1</chargeTimeMultiplier>
           <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
           <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+          <disableMisfire>False</disableMisfire>
           <recoilModifier Type="SRecoilModifier">
             <decayMultiplier>1</decayMultiplier>
             <endDecayMultiplier>1</endDecayMultiplier>
@@ -1680,6 +3067,7 @@
             <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
             <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
             <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+            <disableRecoil>False</disableRecoil>
             <headRotationMultiplier Type="Vec3">
               <x>1</x>
               <y>1</y>
@@ -1928,6 +3316,7 @@
             <chargeTimeMultiplier>1</chargeTimeMultiplier>
             <useAlternateProjectileVisuals>False</useAlternateProjectileVisuals>
             <useAugmentedRealityProjectiles>False</useAugmentedRealityProjectiles>
+            <disableMisfire>False</disableMisfire>
             <recoilModifier Type="SRecoilModifier">
               <decayMultiplier>1</decayMultiplier>
               <endDecayMultiplier>1</endDecayMultiplier>
@@ -1942,6 +3331,7 @@
               <frontalOscillationDecayMultiplier>1</frontalOscillationDecayMultiplier>
               <frontalOscillationRandomnessMultiplier>1</frontalOscillationRandomnessMultiplier>
               <animatedRecoilMultiplier>1</animatedRecoilMultiplier>
+              <disableRecoil>False</disableRecoil>
               <headRotationMultiplier Type="Vec3">
                 <x>1</x>
                 <y>1</y>
@@ -2230,6 +3620,7 @@
               <scale>1</scale>
               <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
               <isMuzzleFlash>False</isMuzzleFlash>
+              <effectCondition />
             </SWeaponParticleEffectParams>
           </fireEffects>
           <impactEffect Type="SExtinguisherImpactParams">
@@ -2340,6 +3731,26 @@
           <dryFireAudioTrigger Type="GlobalResourceAudio">
             <audioTrigger />
           </dryFireAudioTrigger>
+          <NLPCAudioTriggers Type="SWeaponActionFireRapidNLPCAudioTriggers">
+            <startFireAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startFireAudioTrigger>
+            <startFireAudioTriggerOneShot Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startFireAudioTriggerOneShot>
+            <stopFireAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger />
+            </stopFireAudioTrigger>
+            <startRotationAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger />
+            </startRotationAudioTrigger>
+            <stopRotationAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger />
+            </stopRotationAudioTrigger>
+            <dryFireAudioTrigger Type="GlobalResourceAudio">
+              <audioTrigger />
+            </dryFireAudioTrigger>
+          </NLPCAudioTriggers>
           <spinRTPC Type="AudioRtpc">
             <rtpc>Weapon_Rotation_Speed</rtpc>
           </spinRTPC>
@@ -2364,6 +3775,7 @@
               <scale>1</scale>
               <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
               <isMuzzleFlash>False</isMuzzleFlash>
+              <effectCondition />
             </SWeaponParticleEffectParams>
             <SWeaponParticleEffectParams Type="SWeaponParticleEffectParams">
               <firstPerson Type="GlobalResourceParticle">
@@ -2379,6 +3791,7 @@
               <scale>1</scale>
               <retriggerOnViewModeChange>False</retriggerOnViewModeChange>
               <isMuzzleFlash>False</isMuzzleFlash>
+              <effectCondition />
             </SWeaponParticleEffectParams>
           </fireEffects>
           <stopFireEffects Type="SWeaponParticleEffectParams" Count="0" />
@@ -2386,6 +3799,7 @@
             <vibrationImpulse>2500</vibrationImpulse>
           </vibrationParams>
           <signatureEmitterParams />
+          <adaptiveTriggerParams />
         </SWeaponActionFireRapidParams>
       </fireActions>
       <audioParams Type="SWeaponAudioParams">
@@ -2399,6 +3813,9 @@
         <switchFireModeAudioTrigger Type="GlobalResourceAudio">
           <audioTrigger />
         </switchFireModeAudioTrigger>
+        <switchWeaponPresetAudioTrigger Type="GlobalResourceAudio">
+          <audioTrigger />
+        </switchWeaponPresetAudioTrigger>
         <weaponHeatRTPC Type="AudioRtpc">
           <rtpc>Weapon_Heat_Level</rtpc>
         </weaponHeatRTPC>
@@ -2617,15 +4034,18 @@
     <SItemPortContainerComponentParams Type="SItemPortContainerComponentParams">
       <masterController />
       <Ports Type="SItemPortDef" Count="3">
-        <SItemPortDef Pointer="ptr:3" Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:27" Type="SItemPortDef">
           <Name>magazine_attach</Name>
-          <DisplayName>Magazine Slot</DisplayName>
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>kegr_fire_extinguisher_01</PortTags>
           <RequiredPortTags>kegr_fire_extinguisher_01</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2658,7 +4078,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Magazine</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2710,13 +4130,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>item_grab</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2794,13 +4217,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>root</Name>
-          <DisplayName>Magazine Slot</DisplayName>
+          <DisplayName>@Magazine Slot</DisplayName>
           <PortTags>kegr_fire_extinguisher_01</PortTags>
           <RequiredPortTags>kegr_fire_extinguisher_01</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -2833,7 +4259,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponAttachment</Type>
-              <SubTypes Type="ActorStatusPreset" Count="1">
+              <SubTypes Type="StatusEffect" Count="1">
                 <EnumChoice>Magazine</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -2891,6 +4317,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -2917,7 +4344,11 @@
         </baseSignatureParams>
         <crossSectionParams />
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams />
       <scanCustomData />
@@ -2932,6 +4363,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SInteractionLinkParams Type="SInteractionLinkParams">
@@ -2954,13 +4388,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -2998,13 +4437,14 @@
         <BuildingBlocksLayer Type="BuildingBlocksLayer">
           <layerName>Default</layerName>
           <renderTarget>All</renderTarget>
-          <defaultView PointsTo="ptr:4" />
+          <defaultView PointsTo="ptr:28" />
           <views Type="BuildingBlocksView" Count="1">
-            <BuildingBlocksView Pointer="ptr:4" Type="BuildingBlocksView">
+            <BuildingBlocksView Pointer="ptr:28" Type="BuildingBlocksView">
               <name>Default</name>
               <component Type="UIGraph_BuildingBlocksContextComponent">
                 <canvas ReferencedFile="file://./../../../../../../../libs/foundry/records/ui/buildingblocks/weapons/klwe/w_weap_kegr_fire_extinguisher.xml" />
                 <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
               </component>
             </BuildingBlocksView>
           </views>

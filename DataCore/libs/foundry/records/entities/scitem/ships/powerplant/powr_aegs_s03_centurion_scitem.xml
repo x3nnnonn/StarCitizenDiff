@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../../../libs/foundry/records/densityclasses/vehicleitemsdensityclass.xml" />
   <tags Type="Tag" Count="4">
     <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.467e1acb-657a-4eb0-a5b0-3b1b67f51683" RecordId="467e1acb-657a-4eb0-a5b0-3b1b67f51683" />
@@ -17,7 +22,7 @@
       <canEntitleThroughWebsite>True</canEntitleThroughWebsite>
     </DefaultEntitlementEntityParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="20">
+  <Components Type="DataForgeComponentParams" Count="21">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>PowerPlant</Type>
@@ -86,6 +91,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -151,10 +161,11 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
-        <PhysFlagsColliderOverride Type="SAtmosphericEffectsBaseTrailEffectParams" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusUIData" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusUIData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
+        <DampingZeroG>0.01</DampingZeroG>
         <DampingFreefall>0.05</DampingFreefall>
         <PushableByPlayers>True</PushableByPlayers>
         <NeverAffectTriggers>False</NeverAffectTriggers>
@@ -171,13 +182,17 @@
         <temperature Type="EntityTemperature">
           <enable>True</enable>
           <initialTemperature>-1</initialTemperature>
-          <coolingEqualizationMultiplier>500</coolingEqualizationMultiplier>
+          <coolingEqualizationParams Type="CoolingEqualizationRateAtTemperatureDifference">
+            <coolingEqualizationRate>3.75</coolingEqualizationRate>
+            <temperatureDifference>400</temperatureDifference>
+          </coolingEqualizationParams>
           <signatureParams Type="EntityTemperatureSignature">
             <enable>True</enable>
             <minimumTemperatureForIR>250</minimumTemperatureForIR>
             <temperatureToIR>92.4</temperatureToIR>
           </signatureParams>
           <itemResourceParams Type="EntityTemperatureItemResource">
+            <poweredAmbientCoolingMultiplier>1</poweredAmbientCoolingMultiplier>
             <minOperatingTemperature>0</minOperatingTemperature>
             <minCoolingTemperature>300</minCoolingTemperature>
             <enableOverheat>False</enableOverheat>
@@ -187,6 +202,7 @@
             <stateHeatGenerationValues Type="EntityTemperatureResourceHeatGeneration" Count="1">
               <EntityTemperatureResourceHeatGeneration Type="EntityTemperatureResourceHeatGeneration">
                 <state PointsTo="ptr:1" />
+                <resource>Power</resource>
                 <baselineTemperatureChange>12.5</baselineTemperatureChange>
               </EntityTemperatureResourceHeatGeneration>
             </stateHeatGenerationValues>
@@ -209,7 +225,7 @@
       </PhysType>
     </SEntityPhysicsControllerParams>
     <SHealthComponentParams Type="SHealthComponentParams">
-      <Health>2400</Health>
+      <Health>2100</Health>
       <DamageCap>0</DamageCap>
       <DamageResistances Type="DamageResistance">
         <IgnoreMeleeDamage>False</IgnoreMeleeDamage>
@@ -283,6 +299,7 @@
           <y>0</y>
           <z>1</z>
         </explosionUp>
+        <explosionZone>AdamHosted</explosionZone>
         <pressure>200</pressure>
         <holeSize>0</holeSize>
         <terrainHoleSize>3</terrainHoleSize>
@@ -301,9 +318,10 @@
         </damage>
         <flashbangParams />
         <shockwaveParams />
+        <fragmentParams />
         <hitType>explosion</hitType>
         <effect Type="GlobalResourceParticle">
-          <path>Environments\Generic\Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1</path>
+          <path>14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1</path>
         </effect>
         <failedEffect Type="GlobalResourceParticle">
           <path />
@@ -333,10 +351,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -384,13 +403,13 @@
               <consumption Type="ItemResourceDeltaAmount">
                 <resource>Coolant</resource>
                 <resourceAmountPerSecond Type="SStandardResourceUnit">
-                  <standardResourceUnits>23</standardResourceUnits>
+                  <standardResourceUnits>0</standardResourceUnits>
                 </resourceAmountPerSecond>
               </consumption>
               <consumptionComposition Type="ItemResourceComposition">
                 <values Type="ItemResourceCompositionValue" Count="0" />
               </consumptionComposition>
-              <dynamicAmountOverride />
+              <dynamicAmountOverride Type="ItemResourceDynamicAmountCoolant" />
             </ItemResourceDeltaConsumption>
           </deltas>
           <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="0" />
@@ -406,7 +425,23 @@
               <functionalityCurve />
             </IRSignature>
           </signatureParams>
-          <rangeParams Type="ResourceRangeParams" Count="0" />
+          <powerRanges Type="PowerRangeParams">
+            <low Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </low>
+            <medium Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </medium>
+            <high Type="ResourceRangeParams">
+              <start>0</start>
+              <modifier>1</modifier>
+              <registerRange>False</registerRange>
+            </high>
+          </powerRanges>
         </ItemResourceState>
       </states>
       <controlParameters Type="ItemResourceControlParameterBase" Count="0" />
@@ -414,6 +449,11 @@
       <defaultPriority>50</defaultPriority>
       <functionalityModifiers />
       <powerPlantOverride />
+      <selfRepair Type="ItemResourceSelfRepairParams">
+        <maxRepairCount>1</maxRepairCount>
+        <timeToRepair>127</timeToRepair>
+        <healthRatio>0.2</healthRatio>
+      </selfRepair>
     </ItemResourceComponentParams>
     <EntityComponentMisfireParams Type="EntityComponentMisfireParams">
       <itemLocId>@LOC_PLACEHOLDER</itemLocId>
@@ -427,7 +467,7 @@
           <distortion>0.6</distortion>
         </SMisfireStatCondition>
         <SMisfireCriticalItemStateCondition Type="SMisfireCriticalItemStateCondition">
-          <criticalConditions Type="SActorForceReactionStateConfig" Count="1">
+          <criticalConditions Type="ActorStateData_StateValidationParams" Count="1">
             <EnumChoice>Damage</EnumChoice>
           </criticalConditions>
           <misfireArray Type="SMisfireEffect" Count="1">
@@ -440,58 +480,23 @@
           <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="0" />
         </SMisfireLevelParams>
         <SMisfireLevelParams Type="SMisfireLevelParams">
-          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="1">
-            <SMisfireProbabilityParams Type="SMisfireProbabilityParams">
-              <weight>0.5</weight>
-              <misfireArray Type="SMisfireEffect" Count="1">
-                <SDamageMisfireEffect PointsTo="ptr:3" />
-              </misfireArray>
-            </SMisfireProbabilityParams>
-          </misfireProbabilityArray>
+          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="0" />
         </SMisfireLevelParams>
         <SMisfireLevelParams Type="SMisfireLevelParams">
-          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="2">
-            <SMisfireProbabilityParams Type="SMisfireProbabilityParams">
-              <weight>1</weight>
-              <misfireArray Type="SMisfireEffect" Count="1">
-                <SSpreadMisfireEffect PointsTo="ptr:4" />
-              </misfireArray>
-            </SMisfireProbabilityParams>
-            <SMisfireProbabilityParams Type="SMisfireProbabilityParams">
-              <weight>0.25</weight>
-              <misfireArray Type="SMisfireEffect" Count="1">
-                <SFireMisfireEffect PointsTo="ptr:5" />
-              </misfireArray>
-            </SMisfireProbabilityParams>
-          </misfireProbabilityArray>
+          <misfireProbabilityArray Type="SMisfireProbabilityParams" Count="0" />
         </SMisfireLevelParams>
       </misfireLevels>
-      <misfires Type="SMisfireEffect" Count="4">
-        <SSpreadMisfireEffect Pointer="ptr:4" Type="SSpreadMisfireEffect">
-          <effectTrigger />
-          <effectTag />
-        </SSpreadMisfireEffect>
-        <SDamageMisfireEffect Pointer="ptr:3" Type="SDamageMisfireEffect">
-          <effectTrigger />
-          <effectTag />
-          <damageValue Type="SMisfireDamageValue">
-            <health>15</health>
-          </damageValue>
-        </SDamageMisfireEffect>
-        <SFireMisfireEffect Pointer="ptr:5" Type="SFireMisfireEffect">
-          <effectTrigger />
-          <effectTag />
-        </SFireMisfireEffect>
+      <misfires Type="SMisfireEffect" Count="1">
         <SHostExplosionEffect Pointer="ptr:2" Type="SHostExplosionEffect">
           <effectTrigger />
           <effectTag />
-          <explosionChance>0.5</explosionChance>
-          <explosionCountdown>60</explosionCountdown>
-          <degradationAdditionalRollsFactor>10</degradationAdditionalRollsFactor>
+          <explosionChance>0.05</explosionChance>
+          <explosionCountdown>95.3</explosionCountdown>
+          <degradationAdditionalRollsFactor>0</degradationAdditionalRollsFactor>
           <criticalMalfunctionStates Type="SCriticalMalfunctionStates">
-            <safeState PointsTo="ptr:6" />
-            <selfDestructState PointsTo="ptr:7" />
-            <criticalMalfunctionState PointsTo="ptr:8" />
+            <safeState PointsTo="ptr:3" />
+            <selfDestructState PointsTo="ptr:4" />
+            <criticalMalfunctionState PointsTo="ptr:5" />
           </criticalMalfunctionStates>
         </SHostExplosionEffect>
       </misfires>
@@ -521,13 +526,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -541,9 +551,9 @@
       </accumulators>
     </SDegradationParams>
     <SDistortionParams Type="SDistortionParams">
-      <DecayDelay>5</DecayDelay>
-      <DecayRate>133.33</DecayRate>
-      <Maximum>40000</Maximum>
+      <DecayDelay>4.5</DecayDelay>
+      <DecayRate>666.6667</DecayRate>
+      <Maximum>10000</Maximum>
       <WarningRatio>0.75</WarningRatio>
       <RecoveryRatio>0</RecoveryRatio>
       <PowerRatioAtMaxDistortion>0</PowerRatioAtMaxDistortion>
@@ -553,8 +563,8 @@
       <show>True</show>
     </InteriorMapEntityVisiblityEntityComponentParams>
     <SCItemPowerPlantParams Type="SCItemPowerPlantParams">
-      <turnOnInteraction PointsTo="ptr:9" />
-      <turnOffInteraction PointsTo="ptr:10" />
+      <turnOnInteraction PointsTo="ptr:6" />
+      <turnOffInteraction PointsTo="ptr:7" />
     </SCItemPowerPlantParams>
     <EntityComponentPowerConnection Type="EntityComponentPowerConnection">
       <PowerBase>0</PowerBase>
@@ -727,7 +737,7 @@
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
         <SharedInteractions Type="SSharedInteractionParams" Count="2">
-          <SSharedInteractionParams Pointer="ptr:9" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
             <Name>EnablePowerPlant</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -746,7 +756,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:10" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:7" Type="SSharedInteractionParams">
             <Name>DisablePowerPlant</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -813,6 +823,8 @@
                 <z>0</z>
               </Position>
             </InteractionPromptOffset>
+            <PromptStyle>PromptAndText</PromptStyle>
+            <OverrideControlHintDescription>False</OverrideControlHintDescription>
             <InteractionPromptScale>1</InteractionPromptScale>
             <InteractionPromptLabelVerticalOffset>70</InteractionPromptLabelVerticalOffset>
             <InteractionPromptBound>EntityRoot</InteractionPromptBound>
@@ -847,6 +859,7 @@
       <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
       <LinkAllItemsToResourceNetwork>False</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>False</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="0" />
@@ -862,13 +875,14 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
               <StateName>Working</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -882,7 +896,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
               <StateName>Destroyed</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -893,6 +907,7 @@
                   <enable>False</enable>
                 </SendItemResourceNetworkedStateEvent>
               </EnterEventDispatchers>
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -911,12 +926,12 @@
             <SHealthStateModifier Type="SHealthStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:11" />
+                  <state PointsTo="ptr:8" />
                   <min>0.01</min>
                   <max>1</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:12" />
+                  <state PointsTo="ptr:9" />
                   <min>0</min>
                   <max>0.01</max>
                 </SRangeStateLevel>
@@ -928,17 +943,18 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>CriticalMalfunctionState</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:6" />
+          <DefaultState PointsTo="ptr:3" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="3">
-            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:3" Type="SInteractionState">
               <StateName>Safe</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -952,13 +968,14 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:4" Type="SInteractionState">
               <StateName>SelfDestruct</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -972,13 +989,14 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
               <StateName>CriticalMalfunction</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
@@ -997,5 +1015,49 @@
         </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
+    <SSCSignatureSystemParams Type="SSCSignatureSystemParams">
+      <bindingURLPrefix />
+      <radarProperties Type="SSCRadarContactProperites">
+        <contactType RecordReference="file://./../../../../../../../libs/foundry/records/radarsystem/radarcontacttypes.xml" RecordName="RadarContactTypeEntry.bdad3073-c7ad-425d-9542-30918962501f" RecordId="bdad3073-c7ad-425d-9542-30918962501f" />
+        <baseSignatureParams Type="SSCSignatureSystemBaseSignatureParams">
+          <signatures Type="ActivityBehaviorRequestCondition" Count="8">
+            <Single>0</Single>
+            <Single>10</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+            <Single>0</Single>
+          </signatures>
+          <signatureCategories Type="SSignaturesCategoryEntry" Count="0" />
+          <taggedSignatures Type="STaggedSignaturesEntry" Count="0" />
+        </baseSignatureParams>
+        <crossSectionParams />
+        <emissionModifierParams />
+        <deathParams />
+        <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
+      </radarProperties>
+      <audioParams />
+      <scanCustomData />
+      <embeddedScanInfo />
+      <scanDisplayLayoutOverride />
+      <detectionTags Type="Tag" Count="0" />
+      <isOverridden>False</isOverridden>
+      <overriddenSize Type="Vec3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </overriddenSize>
+      <enableDetectionOnItemPort>True</enableDetectionOnItemPort>
+      <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
+      <isObjectOfInterest>False</isObjectOfInterest>
+    </SSCSignatureSystemParams>
   </Components>
 </EntityClassDefinition.POWR_AEGS_S03_Centurion_SCItem>

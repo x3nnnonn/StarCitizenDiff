@@ -4,6 +4,11 @@
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
   <BBoxSelection>False</BBoxSelection>
+  <defaultEditorColor Type="RGB">
+    <r>1</r>
+    <g>1</g>
+    <b>0</b>
+  </defaultEditorColor>
   <entityDensityClass ReferencedFile="file://./../../../../../libs/foundry/records/densityclasses/spaceshipdensityclass.xml" />
   <tags Type="Tag" Count="10">
     <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.5f12dd31-4ff9-41a5-b5e2-916270351ba9" RecordId="5f12dd31-4ff9-41a5-b5e2-916270351ba9" />
@@ -279,13 +284,25 @@
       <DashboardCanvasConfig />
       <inventoryContainerParams ReferencedFile="file://./../../../../../libs/foundry/records/inventorycontainers/ships/orig_890jump_template.xml" />
       <spawnBoxScale>0.5</spawnBoxScale>
+      <landingOffset Type="Vec3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingOffset>
+      <landingRotationOffset Type="Ang3">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </landingRotationOffset>
+      <fusePenetrationDamageMultiplier>0.05</fusePenetrationDamageMultiplier>
+      <componentPenetrationDamageMultiplier>1</componentPenetrationDamageMultiplier>
     </VehicleComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
       <loadout Type="SItemPortLoadoutManualParams">
         <WearRange />
         <DirtRange />
         <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
-        <entries Type="SItemPortLoadoutEntryParams" Count="151">
+        <entries Type="SItemPortLoadoutEntryParams" Count="152">
           <SItemPortLoadoutEntryParams Type="SItemPortLoadoutEntryParams">
             <itemPortName>hardpoint_paint</itemPortName>
             <entityClassName />
@@ -2147,6 +2164,13 @@
             <inventoryContainer />
             <loadout />
           </SItemPortLoadoutEntryParams>
+          <SItemPortLoadoutEntryParams Type="SItemPortLoadoutEntryParams">
+            <itemPortName>hardpoint_engineering_screen</itemPortName>
+            <entityClassName />
+            <entityClassReference />
+            <inventoryContainer />
+            <loadout />
+          </SItemPortLoadoutEntryParams>
         </entries>
       </loadout>
     </SEntityComponentDefaultLoadoutParams>
@@ -3397,10 +3421,11 @@
       <InteractionLocks Type="SHealthInteractionLockParams" Count="0" />
       <IsSalvagable>True</IsSalvagable>
       <IsRepairable>True</IsRepairable>
+      <SalvageDamageModifier>1</SalvageDamageModifier>
       <MirrorSalvageHit>False</MirrorSalvageHit>
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
-      <shatterDestroyEvent />
+      <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
       <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
@@ -3433,7 +3458,11 @@
           </crossSection>
         </crossSectionParams>
         <emissionModifierParams />
+        <deathParams />
         <scanBounds />
+        <roomParams Type="SCSignatureSystemRoomParams">
+          <ignoreInteriorVsExteriorCheck>False</ignoreInteriorVsExteriorCheck>
+        </roomParams>
       </radarProperties>
       <audioParams Type="SSCSignatureSystemAudioParams">
         <rulesets Type="SSCSignatureSystemAudioRuleset" Count="0" />
@@ -3450,6 +3479,9 @@
       </overriddenSize>
       <enableDetectionOnItemPort>False</enableDetectionOnItemPort>
       <ignoreHighlightWhenDetectorInsideBounds>False</ignoreHighlightWhenDetectorInsideBounds>
+      <linkedObjectives Type="MissionObjective" Count="0" />
+      <ignoreHighlightWhenNoLinkedOrActiveObjectives>False</ignoreHighlightWhenNoLinkedOrActiveObjectives>
+      <priorityBoxoutTag />
       <isObjectOfInterest>False</isObjectOfInterest>
     </SSCSignatureSystemParams>
     <SSuperGUIDComponentParams Type="SSuperGUIDComponentParams" />
@@ -4779,6 +4811,11 @@
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
+      <meshsetup Type="SGeometryMeshsetupParams">
+        <visibilityTags Type="TagList">
+          <tags Type="Tag" Count="0" />
+        </visibilityTags>
+      </meshsetup>
       <Geometry Type="SGeometryNodeParams">
         <Tags />
         <Geometry Type="SGeometryDataParams">
@@ -5031,6 +5068,18 @@
       <placeTrigger Type="GlobalResourceAudio">
         <audioTrigger />
       </placeTrigger>
+      <tractorBeamPickupTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamPickupTrigger>
+      <tractorBeamDropTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </tractorBeamDropTrigger>
+      <detachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </detachBreakTrigger>
+      <playerCausedDetachBreakTrigger Type="GlobalResourceAudio">
+        <audioTrigger />
+      </playerCausedDetachBreakTrigger>
       <rtpcSlideVelocity Type="AudioRtpc">
         <rtpc>PhysicalAudio_Velocity_Vehicles</rtpc>
       </rtpcSlideVelocity>
@@ -5064,12 +5113,16 @@
       <rtpcCarried Type="AudioRtpc">
         <rtpc>PhysicalAudio_CarryState</rtpc>
       </rtpcCarried>
+      <rtpcSize Type="AudioRtpc">
+        <rtpc />
+      </rtpcSize>
       <minimumImpulseContinuous>10</minimumImpulseContinuous>
       <minimumImpulseTransient>5</minimumImpulseTransient>
       <minimumVelocityNoImpulse>100</minimumVelocityNoImpulse>
       <slideThreshold>0.1</slideThreshold>
       <rollThreshold>0.1</rollThreshold>
       <momentumScale>1</momentumScale>
+      <rollVelocityScale>1</rollVelocityScale>
       <useAABBCentre>False</useAABBCentre>
       <oneShotTag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.7f3a1138-ec2c-4dac-9c5a-2598090c79ec" RecordId="7f3a1138-ec2c-4dac-9c5a-2598090c79ec" />
       <oneShotCooldown>0.08</oneShotCooldown>
@@ -5101,16 +5154,19 @@
       <masterController Type="SItemPortMasterControllerParams">
         <Pipes Type="SEnergyPipeDefinition" Count="0" />
       </masterController>
-      <Ports Type="SItemPortDef" Count="49">
-        <SItemPortDef Type="SItemPortDef">
+      <Ports Type="SItemPortDef" Count="53">
+        <SItemPortDef Pointer="ptr:13" Type="SItemPortDef">
           <Name>hardpoint_controller_fuel</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5143,7 +5199,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>FuelController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5215,13 +5271,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_fuel_port</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>Ship_Dock_Refuel</PortTags>
           <RequiredPortTags />
           <Flags>dockingport1</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5254,7 +5313,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>DockingCollar</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5326,13 +5385,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_hangar_lift</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5365,7 +5427,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5415,13 +5477,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_hangar_door</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5454,7 +5519,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5502,15 +5567,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:16" Type="SItemPortDef">
           <Name>hardpoint_cargo_lift</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5543,7 +5611,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5591,15 +5659,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:17" Type="SItemPortDef">
           <Name>hardpoint_entrance_lift</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5632,7 +5703,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Door</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5680,15 +5751,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:1" Type="SItemPortDef">
           <Name>hardpoint_relay</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5721,7 +5795,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5769,15 +5843,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:2" Type="SItemPortDef">
           <Name>hardpoint_relay_2</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5810,7 +5887,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5858,15 +5935,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:3" Type="SItemPortDef">
           <Name>hardpoint_relay_3</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5899,7 +5979,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -5947,15 +6027,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:4" Type="SItemPortDef">
           <Name>hardpoint_relay_4</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -5988,7 +6071,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6036,15 +6119,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:5" Type="SItemPortDef">
           <Name>hardpoint_relay_5</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6077,7 +6163,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6125,15 +6211,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:6" Type="SItemPortDef">
           <Name>hardpoint_relay_6</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6166,7 +6255,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6214,15 +6303,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:7" Type="SItemPortDef">
           <Name>hardpoint_relay_7</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6255,7 +6347,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6303,15 +6395,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:8" Type="SItemPortDef">
           <Name>hardpoint_relay_8</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6344,7 +6439,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6392,15 +6487,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:9" Type="SItemPortDef">
           <Name>hardpoint_relay_9</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6433,7 +6531,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6481,15 +6579,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:10" Type="SItemPortDef">
           <Name>hardpoint_relay_10</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6522,7 +6623,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6570,15 +6671,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:11" Type="SItemPortDef">
           <Name>hardpoint_relay_11</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6611,7 +6715,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6659,15 +6763,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:12" Type="SItemPortDef">
           <Name>hardpoint_relay_12</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6700,7 +6807,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Relay</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6748,15 +6855,18 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:14" Type="SItemPortDef">
           <Name>hardpoint_lifesupport</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>4</MinSize>
           <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6834,13 +6944,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_paint</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags>Paint_890J</PortTags>
           <RequiredPortTags>Paint_890J</RequiredPortTags>
           <Flags>invisible </Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6873,7 +6986,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Paints</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -6923,13 +7036,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_01</Name>
-          <DisplayName>port_PDC_01</DisplayName>
+          <DisplayName>@itemPort_port_PDT_01</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -6979,7 +7095,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7051,13 +7167,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_01</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7122,7 +7241,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7194,13 +7313,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_01</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7265,7 +7387,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7337,13 +7459,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_01</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7376,6 +7501,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -7443,7 +7569,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7515,13 +7641,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_02</Name>
-          <DisplayName>port_PDC_02</DisplayName>
+          <DisplayName>@itemPort_port_PDT_02</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7571,7 +7700,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7643,13 +7772,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_02</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7714,7 +7846,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7786,13 +7918,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_02</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7857,7 +7992,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -7929,13 +8064,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_02</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -7968,6 +8106,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -8035,7 +8174,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8107,13 +8246,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_03</Name>
-          <DisplayName>port_PDC_03</DisplayName>
+          <DisplayName>@itemPort_port_PDT_03</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8163,7 +8305,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8235,13 +8377,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_03</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8306,7 +8451,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8378,13 +8523,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_03</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8449,7 +8597,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8521,13 +8669,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_03</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8560,6 +8711,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -8627,7 +8779,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8699,13 +8851,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_04</Name>
-          <DisplayName>port_PDC_04</DisplayName>
+          <DisplayName>@itemPort_port_PDT_04</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8755,7 +8910,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8827,13 +8982,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_04</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -8898,7 +9056,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -8970,13 +9128,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_04</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9041,7 +9202,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9113,13 +9274,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_04</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9152,6 +9316,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -9219,7 +9384,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9291,13 +9456,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_05</Name>
-          <DisplayName>port_PDC_05</DisplayName>
+          <DisplayName>@itemPort_port_PDT_05</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9347,7 +9515,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9419,13 +9587,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_05</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9490,7 +9661,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9562,13 +9733,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_05</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9633,7 +9807,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9705,13 +9879,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_05</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9744,6 +9921,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -9811,7 +9989,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -9883,13 +10061,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_06</Name>
-          <DisplayName>port_PDC_06</DisplayName>
+          <DisplayName>@itemPort_port_PDT_06</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -9939,7 +10120,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10011,13 +10192,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_06</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10082,7 +10266,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10154,13 +10338,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_06</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10225,7 +10412,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10297,13 +10484,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_06</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10336,6 +10526,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10403,7 +10594,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10475,13 +10666,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_07</Name>
-          <DisplayName>port_PDC_07</DisplayName>
+          <DisplayName>@itemPort_port_PDT_07</DisplayName>
           <PortTags>PDC</PortTags>
           <RequiredPortTags>$PDC</RequiredPortTags>
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>2</MinSize>
           <MaxSize>2</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10531,7 +10725,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Turret</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10603,13 +10797,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_WC_07</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10674,7 +10871,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>WeaponController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10746,13 +10943,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_MC_07</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>invisible uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10817,7 +11017,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>MissileController</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -10889,13 +11089,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>hardpoint_PDC_AIM_07</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags>uneditable</Flags>
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>1</MinSize>
           <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass />
@@ -10928,6 +11131,7 @@
               <observableGroups Type="SCItemObservableGroupParams" Count="1">
                 <SCItemObservableGroupParams Type="SCItemObservableGroupParams">
                   <itemType>MissileController</itemType>
+                  <tags Type="ActivityBehaviorRequestCondition" Count="0" />
                   <screens Type="SCItemObservableScreenParams" Count="0" />
                 </SCItemObservableGroupParams>
               </observableGroups>
@@ -10995,7 +11199,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>AIModule</Type>
-              <SubTypes Type="ActorStatusPreset" Count="0" />
+              <SubTypes Type="StatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -11067,13 +11271,16 @@
         </SItemPortDef>
         <SItemPortDef Type="SItemPortDef">
           <Name>engineeringBuff</Name>
-          <DisplayName />
+          <DisplayName>@LOC_EMPTY</DisplayName>
           <PortTags />
           <RequiredPortTags />
           <Flags />
           <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
           <MinSize>0</MinSize>
           <MaxSize>0</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
           <defaultItem Type="SItemPortDefaultItemDef">
             <itemPort />
             <entityClass ReferencedFile="file://./../../../../../libs/foundry/records/entities/scitem/ships/utility/engineering/engineering_buff_modifier_orig_890j.xml" />
@@ -11171,14 +11378,460 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
+        <SItemPortDef Pointer="ptr:15" Type="SItemPortDef">
+          <Name>hardpoint_engineering_screen</Name>
+          <DisplayName>@LOC_EMPTY</DisplayName>
+          <PortTags />
+          <RequiredPortTags />
+          <Flags />
+          <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
+          <MinSize>1</MinSize>
+          <MaxSize>1</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="0" />
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>ORIG_890Jump</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>40</x>
+                    <y>0</y>
+                    <z>-105</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>2.6306</x>
+                    <y>-42.73</y>
+                    <z>-10.8644</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>False</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
+        <SItemPortDef Type="SItemPortDef">
+          <Name>hardpoint_powerplant_01</Name>
+          <DisplayName>@LOC_EMPTY</DisplayName>
+          <PortTags />
+          <RequiredPortTags />
+          <Flags>uneditable invisible</Flags>
+          <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
+          <MinSize>4</MinSize>
+          <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="1">
+            <SItemPortDefTypes Type="SItemPortDefTypes">
+              <Type>PowerPlant</Type>
+              <SubTypes Type="StatusEffect" Count="0" />
+            </SItemPortDefTypes>
+          </Types>
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>hardpoint_powerplant_01</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>4</x>
+                    <y>4</y>
+                    <z>-4</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>False</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
+        <SItemPortDef Type="SItemPortDef">
+          <Name>hardpoint_cooler_left</Name>
+          <DisplayName>@LOC_EMPTY</DisplayName>
+          <PortTags />
+          <RequiredPortTags />
+          <Flags>uneditable invisible</Flags>
+          <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
+          <MinSize>4</MinSize>
+          <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="1">
+            <SItemPortDefTypes Type="SItemPortDefTypes">
+              <Type>Cooler</Type>
+              <SubTypes Type="StatusEffect" Count="0" />
+            </SItemPortDefTypes>
+          </Types>
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>hardpoint_cooler_left</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>0</x>
+                    <y>12</y>
+                    <z>6</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>False</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
+        <SItemPortDef Type="SItemPortDef">
+          <Name>hardpoint_cooler_right</Name>
+          <DisplayName>@LOC_EMPTY</DisplayName>
+          <PortTags />
+          <RequiredPortTags />
+          <Flags>uneditable invisible</Flags>
+          <Tags Type="Tag" Count="0" />
+          <OnAttachTags Type="Tag" Count="0" />
+          <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
+          <MinSize>4</MinSize>
+          <MaxSize>4</MaxSize>
+          <MaxAggregateAttachmentHeight>-1</MaxAggregateAttachmentHeight>
+          <defaultItem Type="SItemPortDefaultItemDef">
+            <itemPort />
+            <entityClass />
+            <childItems Type="SItemPortDefaultItemDef" Count="0" />
+          </defaultItem>
+          <gridBehavior>Both</gridBehavior>
+          <PitchLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </PitchLimit>
+          <YawLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </YawLimit>
+          <RollLimit Type="Vec2">
+            <x>0</x>
+            <y>0</y>
+          </RollLimit>
+          <InteractionPointSize>-1</InteractionPointSize>
+          <InteractionPointOffset Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </InteractionPointOffset>
+          <DefaultWeaponGroup>UNDEFINED</DefaultWeaponGroup>
+          <AttachmentPoints Type="SItemPortAttachmentPoints" Count="0" />
+          <controllableTag />
+          <control />
+          <Connections Type="SItemPortConnectionParam" Count="0" />
+          <Types Type="SItemPortDefTypes" Count="1">
+            <SItemPortDefTypes Type="SItemPortDefTypes">
+              <Type>Cooler</Type>
+              <SubTypes Type="StatusEffect" Count="0" />
+            </SItemPortDefTypes>
+          </Types>
+          <Extension />
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
+            <Helper Type="SItemPortDefHelperNode">
+              <Tags />
+              <Helper Type="SItemPortDefHelper">
+                <Name>hardpoint_cooler_right</Name>
+                <Offset Type="QuatT">
+                  <Rotation Type="Ang3">
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </Rotation>
+                  <Position Type="Vec3">
+                    <x>0</x>
+                    <y>12</y>
+                    <z>6</z>
+                  </Position>
+                </Offset>
+                <ItemOffsetHelperName />
+                <SimulationParams />
+              </Helper>
+              <SubHelpers Type="SItemPortDefHelperNode" Count="0" />
+            </Helper>
+          </AttachmentImplementation>
+          <Breakable Type="SItemPortBreakable">
+            <YoungsModulus>0</YoungsModulus>
+            <BreakStrain>0</BreakStrain>
+            <YieldStrain>0</YieldStrain>
+            <Breakable>False</Breakable>
+          </Breakable>
+          <interactions Type="SItemPortInteractionsParams">
+            <detach />
+            <allowPlaceInteractionFromInventory>False</allowPlaceInteractionFromInventory>
+            <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
+          </interactions>
+          <linkedItemPorts Type="SItemPortDef" Count="0" />
+          <resourceLinkToParent>False</resourceLinkToParent>
+          <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
+          <itemPortRules Type="SItemPortRuleDef" Count="0" />
+          <detachDirection Type="Vec3">
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+          </detachDirection>
+        </SItemPortDef>
       </Ports>
       <PortFlags />
       <PortTags>ORIG_890Jump</PortTags>
       <RequiredItemTags />
-      <InternalResourceLinks Type="SInternalResourceLink" Count="0" />
-      <InternalHardpointLinks Type="SInternalHardpointLink" Count="0" />
+      <InternalResourceLinks Type="SInternalResourceLink" Count="16">
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:1" />
+          <port2 PointsTo="ptr:2" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:2" />
+          <port2 PointsTo="ptr:3" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:3" />
+          <port2 PointsTo="ptr:4" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:4" />
+          <port2 PointsTo="ptr:5" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:5" />
+          <port2 PointsTo="ptr:6" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:6" />
+          <port2 PointsTo="ptr:7" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:7" />
+          <port2 PointsTo="ptr:8" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:8" />
+          <port2 PointsTo="ptr:9" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:9" />
+          <port2 PointsTo="ptr:10" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:10" />
+          <port2 PointsTo="ptr:11" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:11" />
+          <port2 PointsTo="ptr:12" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:13" />
+          <port2 PointsTo="ptr:1" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:14" />
+          <port2 PointsTo="ptr:1" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:15" />
+          <port2 PointsTo="ptr:8" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:16" />
+          <port2 PointsTo="ptr:1" />
+        </SInternalResourceLink>
+        <SInternalResourceLink Type="SInternalResourceLink">
+          <port1 PointsTo="ptr:17" />
+          <port2 PointsTo="ptr:1" />
+        </SInternalResourceLink>
+      </InternalResourceLinks>
+      <InternalHardpointLinks Type="SInternalHardpointLink" Count="4">
+        <SInternalHardpointLink Type="SInternalHardpointLink">
+          <port1>hardpoint_relay</port1>
+          <port2>hardpoint_powerplant_01</port2>
+        </SInternalHardpointLink>
+        <SInternalHardpointLink Type="SInternalHardpointLink">
+          <port1>hardpoint_relay</port1>
+          <port2>hardpoint_cooler_left</port2>
+        </SInternalHardpointLink>
+        <SInternalHardpointLink Type="SInternalHardpointLink">
+          <port1>hardpoint_relay</port1>
+          <port2>hardpoint_cooler_right</port2>
+        </SInternalHardpointLink>
+        <SInternalHardpointLink Type="SInternalHardpointLink">
+          <port1>hardpoint_relay</port1>
+          <port2>hardpoint_shield_generator_left</port2>
+        </SInternalHardpointLink>
+      </InternalHardpointLinks>
       <LinkAllItemsToResourceNetwork>True</LinkAllItemsToResourceNetwork>
       <cheatResourceNetworkUpdate>False</cheatResourceNetworkUpdate>
+      <doorsIgnorePower>True</doorsIgnorePower>
       <destroyEntitiesOnItemportList Type="SItemPortDef" Count="0" />
       <resourceNetworkPowerPools Type="ResourceNetworkPowerPoolSetup">
         <itemPools Type="PowerPool" Count="8">
@@ -11188,21 +11841,27 @@
           </FixedPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>Shield</itemType>
+            <maxItemCount>2</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>FlightController</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>TractorBeam</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>TowingBeam</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>WeaponMining</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <DynamicPowerPool Type="DynamicPowerPool">
             <itemType>SalvageHead</itemType>
+            <maxItemCount>-1</maxItemCount>
           </DynamicPowerPool>
           <PowerPool />
         </itemPools>
@@ -11236,7 +11895,88 @@
     </LegalRegistrationComponentParams>
     <RangeEventDispatcherComponentParams Type="RangeEventDispatcherComponentParams" />
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="0" />
+      <StateTypes Type="SInteractionStateType" Count="1">
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>Engineering State</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState />
+          <asopReset>False</asopReset>
+          <networkAuthority>Local</networkAuthority>
+          <States Type="SInteractionState" Count="3">
+            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
+              <StateName>Normal</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4618d2e7-da8f-4efa-86e8-b46f17ef1782" RecordId="4618d2e7-da8f-4efa-86e8-b46f17ef1782" />
+                </tags>
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
+              <StateName>Aux/Warning</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="2">
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.9532d63b-ccf1-44ec-a7cb-ee33a48b4fe7" RecordId="9532d63b-ccf1-44ec-a7cb-ee33a48b4fe7" />
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.2adc6204-38a1-4285-9d4e-64e4047b37c4" RecordId="2adc6204-38a1-4285-9d4e-64e4047b37c4" />
+                </tags>
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
+              <StateName>Critical</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="1">
+                  <Tag RecordReference="file://./../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.4f631b3d-0f77-4d59-9105-4d565be46532" RecordId="4f631b3d-0f77-4d59-9105-4d565be46532" />
+                </tags>
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="0" />
+        </SInteractionStateType>
+      </StateTypes>
     </SInteractionStateMachineParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="0" />
@@ -11452,13 +12192,18 @@
           <UseAsTimer>False</UseAsTimer>
           <InitialAgeRatio>0</InitialAgeRatio>
           <InitialUsageRatio>0</InitialUsageRatio>
-          <BasePowerMultiplier>0</BasePowerMultiplier>
-          <DrawPowerMultiplier>0</DrawPowerMultiplier>
           <AtmosphereMultiplier>1.5</AtmosphereMultiplier>
           <HeatMultipliers Type="HeatDegradation">
             <NormalTemperatureMultiplier>1</NormalTemperatureMultiplier>
             <OverheatTemperatureMultiplier>1</OverheatTemperatureMultiplier>
           </HeatMultipliers>
+          <FunctionalityMultiplier Type="FunctionalityDegradation">
+            <FunctionalityMultiplyCurve Type="BezierCurve">
+              <points Type="Vec2" Count="0" />
+              <useLUT>False</useLUT>
+            </FunctionalityMultiplyCurve>
+            <UsePowerRatio>True</UsePowerRatio>
+          </FunctionalityMultiplier>
           <DamageConversionRate>0.01</DamageConversionRate>
           <EffectCurve Type="BezierCurve">
             <points Type="Vec2" Count="0" />
@@ -11485,14 +12230,15 @@
       </adapters>
     </AINavigationDynamicTriggerComponent>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="SRadarSenseComponentParams" Count="2">
+      <perceptionTypes Type="ActorStatusUIWarning" Count="2">
         <EnumChoice>Vehicle</EnumChoice>
         <EnumChoice>Spaceship</EnumChoice>
       </perceptionTypes>
-      <excludedSenses Type="SHearingComponentParams" Count="0" />
+      <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
+      <excludedSenses Type="ActorStatusPreset" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="0" />
-      <defaultEntityObservablePoint />
-      <defaultAimingObservablePoint />
+      <visionObservablePointOrdering Type="SObservablePointDef" Count="0" />
+      <aimingObservablePointOrdering Type="SObservablePointDef" Count="0" />
       <observableExtensions Type="IObservableExtender" Count="1">
         <AudioObservableExtender Type="AudioObservableExtender">
           <hearingRadiusAtFullStrength>800</hearingRadiusAtFullStrength>
@@ -11515,7 +12261,11 @@
     <AnnunciatorProviderParams Type="AnnunciatorProviderParams">
       <shotAlertTime>1</shotAlertTime>
     </AnnunciatorProviderParams>
-    <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams" />
+    <EntityComponentResourceNetworkUIProviderParams Type="EntityComponentResourceNetworkUIProviderParams">
+      <normalState PointsTo="ptr:18" />
+      <auxState PointsTo="ptr:19" />
+      <criticalState PointsTo="ptr:20" />
+    </EntityComponentResourceNetworkUIProviderParams>
     <AtmosphericFlightDataParams Type="AtmosphericFlightDataParams" />
     <PositionTrackerComponentParams Type="PositionTrackerComponentParams" />
     <SubsumptionPlatformComponentParams Type="SubsumptionPlatformComponentParams">
