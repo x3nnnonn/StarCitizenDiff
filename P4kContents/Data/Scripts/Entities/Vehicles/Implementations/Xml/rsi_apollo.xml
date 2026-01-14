@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<Vehicle name="rsi_apollo" HudPaletteScheme="RSI" landingOffset="0,0,-7.5">
+<Vehicle name="rsi_apollo" HudPaletteScheme="RSI">
   <Physics pushable="0" dampingFreefall="0">
     <Buoyancy waterDensity="15" waterResistance="250" />
     <Simulation maxTimeStep="0.02" minEnergy="0.16" maxLoggedCollisions="2" />
@@ -177,7 +177,7 @@
               </ItemPort>
             </Part>
             <Part name="hardpoint_turret" class="ItemPort">
-              <ItemPort minsize="3" maxsize="3" flags="$uneditable" display_name="hardpoint_remote_turret_top">
+              <ItemPort minsize="3" maxsize="3" flags="$uneditable" display_name="itemPort_hardpoint_remote_turret_top">
                 <Types>
                   <Type type="Turret" subtypes="TopTurret" />
                 </Types>
@@ -367,6 +367,7 @@
                   <Type type="ToolArm" />
                 </Types>
               </ItemPort>
+              <ControllerDef controllableTags="tractorStation" />
             </Part>
             <Part name="hardpoint_cargo_left_hermes" class="ItemPort">
               <ItemPort minsize="1" maxsize="1" flags="selfphys uneditable">
@@ -586,10 +587,10 @@
                           <PriorityGroup itemType="SalvageController" defaultPriority="no_control" />
                           <PriorityGroup itemType="WeaponController" defaultPriority="no_control">
                             <tags tag="coPilotSeat">
-                              <Priority value="9" />
+                              <Priority value="10" />
                             </tags>
                           </PriorityGroup>
-                          <PriorityGroup itemType="FlightController" defaultPriority="75" id="modFlightcontrol" />
+                          <PriorityGroup itemType="FlightController" defaultPriority="10" />
                           <PriorityGroup itemType="QuantumDrive" />
                           <PriorityGroup itemType="JumpDrive" />
                           <PriorityGroup itemType="LandingSystem" />
@@ -766,8 +767,16 @@
                     <ControllerDef controllableTags="pilotSeat">
                       <UsableDef>
                         <PriorityGroups>
-                          <PriorityGroup itemType="Turret" />
-                          <PriorityGroup itemType="WeaponGun" />
+                          <PriorityGroup itemType="Turret" defaultPriority="10">
+                            <tags tag="pilotSeat">
+                              <Priority value="100" />
+                            </tags>
+                          </PriorityGroup>
+                          <PriorityGroup itemType="WeaponGun" defaultPriority="10">
+                            <tags tag="pilotSeat">
+                              <Priority value="100" />
+                            </tags>
+                          </PriorityGroup>
                           <PriorityGroup itemType="WeaponDefensive" />
                         </PriorityGroups>
                       </UsableDef>
@@ -825,8 +834,16 @@
                     <ControllerDef controllableTags="coPilotSeat">
                       <UsableDef>
                         <PriorityGroups>
-                          <PriorityGroup itemType="Turret" />
-                          <PriorityGroup itemType="WeaponGun" />
+                          <PriorityGroup itemType="Turret" defaultPriority="10">
+                            <tags tag="coPilotSeat">
+                              <Priority value="100" />
+                            </tags>
+                          </PriorityGroup>
+                          <PriorityGroup itemType="WeaponGun" defaultPriority="10">
+                            <tags tag="coPilotSeat">
+                              <Priority value="100" />
+                            </tags>
+                          </PriorityGroup>
                         </PriorityGroups>
                       </UsableDef>
                     </ControllerDef>
@@ -1922,7 +1939,6 @@
                 <ControllerDef controllableTags="tractorStation">
                   <UserDef>
                     <Observerables>
-                      <Observerable itemType="LightController" screensDefault="empty" screensAvail="NotUsed_LightController" />
                       <Observerable itemType="Seat" screensDefault="geo_screen" screensAvail="geo_screen" />
                       <Observerable itemType="Radar" screensDefault="geo_screen" screensAvail="geo_screen" />
                       <Observerable itemType="EnergyController" screensDefault="geo_screen" screensAvail="geo_screen" />
@@ -1932,7 +1948,6 @@
                       <Observerable itemType="SalvageController" screensDefault="empty" screensAvail="Flight_HUD" />
                     </Observerables>
                     <PriorityGroups>
-                      <PriorityGroup itemType="LightController" />
                       <PriorityGroup itemType="EnergyController" defaultPriority="observe_only" />
                       <PriorityGroup itemType="CommsController" />
                       <PriorityGroup itemType="SalvageController" defaultPriority="100" />
@@ -1989,7 +2004,7 @@
                 <ControllerDef controllableTags="tractorStation">
                   <UsableDef>
                     <PriorityGroups>
-                      <PriorityGroup itemType="Turret" subtypes="Utility" />
+                      <PriorityGroup itemType="UtilityTurret" />
                     </PriorityGroups>
                   </UsableDef>
                 </ControllerDef>
@@ -2064,7 +2079,6 @@
         <Elem idRef="modPaint" name="requiredTags" value="Paint_Hermes" />
         <Elem idRef="modModuleLeft" name="skipPart" value="1" />
         <Elem idRef="modModuleRight" name="skipPart" value="1" />
-        <Elem idRef="modFlightcontrol" name="defaultPriority" value="observe_only" />
         <Elem idRef="modTractorTurret" name="skipPart" value="0" />
         <Elem idRef="modTractorStation" name="skipPart" value="0" />
         <Elem idRef="modTractorSeatAccess" name="skipPart" value="0" />
