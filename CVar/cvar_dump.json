@@ -4006,7 +4006,7 @@
   {
     "name": "capture_image_scale",
     "type": "FLOAT",
-    "value": 720,
+    "value": 0.4,
     "description": "Image size. [0-1] = scale value. >1 = actual pixels for image width",
     "flags": "0x0"
   },
@@ -5840,7 +5840,7 @@
   {
     "name": "e_DamageMap_GameToShaderConversion",
     "type": "FLOATVAR",
-    "value": 0.004,
+    "value": 0.002,
     "description": "Multiplier that acts on all 4 damage types from gameplay values.",
     "flags": "0x0"
   },
@@ -5852,10 +5852,24 @@
     "flags": "0x0"
   },
   {
-    "name": "e_DamageMap_ImpactSizeExponent",
+    "name": "e_DamageMap_ImpactRadiusOverride",
     "type": "FLOATVAR",
-    "value": 1,
-    "description": "How much of the damage force is reduced by impact radius.",
+    "value": 0,
+    "description": "Overrides radius of all impacts when non-zero.",
+    "flags": "0x0"
+  },
+  {
+    "name": "e_DamageMap_ImpactSizeExponentMinPixel",
+    "type": "FLOATVAR",
+    "value": 2,
+    "description": "Power value to use when impacts need to be scaled up to fit the minimum damage map texel size.",
+    "flags": "0x0"
+  },
+  {
+    "name": "e_DamageMap_ImpactSizeExponentWeapons",
+    "type": "FLOATVAR",
+    "value": 2,
+    "description": "Power value to use when converting weapon damage to per-texel (surface-area) damage. A value of 2 would be physically based, but gameplay tends to want a more linear scaling",
     "flags": "0x0"
   },
   {
@@ -5870,6 +5884,13 @@
     "type": "INTVAR",
     "value": 0,
     "description": "Enables the ability to load damage maps from a previous version for the purpose of converting to the newer format!0 - Disabled\n1 - Enabled",
+    "flags": "0x0"
+  },
+  {
+    "name": "e_DamageMap_LogHitAdjustments",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "Outputs the various multipliers that are applied to each weapon impact",
     "flags": "0x0"
   },
   {
@@ -5898,6 +5919,20 @@
     "type": "INTVAR",
     "value": 2400,
     "description": "only render PBM if mesh was rendered within the last N frames.",
+    "flags": "0x0"
+  },
+  {
+    "name": "e_DamageMap_RandomImpactDamage",
+    "type": "FLOATVAR",
+    "value": 0.35,
+    "description": "Percentage of damage that is randomly added/subtracted per hit.",
+    "flags": "0x0"
+  },
+  {
+    "name": "e_DamageMap_RandomImpactSize",
+    "type": "FLOATVAR",
+    "value": 0.2,
+    "description": "Percentage of radius that is randomly added/subtracted per hit.",
     "flags": "0x0"
   },
   {
@@ -5943,6 +5978,13 @@
     "flags": "0x0"
   },
   {
+    "name": "e_DamageMap_VolumeThreshold",
+    "type": "FLOATVAR",
+    "value": 0.1,
+    "description": "For impacts larger than the target they are affecting, a scaling is applied that is proportional to how much smaller the target is than the impact. This threshold controls the strength of that scaling (0 = impacts will never do any damage, 1 = the impacts scale directly with the size ratio between the target and the impact).",
+    "flags": "0x0"
+  },
+  {
     "name": "e_DebugDraw",
     "type": "INTVAR",
     "value": 0,
@@ -5962,20 +6004,6 @@
     "value": "",
     "description": "Show a specified text on DebugDraw",
     "flags": "0x0"
-  },
-  {
-    "name": "e_DebugDrawListBBoxIndex",
-    "type": "INTVAR",
-    "value": 0,
-    "description": "enables BBOX drawing for the 'n' element of the DebugDrawList (starting by 1.   0 = no bbox drawing).",
-    "flags": "0x10000000"
-  },
-  {
-    "name": "e_DebugDrawListSize",
-    "type": "INTVAR",
-    "value": 24,
-    "description": "num objects in the list for e_DebugDraw list infodebug",
-    "flags": "0x10000000"
   },
   {
     "name": "e_DebugDrawShowOnlyCompound",
@@ -9329,34 +9357,6 @@
     "value": 0,
     "description": "If enabled, shows on screen information for the emotion component",
     "flags": "0x0"
-  },
-  {
-    "name": "ec_harvestable.debug_OC_metadata",
-    "type": "INTVAR",
-    "value": 1,
-    "description": "Debugs harvestable OC slot metadata near the player. Useful in editor when working with levels with nested harvestable slots.\n0: off completely\n1: previews on in edit mode, off in game mode\n2: previews on at all times\n3: previews and extra debug info on at all times",
-    "flags": "0x4"
-  },
-  {
-    "name": "ec_harvestable.debug_OC_slots",
-    "type": "INTVAR",
-    "value": 0,
-    "description": "Debugs harvestable OC slots near the player.\n1: filled slots\n2: empty slots\n3: all slots",
-    "flags": "0x4"
-  },
-  {
-    "name": "ec_harvestable.debug_OC_slots_distance",
-    "type": "INTVAR",
-    "value": 20000,
-    "description": "Distance in meters to show harvestable OCs when using debug_OC_slots. Use the Harvestable slots debugGUI for tagpoint distance filter.",
-    "flags": "0x84"
-  },
-  {
-    "name": "ec_harvestable.debug_OC_slots_streaming",
-    "type": "INTVAR",
-    "value": 0,
-    "description": "If > 0, shows extra information related to Zones and Streaming Groups when using debug_OC_slots.",
-    "flags": "0x4"
   },
   {
     "name": "ec_harvestable.debug_analytics",
@@ -13085,7 +13085,7 @@
   {
     "name": "g_PlanetEnableLegacyCPUTerrainElevation",
     "type": "INTVAR",
-    "value": 0,
+    "value": 1,
     "description": "Use old CPU displaced terrain geometry",
     "flags": "0x0"
   },
@@ -16541,6 +16541,13 @@
     "flags": "0x100000C0"
   },
   {
+    "name": "g_freight_elevator.cleanUpUnownedEntities",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "0 - During bad state recovery, if a valid inventory can't be found then entities on the platform will be left where they are. 1 - Such items will be deleted",
+    "flags": "0x100000C0"
+  },
+  {
     "name": "g_freight_elevator.duplicate_item_in_warehouse_view",
     "type": "INTVAR",
     "value": 0,
@@ -16581,6 +16588,13 @@
     "value": 60,
     "description": "Amount of time that need to be elapsed in the same sate before the kiosk is considered stalled and initiate bad sate recovery",
     "flags": "0xC0"
+  },
+  {
+    "name": "g_freight_elevator.writeOverValidLocations",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "0 - Once a valid location has been serialized, it won't be changed. 1 - location will be re-fetched on every authority change",
+    "flags": "0x100000C0"
   },
   {
     "name": "g_friendManager.friendRequests",
@@ -17157,11 +17171,18 @@
     "flags": "0x600"
   },
   {
+    "name": "g_headtracking_hmd_cursorFollowsHead",
+    "type": "FLOATVAR",
+    "value": 0,
+    "description": "If on the stereo cursor follows the head motion",
+    "flags": "0x0"
+  },
+  {
     "name": "g_headtracking_hmd_cursorOffsetSensitivity",
     "type": "FLOATVAR",
-    "value": 1,
+    "value": 2,
     "description": "How much using the mouse offsets the camera ray",
-    "flags": "0x10000000"
+    "flags": "0x0"
   },
   {
     "name": "g_headtracking_hmd_cursorRange",
@@ -17175,7 +17196,7 @@
     "type": "FLOATVAR",
     "value": 1,
     "description": "Size of the stereo cursor rendered at the raycasts hitpoint",
-    "flags": "0x10000000"
+    "flags": "0x0"
   },
   {
     "name": "g_headtracking_hmd_cursorUseAuxGeom",
@@ -17185,10 +17206,31 @@
     "flags": "0x10000000"
   },
   {
+    "name": "g_headtracking_hmd_cursorUseEyeTracking",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "If enabled uses eye tracking for the stereo cursor",
+    "flags": "0x0"
+  },
+  {
+    "name": "g_headtracking_hmd_fpsAdsDominantEye",
+    "type": "INTVAR",
+    "value": 1,
+    "description": "Sets which eye is used for ADS during FPS: \n0: Left eye. \n1: Right eye.",
+    "flags": "0x0"
+  },
+  {
     "name": "g_headtracking_hmd_fpsMovementMode",
     "type": "INTVAR",
     "value": 1,
     "description": "Sets the mode of motion when walking around: \nMode 0: Simple VR offsets on the current look direction. When you look to the side while aiming up you however not have a 'grounded' rotation. Feels less stable. \nMode 1: VR offsets are applied to a grounded look direction. During walking you will only yaw, aim will pitch independently. Feels very stable.",
+    "flags": "0x0"
+  },
+  {
+    "name": "g_headtracking_hmd_fpsMovementModeAdsDirectOffset",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "Sets the mode of motion when walking around within ADS: \nMode 1: Simple VR offsets on the current look direction. When you look to the side while aiming up you however not have a 'grounded' rotation. Feels less stable.",
     "flags": "0x0"
   },
   {
@@ -22759,7 +22801,7 @@
   {
     "name": "i_ports_allow_place_from_inventory",
     "type": "INTVAR",
-    "value": 0,
+    "value": 1,
     "description": "Allow the place from inventory feature of the itemports",
     "flags": "0x10000000"
   },
@@ -31467,7 +31509,7 @@
   {
     "name": "pl_mobiglas_offset_y",
     "type": "FLOATVAR",
-    "value": -0.17,
+    "value": 0.1,
     "description": "offset of the menu from the mobiGlas position y",
     "flags": "0x0"
   },
@@ -33170,6 +33212,20 @@
     "type": "INTVAR",
     "value": 15,
     "description": "Memory budget for GPU-skinning projected effect output buffers in MiB.\n",
+    "flags": "0x4"
+  },
+  {
+    "name": "r.D3D12DebugValidation",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "Enables Validation layer for the D3D12 Device",
+    "flags": "0x4"
+  },
+  {
+    "name": "r.DXGIDebugValidation",
+    "type": "INTVAR",
+    "value": 0,
+    "description": "Enables Validation layer for DXGI calls",
     "flags": "0x4"
   },
   {
@@ -39174,7 +39230,7 @@
   {
     "name": "r_ShaderEmailTags",
     "type": "STRING",
-    "value": "Build Version: 4.6.168.18850; Stream: sc-alpha-4.6.0; ShaderCacheGen: False",
+    "value": "Build Version: 4.6.169.49321; Stream: sc-alpha-4.6.0; ShaderCacheGen: False",
     "description": "Adds optional tags to shader error emails e.g. own name or build run\nUsage: r_ShaderEmailTags \"some set of tags or text\" \nDefault is build version",
     "flags": "0x2000"
   },
@@ -39888,7 +39944,7 @@
   {
     "name": "r_Unlit",
     "type": "INTVAR",
-    "value": 1,
+    "value": 0,
     "description": "Render just diffuse texture with no lighting (for most materials).",
     "flags": "0x0"
   },
@@ -40892,6 +40948,13 @@
     "value": 2,
     "description": "The minimum humidity override to output when the planet weather system outputs rain values",
     "flags": "0x4"
+  },
+  {
+    "name": "rm_subgraph_connection_cache_depth",
+    "type": "INTVAR",
+    "value": 2,
+    "description": "Maximum depth of subgraph connections to cache.",
+    "flags": "0x40"
   },
   {
     "name": "s_AreaQueryMaxDistance",
@@ -42658,6 +42721,20 @@
     "flags": "0x400"
   },
   {
+    "name": "sys.OpenXR.Layer.DisableMotionCompensation",
+    "type": "INTVAR",
+    "value": 1,
+    "description": "Disables the motion compensation layer which is known to cause issues with star citizen VR\n",
+    "flags": "0x400"
+  },
+  {
+    "name": "sys.OpenXR.Layer.DisableOpenXRToolkit",
+    "type": "INTVAR",
+    "value": 1,
+    "description": "Disables the openxr toolkit layer which is known to cause issues with star citizen VR\n",
+    "flags": "0x400"
+  },
+  {
     "name": "sys.OpenXR.loaderDebug",
     "type": "INTVAR",
     "value": 0,
@@ -42954,7 +43031,7 @@
   {
     "name": "sys_asserts",
     "type": "INTVAR",
-    "value": 4,
+    "value": 1,
     "description": "Assert modes:\n0 = Only log callstacks in the game log. No assert dialog will be presented.\n1 = Enable asserts (assert dialog + logging callstacks in the game log)\n2 = (Deprecated) Same as 0.\n3 = Treat assert as Fatal Error.\n4 = Handle assert via Trace Pipeline.",
     "flags": "0x10000000"
   },
@@ -43409,7 +43486,7 @@
   {
     "name": "sys_min_step",
     "type": "FLOAT",
-    "value": 0.25,
+    "value": -0.15,
     "description": "Specifies the minimum physics step in a separate thread",
     "flags": "0x0"
   },
@@ -43668,7 +43745,7 @@
   {
     "name": "system.asserts.mode",
     "type": "INTVAR",
-    "value": 4,
+    "value": 1,
     "description": "Assert modes:\n0 = Only log callstacks in the game log. No assert dialog will be presented.\n1 = Enable asserts (assert dialog + logging callstacks in the game log)\n2 = (Deprecated) Same as 0.\n3 = Treat assert as Fatal Error.\n4 = Handle assert via Trace Pipeline.",
     "flags": "0x10000000"
   },
@@ -45801,6 +45878,13 @@
     "flags": "0x80"
   },
   {
+    "name": "v_armor_max_effectiveness",
+    "type": "FLOATVAR",
+    "value": 0.75,
+    "description": "Sets the maximum percentage of damage absorbed by armor when at full health, with the remainder passed onto the hull and damage map system.",
+    "flags": "0x4"
+  },
+  {
     "name": "v_autopilot.debug_action",
     "type": "INTVAR",
     "value": 0,
@@ -47542,6 +47626,13 @@
     "value": 0,
     "description": "Set as player option. If set to 1 we will not change the inputs so that the ship follows the VJoy cursor.",
     "flags": "0x0"
+  },
+  {
+    "name": "v_lamp.ev_amplification",
+    "type": "INTVAR",
+    "value": 8,
+    "description": "Amplificate scene luminance by this EV amount",
+    "flags": "0x4"
   },
   {
     "name": "v_landingSystem.areaGeom.debugLandingUI",
