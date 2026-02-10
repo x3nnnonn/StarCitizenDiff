@@ -2,7 +2,7 @@
 <PlayerChoice_PITConfig.PlayerChoicePersonalThought RecordId="e27ecc74-a18c-4758-9cb6-b2c97822fd24" Type="PlayerChoice_PITConfig">
   <maxMenuSize>8</maxMenuSize>
   <showDisabledActions>False</showDisabledActions>
-  <cameraEffects Type="PersonalThoughtCameraEffectsParams" Count="5">
+  <cameraEffects Type="PersonalThoughtCameraEffectsParams" Count="6">
     <PersonalThoughtCameraEffectsParams Type="PersonalThoughtCameraEffectsParams">
       <openingDelay>0</openingDelay>
       <closingDelay>0</closingDelay>
@@ -32,6 +32,12 @@
       <closingDelay>0</closingDelay>
       <backgroundExposure>-3</backgroundExposure>
       <dynamicCameraEffectsRecord ReferencedFile="file://./../../../../libs/foundry/records/dynamiccameraeffects/personallootingdefault.xml" />
+    </PersonalThoughtCameraEffectsParams>
+    <PersonalThoughtCameraEffectsParams Type="PersonalThoughtCameraEffectsParams">
+      <openingDelay>0</openingDelay>
+      <closingDelay>0</closingDelay>
+      <backgroundExposure>-3</backgroundExposure>
+      <dynamicCameraEffectsRecord />
     </PersonalThoughtCameraEffectsParams>
   </cameraEffects>
   <forceCloseActions Type="PersonalThoughtForceCloseActionsParams">
@@ -225,9 +231,10 @@
     </color>
     <occludedAlpha>1</occludedAlpha>
     <outlineWidth>1</outlineWidth>
-    <outlineOnly>True</outlineOnly>
-    <tintObject>True</tintObject>
+    <outlineOnly>False</outlineOnly>
+    <tintObject>False</tintObject>
   </softAttachColourParams>
+  <inventoryCameraConfig ReferencedFile="file://./../../../../libs/foundry/records/cameras/playerinventorycamerav4.xml" />
   <root Type="PersonalThoughtCategoryAction">
     <text>@ui_none</text>
     <description>@LOC_EMPTY</description>
@@ -573,17 +580,23 @@
   <inventoryParams Type="PersonalThoughtInventoryParams">
     <proximityDetectionParams Type="ProximityInventoryDetectionParams">
       <filterTags Type="TagsDNF">
-        <terms Type="TagsDNFTerm" Count="1">
+        <terms Type="TagsDNFTerm" Count="2">
           <TagsDNFTerm Type="TagsDNFTerm">
             <positiveTags Type="Tag" Count="1">
               <Tag RecordReference="file://./../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.039eb697-7307-409b-a176-a778de49a613" RecordId="039eb697-7307-409b-a176-a778de49a613" />
             </positiveTags>
             <negativeTags Type="Tag" Count="0" />
           </TagsDNFTerm>
+          <TagsDNFTerm Type="TagsDNFTerm">
+            <positiveTags Type="Tag" Count="1">
+              <Tag RecordReference="file://./../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.57884827-52f2-41fb-9e95-8ea5b769caf0" RecordId="57884827-52f2-41fb-9e95-8ea5b769caf0" />
+            </positiveTags>
+            <negativeTags Type="Tag" Count="0" />
+          </TagsDNFTerm>
         </terms>
       </filterTags>
-      <zoneQueryRadius>2</zoneQueryRadius>
-      <maxHeightStep>1.25</maxHeightStep>
+      <zoneQueryRadius>3</zoneQueryRadius>
+      <maxHeightStep>1.75</maxHeightStep>
     </proximityDetectionParams>
     <lootingScreenParams Type="PersonalThoughtLootingScreenParams">
       <itemPortClasses Type="LootingItemPortSizeClass" Count="1">
@@ -603,8 +616,19 @@
       </itemPortClasses>
       <lootingInventoryParams Type="LootingInventoryParams">
         <defaultTabIconPath>UI/Textures/General/Markers/marker_icon_storage.svg</defaultTabIconPath>
-        <tabParams Type="LootingTabParams" Count="3">
+        <groupSubTabParams Type="LootingTabParams">
+          <title>@vehicle_focus_all</title>
+          <iconPath>UI/Textures/Vector/PIT/Looting/PIT_Looting_All_Icon.svg</iconPath>
+          <itemCategories Type="ItemCategory" Count="0" />
+        </groupSubTabParams>
+        <locationTabParams Type="LootingTabParams">
+          <title>@ui_inventory_tab_location</title>
+          <iconPath>UI/Textures/Vector/MobiGlas/Icons/PU_mobiapp_icon_pin.svg</iconPath>
+          <itemCategories Type="ItemCategory" Count="0" />
+        </locationTabParams>
+        <tabParams Type="LootingTabParams" Count="6">
           <LootingTabParams Type="LootingTabParams">
+            <title>@item_TypeChar_Armor_Backpack</title>
             <iconPath>UI/Textures/Vector/PIT/Looting/PIT_Looting_Backpack_Icon.svg</iconPath>
             <itemCategories Type="ItemCategory" Count="2">
               <ItemCategory Type="ItemCategory">
@@ -620,6 +644,7 @@
             </itemCategories>
           </LootingTabParams>
           <LootingTabParams Type="LootingTabParams">
+            <title>@item_TypeChar_Armor_Torso</title>
             <iconPath>UI/Textures/Vector/PIT/Looting/PIT_Looting_Core_Icon.svg</iconPath>
             <itemCategories Type="ItemCategory" Count="2">
               <ItemCategory Type="ItemCategory">
@@ -635,6 +660,7 @@
             </itemCategories>
           </LootingTabParams>
           <LootingTabParams Type="LootingTabParams">
+            <title>@item_TypeChar_Armor_Legs</title>
             <iconPath>UI/Textures/Vector/PIT/Looting/PIT_Looting_Legs_Icon.svg</iconPath>
             <itemCategories Type="ItemCategory" Count="2">
               <ItemCategory Type="ItemCategory">
@@ -644,6 +670,39 @@
               </ItemCategory>
               <ItemCategory Type="ItemCategory">
                 <type>Char_Clothing_Legs</type>
+                <subType>UNDEFINED</subType>
+                <requiredTag />
+              </ItemCategory>
+            </itemCategories>
+          </LootingTabParams>
+          <LootingTabParams Type="LootingTabParams">
+            <title>@hud_corpseMarker_name</title>
+            <iconPath>UI/Textures/Vector/General/MarkerIcons/ui_icon_enemy.svg</iconPath>
+            <itemCategories Type="ItemCategory" Count="1">
+              <ItemCategory Type="ItemCategory">
+                <type>NOITEM_Player</type>
+                <subType>UNDEFINED</subType>
+                <requiredTag RecordReference="file://./../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.e08d34fb-cb56-4b3f-9e8b-60fa8f80a7f4" RecordId="e08d34fb-cb56-4b3f-9e8b-60fa8f80a7f4" />
+              </ItemCategory>
+            </itemCategories>
+          </LootingTabParams>
+          <LootingTabParams Type="LootingTabParams">
+            <title>@ui_inventory_tab_player</title>
+            <iconPath>UI/Textures/Vector/MobiGlas/Icons/PU_mobiapp_icon_personal_status.svg</iconPath>
+            <itemCategories Type="ItemCategory" Count="1">
+              <ItemCategory Type="ItemCategory">
+                <type>NOITEM_Player</type>
+                <subType>UNDEFINED</subType>
+                <requiredTag />
+              </ItemCategory>
+            </itemCategories>
+          </LootingTabParams>
+          <LootingTabParams Type="LootingTabParams">
+            <title>@ui_inventory_tab_vehicle</title>
+            <iconPath>UI/Textures/Vector/MobiGlas/Icons/PU_mobiapp_icon_vehicle.svg</iconPath>
+            <itemCategories Type="ItemCategory" Count="1">
+              <ItemCategory Type="ItemCategory">
+                <type>NOITEM_Vehicle</type>
                 <subType>UNDEFINED</subType>
                 <requiredTag />
               </ItemCategory>
@@ -1506,7 +1565,7 @@
           <ItemCategory Type="ItemCategory">
             <type>WeaponPersonal</type>
             <subType>Gadget</subType>
-            <requiredTag RecordReference="file://./../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.a690b745-4830-4827-9013-54bf699eeb7b" RecordId="a690b745-4830-4827-9013-54bf699eeb7b" />
+            <requiredTag />
           </ItemCategory>
         </itemCategories>
       </PersonalThoughtInventoryItemOrientationOffset>
