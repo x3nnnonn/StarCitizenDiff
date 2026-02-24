@@ -29,7 +29,7 @@
       </customMaterials>
     </CustomMaterialsEntityParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="17">
+  <Components Type="DataForgeComponentParams" Count="20">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>Cooler</Type>
@@ -89,7 +89,6 @@
           <y>0.75</y>
           <z>0.75</z>
         </inventoryOccupancyDimensionsUIOverride>
-        <inventoryOccupancyDimensionsUIOverrideV4 />
         <ignoredAttachAxis>None</ignoredAttachAxis>
         <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
@@ -169,8 +168,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AbilityStatusCosts" Count="0" />
-        <PhysFlagsColliderOverride Type="AbilityStatusCosts" Count="0" />
+        <PhysFlagsOverride Type="HealthIconData" Count="0" />
+        <PhysFlagsColliderOverride Type="HealthIconData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingZeroG>0.01</DampingZeroG>
@@ -292,10 +291,10 @@
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
       <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
       <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
-      <applyExplosionFalloffFromOrigin>True</applyExplosionFalloffFromOrigin>
     </SHealthComponentParams>
     <ItemControlComponentParams Type="ItemControlComponentParams">
       <turnedOnByDefault>False</turnedOnByDefault>
@@ -471,6 +470,11 @@
     <InteriorMapEntityVisiblityEntityComponentParams Type="InteriorMapEntityVisiblityEntityComponentParams">
       <show>True</show>
     </InteriorMapEntityVisiblityEntityComponentParams>
+    <SCItemCoolerParams Type="SCItemCoolerParams">
+      <CoolingRate>150000</CoolingRate>
+      <SuppressionIRFactor>0.1</SuppressionIRFactor>
+      <SuppressionHeatFactor>0.1</SuppressionHeatFactor>
+    </SCItemCoolerParams>
     <SCItemPurchasableParams Type="SCItemPurchasableParams">
       <Display />
       <displayName>@item_NameCOOL_TYDT_S01_VaporBlock</displayName>
@@ -590,6 +594,136 @@
         <menuTitle />
       </Interactable>
     </SEntityInteractableParams>
+    <EntityComponentPowerConnection Type="EntityComponentPowerConnection">
+      <PowerBase>8</PowerBase>
+      <PowerDraw>12</PowerDraw>
+      <TimeToReachDrawRequest>7.5</TimeToReachDrawRequest>
+      <SafeguardPriority>30</SafeguardPriority>
+      <DisplayedInPoweredItemList>True</DisplayedInPoweredItemList>
+      <IsThrottleable>False</IsThrottleable>
+      <IsOverclockable>False</IsOverclockable>
+      <OverclockThresholdMin>0.34</OverclockThresholdMin>
+      <OverclockThresholdMax>0.43</OverclockThresholdMax>
+      <OverpowerPerformance>0.374</OverpowerPerformance>
+      <OverclockPerformance>0.05</OverclockPerformance>
+      <PowerToEM>8.25</PowerToEM>
+      <DecayRateOfEM>0.26</DecayRateOfEM>
+      <WarningDelayTime>0.3</WarningDelayTime>
+      <WarningDisplayTime>8</WarningDisplayTime>
+      <MisfireItemTypeLocID>@item_TypeCooler</MisfireItemTypeLocID>
+      <MisfireGenerationParams Type="SMisfireGenerationParams">
+        <maxWindowLength>912</maxWindowLength>
+        <minWindowLength>81.9</minWindowLength>
+        <severityFactors Type="SMisfireSeverityFactors">
+          <degradation>1</degradation>
+          <damage>0.9</damage>
+          <heat>0.8</heat>
+          <distortion>0.6</distortion>
+        </severityFactors>
+        <minorBand Type="SMisfireBandParams">
+          <threshold>0.23</threshold>
+          <minorProbability>1</minorProbability>
+          <majorProbability>0</majorProbability>
+          <criticalProbability>0</criticalProbability>
+        </minorBand>
+        <majorBand Type="SMisfireBandParams">
+          <threshold>0.35</threshold>
+          <minorProbability>0.44</minorProbability>
+          <majorProbability>0.54</majorProbability>
+          <criticalProbability>0</criticalProbability>
+        </majorBand>
+        <criticalBand Type="SMisfireBandParams">
+          <threshold>0.58</threshold>
+          <minorProbability>0.32</minorProbability>
+          <majorProbability>0.4</majorProbability>
+          <criticalProbability>0.27</criticalProbability>
+        </criticalBand>
+      </MisfireGenerationParams>
+      <MisfireEvents Type="SMisfireEvents">
+        <MinorMisfires Type="SMisfireEventParams" Count="1">
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_Cooler_Minor</warningLocId>
+            <duration>3</duration>
+            <ageRatioInflicted>0</ageRatioInflicted>
+            <healthRatioInflicted>0</healthRatioInflicted>
+            <ItemParams Type="SCoolerMisfireParams">
+              <coolingRateReduction>0</coolingRateReduction>
+              <minCoolingRateReduction>0</minCoolingRateReduction>
+              <hasVariableCoolingRateReduction>False</hasVariableCoolingRateReduction>
+            </ItemParams>
+          </SMisfireEventParams>
+        </MinorMisfires>
+        <MajorMisfires Type="SMisfireEventParams" Count="2">
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_Cooler_Major</warningLocId>
+            <duration>5</duration>
+            <ageRatioInflicted>0.04</ageRatioInflicted>
+            <healthRatioInflicted>0</healthRatioInflicted>
+            <ItemParams Type="SCoolerMisfireParams">
+              <coolingRateReduction>6000</coolingRateReduction>
+              <minCoolingRateReduction>2000</minCoolingRateReduction>
+              <hasVariableCoolingRateReduction>True</hasVariableCoolingRateReduction>
+            </ItemParams>
+          </SMisfireEventParams>
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_Cooler_Major</warningLocId>
+            <duration>5</duration>
+            <ageRatioInflicted>0.02</ageRatioInflicted>
+            <healthRatioInflicted>0</healthRatioInflicted>
+            <ItemParams Type="SCoolerMisfireParams">
+              <coolingRateReduction>8000</coolingRateReduction>
+              <minCoolingRateReduction>4000</minCoolingRateReduction>
+              <hasVariableCoolingRateReduction>True</hasVariableCoolingRateReduction>
+            </ItemParams>
+          </SMisfireEventParams>
+        </MajorMisfires>
+        <CriticalMisfires Type="SMisfireEventParams" Count="2">
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_Cooler_Critical</warningLocId>
+            <duration>5</duration>
+            <ageRatioInflicted>0.02</ageRatioInflicted>
+            <healthRatioInflicted>0.1</healthRatioInflicted>
+            <ItemParams Type="SCoolerMisfireParams">
+              <coolingRateReduction>12000</coolingRateReduction>
+              <minCoolingRateReduction>0</minCoolingRateReduction>
+              <hasVariableCoolingRateReduction>False</hasVariableCoolingRateReduction>
+            </ItemParams>
+          </SMisfireEventParams>
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_Cooler_Critical</warningLocId>
+            <duration>10</duration>
+            <ageRatioInflicted>0.1</ageRatioInflicted>
+            <healthRatioInflicted>0.02</healthRatioInflicted>
+            <ItemParams Type="SCoolerMisfireParams">
+              <coolingRateReduction>8000</coolingRateReduction>
+              <minCoolingRateReduction>0</minCoolingRateReduction>
+              <hasVariableCoolingRateReduction>False</hasVariableCoolingRateReduction>
+            </ItemParams>
+          </SMisfireEventParams>
+        </CriticalMisfires>
+      </MisfireEvents>
+    </EntityComponentPowerConnection>
+    <EntityComponentHeatConnection Type="EntityComponentHeatConnection">
+      <TemperatureToIR>1.3525</TemperatureToIR>
+      <StartIRTemperature>0</StartIRTemperature>
+      <OverpowerHeat>0</OverpowerHeat>
+      <OverclockThresholdMinHeat>0</OverclockThresholdMinHeat>
+      <OverclockThresholdMaxHeat>0</OverclockThresholdMaxHeat>
+      <ThermalEnergyBase>10</ThermalEnergyBase>
+      <ThermalEnergyDraw>20</ThermalEnergyDraw>
+      <ThermalConductivity>3</ThermalConductivity>
+      <SpecificHeatCapacity>13</SpecificHeatCapacity>
+      <Mass>323</Mass>
+      <SurfaceArea>50</SurfaceArea>
+      <StartCoolingTemperature>300</StartCoolingTemperature>
+      <MaxCoolingRate>1</MaxCoolingRate>
+      <MaxTemperature>450</MaxTemperature>
+      <OverheatTemperature>370</OverheatTemperature>
+      <RecoveryTemperature>350</RecoveryTemperature>
+      <MinTemperature>0</MinTemperature>
+      <MisfireMinTemperature>370</MisfireMinTemperature>
+      <MisfireMaxTemperature>600</MisfireMaxTemperature>
+    </EntityComponentHeatConnection>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
       <StateTypes Type="SInteractionStateType" Count="1">
         <SInteractionStateType Type="SInteractionStateType">

@@ -21,7 +21,7 @@
       <canEntitleThroughWebsite>True</canEntitleThroughWebsite>
     </DefaultEntitlementEntityParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="19">
+  <Components Type="DataForgeComponentParams" Count="22">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>PowerPlant</Type>
@@ -81,7 +81,6 @@
           <y>0.75</y>
           <z>0.75</z>
         </inventoryOccupancyDimensionsUIOverride>
-        <inventoryOccupancyDimensionsUIOverrideV4 />
         <ignoredAttachAxis>None</ignoredAttachAxis>
         <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
@@ -161,8 +160,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AbilityStatusCosts" Count="0" />
-        <PhysFlagsColliderOverride Type="AbilityStatusCosts" Count="0" />
+        <PhysFlagsOverride Type="HealthIconData" Count="0" />
+        <PhysFlagsColliderOverride Type="HealthIconData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingZeroG>0.01</DampingZeroG>
@@ -356,10 +355,10 @@
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
       <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
       <sendOnDestructionEventToMasterRootContainer>True</sendOnDestructionEventToMasterRootContainer>
-      <applyExplosionFalloffFromOrigin>True</applyExplosionFalloffFromOrigin>
     </SHealthComponentParams>
     <ItemControlComponentParams Type="ItemControlComponentParams">
       <turnedOnByDefault>False</turnedOnByDefault>
@@ -564,6 +563,135 @@
     <InteriorMapEntityVisiblityEntityComponentParams Type="InteriorMapEntityVisiblityEntityComponentParams">
       <show>True</show>
     </InteriorMapEntityVisiblityEntityComponentParams>
+    <SCItemPowerPlantParams Type="SCItemPowerPlantParams">
+      <turnOnInteraction PointsTo="ptr:6" />
+      <turnOffInteraction PointsTo="ptr:7" />
+    </SCItemPowerPlantParams>
+    <EntityComponentPowerConnection Type="EntityComponentPowerConnection">
+      <PowerBase>0</PowerBase>
+      <PowerDraw>3470.78</PowerDraw>
+      <TimeToReachDrawRequest>10.625</TimeToReachDrawRequest>
+      <SafeguardPriority>100</SafeguardPriority>
+      <DisplayedInPoweredItemList>True</DisplayedInPoweredItemList>
+      <IsThrottleable>True</IsThrottleable>
+      <IsOverclockable>True</IsOverclockable>
+      <OverclockThresholdMin>0.34</OverclockThresholdMin>
+      <OverclockThresholdMax>0.43</OverclockThresholdMax>
+      <OverpowerPerformance>0.05</OverpowerPerformance>
+      <OverclockPerformance>0.544</OverclockPerformance>
+      <PowerToEM>0.634</PowerToEM>
+      <DecayRateOfEM>0.32</DecayRateOfEM>
+      <WarningDelayTime>0.3</WarningDelayTime>
+      <WarningDisplayTime>8</WarningDisplayTime>
+      <MisfireItemTypeLocID>@item_TypePowerPlant</MisfireItemTypeLocID>
+      <MisfireGenerationParams Type="SMisfireGenerationParams">
+        <maxWindowLength>900</maxWindowLength>
+        <minWindowLength>67.5</minWindowLength>
+        <severityFactors Type="SMisfireSeverityFactors">
+          <degradation>0.9</degradation>
+          <damage>0.81</damage>
+          <heat>0.72</heat>
+          <distortion>0.54</distortion>
+        </severityFactors>
+        <minorBand Type="SMisfireBandParams">
+          <threshold>0.22</threshold>
+          <minorProbability>1.15</minorProbability>
+          <majorProbability>0</majorProbability>
+          <criticalProbability>0</criticalProbability>
+        </minorBand>
+        <majorBand Type="SMisfireBandParams">
+          <threshold>0.33</threshold>
+          <minorProbability>0.46</minorProbability>
+          <majorProbability>0.6</majorProbability>
+          <criticalProbability>0</criticalProbability>
+        </majorBand>
+        <criticalBand Type="SMisfireBandParams">
+          <threshold>0.575</threshold>
+          <minorProbability>0.39</minorProbability>
+          <majorProbability>0.34</majorProbability>
+          <criticalProbability>0.3</criticalProbability>
+        </criticalBand>
+      </MisfireGenerationParams>
+      <MisfireEvents Type="SMisfireEvents">
+        <MinorMisfires Type="SMisfireEventParams" Count="1">
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_PowerPlant_Minor</warningLocId>
+            <duration>3</duration>
+            <ageRatioInflicted>0</ageRatioInflicted>
+            <healthRatioInflicted>0</healthRatioInflicted>
+            <ItemParams Type="SPowerPlantMisfireParams">
+              <reducesPower>False</reducesPower>
+              <powerReductionRatio>0</powerReductionRatio>
+            </ItemParams>
+          </SMisfireEventParams>
+        </MinorMisfires>
+        <MajorMisfires Type="SMisfireEventParams" Count="2">
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_PowerPlant_Major</warningLocId>
+            <duration>5</duration>
+            <ageRatioInflicted>0.04</ageRatioInflicted>
+            <healthRatioInflicted>0</healthRatioInflicted>
+            <ItemParams Type="SPowerPlantMisfireParams">
+              <reducesPower>True</reducesPower>
+              <powerReductionRatio>0.1</powerReductionRatio>
+            </ItemParams>
+          </SMisfireEventParams>
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_PowerPlant_Major</warningLocId>
+            <duration>5</duration>
+            <ageRatioInflicted>0.02</ageRatioInflicted>
+            <healthRatioInflicted>0</healthRatioInflicted>
+            <ItemParams Type="SPowerPlantMisfireParams">
+              <reducesPower>True</reducesPower>
+              <powerReductionRatio>0.2</powerReductionRatio>
+            </ItemParams>
+          </SMisfireEventParams>
+        </MajorMisfires>
+        <CriticalMisfires Type="SMisfireEventParams" Count="2">
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_PowerPlant_Critical</warningLocId>
+            <duration>5</duration>
+            <ageRatioInflicted>0.02</ageRatioInflicted>
+            <healthRatioInflicted>0.1</healthRatioInflicted>
+            <ItemParams Type="SPowerPlantMisfireParams">
+              <reducesPower>True</reducesPower>
+              <powerReductionRatio>0.45</powerReductionRatio>
+            </ItemParams>
+          </SMisfireEventParams>
+          <SMisfireEventParams Type="SMisfireEventParams">
+            <warningLocId>@misfire_General_PowerPlant_Critical</warningLocId>
+            <duration>15</duration>
+            <ageRatioInflicted>0.1</ageRatioInflicted>
+            <healthRatioInflicted>0.02</healthRatioInflicted>
+            <ItemParams Type="SPowerPlantMisfireParams">
+              <reducesPower>True</reducesPower>
+              <powerReductionRatio>0.15</powerReductionRatio>
+            </ItemParams>
+          </SMisfireEventParams>
+        </CriticalMisfires>
+      </MisfireEvents>
+    </EntityComponentPowerConnection>
+    <EntityComponentHeatConnection Type="EntityComponentHeatConnection">
+      <TemperatureToIR>1.75</TemperatureToIR>
+      <StartIRTemperature>14</StartIRTemperature>
+      <OverpowerHeat>0.3</OverpowerHeat>
+      <OverclockThresholdMinHeat>0.64</OverclockThresholdMinHeat>
+      <OverclockThresholdMaxHeat>0.77</OverclockThresholdMaxHeat>
+      <ThermalEnergyBase>32586.91</ThermalEnergyBase>
+      <ThermalEnergyDraw>36813</ThermalEnergyDraw>
+      <ThermalConductivity>0.05</ThermalConductivity>
+      <SpecificHeatCapacity>0.5</SpecificHeatCapacity>
+      <Mass>583.2</Mass>
+      <SurfaceArea>0.05</SurfaceArea>
+      <StartCoolingTemperature>300</StartCoolingTemperature>
+      <MaxCoolingRate>123.3463</MaxCoolingRate>
+      <MaxTemperature>700</MaxTemperature>
+      <OverheatTemperature>600</OverheatTemperature>
+      <RecoveryTemperature>670</RecoveryTemperature>
+      <MinTemperature>0</MinTemperature>
+      <MisfireMinTemperature>300</MisfireMinTemperature>
+      <MisfireMaxTemperature>900</MisfireMaxTemperature>
+    </EntityComponentHeatConnection>
     <SCItemPurchasableParams Type="SCItemPurchasableParams">
       <Display />
       <displayName>@item_Name_POWR_AMRS_S01_DynaFlux</displayName>
@@ -610,7 +738,7 @@
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
         <SharedInteractions Type="SSharedInteractionParams" Count="2">
-          <SSharedInteractionParams Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:6" Type="SSharedInteractionParams">
             <Name>EnablePowerPlant</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -629,7 +757,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:7" Type="SSharedInteractionParams">
             <Name>DisablePowerPlant</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -748,7 +876,7 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:8" Type="SInteractionState">
               <StateName>Working</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -769,7 +897,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:7" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
               <StateName>Destroyed</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -799,12 +927,12 @@
             <SHealthStateModifier Type="SHealthStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:6" />
+                  <state PointsTo="ptr:8" />
                   <min>0.01</min>
                   <max>1</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:7" />
+                  <state PointsTo="ptr:9" />
                   <min>0</min>
                   <max>0.01</max>
                 </SRangeStateLevel>
