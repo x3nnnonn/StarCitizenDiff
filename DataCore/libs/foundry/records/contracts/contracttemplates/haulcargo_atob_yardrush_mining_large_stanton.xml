@@ -117,22 +117,23 @@
       <value Type="MissionPropertyValue_Location">
         <matchConditions Type="BaseDataSetMatchCondition" Count="0" />
         <resourceTags Type="Tag" Count="0" />
+        <resourcePriority>Contract</resourcePriority>
         <logErrorOnSearchFail>True</logErrorOnSearchFail>
       </value>
     </MissionProperty>
   </contractProperties>
   <objectiveTokens Type="ObjectiveToken" Count="1">
-    <ObjectiveToken Pointer="ptr:5" Type="ObjectiveToken">
+    <ObjectiveToken Pointer="ptr:6" Type="ObjectiveToken">
       <id>31c0f908-eac2-402b-807b-f2e5d1ff4702</id>
       <debugName>Hauling</debugName>
       <startsActive>True</startsActive>
       <properties Type="ObjectivePropertyBase" Count="3">
-        <ObjectiveProperty_Referenced Pointer="ptr:4" Type="ObjectiveProperty_Referenced">
+        <ObjectiveProperty_Referenced Pointer="ptr:5" Type="ObjectiveProperty_Referenced">
           <missionVariableName>DropoffLocation_BP</missionVariableName>
           <extendedTextToken>Destination</extendedTextToken>
           <property PointsTo="ptr:1" />
         </ObjectiveProperty_Referenced>
-        <ObjectiveProperty_Output Type="ObjectiveProperty_Output">
+        <ObjectiveProperty_Output Pointer="ptr:4" Type="ObjectiveProperty_Output">
           <property Type="MissionProperty">
             <missionVariableName>CollectedCargo</missionVariableName>
             <extendedTextToken />
@@ -147,6 +148,7 @@
       </properties>
       <objectiveHandler Type="ObjectiveHandler_Hauling">
         <organization PointsTo="ptr:3" />
+        <collectedCargoOutput PointsTo="ptr:4" />
         <objectiveSettings Type="Hauling_ObjectiveSettings">
           <collectObjective Type="ObjectiveDisplayInfo">
             <shortDescription>@LOC_UNINITIALIZED</shortDescription>
@@ -208,9 +210,9 @@
         <haulingOrders Type="HaulingOrderBase" Count="2">
           <HaulingOrder_Resource Type="HaulingOrder_Resource">
             <pickUpLocation />
-            <dropOffLocation PointsTo="ptr:4" />
-            <pickUpTargetTypes Type="LocationEntityDeclaration" Count="0" />
-            <dropOffTargetTypes Type="LocationEntityDeclaration" Count="0" />
+            <dropOffLocation PointsTo="ptr:5" />
+            <pickUpTargetTypes Type="DeliveryTarget" Count="0" />
+            <dropOffTargetTypes Type="DeliveryTarget" Count="0" />
             <resource RecordReference="file://./../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.Copper" RecordId="a789f57a-e12b-4bcd-8132-e0c03d84fc89" />
             <maxContainerSize>-1</maxContainerSize>
             <minSCU>334</minSCU>
@@ -218,9 +220,9 @@
           </HaulingOrder_Resource>
           <HaulingOrder_Resource Type="HaulingOrder_Resource">
             <pickUpLocation />
-            <dropOffLocation PointsTo="ptr:4" />
-            <pickUpTargetTypes Type="LocationEntityDeclaration" Count="0" />
-            <dropOffTargetTypes Type="LocationEntityDeclaration" Count="0" />
+            <dropOffLocation PointsTo="ptr:5" />
+            <pickUpTargetTypes Type="DeliveryTarget" Count="0" />
+            <dropOffTargetTypes Type="DeliveryTarget" Count="0" />
             <resource RecordReference="file://./../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.Corundum" RecordId="4236c16b-c47f-4083-9e26-4313733f2326" />
             <maxContainerSize>-1</maxContainerSize>
             <minSCU>334</minSCU>
@@ -250,7 +252,7 @@
       <MissionFlowTrigger Type="MissionFlowTrigger">
         <description>When [Hauling] completed -&amp;gt; Mission Completed</description>
         <condition Type="MissionFlowCondition_TokenState">
-          <objectiveToken PointsTo="ptr:5" />
+          <objectiveToken PointsTo="ptr:6" />
           <tokenState>Completed</tokenState>
         </condition>
         <action Type="MissionFlowAction_StateChange">
@@ -260,7 +262,7 @@
       <MissionFlowTrigger Type="MissionFlowTrigger">
         <description>When [Hauling] failed -&amp;gt; Mission Failed</description>
         <condition Type="MissionFlowCondition_TokenState">
-          <objectiveToken PointsTo="ptr:5" />
+          <objectiveToken PointsTo="ptr:6" />
           <tokenState>Failed</tokenState>
         </condition>
         <action Type="MissionFlowAction_StateChange">
@@ -273,7 +275,7 @@
           <conditions Type="MissionFlowConditionBase" Count="0" />
         </condition>
         <action Type="MissionFlowAction_TokenStateChange">
-          <objectiveToken PointsTo="ptr:5" />
+          <objectiveToken PointsTo="ptr:6" />
           <toState>Abandoned</toState>
         </action>
       </MissionFlowTrigger>

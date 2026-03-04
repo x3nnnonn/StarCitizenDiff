@@ -19,7 +19,7 @@
       <canEntitleThroughWebsite>False</canEntitleThroughWebsite>
     </DefaultEntitlementEntityParams>
   </StaticEntityClassData>
-  <Components Type="DataForgeComponentParams" Count="13">
+  <Components Type="DataForgeComponentParams" Count="15">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>ToolArm</Type>
@@ -79,7 +79,6 @@
           <y>0.38</y>
           <z>0.38</z>
         </inventoryOccupancyDimensionsUIOverride>
-        <inventoryOccupancyDimensionsUIOverrideV4 />
         <ignoredAttachAxis>None</ignoredAttachAxis>
         <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
@@ -398,6 +397,30 @@
         <fireConsentAngleDeg>25</fireConsentAngleDeg>
       </gunFireSafety>
     </SCItemTurretParams>
+    <EntityComponentPowerConnection Type="EntityComponentPowerConnection">
+      <PowerBase>0</PowerBase>
+      <PowerDraw>10</PowerDraw>
+      <TimeToReachDrawRequest>0</TimeToReachDrawRequest>
+      <SafeguardPriority>0</SafeguardPriority>
+      <DisplayedInPoweredItemList>True</DisplayedInPoweredItemList>
+      <IsThrottleable>False</IsThrottleable>
+      <IsOverclockable>False</IsOverclockable>
+      <OverclockThresholdMin>0.1</OverclockThresholdMin>
+      <OverclockThresholdMax>0.2</OverclockThresholdMax>
+      <OverpowerPerformance>0</OverpowerPerformance>
+      <OverclockPerformance>0</OverclockPerformance>
+      <PowerToEM>0</PowerToEM>
+      <DecayRateOfEM>0.15</DecayRateOfEM>
+      <WarningDelayTime>0.3</WarningDelayTime>
+      <WarningDisplayTime>8</WarningDisplayTime>
+      <MisfireItemTypeLocID>@LOC_PLACEHOLDER</MisfireItemTypeLocID>
+      <MisfireGenerationParams />
+      <MisfireEvents Type="SMisfireEvents">
+        <MinorMisfires Type="SMisfireEventParams" Count="0" />
+        <MajorMisfires Type="SMisfireEventParams" Count="0" />
+        <CriticalMisfires Type="SMisfireEventParams" Count="0" />
+      </MisfireEvents>
+    </EntityComponentPowerConnection>
     <SHealthComponentParams Type="SHealthComponentParams">
       <Health>5000</Health>
       <DamageCap>0</DamageCap>
@@ -464,10 +487,10 @@
       <DisableMaterialDamage>False</DisableMaterialDamage>
       <sequencerTasks Type="EntityComponentHealth_SBaseSequencerTask" Count="0" />
       <maelstromEvents Type="MaelstromBaseEvent" Count="0" />
+      <craftingData />
       <alwaysPropagateHitToParent>False</alwaysPropagateHitToParent>
       <duplicateHitToParent>False</duplicateHitToParent>
       <sendOnDestructionEventToMasterRootContainer>False</sendOnDestructionEventToMasterRootContainer>
-      <applyExplosionFalloffFromOrigin>True</applyExplosionFalloffFromOrigin>
     </SHealthComponentParams>
     <SEntityPhysicsControllerParams Type="SEntityPhysicsControllerParams">
       <PhysType Type="SEntityRigidPhysicsControllerParams">
@@ -476,8 +499,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="AbilityStatusCosts" Count="0" />
-        <PhysFlagsColliderOverride Type="AbilityStatusCosts" Count="0" />
+        <PhysFlagsOverride Type="HealthIconData" Count="0" />
+        <PhysFlagsColliderOverride Type="HealthIconData" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingZeroG>0.01</DampingZeroG>
@@ -532,6 +555,27 @@
         </temperature>
       </PhysType>
     </SEntityPhysicsControllerParams>
+    <EntityComponentHeatConnection Type="EntityComponentHeatConnection">
+      <TemperatureToIR>6</TemperatureToIR>
+      <StartIRTemperature>250</StartIRTemperature>
+      <OverpowerHeat>0</OverpowerHeat>
+      <OverclockThresholdMinHeat>0</OverclockThresholdMinHeat>
+      <OverclockThresholdMaxHeat>0</OverclockThresholdMaxHeat>
+      <ThermalEnergyBase>10</ThermalEnergyBase>
+      <ThermalEnergyDraw>20</ThermalEnergyDraw>
+      <ThermalConductivity>3</ThermalConductivity>
+      <SpecificHeatCapacity>13</SpecificHeatCapacity>
+      <Mass>200</Mass>
+      <SurfaceArea>50</SurfaceArea>
+      <StartCoolingTemperature>300</StartCoolingTemperature>
+      <MaxCoolingRate>1</MaxCoolingRate>
+      <MaxTemperature>450</MaxTemperature>
+      <OverheatTemperature>370</OverheatTemperature>
+      <RecoveryTemperature>350</RecoveryTemperature>
+      <MinTemperature>0</MinTemperature>
+      <MisfireMinTemperature>370</MisfireMinTemperature>
+      <MisfireMaxTemperature>600</MisfireMaxTemperature>
+    </EntityComponentHeatConnection>
     <SDegradationParams Type="SDegradationParams">
       <StopDegradingIfDestroyed>False</StopDegradingIfDestroyed>
       <accumulators Type="SAccumulatorParams" Count="1">
@@ -633,7 +677,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>SalvageHead</Type>
-              <SubTypes Type="StatusEffectBuffMacro" Count="0" />
+              <SubTypes Type="ProbabilisticStatusEffect" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -672,7 +716,7 @@
             <placeInteractionBlockText>@interaction_condition_placeOnItemport_noMatchingItem</placeInteractionBlockText>
           </interactions>
           <linkedItemPorts Type="SItemPortDef" Count="0" />
-          <resourceLinkToParent>True</resourceLinkToParent>
+          <resourceLinkToParent>False</resourceLinkToParent>
           <useHelperAsInteractionPointName>False</useHelperAsInteractionPointName>
           <itemPortRules Type="SItemPortRuleDef" Count="0" />
           <detachDirection Type="Vec3">
@@ -730,8 +774,6 @@
       <deployConditions Type="SToolArmDeployCondition_Base" Count="0" />
     </SCItemToolArmParams>
     <SCItemAimableComponentParams Type="SCItemAimableComponentParams" />
-    <SAudioProxyParams Type="SAudioProxyParams">
-      <tagActions Type="AudioTagActionList" Count="0" />
-    </SAudioProxyParams>
+    <SAudioProxyParams Type="SAudioProxyParams" />
   </Components>
 </EntityClassDefinition.RSI_Salvation_Salvage_Arm_Right>

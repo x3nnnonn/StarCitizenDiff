@@ -117,6 +117,7 @@
       <value Type="MissionPropertyValue_Locations">
         <matchConditions Type="BaseDataSetMatchCondition" Count="0" />
         <resourceTags Type="Tag" Count="0" />
+        <resourcePriority>Contract</resourcePriority>
         <logErrorOnSearchFail>True</logErrorOnSearchFail>
         <minLocationsToFind>1</minLocationsToFind>
         <maxLocationsToFind>1</maxLocationsToFind>
@@ -130,7 +131,7 @@
         <haulingOrderContent Type="HaulingOrderContentBase" Count="0" />
       </value>
     </MissionProperty>
-    <MissionProperty Pointer="ptr:7" Type="MissionProperty">
+    <MissionProperty Pointer="ptr:8" Type="MissionProperty">
       <missionVariableName>CN_MissionAccept</missionVariableName>
       <extendedTextToken />
       <value Type="MissionPropertyValue_Tags">
@@ -148,7 +149,7 @@
         <options Type="MissionPropertyValueOption_Tags" Count="0" />
       </value>
     </MissionProperty>
-    <MissionProperty Pointer="ptr:9" Type="MissionProperty">
+    <MissionProperty Pointer="ptr:10" Type="MissionProperty">
       <missionVariableName>CN_MissionAbandon</missionVariableName>
       <extendedTextToken />
       <value Type="MissionPropertyValue_Tags">
@@ -164,7 +165,7 @@
         <options Type="MissionPropertyValueOption_Tags" Count="0" />
       </value>
     </MissionProperty>
-    <MissionProperty Pointer="ptr:8" Type="MissionProperty">
+    <MissionProperty Pointer="ptr:9" Type="MissionProperty">
       <missionVariableName>CN_MissionComplete</missionVariableName>
       <extendedTextToken />
       <value Type="MissionPropertyValue_Tags">
@@ -184,17 +185,17 @@
     </MissionProperty>
   </contractProperties>
   <objectiveTokens Type="ObjectiveToken" Count="1">
-    <ObjectiveToken Pointer="ptr:6" Type="ObjectiveToken">
+    <ObjectiveToken Pointer="ptr:7" Type="ObjectiveToken">
       <id>f94ac2dc-0e72-411a-8985-63d7ed0577f1</id>
       <debugName>ItemResourceGathering</debugName>
       <startsActive>True</startsActive>
       <properties Type="ObjectivePropertyBase" Count="4">
-        <ObjectiveProperty_Referenced Pointer="ptr:5" Type="ObjectiveProperty_Referenced">
+        <ObjectiveProperty_Referenced Pointer="ptr:6" Type="ObjectiveProperty_Referenced">
           <missionVariableName>DropoffLocation_BP</missionVariableName>
           <extendedTextToken>Destination</extendedTextToken>
           <property PointsTo="ptr:1" />
         </ObjectiveProperty_Referenced>
-        <ObjectiveProperty_Output Type="ObjectiveProperty_Output">
+        <ObjectiveProperty_Output Pointer="ptr:5" Type="ObjectiveProperty_Output">
           <property Type="MissionProperty">
             <missionVariableName>CollectedCargo</missionVariableName>
             <extendedTextToken />
@@ -214,6 +215,7 @@
       </properties>
       <objectiveHandler Type="ObjectiveHandler_Hauling">
         <organization PointsTo="ptr:4" />
+        <collectedCargoOutput PointsTo="ptr:5" />
         <objectiveSettings Type="Hauling_ObjectiveSettings">
           <collectObjective Type="ObjectiveDisplayInfo">
             <shortDescription>@LOC_UNINITIALIZED</shortDescription>
@@ -275,9 +277,9 @@
         <haulingOrders Type="HaulingOrderBase" Count="1">
           <HaulingOrder_Resource Type="HaulingOrder_Resource">
             <pickUpLocation />
-            <dropOffLocation PointsTo="ptr:5" />
-            <pickUpTargetTypes Type="LocationEntityDeclaration" Count="0" />
-            <dropOffTargetTypes Type="LocationEntityDeclaration" Count="0" />
+            <dropOffLocation PointsTo="ptr:6" />
+            <pickUpTargetTypes Type="DeliveryTarget" Count="0" />
+            <dropOffTargetTypes Type="DeliveryTarget" Count="0" />
             <resource RecordReference="file://./../../../../../libs/foundry/records/resourcetypedatabase/resourcetypedatabase.xml" RecordName="ResourceType.Quantanium" RecordId="bde5a2c8-2ef4-46ac-9403-2fcb79e4016c" />
             <maxContainerSize>-1</maxContainerSize>
             <minSCU>24</minSCU>
@@ -307,7 +309,7 @@
       <MissionFlowTrigger Type="MissionFlowTrigger">
         <description>When [ItemResourceGathering] completed -&gt; Mission Completed</description>
         <condition Type="MissionFlowCondition_TokenState">
-          <objectiveToken PointsTo="ptr:6" />
+          <objectiveToken PointsTo="ptr:7" />
           <tokenState>Completed</tokenState>
         </condition>
         <action Type="MissionFlowAction_StateChange">
@@ -317,7 +319,7 @@
       <MissionFlowTrigger Type="MissionFlowTrigger">
         <description>When [ItemResourceGathering] failed -&gt; Mission Failed</description>
         <condition Type="MissionFlowCondition_TokenState">
-          <objectiveToken PointsTo="ptr:6" />
+          <objectiveToken PointsTo="ptr:7" />
           <tokenState>Failed</tokenState>
         </condition>
         <action Type="MissionFlowAction_StateChange">
@@ -330,25 +332,25 @@
           <conditions Type="MissionFlowConditionBase" Count="0" />
         </condition>
         <action Type="MissionFlowAction_TokenStateChange">
-          <objectiveToken PointsTo="ptr:6" />
+          <objectiveToken PointsTo="ptr:7" />
           <toState>Abandoned</toState>
         </action>
       </MissionFlowTrigger>
     </triggers>
   </missionFlow>
   <contractStartCommsNotification Type="ContractCommsNotification">
-    <communicationTags PointsTo="ptr:7" />
+    <communicationTags PointsTo="ptr:8" />
     <delay>0</delay>
   </contractStartCommsNotification>
   <contractEndCommsNotifications Type="ContractEndCommsNotification" Count="2">
     <ContractEndCommsNotification Type="ContractEndCommsNotification">
       <reason>Complete</reason>
-      <communicationTags PointsTo="ptr:8" />
+      <communicationTags PointsTo="ptr:9" />
       <delay>0</delay>
     </ContractEndCommsNotification>
     <ContractEndCommsNotification Type="ContractEndCommsNotification">
       <reason>Abandon</reason>
-      <communicationTags PointsTo="ptr:9" />
+      <communicationTags PointsTo="ptr:10" />
       <delay>0</delay>
     </ContractEndCommsNotification>
   </contractEndCommsNotifications>
