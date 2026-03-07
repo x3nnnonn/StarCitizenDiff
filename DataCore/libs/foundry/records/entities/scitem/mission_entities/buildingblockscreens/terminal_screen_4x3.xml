@@ -12,7 +12,7 @@
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="9">
+  <Components Type="DataForgeComponentParams" Count="12">
     <SGeometryResourceParams Type="SGeometryResourceParams">
       <ModelTag />
       <cacheResources>False</cacheResources>
@@ -186,7 +186,7 @@
     <UserVariablesComponentParams Type="UserVariablesComponentParams">
       <AlwaysUseDefaultValues>False</AlwaysUseDefaultValues>
       <floats Type="FloatUserVariable" Count="0" />
-      <ints Type="IntUserVariable" Count="2">
+      <ints Type="IntUserVariable" Count="3">
         <IntUserVariable Type="IntUserVariable">
           <name>Code1</name>
           <defaultValue>0</defaultValue>
@@ -194,6 +194,11 @@
         </IntUserVariable>
         <IntUserVariable Type="IntUserVariable">
           <name>Code2</name>
+          <defaultValue>0</defaultValue>
+          <tasks Type="IntUserVariableTask" Count="0" />
+        </IntUserVariable>
+        <IntUserVariable Type="IntUserVariable">
+          <name>KeypadCode</name>
           <defaultValue>0</defaultValue>
           <tasks Type="IntUserVariableTask" Count="0" />
         </IntUserVariable>
@@ -211,7 +216,128 @@
         </BoolUserVariable>
       </bools>
       <strings Type="StringUserVariable" Count="0" />
-      <locStrings Type="LocStringUserVariable" Count="0" />
+      <locStrings Type="LocStringUserVariable" Count="1">
+        <LocStringUserVariable Type="LocStringUserVariable">
+          <name>refractorType</name>
+          <defaultValue>@LOC_EMPTY</defaultValue>
+        </LocStringUserVariable>
+      </locStrings>
     </UserVariablesComponentParams>
+    <SEntityInteractableParams Type="SEntityInteractableParams">
+      <Interactable Type="SInteractableParams">
+        <SharedInteractions Type="SSharedInteractionParams" Count="2">
+          <SSharedInteractionParams Pointer="ptr:4" Type="SSharedInteractionParams">
+            <Name>PowerOn</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Hide</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:3" Type="SSharedInteractionParams">
+            <Name>PowerOff</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Hide</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+        </SharedInteractions>
+        <InteractionPoints Type="SInteractionPointParams" Count="0" />
+        <interactionTasks Type="SSequencerInteractionTask" Count="0" />
+        <actionHandlerTasks Type="SSequencerActorActionHandlerTask" Count="0" />
+        <itemActionTasks Type="SSequencerItemActionTask" Count="0" />
+        <menuTitle />
+      </Interactable>
+    </SEntityInteractableParams>
+    <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
+      <StateTypes Type="SInteractionStateType" Count="1">
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>PowerState</StateTypeName>
+          <bindingsMethod>States</bindingsMethod>
+          <DefaultState PointsTo="ptr:2" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:5" Type="SInteractionState">
+              <StateName>Powered</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:3" />
+                  <NextState PointsTo="ptr:2" />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:2" Type="SInteractionState">
+              <StateName>Unpowered</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:4" />
+                  <NextState PointsTo="ptr:5" />
+                </SInteractionStateTransition>
+              </Interactions>
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="0" />
+        </SInteractionStateType>
+      </StateTypes>
+    </SInteractionStateMachineParams>
+    <SSubsumptionMissionComponentParams Type="SSubsumptionMissionComponentParams" />
   </Components>
 </EntityClassDefinition.Terminal_Screen_4x3>
