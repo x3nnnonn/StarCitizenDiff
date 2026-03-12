@@ -272,7 +272,7 @@
         <timeBetweenSpawns>1</timeBetweenSpawns>
         <maxEntities>0</maxEntities>
         <maxLifetimeEntities>0</maxLifetimeEntities>
-        <dontOverlap>True</dontOverlap>
+        <dontOverlap>False</dontOverlap>
         <startTimerOnDone>False</startTimerOnDone>
       </spawnRules>
       <despawnRules Type="SDespawnRules">
@@ -295,7 +295,7 @@
       <untrackOnDetach>True</untrackOnDetach>
       <wildcardPorts Type="SItemPortDef" Count="0" />
       <spawnerTasks Type="SSequencerSpawnerTaskParams" Count="1">
-        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:14" Type="SSequencerSpawnInItemportSpawnerTaskParams">
+        <SSequencerSpawnInItemportSpawnerTaskParams Pointer="ptr:18" Type="SSequencerSpawnInItemportSpawnerTaskParams">
           <entityToSpawn ReferencedFile="file://./../../../../../../../../../../libs/foundry/records/entities/scitem/human/lt/prop/utilitarian/rockcracker/rockcrack_sparkplug_a.xml" />
           <port PointsTo="ptr:1" />
           <destroyAttachedEntityFirst>False</destroyAttachedEntityFirst>
@@ -344,7 +344,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:13" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:17" Type="SSharedInteractionParams">
             <Name>Reset</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -366,11 +366,11 @@
         </SharedInteractions>
         <InteractionPoints Type="SInteractionPointParams" Count="0" />
         <interactionTasks Type="SSequencerInteractionTask" Count="2">
-          <SSequencerInteractionTask Pointer="ptr:9" Type="SSequencerInteractionTask">
+          <SSequencerInteractionTask Pointer="ptr:13" Type="SSequencerInteractionTask">
             <interaction>OnAttach</interaction>
             <triggerType>Self</triggerType>
           </SSequencerInteractionTask>
-          <SSequencerInteractionTask Pointer="ptr:10" Type="SSequencerInteractionTask">
+          <SSequencerInteractionTask Pointer="ptr:14" Type="SSequencerInteractionTask">
             <interaction>OnDetach</interaction>
             <triggerType>Self</triggerType>
           </SSequencerInteractionTask>
@@ -381,7 +381,7 @@
       </Interactable>
     </SEntityInteractableParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="2">
+      <StateTypes Type="SInteractionStateType" Count="3">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>SlotState</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
@@ -531,6 +531,102 @@
             </AggregateStateModifier>
           </StateModifiers>
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>SpawnState</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:9" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="3">
+            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+              <StateName>Respawn</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence PointsTo="ptr:10" />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
+              <StateName>WaitToRespawn</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange Type="SStateAutoChange">
+                <NextState PointsTo="ptr:11" />
+                <Delay>1800</Delay>
+                <RunWhenStreamedOut>True</RunWhenStreamedOut>
+              </StateAutoChange>
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
+              <StateName>Uninitialized</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <AggregateStateModifier Type="AggregateStateModifier">
+              <aggregateStateParams Type="AggregateStateParams" Count="2">
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="1">
+                    <SInteractionState PointsTo="ptr:5" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:12" />
+                  <elseState />
+                </AggregateStateParams>
+                <AggregateStateParams Type="AggregateStateParams">
+                  <aggregateStates Type="SInteractionState" Count="1">
+                    <SInteractionState PointsTo="ptr:2" />
+                  </aggregateStates>
+                  <state PointsTo="ptr:9" />
+                  <elseState />
+                </AggregateStateParams>
+              </aggregateStateParams>
+            </AggregateStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
@@ -545,7 +641,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:9" />
+              <task PointsTo="ptr:13" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -557,7 +653,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:10" />
+              <task PointsTo="ptr:14" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -569,7 +665,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:11" />
+              <task PointsTo="ptr:15" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -581,19 +677,19 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:12" />
+              <task PointsTo="ptr:16" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
             </SSequencerSequenceTaskEntryParams>
           </taskEntries>
         </SReplicatedSequencerDefSequenceParams>
-        <SReplicatedSequencerDefSequenceParams Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:10" Type="SReplicatedSequencerDefSequenceParams">
           <name>RespawnPlug</name>
-          <interaction PointsTo="ptr:13" />
+          <interaction PointsTo="ptr:17" />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:14" />
+              <task PointsTo="ptr:18" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>False</haltOnFailure>
@@ -615,7 +711,7 @@
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
       <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="2">
-        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:11" Type="SSequencerSkeletonAnimationTaskParams">
+        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:15" Type="SSequencerSkeletonAnimationTaskParams">
           <taskName />
           <animationName>open</animationName>
           <layerId>0</layerId>
@@ -625,7 +721,7 @@
           <transitionType>Linear</transitionType>
           <normalizedStartTime>0</normalizedStartTime>
         </SSequencerSkeletonAnimationTaskParams>
-        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:12" Type="SSequencerSkeletonAnimationTaskParams">
+        <SSequencerSkeletonAnimationTaskParams Pointer="ptr:16" Type="SSequencerSkeletonAnimationTaskParams">
           <taskName />
           <animationName>close</animationName>
           <layerId>0</layerId>
@@ -1417,6 +1513,6 @@
       </tags>
       <tagTriggers Type="TagTrigger" Count="0" />
     </SEntityAudioControllerParams>
-    <SSubsumptionMissionComponentParams Type="SSubsumptionMissionComponentParams" />
+    <SubsumptionMissionLinkComponentParams Type="SubsumptionMissionLinkComponentParams" />
   </Components>
 </EntityClassDefinition.rockcrack_sparkplug_drone_slot_a>
