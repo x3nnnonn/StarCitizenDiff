@@ -357,11 +357,11 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>SpawnState</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState />
+          <DefaultState PointsTo="ptr:1" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="5">
-            <SInteractionState Pointer="ptr:6" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:1" Type="SInteractionState">
               <StateName>Empty</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -369,10 +369,10 @@
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
               <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:1" />
+              <EnterStatePlaySequence PointsTo="ptr:2" />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:2" />
+                <NextState PointsTo="ptr:3" />
                 <Delay>20</Delay>
                 <RunWhenStreamedOut>False</RunWhenStreamedOut>
               </StateAutoChange>
@@ -386,7 +386,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:2" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:3" Type="SInteractionState">
               <StateName>ReadyToSpawn</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -397,7 +397,7 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:3" />
+                <NextState PointsTo="ptr:4" />
                 <Delay>2</Delay>
                 <RunWhenStreamedOut>False</RunWhenStreamedOut>
               </StateAutoChange>
@@ -411,7 +411,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:3" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:4" Type="SInteractionState">
               <StateName>SpawnCompleted</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -419,7 +419,7 @@
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
               <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:4" />
+              <EnterStatePlaySequence PointsTo="ptr:5" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="0" />
@@ -440,7 +440,7 @@
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
               <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:5" />
+              <EnterStatePlaySequence PointsTo="ptr:6" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="0" />
@@ -461,11 +461,11 @@
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
               <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:5" />
+              <EnterStatePlaySequence PointsTo="ptr:6" />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:6" />
-                <Delay>1200</Delay>
+                <NextState PointsTo="ptr:1" />
+                <Delay>1800</Delay>
                 <RunWhenStreamedOut>True</RunWhenStreamedOut>
               </StateAutoChange>
               <Interactions Type="SInteractionStateTransition" Count="0" />
@@ -486,7 +486,7 @@
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="3">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:2" />
+          <targetState PointsTo="ptr:3" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SItemportEntityCommunicationGameplayTrigger Type="SItemportEntityCommunicationGameplayTrigger">
               <CommunicationTarget Type="SChildPort">
@@ -501,7 +501,7 @@
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:3" />
+          <targetState PointsTo="ptr:4" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
             <SModifyUservariableGameplayTrigger Type="SModifyUservariableGameplayTrigger">
               <operationType Type="SSetUserVariable">
@@ -519,7 +519,7 @@
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:6" />
+          <targetState PointsTo="ptr:1" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
             <SItemportEntityCommunicationGameplayTrigger Type="SItemportEntityCommunicationGameplayTrigger">
               <CommunicationTarget Type="SChildPort">
@@ -568,11 +568,20 @@
                       <target PointsTo="ptr:11" />
                     </StateSetResult>
                   </conditionalResult>
-                  <conditions Type="GameplayTriggerConditionCheckUserVariable">
-                    <userVariableCheck Type="UserVariableCheckIntLess">
-                      <variableName>Counter</variableName>
-                      <valueToCheck>4</valueToCheck>
-                    </userVariableCheck>
+                  <conditions Type="GameplayTriggerConditionAND">
+                    <inputs Type="GameplayTriggerCondition" Count="2">
+                      <GameplayTriggerConditionNOT Type="GameplayTriggerConditionNOT">
+                        <input Type="GameplayTriggerConditionCheckState">
+                          <stateCheck PointsTo="ptr:1" />
+                        </input>
+                      </GameplayTriggerConditionNOT>
+                      <GameplayTriggerConditionCheckUserVariable Type="GameplayTriggerConditionCheckUserVariable">
+                        <userVariableCheck Type="UserVariableCheckIntLess">
+                          <variableName>Counter</variableName>
+                          <valueToCheck>8</valueToCheck>
+                        </userVariableCheck>
+                      </GameplayTriggerConditionCheckUserVariable>
+                    </inputs>
                   </conditions>
                   <conditionalGameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="0" />
                 </ConditionalOption>
@@ -616,7 +625,7 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SetInteractionStateGameplayTrigger Type="SetInteractionStateGameplayTrigger">
               <stateToSet Type="GameplayTrigger_Executor_SetInteractionState_ByReference">
-                <state PointsTo="ptr:6" />
+                <state PointsTo="ptr:1" />
               </stateToSet>
             </SetInteractionStateGameplayTrigger>
           </gameplayTriggers>
@@ -1546,7 +1555,7 @@
     </SAnimationControllerParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="3">
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:1" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:2" Type="SReplicatedSequencerDefSequenceParams">
           <name>close</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
@@ -1558,7 +1567,7 @@
             </SSequencerSequenceTaskEntryParams>
           </taskEntries>
         </SReplicatedSequencerDefSequenceParams>
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:4" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:5" Type="SReplicatedSequencerDefSequenceParams">
           <name>open</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="2">
@@ -1578,7 +1587,7 @@
             </SSequencerSequenceTaskEntryParams>
           </taskEntries>
         </SReplicatedSequencerDefSequenceParams>
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:5" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:6" Type="SReplicatedSequencerDefSequenceParams">
           <name>top</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
