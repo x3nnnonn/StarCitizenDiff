@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package sc.internal.services.spawn_resolution.v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "sc/external/common/types/v1/transforms.proto";
+
+service SpawnResolutionService {
+  rpc ResolveLocation ( .sc.internal.services.spawn_resolution.v1.ResolveLocationRequest ) returns ( .sc.internal.services.spawn_resolution.v1.ResolveLocationResponse );
+  rpc CancelResolveLocation ( .sc.internal.services.spawn_resolution.v1.CancelResolveLocationRequest ) returns ( .sc.internal.services.spawn_resolution.v1.CancelResolveLocationResponse );
+}
+
+message QuatTd {
+  .sc.external.common.types.v1.Quatd rotation = 1;
+  .sc.external.common.types.v1.Vec3d translation = 2;
+}
+
+message ResolveLocationRequest {
+  string request_id = 1;
+  uint32 account_id = 2;
+  uint64 player_geid = 3;
+  uint64 home_location_id = 4;
+  uint64 spawn_location_id = 5;
+  uint64 client_node_id = 6;
+  string player_name = 7;
+  uint64 stowed_parent_entity_id = 8;
+  string stowed_parent_inventory_id = 9;
+  string stowed_parent_parent_super_guid = 10;
+  string stowed_parent_zone_host_super_guid = 11;
+  .sc.internal.services.spawn_resolution.v1.QuatTd stowed_parent_transform = 12;
+  string tracking_metrics_id = 13;
+  repeated int32 rsi_badges = 14;
+  string trace_id = 15;
+  bool can_unstow_instanced_interior = 16;
+}
+
+message ResolveLocationResponse {
+  .sc.internal.services.spawn_resolution.v1.SpawnResolutionResultCode result_code = 1;
+  bool should_retry = 2;
+}
+
+message CancelResolveLocationRequest {
+  string request_id = 1;
+}
+
+message CancelResolveLocationResponse {}
+
+enum SpawnResolutionResultCode {
+  SPAWN_RESOLUTION_RESULT_CODE_UNSPECIFIED = 0;
+  SPAWN_RESOLUTION_RESULT_CODE_SUCCESS = 1;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_CANCELED = 2;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_CROSS_SHARD_STOW = 3;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_INVALID_UNSTOW = 4;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_UNSTOW_RESULT = 5;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_QUERY_RESULT = 6;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_MISSING_PLAYER = 7;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_INVALID_SHIP_UNSTOW = 8;
+  SPAWN_RESOLUTION_RESULT_CODE_ERROR_GENERAL = 9;
+  SPAWN_RESOLUTION_RESULT_CODE_TIMEOUT = 10;
+  SPAWN_RESOLUTION_RESULT_CODE_TIMEOUT_NO_ACTIVE_REQUESTS = 11;
+}
+
