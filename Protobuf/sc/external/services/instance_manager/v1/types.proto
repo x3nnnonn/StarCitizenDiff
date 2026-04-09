@@ -5,12 +5,11 @@ package sc.external.services.instance_manager.v1;
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "sc/external/common/mission/v1/contracts.proto";
-import "sc/external/services/entitygraph/v1/types.proto";
 
 message InstanceHeartbeat {
-  string instance_id = 1;
+  uint64 instance_geid = 1;
   string shard_id = 2;
-  repeated uint64 player_geids = 3;
+  repeated string player_geids = 3;
   repeated .sc.external.services.instance_manager.v1.RoleSlotStats role_slot_stats = 4;
 }
 
@@ -22,12 +21,12 @@ message InstancePrerequisites {
 
 message RoleSlot {
   string name = 1;
-  uint32 max_count = 2;
+  int32 max_count = 2;
 }
 
 message RoleSlotStats {
   string name = 1;
-  uint32 current_count = 2;
+  int32 current_count = 2;
 }
 
 message InstanceConfig {
@@ -36,55 +35,32 @@ message InstanceConfig {
   .google.protobuf.Duration join_cooldown = 3;
   .google.protobuf.Duration ttl = 4;
   bool ignore_cooldowns = 5;
-  bool ignore_creation_limits = 6;
-}
-
-message InstanceEntitySnapshot {
-  map<string, .sc.external.services.entitygraph.v1.EntitySnapshot> snapshots = 1;
-
 }
 
 message InstanceTemplate {
-  string instance_oc_path = 1;
+  string instance_class_guid = 1;
   .sc.external.services.instance_manager.v1.InstanceType type = 2;
   .sc.external.services.instance_manager.v1.InstancePrerequisites prerequisites = 3;
   .sc.external.services.instance_manager.v1.InstanceConfig config = 4;
 }
 
 message InstanceActivityReport {
-  repeated uint64 player_geids = 1;
+  repeated string player_geids = 1;
   repeated .sc.external.services.instance_manager.v1.RoleSlotStats role_slot_stats = 2;
 }
 
 message Instance {
-  string instance_id = 1;
+  uint64 instance_geid = 1;
   string instance_identifier = 2;
   string shard_id = 3;
-  map<string, uint64> instance_entity_geids = 4;
-  .google.protobuf.Timestamp created_at = 5;
-  .sc.external.services.instance_manager.v1.InstanceTemplate template = 6;
-  .sc.external.services.instance_manager.v1.InstanceStatus status = 7;
-  string requester_urn = 8;
-  string assigned_to_urn = 9;
-  string stow_inventory_id = 10;
-  .google.protobuf.Timestamp last_activity_at = 11;
-
-}
-
-message InstanceFilter {
-  string shard_id = 1;
-  repeated string instance_identifiers = 2;
-  repeated string assigned_to_urns = 3;
-  repeated .sc.external.services.instance_manager.v1.InstanceStatus statuses = 4;
-  repeated string requester_urns = 5;
-  repeated .sc.external.services.instance_manager.v1.InstanceType instance_types = 6;
-}
-
-message InstanceAvailabilityInfo {
-  string instance_identifier = 1;
-  .sc.external.services.instance_manager.v1.Instance instance = 2;
-  .sc.external.services.instance_manager.v1.InstanceActivityReport activity_report = 3;
-  bool eligible = 4;
+  .google.protobuf.Timestamp created_at = 4;
+  .sc.external.services.instance_manager.v1.InstanceTemplate template = 5;
+  .sc.external.services.instance_manager.v1.InstanceStatus status = 6;
+  string requester_urn = 7;
+  string assigned_to_urn = 8;
+  string stow_inventory_id = 9;
+  .google.protobuf.Timestamp last_activity_at = 10;
+  .sc.external.services.instance_manager.v1.InstanceActivityReport activity_report = 11;
 }
 
 enum InstanceCleanupStrategy {

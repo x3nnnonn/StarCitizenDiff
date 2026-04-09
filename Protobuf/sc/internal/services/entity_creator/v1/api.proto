@@ -11,11 +11,9 @@ import "sc/external/common/game/v1/types.proto";
 import "sc/external/services/entitygraph/v1/types.proto";
 import "sc/external/services/reputation/v1/types.proto";
 import "sc/external/common/types/v1/customization.proto";
-import "sc/external/services/instance_manager/v1/types.proto";
 
 service EntityCreatorService {
   rpc CreateEntity ( .sc.internal.services.entity_creator.v1.CreateEntityRequest ) returns ( .sc.internal.services.entity_creator.v1.CreateEntityResponse );
-  rpc CreateInstance ( .sc.internal.services.entity_creator.v1.CreateInstanceRequest ) returns ( .sc.internal.services.entity_creator.v1.CreateInstanceResponse );
   rpc CheckMissingEntityClass ( .sc.internal.services.entity_creator.v1.CheckMissingEntityClassRequest ) returns ( .sc.internal.services.entity_creator.v1.CheckMissingEntityClassResponse );
   rpc CreatePlayer ( .sc.internal.services.entity_creator.v1.CreatePlayerRequest ) returns ( .sc.internal.services.entity_creator.v1.CreatePlayerResponse );
   rpc DeletePlayer ( .sc.internal.services.entity_creator.v1.DeletePlayerRequest ) returns ( .sc.internal.services.entity_creator.v1.DeletePlayerResponse );
@@ -56,7 +54,7 @@ message CreateEntityRequest {
   repeated .sc.internal.services.entity_creator.v1.CreateEntityRequest.Body creates = 2;
   .sc.external.services.entitygraph.v1.Purpose purpose = 3;
   uint64 owner_id = 4;
-  .sc.external.services.entitygraph.v1.EntityGraphDestination destination = 6;
+  string target_inventory = 5;
 
   message Body {
     string entity_class_guid = 1;
@@ -65,7 +63,6 @@ message CreateEntityRequest {
     .sc.external.common.game.v1.Game game = 6;
     .sc.internal.services.entity_creator.v1.NewEntityOwnershipType ownership_type = 7;
     .sc.external.services.entitlement.v1.NewEntityConfiguration entity_config = 9;
-    .sc.external.services.entitygraph.v1.EntitySnapshot snapshot = 10;
   }
 }
 
@@ -87,20 +84,6 @@ message CreateFromEntitlementsRequest {
 }
 
 message CreateFromEntitlementsResponse {}
-
-message CreateInstanceRequest {
-  string oc_path = 1;
-  uint64 owner_id = 2;
-  .sc.external.services.entitygraph.v1.EntityGraphDestination destination = 3;
-  .sc.external.common.command.v1.CommandArguments arguments = 4;
-  .sc.external.services.entitygraph.v1.Purpose purpose = 5;
-  .sc.external.services.instance_manager.v1.InstanceEntitySnapshot instance_snapshot = 6;
-}
-
-message CreateInstanceResponse {
-  map<string, uint64> created_instance_slots = 1;
-
-}
 
 message CheckMissingEntityClassRequest {
   repeated string entity_class_guid = 1;
