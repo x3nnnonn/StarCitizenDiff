@@ -2,94 +2,97 @@ syntax = "proto3";
 
 package sc.external.services.instance_manager.v1;
 
-message InstanceCreationStarted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+import "sc/external/services/entitygraph/v1/types.proto";
+import "sc/external/services/instance_manager/v1/types.proto";
+
+message InstanceProvisionStarted {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
-message InstanceCreationCompleted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+message InstanceProvisionCompleted {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+}
+
+message InstanceProvisionFailed {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
 message PoolInstanceAssigned {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
-message InstanceUnstowStarted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+message InstanceUnprovisionStarted {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
-message InstanceUnstowCompleted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+message InstanceUnprovisionCompleted {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
-message InstanceStowStarted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
-}
-
-message InstanceStowCompleted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
-}
-
-message InstanceBuryStarted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
-}
-
-message InstanceBuryCompleted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+message InstanceUnprovisionFailed {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
 message PoolInstanceCreationStarted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
 message PoolInstanceCreationCompleted {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+}
+
+message PoolInstanceCreationFailed {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
 message InstanceAssignmentChanged {
-  uint64 instance_geid = 1;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
   string new_assignment_urn = 2;
-}
-
-message InstanceCreationFailed {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
-  string instance_identifier = 3;
+  string old_assignment_urn = 3;
 }
 
 message InstanceBecameActive {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
 message InstanceBecameIdle {
-  uint64 instance_geid = 1;
-  string shard_id = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
 }
 
 message PlayerJoinedInstance {
-  string player_urn = 1;
-  uint64 instance_geid = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+  uint64 player_geid = 2;
 }
 
 message PlayerLeftInstance {
-  uint64 player_geid = 1;
-  uint64 instance_geid = 2;
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+  uint64 player_geid = 2;
 }
 
-message PlayerKickedFromInstance {
-  uint64 player_geid = 1;
-  uint64 instance_geid = 2;
+message StartStowingInstance {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+  string inventory_id = 2;
+  string command_id = 3;
+  string notification_kafka_topic = 4;
+}
+
+message StartUnstowingInstance {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+  string inventory_id = 2;
+  .sc.external.services.entitygraph.v1.ShardDestination shard_destination = 3;
+  string command_id = 4;
+  string notification_kafka_topic = 5;
+  .sc.external.services.instance_manager.v1.InstanceEntitySnapshot snapshot = 6;
+}
+
+message StartBuryingInstance {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+  string command_id = 2;
+  string notification_kafka_topic = 3;
+}
+
+message KickPlayerFromInstance {
+  .sc.external.services.instance_manager.v1.Instance instance = 1;
+  uint64 player_geid = 2;
 }
 

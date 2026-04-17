@@ -25,6 +25,7 @@ service ContractBrokerService {
   rpc ActivateReconciliation ( .sc.internal.services.contract_broker.v1.ActivateReconciliationRequest ) returns ( .sc.internal.services.contract_broker.v1.ActivateReconciliationResponse );
   rpc CancelContractsAtLocation ( .sc.internal.services.contract_broker.v1.CancelContractsAtLocationRequest ) returns ( .sc.internal.services.contract_broker.v1.CancelContractsAtLocationResponse );
   rpc UpdateContractVariables ( .sc.internal.services.contract_broker.v1.UpdateContractVariablesRequest ) returns ( .sc.internal.services.contract_broker.v1.UpdateContractVariablesResponse );
+  rpc CheckContractPrerequisites ( .sc.internal.services.contract_broker.v1.CheckContractPrerequisitesRequest ) returns ( .sc.internal.services.contract_broker.v1.CheckContractPrerequisitesResponse );
 }
 
 message CreateContractsRequest {
@@ -155,4 +156,13 @@ message CancelContractsAtLocationRequest {
 }
 
 message CancelContractsAtLocationResponse {}
+
+message CheckContractPrerequisitesRequest {
+  string player_urn = 1;
+  repeated .sc.external.common.mission.v1.ContractPrerequisites prerequisites = 2;
+}
+
+message CheckContractPrerequisitesResponse {
+  repeated bool meets_prerequisites = 1;
+}
 
