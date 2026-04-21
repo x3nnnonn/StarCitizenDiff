@@ -76,7 +76,7 @@
           <x>1</x>
           <y>1</y>
         </inventoryOccupancyFixedGridDimensionsUIV4>
-        <ignoredAttachAxis>None</ignoredAttachAxis>
+        <ignoredAttachAxis>XYZAxis</ignoredAttachAxis>
         <attachCheckCenterOfMass>False</attachCheckCenterOfMass>
       </AttachDef>
       <attachToTileItemPort>NoConnection</attachToTileItemPort>
@@ -405,7 +405,7 @@
       <RenderLayers Type="SRenderToTextureRenderLayerParams" Count="0" />
     </SRenderToTextureViewParams>
     <SHealthComponentParams Type="SHealthComponentParams">
-      <Health>350</Health>
+      <Health>9000</Health>
       <DamageCap>0</DamageCap>
       <DamageResistances Type="DamageResistance">
         <IgnoreMeleeDamage>False</IgnoreMeleeDamage>
@@ -697,12 +697,12 @@
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
       <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="2">
-        <SSequencerAnimationTaskParams Pointer="ptr:21" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:23" Type="SSequencerAnimationTaskParams">
           <fragmentId>CollarState</fragmentId>
           <fragTag>Retract</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:20" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:22" Type="SSequencerAnimationTaskParams">
           <fragmentId>CollarState</fragmentId>
           <fragTag>Deploy</fragTag>
           <looping>False</looping>
@@ -1173,7 +1173,7 @@
       <triggersToEnableOnLoad Type="Tag" Count="0" />
     </SEntityComponentEffects>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="5">
+      <StateTypes Type="SInteractionStateType" Count="6">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Extension</StateTypeName>
           <bindingsMethod>States</bindingsMethod>
@@ -1682,6 +1682,71 @@
             </ItemResourceStateModifier>
           </StateModifiers>
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>OperatorMode</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="2">
+            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
+              <StateName>NotRefuel</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <uiBindingsTag />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:21" Type="SInteractionState">
+              <StateName>Refuel</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <uiBindingsTag />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="1">
+            <OperatorModeStateModifier Type="OperatorModeStateModifier">
+              <context Type="AttachableStateModifierContext_Self" />
+              <inactive PointsTo="ptr:20" />
+              <combat PointsTo="ptr:20" />
+              <turret PointsTo="ptr:20" />
+              <scanning PointsTo="ptr:20" />
+              <mining PointsTo="ptr:20" />
+              <quantumNavigation PointsTo="ptr:20" />
+              <refuel PointsTo="ptr:21" />
+            </OperatorModeStateModifier>
+          </StateModifiers>
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <UIBindingsInteractionsComponentParams Type="UIBindingsInteractionsComponentParams">
@@ -1743,7 +1808,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:20" />
+              <task PointsTo="ptr:22" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -1755,7 +1820,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:21" />
+              <task PointsTo="ptr:23" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -1831,7 +1896,8 @@
       </loadout>
     </SEntityComponentDefaultLoadoutParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
-      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="2">
+      <targetPresets Type="GameplayTrigger_TargetPreset" Count="0" />
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="4">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:7" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
@@ -1858,6 +1924,26 @@
               </impulseDirection>
               <impulseStrength>0</impulseStrength>
             </SDetachItemGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:21" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <ActivateInteractionGameplayTrigger Type="ActivateInteractionGameplayTrigger">
+              <interactionToActivate Type="GameplayTrigger_Executor_ActivateInteraction_ByReference">
+                <interaction PointsTo="ptr:3" />
+              </interactionToActivate>
+            </ActivateInteractionGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:20" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <ActivateInteractionGameplayTrigger Type="ActivateInteractionGameplayTrigger">
+              <interactionToActivate Type="GameplayTrigger_Executor_ActivateInteraction_ByReference">
+                <interaction PointsTo="ptr:6" />
+              </interactionToActivate>
+            </ActivateInteractionGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
       </onInteractionStateChangeTriggers>
@@ -1922,7 +2008,7 @@
               <consumption Type="ItemResourceDeltaAmount">
                 <resource>Fuel</resource>
                 <resourceAmountPerSecond Type="SStandardResourceUnit">
-                  <standardResourceUnits>1</standardResourceUnits>
+                  <standardResourceUnits>1.65</standardResourceUnits>
                 </resourceAmountPerSecond>
               </consumption>
               <consumptionComposition Type="ItemResourceComposition">
@@ -1935,7 +2021,7 @@
               <consumption Type="ItemResourceDeltaAmount">
                 <resource>QuantumFuel</resource>
                 <resourceAmountPerSecond Type="SStandardResourceUnit">
-                  <standardResourceUnits>0.1</standardResourceUnits>
+                  <standardResourceUnits>0.91</standardResourceUnits>
                 </resourceAmountPerSecond>
               </consumption>
               <consumptionComposition Type="ItemResourceComposition">

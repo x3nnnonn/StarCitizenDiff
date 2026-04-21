@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package sc.internal.services.dynamic_game_assets.v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "sc/internal/services/dynamic_game_assets/v1/types.proto";
+import "google/protobuf/timestamp.proto";
+
+service DynamicGameAssetsService {
+  rpc RegisterAsset ( .sc.internal.services.dynamic_game_assets.v1.RegisterAssetRequest ) returns ( .sc.internal.services.dynamic_game_assets.v1.RegisterAssetResponse );
+  rpc ListAssets ( .sc.internal.services.dynamic_game_assets.v1.ListAssetsRequest ) returns ( .sc.internal.services.dynamic_game_assets.v1.ListAssetsResponse );
+}
+
+message RegisterAssetRequest {
+  string screen_id = 1;
+  string asset_id = 2;
+  .google.protobuf.Timestamp valid_from = 3;
+}
+
+message RegisterAssetResponse {
+  string id = 1;
+}
+
+message ListAssetsRequest {
+  string screen_id = 1;
+}
+
+message ListAssetsResponse {
+  repeated .sc.internal.services.dynamic_game_assets.v1.Asset assets = 1;
+}
+

@@ -10,6 +10,8 @@ service SolarSystemShopService {
   rpc GetShopInventory ( .sc.internal.services.solar_system_shop.v1.GetShopInventoryRequest ) returns ( .sc.internal.services.solar_system_shop.v1.GetShopInventoryResponse );
   rpc GetItemPricesFromAllShops ( .sc.internal.services.solar_system_shop.v1.GetItemPricesFromAllShopsRequest ) returns ( .sc.internal.services.solar_system_shop.v1.GetItemPricesFromAllShopsResponse );
   rpc GetGlobalInventory ( .sc.internal.services.solar_system_shop.v1.GetGlobalInventoryRequest ) returns ( .sc.internal.services.solar_system_shop.v1.GetGlobalInventoryResponse );
+  rpc GetGlobalCommodities ( .sc.internal.services.solar_system_shop.v1.GetGlobalCommoditiesRequest ) returns ( .sc.internal.services.solar_system_shop.v1.GetGlobalCommoditiesResponse );
+  rpc ShopTransaction ( .sc.internal.services.solar_system_shop.v1.ShopTransactionRequest ) returns ( .sc.internal.services.solar_system_shop.v1.ShopTransactionResponse );
 }
 
 message GetShopInventoryRequest {
@@ -20,6 +22,8 @@ message GetShopInventoryResponse {
   string shop_id = 1;
   bool accepts_stolen_goods = 2;
   repeated .sc.internal.services.solar_system_shop.v1.InventoryItem inventory_items = 3;
+  double cargo_price_pct = 4;
+  double cargo_time_pct = 5;
 }
 
 message GetItemPricesFromAllShopsRequest {
@@ -36,4 +40,19 @@ message GetGlobalInventoryRequest {}
 message GetGlobalInventoryResponse {
   repeated .sc.internal.services.solar_system_shop.v1.InventoryItem inventory_items = 1;
 }
+
+message GetGlobalCommoditiesRequest {}
+
+message GetGlobalCommoditiesResponse {
+  repeated .sc.internal.services.solar_system_shop.v1.GlobalCommoditiesData commodities = 1;
+}
+
+message ShopTransactionRequest {
+  string shop_id = 1;
+  int64 player_id = 2;
+  repeated .sc.internal.services.solar_system_shop.v1.TransactionType event_types = 3;
+  repeated .sc.internal.services.solar_system_shop.v1.ShopTransactionItem items = 4;
+}
+
+message ShopTransactionResponse {}
 
