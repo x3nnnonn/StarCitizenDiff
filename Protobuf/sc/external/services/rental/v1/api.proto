@@ -12,6 +12,7 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 service ExternalRentalService {
   rpc Start ( .sc.external.services.rental.v1.StartRequest ) returns ( .sc.external.services.rental.v1.StartResponse );
   rpc QueryRentals ( .sc.external.services.rental.v1.QueryRentalsRequest ) returns ( .sc.external.services.rental.v1.QueryRentalsResponse );
+  rpc QueryRentalsStream ( .sc.external.services.rental.v1.QueryRentalsStreamRequest ) returns (stream .sc.external.services.rental.v1.QueryRentalsStreamResponse );
 }
 
 message StartRequest {
@@ -34,5 +35,13 @@ message QueryRentalsRequest {
 message QueryRentalsResponse {
   .sc.external.common.api.v1.PaginationInfo page_info = 1;
   repeated .sc.external.services.rental.v1.Rental results = 2;
+}
+
+message QueryRentalsStreamRequest {
+  .sc.external.services.rental.v1.RentalFilter filter = 1;
+}
+
+message QueryRentalsStreamResponse {
+  repeated .sc.external.services.rental.v1.Rental results = 1;
 }
 

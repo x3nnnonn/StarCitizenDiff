@@ -1,0 +1,165 @@
+syntax = "proto3";
+
+package sc.external.services.entitlement.v2;
+
+import "google/protobuf/timestamp.proto";
+import "sc/external/common/platform/v1/types.proto";
+
+message EntityConfigurationParameters {
+  oneof param {
+    .sc.external.common.platform.v1.PortConfig web_customizations = 1;
+    .sc.external.common.platform.v1.LoadoutKitConfiguration loadout_kit = 2;
+    string custom_name = 3;
+    string serial = 4;
+  }
+}
+
+message EntityConfiguration {
+  string id = 1;
+  repeated .sc.external.services.entitlement.v2.EntityConfigurationParameters params = 2;
+}
+
+message ItemPortLoadout {
+  repeated .sc.external.services.entitlement.v2.ItemPortLoadout.ItemPortParams items = 1;
+
+  message ItemPortParams {
+    repeated .sc.external.services.entitlement.v2.ItemPortLoadout.ItemPortParams items = 1;
+    string port_name = 2;
+    string item_class_name = 3;
+    uint64 game_flags = 4;
+    int32 ownership = 5;
+    string parent_urn = 6;
+  }
+}
+
+message EntitlementMetadata {
+  string name = 1;
+  int32 stack_size = 2;
+  string source_sku = 3;
+  bool real_money = 4;
+}
+
+message Entitlement {
+  string urn = 1;
+  string source_urn = 2;
+  .sc.external.services.entitlement.v2.EntitlementSourceType source_type = 3;
+  .sc.external.services.entitlement.v2.EntitlementStatus status = 4;
+  string entity_class_guid = 5;
+  uint64 player_id = 6;
+  string item_type = 7;
+  string item_sub_type = 8;
+  .sc.external.services.entitlement.v2.EntityConfiguration entity_configuration = 9;
+  uint64 entity_geid = 10;
+  .google.protobuf.Timestamp claim_timestamp = 11;
+  string claim_version = 12;
+  .google.protobuf.Timestamp rental_expiry = 13;
+  .sc.external.services.entitlement.v2.ItemPortLoadout arena_commander_loadout = 14;
+  .google.protobuf.Timestamp created_at = 15;
+  .google.protobuf.Timestamp modified_at = 16;
+  .sc.external.services.entitlement.v2.EntitlementMetadata metadata = 17;
+}
+
+message SnapshotRecord {
+  string id = 1;
+  uint64 player_id = 2;
+  string root_urn = 3;
+  string item_urn = 4;
+  .sc.external.services.entitlement.v2.SnapshotSlotId slot_id = 5;
+  repeated string attach_path = 6;
+}
+
+message EntitlementHistory {
+  string urn = 1;
+  uint64 player_id = 2;
+  .sc.external.services.entitlement.v2.EntitlementSourceType source = 3;
+  .sc.external.services.entitlement.v2.EntitlementStatus status = 4;
+  string name = 5;
+  string entity_class_guid = 6;
+  .google.protobuf.Timestamp created_at = 7;
+  .sc.external.services.entitlement.v2.EntitlementLogAction log_action = 8;
+  string log_message = 9;
+  string command_id = 10;
+  string source_entitlement_urn = 11;
+}
+
+message EntitlementFilter {
+  string item_type = 1;
+  string item_sub_type = 2;
+  repeated string entity_class_guid = 3;
+  repeated string entitlement_urn = 4;
+  repeated .sc.external.services.entitlement.v2.EntitlementSourceType source_type = 5;
+  repeated uint64 entity_geid = 6;
+  .sc.external.services.entitlement.v2.EntitlementFilter.Exclude exclude = 7;
+  bool include_revoked = 8;
+
+  message Exclude {
+    repeated string item_type = 1;
+    repeated string item_sub_type = 2;
+  }
+}
+
+message SnapshotFilter {
+  repeated string entitlement_urn = 1;
+  repeated .sc.external.services.entitlement.v2.SnapshotSlotId snapshot_slot_id = 2;
+}
+
+message SnapshotWithEntitlement {
+  .sc.external.services.entitlement.v2.SnapshotRecord snapshot = 1;
+  .sc.external.services.entitlement.v2.Entitlement entitlement = 2;
+}
+
+enum EntitlementStatus {
+  ENTITLEMENT_STATUS_UNSPECIFIED = 0;
+  ENTITLEMENT_STATUS_PACKAGED = 1;
+  ENTITLEMENT_STATUS_UNDELIVERED = 2;
+  ENTITLEMENT_STATUS_DELIVERED = 3;
+  ENTITLEMENT_STATUS_REVOKED = 4;
+}
+
+enum EntitlementSourceType {
+  ENTITLEMENT_SOURCE_TYPE_UNSPECIFIED = 0;
+  ENTITLEMENT_SOURCE_TYPE_PLATFORM = 1;
+  ENTITLEMENT_SOURCE_TYPE_INGAME_PERSISTENT = 2;
+  ENTITLEMENT_SOURCE_TYPE_INGAME_NONPERSISTENT = 3;
+  ENTITLEMENT_SOURCE_TYPE_RENTAL = 4;
+  ENTITLEMENT_SOURCE_TYPE_ARENA_COMMANDER = 5;
+}
+
+enum SnapshotSlotId {
+  SNAPSHOT_SLOT_ID_UNSPECIFIED = 0;
+  SNAPSHOT_SLOT_ID_DEFAULT = 1;
+  SNAPSHOT_SLOT_ID_CUSTOMIZED = 2;
+}
+
+enum EntitlementLogAction {
+  ENTITLEMENT_LOG_ACTION_UNSPECIFIED = 0;
+  ENTITLEMENT_LOG_ACTION_CREATED = 1;
+  ENTITLEMENT_LOG_ACTION_DELIVERED = 2;
+  ENTITLEMENT_LOG_ACTION_REVOKED = 3;
+  ENTITLEMENT_LOG_ACTION_DELETED = 4;
+  ENTITLEMENT_LOG_ACTION_UNCLAIMED = 5;
+  ENTITLEMENT_LOG_ACTION_RECONCILED = 6;
+  ENTITLEMENT_LOG_ACTION_UPDATED = 7;
+}
+
+enum ReconcileAccountStatus {
+  RECONCILE_ACCOUNT_STATUS_UNSPECIFIED = 0;
+  RECONCILE_ACCOUNT_STATUS_EXECUTING = 1;
+  RECONCILE_ACCOUNT_STATUS_COMPLETE = 2;
+  RECONCILE_ACCOUNT_STATUS_FAILED = 3;
+}
+
+enum ReconcileAccountPhase {
+  RECONCILE_ACCOUNT_PHASE_UNSPECIFIED = 0;
+  RECONCILE_ACCOUNT_PHASE_LTP = 1;
+  RECONCILE_ACCOUNT_PHASE_PLATFORM = 2;
+  RECONCILE_ACCOUNT_PHASE_ENTITLEMENT = 3;
+}
+
+enum RealtimeFulfillmentProcessorStatus {
+  REALTIME_FULFILLMENT_PROCESSOR_STATUS_UNSPECIFIED = 0;
+  REALTIME_FULFILLMENT_PROCESSOR_STATUS_EXECUTING = 1;
+  REALTIME_FULFILLMENT_PROCESSOR_STATUS_COMPLETED = 2;
+  REALTIME_FULFILLMENT_PROCESSOR_STATUS_FAILED = 3;
+}
+

@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package sc.internal.services.entity_creator.v2;
+
+import "sc/external/services/entitygraph/v1/types.proto";
+import "sc/external/services/entitlement/v2/types.proto";
+import "sc/internal/services/entity_creator/v2/types.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "sc/external/common/command/v1/types.proto";
+import "sc/external/common/types/v1/customization.proto";
+
+service EntityCreatorService {
+  rpc CreateEntitiesFromEntitlements ( .sc.internal.services.entity_creator.v2.CreateEntitiesFromEntitlementsRequest ) returns ( .sc.internal.services.entity_creator.v2.CreateEntitiesFromEntitlementsResponse );
+  rpc CheckMissingEntityClass ( .sc.internal.services.entity_creator.v2.CheckMissingEntityClassRequest ) returns ( .sc.internal.services.entity_creator.v2.CheckMissingEntityClassResponse );
+  rpc CreatePlayer ( .sc.internal.services.entity_creator.v2.CreatePlayerRequest ) returns ( .sc.internal.services.entity_creator.v2.CreatePlayerResponse );
+  rpc DeletePlayer ( .sc.internal.services.entity_creator.v2.DeletePlayerRequest ) returns ( .sc.internal.services.entity_creator.v2.DeletePlayerResponse );
+  rpc RepairPlayer ( .sc.internal.services.entity_creator.v2.RepairPlayerRequest ) returns ( .sc.internal.services.entity_creator.v2.RepairPlayerResponse );
+  rpc GetCurrentGeneration ( .sc.internal.services.entity_creator.v2.GetCurrentGenerationRequest ) returns ( .sc.internal.services.entity_creator.v2.GetCurrentGenerationResponse );
+  rpc CreateEntities ( .sc.internal.services.entity_creator.v2.CreateEntitiesRequest ) returns ( .sc.internal.services.entity_creator.v2.CreateEntitiesResponse );
+  rpc RestoreExistingEntityFromEntitlements ( .sc.internal.services.entity_creator.v2.RestoreExistingEntityFromEntitlementsRequest ) returns ( .sc.internal.services.entity_creator.v2.RestoreExistingEntityFromEntitlementsResponse );
+}
+
+message EntitlementSnapshotRecords {
+  repeated .sc.external.services.entitlement.v2.Entitlement entitlements = 1;
+  repeated .sc.external.services.entitlement.v2.SnapshotRecord snapshots = 2;
+}
+
+message CreateEntitiesFromEntitlementsRequest {
+  uint64 player_id = 1;
+  string fallback_inventory_id = 2;
+  repeated .sc.internal.services.entity_creator.v2.CreateEntitiesFromEntitlementsRequest.Body creation_requests = 3;
+
+  message Body {
+    .sc.external.services.entitygraph.v1.InventoryDestination inventory_destination = 1;
+    string root_entitlement_urn = 2;
+    .sc.external.services.entitlement.v2.SnapshotSlotId snapshot_slot_id = 3;
+    repeated .sc.external.services.entitlement.v2.Entitlement entitlements = 4;
+    repeated .sc.external.services.entitlement.v2.SnapshotRecord snapshots = 5;
+  }
+}
+
+message CreateEntitiesFromEntitlementsResponse {
+  repeated .sc.internal.services.entity_creator.v2.EntitlementSnapshotRecords created_records = 1;
+  repeated uint64 fallback_entities_geids = 2;
+}
+
+message CreatePlayerRequest {
+  .sc.external.common.command.v1.CommandArguments arguments = 1;
+  repeated .sc.internal.services.entity_creator.v2.CreatePlayerRequest.Body creates = 2;
+
+  message Body {
+    uint64 player_id = 1;
+    int32 account_id = 2;
+    string name = 3;
+    .sc.external.common.types.v1.CharacterCustomization character_customizations = 7;
+  }
+}
+
+message CreatePlayerResponse {}
+
+message DeletePlayerRequest {
+  .sc.external.common.command.v1.CommandArguments arguments = 1;
+  repeated .sc.internal.services.entity_creator.v2.DeletePlayerRequest.Body deletes = 2;
+
+  message Body {
+    uint64 player_id = 1;
+    bool all_owned_entities = 2;
+  }
+}
+
+message DeletePlayerResponse {}
+
+message CheckMissingEntityClassRequest {
+  repeated string entity_class_guid = 1;
+}
+
+message CheckMissingEntityClassResponse {
+  repeated string invalid_entity_class_guid = 1;
+}
+
+message RepairPlayerRequest {
+  .sc.external.common.command.v1.CommandArguments arguments = 1;
+  uint64 player_id = 2;
+  .sc.internal.services.entity_creator.v2.RepairPlayerRequest.Strategy strategy = 3;
+
+  enum Strategy {
+    STRATEGY_UNSPECIFIED = 0;
+    STRATEGY_FORCE_STOW = 1;
+    STRATEGY_REPAIR = 2;
+  }
+}
+
+message RepairPlayerResponse {}
+
+message GetCurrentGenerationRequest {}
+
+message GetCurrentGenerationResponse {
+  string generation = 1;
+}
+
+message CreateEntitiesRequest {
+  repeated .sc.internal.services.entity_creator.v2.CreateEntitiesRequest.Body creations = 1;
+  string inventory_id = 2;
+  uint64 owner_id = 3;
+  .sc.external.common.command.v1.CommandArguments arguments = 4;
+
+  message Body {
+    string entity_class_guid = 1;
+    int32 stack_size = 2;
+    string urn = 3;
+  }
+}
+
+message CreateEntitiesResponse {}
+
+message RestoreExistingEntityFromEntitlementsRequest {
+  string root_entitlement_urn = 1;
+  .sc.external.services.entitlement.v2.SnapshotSlotId snapshot_slot_id = 2;
+  repeated .sc.external.services.entitlement.v2.Entitlement entitlements = 3;
+  repeated .sc.external.services.entitlement.v2.SnapshotRecord snapshots = 4;
+  repeated .sc.internal.services.entity_creator.v2.MissingItemStructure missing_item_structures = 5;
+  string shard_id = 6;
+}
+
+message RestoreExistingEntityFromEntitlementsResponse {
+  repeated .sc.internal.services.entity_creator.v2.EntitlementSnapshotRecords restored_records = 1;
+}
+

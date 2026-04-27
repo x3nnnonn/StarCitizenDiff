@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+package sc.internal.services.entitlement.v2;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "sc/external/common/api/v1/pagination.proto";
+import "sc/external/common/command/v1/types.proto";
+import "sc/internal/services/entitlement/v2/commands.proto";
+import "sc/external/services/entitlement/v2/types.proto";
+
+service EntitlementService {
+  rpc CreateEntitlement ( .sc.internal.services.entitlement.v2.CreateEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.CreateEntitlementResponse );
+  rpc UpsertSnapshots ( .sc.internal.services.entitlement.v2.UpsertSnapshotsRequest ) returns ( .sc.internal.services.entitlement.v2.UpsertSnapshotsResponse );
+  rpc RevokeAllPlayerEntitlements ( .sc.internal.services.entitlement.v2.RevokeAllPlayerEntitlementsRequest ) returns ( .sc.internal.services.entitlement.v2.RevokeAllPlayerEntitlementsResponse );
+  rpc DeliverEntitlement ( .sc.internal.services.entitlement.v2.DeliverEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.DeliverEntitlementResponse );
+  rpc CreateAndDeliverEntitlement ( .sc.internal.services.entitlement.v2.CreateAndDeliverEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.CreateAndDeliverEntitlementResponse );
+  rpc ClaimEntitlement ( .sc.internal.services.entitlement.v2.ClaimEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.ClaimEntitlementResponse );
+  rpc ClearSnapshots ( .sc.internal.services.entitlement.v2.ClearSnapshotsRequest ) returns ( .sc.internal.services.entitlement.v2.ClearSnapshotsResponse );
+  rpc RevokeEntitlement ( .sc.internal.services.entitlement.v2.RevokeEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.RevokeEntitlementResponse );
+  rpc QueryEntitlementsStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsStreamResponse );
+  rpc QuerySnapshotsStream ( .sc.internal.services.entitlement.v2.QuerySnapshotsStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QuerySnapshotsStreamResponse );
+  rpc QuerySnapshotsWithEntitlementsStream ( .sc.internal.services.entitlement.v2.QuerySnapshotsWithEntitlementsStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QuerySnapshotsWithEntitlementsStreamResponse );
+  rpc QueryEntitlementsHistory ( .sc.internal.services.entitlement.v2.QueryEntitlementsHistoryRequest ) returns ( .sc.internal.services.entitlement.v2.QueryEntitlementsHistoryResponse );
+  rpc QueryEntitlementsByItemTypeStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsByItemTypeStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsByItemTypeStreamResponse );
+  rpc QueryEntitlementsBySourceTypeStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsBySourceTypeStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsBySourceTypeStreamResponse );
+  rpc QueryEntitlementsByEntityClassStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityClassStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityClassStreamResponse );
+  rpc QueryEntitlementsByEntityGeidsStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityGeidsStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityGeidsStreamResponse );
+  rpc RestoreEntitlement ( .sc.internal.services.entitlement.v2.RestoreEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.RestoreEntitlementResponse );
+}
+
+message QueryEntitlementsStreamRequest {
+  uint64 player_id = 1;
+  .sc.external.services.entitlement.v2.EntitlementFilter filter = 2;
+}
+
+message QueryEntitlementsStreamResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement results = 1;
+}
+
+message QuerySnapshotsStreamRequest {
+  uint64 player_id = 1;
+  .sc.external.services.entitlement.v2.SnapshotFilter filter = 2;
+}
+
+message QuerySnapshotsStreamResponse {
+  repeated .sc.external.services.entitlement.v2.SnapshotRecord results = 1;
+}
+
+message QuerySnapshotsWithEntitlementsStreamRequest {
+  uint64 player_id = 1;
+  .sc.external.services.entitlement.v2.SnapshotFilter filter = 2;
+}
+
+message QuerySnapshotsWithEntitlementsStreamResponse {
+  repeated .sc.external.services.entitlement.v2.SnapshotWithEntitlement results = 1;
+}
+
+message QueryEntitlementsHistoryRequest {
+  string entitlement_urn = 1;
+  .sc.external.common.api.v1.PaginationArguments pagination = 2;
+  .sc.external.common.api.v1.PaginationSort sort = 3;
+}
+
+message QueryEntitlementsHistoryResponse {
+  .sc.external.common.api.v1.PaginationInfo page_info = 1;
+  repeated .sc.external.services.entitlement.v2.EntitlementHistory results = 2;
+}
+
+message CreateEntitlementRequest {
+  .sc.internal.services.entitlement.v2.CreateEntitlementCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message CreateEntitlementResponse {}
+
+message UpsertSnapshotsRequest {
+  .sc.internal.services.entitlement.v2.UpsertSnapshotsCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message UpsertSnapshotsResponse {}
+
+message DeliverEntitlementRequest {
+  .sc.internal.services.entitlement.v2.DeliverEntitlementCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message DeliverEntitlementResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement created_vehicle_entitlements = 1;
+}
+
+message RevokeAllPlayerEntitlementsRequest {
+  .sc.internal.services.entitlement.v2.RevokeAllPlayerEntitlementsCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message RevokeAllPlayerEntitlementsResponse {}
+
+message CreateAndDeliverEntitlementRequest {
+  .sc.internal.services.entitlement.v2.CreateAndDeliverEntitlementCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message CreateAndDeliverEntitlementResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement created_vehicle_entitlements = 1;
+}
+
+message ClaimEntitlementRequest {
+  .sc.internal.services.entitlement.v2.ClaimEntitlementCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message ClaimEntitlementResponse {
+  repeated uint64 created_entities_geids = 1;
+  repeated uint64 bricked_entities_geids = 2;
+}
+
+message ClearSnapshotsRequest {
+  .sc.internal.services.entitlement.v2.ClearSnapshotsCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message ClearSnapshotsResponse {}
+
+message RevokeEntitlementRequest {
+  .sc.internal.services.entitlement.v2.RevokeEntitlementCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message RevokeEntitlementResponse {}
+
+message QueryEntitlementsByItemTypeStreamRequest {
+  uint64 player_id = 1;
+  string item_type = 2;
+  string item_sub_type = 3;
+}
+
+message QueryEntitlementsByItemTypeStreamResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement results = 1;
+}
+
+message QueryEntitlementsBySourceTypeStreamRequest {
+  uint64 player_id = 1;
+  .sc.external.services.entitlement.v2.EntitlementSourceType source_type = 2;
+  repeated string entitlement_urns = 3;
+}
+
+message QueryEntitlementsBySourceTypeStreamResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement results = 1;
+}
+
+message QueryEntitlementsByEntityClassStreamRequest {
+  uint64 player_id = 1;
+  repeated string entity_class_guids = 2;
+  repeated .sc.external.services.entitlement.v2.EntitlementSourceType source_types = 3;
+}
+
+message QueryEntitlementsByEntityClassStreamResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement results = 1;
+}
+
+message QueryEntitlementsByEntityGeidsStreamRequest {
+  uint64 player_id = 1;
+  repeated uint64 entity_geids = 2;
+}
+
+message QueryEntitlementsByEntityGeidsStreamResponse {
+  repeated .sc.external.services.entitlement.v2.Entitlement results = 1;
+}
+
+message RestoreEntitlementRequest {
+  .sc.internal.services.entitlement.v2.RestoreEntitlementCommand command = 1;
+  .sc.external.common.command.v1.CommandArguments arguments = 2;
+}
+
+message RestoreEntitlementResponse {}
+
