@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ControlHints_Preset.ControlHintsConfig_PU_Vehicle RecordId="092c3194-557d-41de-9fbc-1de416e3f15e" Type="ControlHints_Preset">
+<ControlHints_Preset.ControlHintsConfig_PU_Vehicle RecordId="092c3194-557d-41de-9fbc-1de416e3f15e" RecordCategory="Unknown" Type="ControlHints_Preset">
   <hintSlots Type="ControlHint_Entry" Count="3">
     <ControlHint_Entry Type="ControlHint_Entry">
       <name>VehicleSlot_01</name>
@@ -3084,7 +3084,51 @@
     </ControlHint_Entry>
     <ControlHint_Entry Type="ControlHint_Entry">
       <name>VehicleSlot_03</name>
-      <controlHintList Type="ControlHintDef" Count="42">
+      <controlHintList Type="ControlHintDef" Count="44">
+        <ControlHintDef Type="ControlHintDef">
+          <description>Refuel Mode - REQUEST DOCKING</description>
+          <condition Type="ControlHintCondition_AND">
+            <conditions Type="ControlHintCondition" Count="4">
+              <ControlHintCondition_VehicleOperatorMode Type="ControlHintCondition_VehicleOperatorMode">
+                <operatorMode>Refuel</operatorMode>
+              </ControlHintCondition_VehicleOperatorMode>
+              <ControlHintCondition_VehicleSystems Type="ControlHintCondition_VehicleSystems">
+                <systems>Power_On</systems>
+              </ControlHintCondition_VehicleSystems>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleLockedTarget">
+                  <lockedTarget>None</lockedTarget>
+                </condition>
+              </ControlHintCondition_NOT>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleDocking">
+                  <docking>Active</docking>
+                </condition>
+              </ControlHintCondition_NOT>
+            </conditions>
+          </condition>
+          <alwaysDisplayCondition Type="ControlHintAlwaysDisplay_WhenConditionsPass" />
+          <hintDisplayInfoSet Type="ControlHint_DisplayInfoSet" Count="1">
+            <ControlHint_DisplayInfoSet Type="ControlHint_DisplayInfoSet">
+              <overrideHint Type="ControlHints_HintDisplayInfoAction">
+                <overrideName>True</overrideName>
+                <name>@ui_controlhint_ships_atc_request_docking</name>
+                <includeSeparator>False</includeSeparator>
+                <separatorInputName>@LOC_EMPTY</separatorInputName>
+                <separatorIconPath />
+                <actions Type="ControlHints_Input" Count="1">
+                  <ControlHints_ActionInput Type="ControlHints_ActionInput">
+                    <activationMode>Default</activationMode>
+                    <actionName>spaceship_movement:v_toggle_docking_request</actionName>
+                  </ControlHints_ActionInput>
+                </actions>
+              </overrideHint>
+              <gamepadHint />
+              <joystickHint />
+              <alwaysShowIfBound>False</alwaysShowIfBound>
+            </ControlHint_DisplayInfoSet>
+          </hintDisplayInfoSet>
+        </ControlHintDef>
         <ControlHintDef Type="ControlHintDef">
           <description>PIT Menu Open - Rebinding Input - BLANK</description>
           <condition Type="ControlHintCondition_AND">
@@ -4107,7 +4151,7 @@
         <ControlHintDef Type="ControlHintDef">
           <description>Not Docked - Docking Mode On - DOCKING MODE CAMERA TOGGLE</description>
           <condition Type="ControlHintCondition_AND">
-            <conditions Type="ControlHintCondition" Count="6">
+            <conditions Type="ControlHintCondition" Count="7">
               <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
                 <condition Type="ControlHintCondition_VehicleState">
                   <state>Docked</state>
@@ -4137,6 +4181,11 @@
                   <docking>NoDockingTube</docking>
                 </condition>
               </ControlHintCondition_NOT>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleOperatorMode">
+                  <operatorMode>Refuel</operatorMode>
+                </condition>
+              </ControlHintCondition_NOT>
             </conditions>
           </condition>
           <alwaysDisplayCondition />
@@ -4164,7 +4213,7 @@
         <ControlHintDef Type="ControlHintDef">
           <description>Not Landed &amp;amp; Out Of Landing Area &amp;amp; Gear Down - Thrusters On - Always On - LANDING GEAR TOGGLE (to raise)</description>
           <condition Type="ControlHintCondition_AND">
-            <conditions Type="ControlHintCondition" Count="6">
+            <conditions Type="ControlHintCondition" Count="7">
               <ControlHintCondition_VehicleSystems Type="ControlHintCondition_VehicleSystems">
                 <systems>Power_On</systems>
               </ControlHintCondition_VehicleSystems>
@@ -4185,6 +4234,11 @@
               <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
                 <condition Type="ControlHintCondition_VehicleLandingArea">
                   <landingArea>Reserved</landingArea>
+                </condition>
+              </ControlHintCondition_NOT>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleOperatorMode">
+                  <operatorMode>Refuel</operatorMode>
                 </condition>
               </ControlHintCondition_NOT>
             </conditions>
@@ -4251,7 +4305,7 @@
         <ControlHintDef Type="ControlHintDef">
           <description>Not Landed &amp;amp; Has Assigned Landing Area &amp;amp; Gear Up - Thrusters On - LANDING GEAR TOGGLE (to lower)</description>
           <condition Type="ControlHintCondition_AND">
-            <conditions Type="ControlHintCondition" Count="5">
+            <conditions Type="ControlHintCondition" Count="6">
               <ControlHintCondition_VehicleSystems Type="ControlHintCondition_VehicleSystems">
                 <systems>Power_On</systems>
               </ControlHintCondition_VehicleSystems>
@@ -4269,6 +4323,11 @@
               <ControlHintCondition_VehicleLandingArea Type="ControlHintCondition_VehicleLandingArea">
                 <landingArea>Reserved</landingArea>
               </ControlHintCondition_VehicleLandingArea>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleOperatorMode">
+                  <operatorMode>Refuel</operatorMode>
+                </condition>
+              </ControlHintCondition_NOT>
             </conditions>
           </condition>
           <alwaysDisplayCondition />
@@ -4376,7 +4435,7 @@
         <ControlHintDef Type="ControlHintDef">
           <description>Current Select or Locked Target - No Pinned Targets - PIN TARGET </description>
           <condition Type="ControlHintCondition_AND">
-            <conditions Type="ControlHintCondition" Count="2">
+            <conditions Type="ControlHintCondition" Count="3">
               <ControlHintCondition_VehiclePinnedTarget Type="ControlHintCondition_VehiclePinnedTarget">
                 <pinnedTarget>None</pinnedTarget>
               </ControlHintCondition_VehiclePinnedTarget>
@@ -4390,6 +4449,11 @@
                   </ControlHintCondition_VehicleLockedTarget>
                 </conditions>
               </ControlHintCondition_OR>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleOperatorMode">
+                  <operatorMode>Refuel</operatorMode>
+                </condition>
+              </ControlHintCondition_NOT>
             </conditions>
           </condition>
           <alwaysDisplayCondition />
@@ -4529,6 +4593,42 @@
               <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
                 <condition Type="ControlHintCondition_VehicleJumpDriveState">
                   <vehicleJumpDriveState>HasLinkedJumpPoint</vehicleJumpDriveState>
+                </condition>
+              </ControlHintCondition_NOT>
+            </conditions>
+          </condition>
+          <alwaysDisplayCondition />
+          <hintDisplayInfoSet Type="ControlHint_DisplayInfoSet" Count="1">
+            <ControlHint_DisplayInfoSet Type="ControlHint_DisplayInfoSet">
+              <overrideHint Type="ControlHints_HintDisplayInfoAction">
+                <overrideName>True</overrideName>
+                <name>@ui_controlhint_ships_operatorMode_cycle_fwd</name>
+                <includeSeparator>False</includeSeparator>
+                <separatorInputName>@LOC_EMPTY</separatorInputName>
+                <separatorIconPath />
+                <actions Type="ControlHints_Input" Count="1">
+                  <ControlHints_ActionInput Type="ControlHints_ActionInput">
+                    <activationMode>Default</activationMode>
+                    <actionName>seat_general:v_operator_mode_cycle_forward</actionName>
+                  </ControlHints_ActionInput>
+                </actions>
+              </overrideHint>
+              <gamepadHint />
+              <joystickHint />
+              <alwaysShowIfBound>False</alwaysShowIfBound>
+            </ControlHint_DisplayInfoSet>
+          </hintDisplayInfoSet>
+        </ControlHintDef>
+        <ControlHintDef Type="ControlHintDef">
+          <description>Power On - In SCM Mode - CHANGE OPERATOR MODE</description>
+          <condition Type="ControlHintCondition_AND">
+            <conditions Type="ControlHintCondition" Count="2">
+              <ControlHintCondition_VehicleMasterMode Type="ControlHintCondition_VehicleMasterMode">
+                <masterMode>SCM</masterMode>
+              </ControlHintCondition_VehicleMasterMode>
+              <ControlHintCondition_NOT Type="ControlHintCondition_NOT">
+                <condition Type="ControlHintCondition_VehicleDocking">
+                  <docking>Active</docking>
                 </condition>
               </ControlHintCondition_NOT>
             </conditions>

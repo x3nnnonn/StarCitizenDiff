@@ -4,20 +4,19 @@ package sc.internal.services.rental.v1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "sc/internal/services/rental/v1/types.proto";
 import "sc/external/common/api/v1/pagination.proto";
 import "sc/external/common/command/v1/types.proto";
 import "sc/external/common/api/v1/query.proto";
-import "sc/external/services/entitlement/v2/types.proto";
+import "sc/external/services/entitlement/v1/types.proto";
 import "sc/external/services/rental/v1/types.proto";
 
 service RentalService {
   rpc Rent ( .sc.internal.services.rental.v1.RentRequest ) returns ( .sc.internal.services.rental.v1.RentResponse );
   rpc Cancel ( .sc.internal.services.rental.v1.CancelRequest ) returns ( .sc.internal.services.rental.v1.CancelResponse );
   rpc Renew ( .sc.internal.services.rental.v1.RenewRequest ) returns ( .sc.internal.services.rental.v1.RenewResponse );
-  rpc RentOrRenew ( .sc.internal.services.rental.v1.RentOrRenewRequest ) returns ( .sc.internal.services.rental.v1.RentOrRenewResponse );
   rpc Query ( .sc.internal.services.rental.v1.QueryRequest ) returns ( .sc.internal.services.rental.v1.QueryResponse );
   rpc QueryHistory ( .sc.internal.services.rental.v1.QueryHistoryRequest ) returns ( .sc.internal.services.rental.v1.QueryHistoryResponse );
-  rpc QueryRentalsStream ( .sc.internal.services.rental.v1.QueryRentalsStreamRequest ) returns (stream .sc.internal.services.rental.v1.QueryRentalsStreamResponse );
 }
 
 message RentRequest {
@@ -26,15 +25,15 @@ message RentRequest {
 
   message Body {
     string account_urn = 1;
-    uint64 player_id = 2;
-    string name = 3;
-    string entity_class_guid = 4;
-    uint32 duration = 5;
-    bool start_now = 6;
-    string log_message = 7;
-    string target_inventory = 8;
-    .sc.external.services.entitlement.v2.EntityConfiguration entity_configuration = 9;
-    .sc.external.services.entitlement.v2.SnapshotSlotId snapshot_slot_id = 10;
+    string player_urn = 2;
+    .sc.external.services.entitlement.v1.EntitlementSource source = 3;
+    string name = 4;
+    string entity_class_guid = 5;
+    uint32 duration = 6;
+    bool start_now = 8;
+    string log_message = 9;
+    string target_inventory = 10;
+    .sc.external.services.entitlement.v1.NewEntityConfiguration entity_config = 11;
   }
 }
 
@@ -69,7 +68,7 @@ message RenewRequest {
 message RenewResponse {}
 
 message QueryRequest {
-  .sc.external.common.api.v1.Query query = 1;
+  .sc.external.common.api.v1.Query query = 2;
 }
 
 message QueryResponse {
@@ -78,50 +77,11 @@ message QueryResponse {
 }
 
 message QueryHistoryRequest {
-  uint64 player_id = 1;
-  string rental_id = 2;
-  .sc.external.common.api.v1.PaginationArguments pagination = 3;
-  .sc.external.common.api.v1.PaginationSort sort = 4;
+  .sc.external.common.api.v1.Query query = 2;
 }
 
 message QueryHistoryResponse {
   .sc.external.common.api.v1.PaginationInfo page_info = 1;
-  repeated .sc.external.services.rental.v1.RentalHistory results = 2;
-}
-
-message RentOrRenewRequest {
-  .sc.external.common.command.v1.CommandArguments arguments = 1;
-  .sc.internal.services.rental.v1.RentOrRenewRequest.Body body = 2;
-
-  message Body {
-    uint64 player_id = 1;
-    string entity_class_guid = 2;
-    uint32 duration = 3;
-    string log_message = 4;
-    .sc.internal.services.rental.v1.RentOrRenewRequest.Body.RentParams rent_params = 5;
-
-    message RentParams {
-      string account_urn = 1;
-      string name = 2;
-      bool start_now = 3;
-      string target_inventory = 4;
-      .sc.external.services.entitlement.v2.EntityConfiguration entity_configuration = 5;
-      .sc.external.services.entitlement.v2.SnapshotSlotId snapshot_slot_id = 6;
-    }
-  }
-}
-
-message RentOrRenewResponse {
-  string rental_id = 1;
-  string entitlement_urn = 2;
-}
-
-message QueryRentalsStreamRequest {
-  uint64 player_id = 1;
-  .sc.external.services.rental.v1.RentalFilter filter = 2;
-}
-
-message QueryRentalsStreamResponse {
-  repeated .sc.external.services.rental.v1.Rental results = 1;
+  repeated .sc.internal.services.rental.v1.RentalHistory results = 2;
 }
 
