@@ -3747,6 +3747,7 @@ More info: %s
 !bNotFound;1971;
 !bOpen;560;
 !bOverflow;481;Silhouette params packed buffer has exceed limit (%u) for unique per object parameters, need to reduce number of objects rendering with these parameters
+!bPrecachedCommonData;416;
 !bRemovedShouldFail
 !bRenderTransparentOnly || !bCacheGBuffer;1674;Runtime cubemaps cannot cache GBuffer during rendering of transparent only pass.
 !bTessellation || (arrShaderInstances[eHWSC_Hull] && arrShaderInstances[eHWSC_Domain]);152;Tessellation enabled on %s@%s but hardware shaders are not available. Please check the shader code.
@@ -3860,7 +3861,7 @@ More info: %s
 !gEnv->IsDedicated();5453;
 !gEnv->IsDedicated();778;Corpse found without parent during corpsify on server, name: %s.
 !gEnv->IsEditor();1280;
-!gEnv->IsEditor();477;In editor we should not have any hierarchy graphs whose parent is the solar system.
+!gEnv->IsEditor();485;In editor we should not have any hierarchy graphs whose parent is the solar system.
 !gEnv->IsEditor();511;Editor should not need to clone params post-spawn
 !gEnv->IsOnline() || (g_pGame && g_pGame->GetGameRules() && g_pGame->GetGameRules()->GetGameModeId() == EGameModeId::SC_Frontend);431;Query GetArenaCommanderAPI should only be used in frontend or in offline mode!
 !gEnv->IsOnline() || g_pGame->GetGameRules()->GetGameModeId() == EGameModeId::SC_Frontend;433;Query GetArenaCommanderAPI should only be used in frontend or in offline mode!
@@ -4042,7 +4043,7 @@ More info: %s
 !m_gpmCtx.bForceUpdate || bPromoteNewGpmUpdate;4247;
 !m_groupLabelStack.empty();199;
 !m_hasValue;60;[Bindings] %s - pointer is already assiged, use reset before reassignment
-!m_hierarchyGraphs.empty();1455;
+!m_hierarchyGraphs.empty();1463;
 !m_hitFacialReactionAction;135;%s: '%s' is starting a new reaction while the previous one is still playing!
 !m_idRangeImmovable.IsValid() || HasFlags(UniverseHierarchy::eTemplate);715;Only template graphs should have an id range set more than once.
 !m_idRangeMovable.IsValid() || HasFlags(UniverseHierarchy::eTemplate);728;Only template graphs should have an id range set more than once.
@@ -4153,7 +4154,7 @@ More info: %s
 !m_packet.m_pPacket;338;
 !m_parentId || GetParent()->IsZoneHost() || GetParent()->IsUnstreamable() || (m_parentAttachId == g_zoneAttachId);1387;Streaming group roots must be owned by either a zonehost or an unstreamable entity. entityId=%llu, parentId=%llu, attachId=%u
 !m_partnerLighting.m_pSunLight;4029;Creating sun light when it already exists
-!m_pendingServices.Read().empty();132;[CShipServicesProvider::TransitionToNextState] Invalid state
+!m_pendingServices.Read().empty();134;[CShipServicesProvider::TransitionToNextState] Invalid state
 !m_pipelineStates.empty();24;Base pipeline state needs to be compiled before any permutations
 !m_points.empty();821;
 !m_points[edgeIndex].outEdges.empty();1135;
@@ -16513,6 +16514,7 @@ Default is 1
 0 <= state;110;
 0 <= temp && temp <= 32767i16;824;
 0 = Apply inverse timestep to agent collision separation (very fast separation but can fail if agents intersect a lot)1 = Do softer collision separation (doesn't separate immediately but won't fail if agents are intersecting)
+0 = Debug draw is disabled.1 = Debug draw will show servicing zone in green.
 0 = Default, 1 = Allow loading of starmap editor levels, this will prevent OC exporting so use with caution. Should always be 0 unless testing the starmap using the editor.
 0 = Disable marker grouping, 1 = Game mode default, 2 = Enable Marker Grouping.
 0 = Disables melee attack, 1 = Enables old melee attack, 2 = Enables new melee attack.
@@ -31485,7 +31487,7 @@ BuildingBlocks_WidgetTickBox
 BuildingBlocks_WidgetToggleControl
 BuildingBlocks_WidgetWindow
 BuildingBlocks_WindowCamera
-Built on Apr 27 2026 21:39:54
+Built on Apr 28 2026 15:09:58
 BuiltElementDetails
 BuiltIn
 Bulkhead
@@ -63179,6 +63181,7 @@ EntityArchetypeClass
 EntityArchetypeProperties
 EntityArea
 EntityArea Count: %12d
+EntityArea.ShipServicingArea
 EntityArea.TrackInArea
 EntityArea.TrackInArea.ActionArea
 EntityArea.TrackInArea.AudioArea
@@ -80533,6 +80536,7 @@ IsEncrypted();222;
 IsEngaged();84;
 IsEntityClassValid
 IsEntityHostile
+IsEntityInServicingZone
 IsEntityPlayer
 IsEntityTrackerEmpty
 IsEntityWithinDistance
@@ -94844,6 +94848,8 @@ Outside
 Outside Break Radius
 OutsideInteractionArea
 OutsideMaxRange
+OutsideOfServicingZone
+OutsideOfServicingZone |
 OutsideRadius
 OutsideThreshold
 Outstanding
@@ -116374,6 +116380,9 @@ ServicesMissingParams
 ServicesMissingParams |
 ServicesRunning
 ServicesRunning |
+Servicing zone cache has been refreshed for [$$:$$] for reason [$$]. It has now [$$] servicing zone.
+Servicing zone cache refresh
+Servicing zone cache was stale on entity [$$:$$].
 Session
 Session Duration
 Session ID cannot be set as a custom header.
@@ -138009,6 +138018,7 @@ VehicleWasObstructing
 VehicleWeaponFire
 VehicleWeaponRecoilScale
 VehicleYaw
+Vehicle[$$] is not inside a servicing zone!
 Vehicle[$$][$$] doesn't have physics!?
 Vehicle[%s][%llu] Pilot[%s]
 Vehicle[None]
@@ -141266,6 +141276,7 @@ Zone Query for Potential Obstructions
 Zone Query for Potential door obstructions
 Zone Query for Spawned Vehicle Closed Inventory Item Data
 Zone Query for Spawned Vehicle Loose Item Data
+Zone Query for ship servicing zone
 Zone Querying for Spawned Vehicle Closed Inventory Item Data  - vehicleId[$$]
 Zone Update Queue is Full
 Zone Update Queue is full! Consider upping the size of the queue from '$$' or defering excess requests
@@ -163314,7 +163325,7 @@ data->ID == window->IDStack.back()
 data->ListClipper == this
 data->StepNo == 1
 data.m_ResourceListLock
-data.m_serviceIndex < GetServices()->m_Services.size();2428;RmAuthorityRequestServices service index out of range
+data.m_serviceIndex < GetServices()->m_Services.size();2430;RmAuthorityRequestServices service index out of range
 data.m_syncGroupPairingId == (0);237;
 data.nPoolIndex < m_ProceduralAsteroidGroupsPool.Size();722;
 data.nPoolIndex < m_StatObjGroupsPool.Size();1334;
@@ -170362,10 +170373,10 @@ false;1198;Trying to create a texture view from a texture with no device texture
 false;119;CFlowNode_IsInArea::OnEntityEvent Received unhandled event
 false;119;Unexpected flow data type when initializing game token
 false;1204;no name for geomcache when trying to attach entity %s to entity %s
-false;1206;[%s:%d] Tried to bind an exclusive link from a parent controller '%s' to a non-item child '%s' | %s
 false;1208;Null pipelinestate encountered on drawpacket (Pass: %s). Skipping draw.
 false;120;[ContextController::PushActionRequest]: Action is incompatible with the pending context state. Please review your flow.
 false;1211;Solar System not found while building locations for Personal Asset Manager. This should never occur!
+false;1212;[%s:%d] Tried to bind an exclusive link from a parent controller '%s' to a non-item child '%s' | %s
 false;1216;Unhandled thread context request
 false;121;%s not implemented for single player
 false;121;Failed to set write protection for %s::%s (%p), err %i. Region size: %llu
@@ -170405,7 +170416,6 @@ false;126;[CBaseMenuPopUpComponent::Leave] Can't get CUIMenuEvents
 false;1270;BLAS '%u' on invalid SubObject index '%u'. Must be owned by a SubObject that has geometry!
 false;1273;%s Returning Invalid ObjectiveData for Entity: %s
 false;1273;Movable entity has invalid zone.
-false;1274;Failed to find editor object graph
 false;1278;CSkeletonPose::AddRenderNodeRef :: Failed to get a RenderNode from a joint because of invalid index or no joints on the Skeleton.
 false;1279;Polygon submitted without any vertices
 false;1279;Precached trackview sequence timed out after %.1f seconds without having been played
@@ -170415,6 +170425,7 @@ false;127;The room state property '%s' does not match any 'EAsteroidStatePropert
 false;127;[AUDIO] Audio voice rx aggregate trigger does not exist.
 false;127;usableEntryId[%u] is not valid on [%s]. Something must have gone horribly wrong.
 false;1280;Interior Map - Trying to load unstreamed entities before previous ones have been cleared. This should not happen!
+false;1282;Failed to find editor object graph
 false;1285;First two sequencer entries must have increasing timestamps. Found entry 0: [%s], entry 1: [%s].
 false;1287;Failed to find density class for unharvested slot-spawned harvestables '%s'
 false;1287;Unstreamable entities cannot be removed. eid=%llu
@@ -170730,18 +170741,18 @@ false;196;WaterSim Shape idx %i not implemented yet! Returning 5
 false;1971;[%s] Can't register a null pointer
 false;1976;[%s] Unhandled open state '%s' | %s
 false;197;[CMenuPauseStripComponent::SetButton] You try to set an invalid button.
-false;1984;[%s:%d] Component node '%s' expected a Controller parent, instead received '%s' | %s
 false;1985;A required subsystem was not found when trying to load the game
 false;1988;Integer parameter found with %i parameters
 false;1988;[%s] RTTO '%s' not registered
 false;198;CSCItemQuantumDrive_NEW::SetupMotionControllerDataForTravelling: newAccelTime is negative, that should not happen. Reach out to CGP4.
 false;198;Removing illegal cargo failed to find enough loose resources for target id: %llu, guid[%s], resources left[%lli]
+false;1990;[%s:%d] Component node '%s' expected a Controller parent, instead received '%s' | %s
 false;1993;You shouldn't be submitting empty requests
 false;1993;[%s] Can't unregister a null pointer
 false;1997;CharacterManager::CreateExtendedSkel: Could not find a valid animation joint for default skeleton '%s' for physical joint index: %u (of %d)! Owner entity is '%s'.
 false;199;Mising Archetype
-false;2002;Atmosphere Container on Entity %s has invalid atmosphere inheritance mode %s
 false;2004;Invalid setup, decompression requires staging buffer
+false;2008;Atmosphere Container on Entity %s has invalid atmosphere inheritance mode %s
 false;2008;Could not erase trigger %u. Reason: not found
 false;2008;SRenderingParams_RenderMesh.pPipelineStateCache is a mandatory parameter
 false;200;Listening to unhandled event
@@ -170765,14 +170776,14 @@ false;2054;[CSCItemFuelController::GetFuelCost] No valid fuel type provided
 false;2059;Missing vertex stream with no appropriate empty vertex buffer (stride: %u). Add me in the code or fix me on a higher level.
 false;205;[CChatCommandFactory::CreateEmoteCommand] Chat command already present, skipping
 false;2062;Tutorial QTE requested but actor is invalid
-false;2068;[%s:%d] Component node '%s' has null ControlContext | %s
 false;206;[AUDIO] Play_Microphone_Input trigger does not exist.
+false;2074;[%s:%d] Component node '%s' has null ControlContext | %s
 false;2078;[%s] DoorInteractionPanel has no InteractableComponent | %s
 false;207;Recv packet stream of %u bytes overflowed maximum capacity of %Iu bytes. Packet flags %u
-false;2088;[%s:%d] Component node '%s' expected to be bound to a Controller, instead bound to '%s' | %s
 false;208;%s: Failed to find channel information for id '%u'!
 false;208;Converting from type bool to EntityId makes no sense. Hopefully nothing ever tries to do this
 false;2094;Loot generation terminated unexpectedly as item generation failed with dynamic pruning.
+false;2094;[%s:%d] Component node '%s' expected to be bound to a Controller, instead bound to '%s' | %s
 false;2099;Invalid register component %d (must be 0-3 (or negative if no component)).
 false;209;IFreeFormVariableService::GetVariables() : Invalid variable name
 false;209;SInnerThought_LayoutDefBaseDef::Apply - should not be called
@@ -170780,8 +170791,8 @@ false;209;[%s] Invalid flowgraph xml file: %s
 false;210;%s: Unable to load [%s]. Check that file exists and consult build engineers if not. You can set ca_UseIMG_CAF = 0 as a workaround. Disabling all IMGs for this session now.
 false;210;Unexpected data type in component flownode input registration
 false;210;Unhandled RayCastState
-false;2110;[%s:%d] Node '%s' has a parent '%s' when it should have none | %s
 false;2111;%s is not supported, use Dynamic implementation instead.
+false;2116;[%s:%d] Node '%s' has a parent '%s' when it should have none | %s
 false;2118;AI move target for quantum boosting has not been set, aborting.
 false;211;BindingsModifyInt outside expected range!?
 false;2126;Loot generation failed to generate an item from a choice node, this should have been prevented before this point
@@ -170900,12 +170911,12 @@ false;23;CFixedEntityIdVector::push_back() failing as array of size %u is full -
 false;23;EntityGraphQueryApi::Utils::BuildSnapshotQuery(): entity id is invalid
 false;23;Souce: Does not have input
 false;2409;UI provider tried to delete the default preset. Something is wrong in validation.
-false;240;%s - Trying to remove %s which is not in the inventory of %s! (searched %d objects of type %s)
 false;240;Unknown address type
 false;240;[CBaseARDataComponent::Activate] Already activated
 false;2427;Invalid GIPerFrameVisAreaID! RTSceneStage will have this entry but we can't initialize it in our lookup structure!
 false;242;Checkpoint command type not implemented
 false;2432;Invalid ZoneID! RTSceneStage will have this entry but we can't initialize it in our lookup structure!
+false;243;%s - Trying to remove %s which is not in the inventory of %s! (searched %d objects of type %s)
 false;2445;Bad ReferencePosition
 false;244;CStandaloneEntityGraph::AcquireShard() : shound not be called!
 false;244;texture type not found
@@ -171002,17 +171013,17 @@ false;276;Shadertype doesn't exist!
 false;276;Something went wrong and the fragmented message header could not be written
 false;277;Bank file entry for '%s' already exists. Banks entries must be unique.
 false;277;[CCurveEditingPopUpComponent::Leave] Can't get instance.
-false;2783;[%s:%d] User in ControlContext is null | %s
-false;2789;[%s:%d] Controller is null | %s
 false;278;Failed to find dynamic child in dynamic parent node, this suggests it was removed without unsetting parent pointers, or we didn't insert as a child.
 false;278;Was not empty
 false;278;[%s] invalid case
-false;2795;[%s:%d] Controller '%s' has no ControlComponent | %s
+false;2792;[%s:%d] User in ControlContext is null | %s
+false;2798;[%s:%d] Controller is null | %s
 false;27;[CPopupStore::Create] Trying to Create() the singleton more than once
 false;27;[TaskExecutor::~TaskExecutor]: A task is still being executed.
 false;27;[TaskQueue::~TaskQueue]: Tasks are still pending. Please review your flow.
-false;2807;[%s:%d] User '%s' registering with invalid Controller '%s' | %s
+false;2804;[%s:%d] Controller '%s' has no ControlComponent | %s
 false;280;Attempt made to assign territory #%u name="%s" a null governing view, assignment has been rejected
+false;2816;[%s:%d] User '%s' registering with invalid Controller '%s' | %s
 false;2817;Trying to query pre-cached results in bounding box outside of pre-cached bounds!
 false;282;Invalid map type.
 false;283;Could not determine face!?
@@ -171020,9 +171031,9 @@ false;2841;No target zone, this should never happen!
 false;284;Cannot register serialized variable because it is already registered - componentName="%s", varName="%s", entityId=%llu, entityName="%s"
 false;284;Unknown QueueType support requested: %i
 false;284;Unsupported state
-false;2853;[%s:%d] User '%s' already registered in network | %s
 false;285;Somehow ended up with an unsent/invalid packet sequence in m_pendingResends
 false;285;Unexpected empty list of physicsPartIds for healthPartIndex '%zu' on entity '%s'
+false;2862;[%s:%d] User '%s' already registered in network | %s
 false;2882;CSCActorActionHandler::ForceTeleportPlayerInStaging can only be called on the authoritative side.
 false;2888;CSCActorActionHandler::ForceTeleportPlayerInStaging can only be called for players.
 false;288;Too many remote methods
@@ -171035,7 +171046,7 @@ false;2908;CSCActorActionHandler::ForceTeleportPlayerInStaging requires either a
 false;290;%s: In FG module '%s' an input port '%s' has invalid type %d.
 false;290;Ignoring received remote method call because not bound to network eid=%llu name="%s" fromNodeId=%s methodName='%s'
 false;290;The number of default action entries in local file doesn't match DF setup but the version IDs are the same, ID: %d. Using DF default action setup now.
-false;2910;[%s:%d] ControllableParams are null | %s
+false;2919;[%s:%d] ControllableParams are null | %s
 false;2928;No owner reason set for entity
 false;292;Game nub pointer arguments are the wrong type or the wrong way round
 false;292;[CFlashDockingStationContextComponent::Enter] Invalid subtask
@@ -171344,7 +171355,7 @@ false;424;%s - Unhandled SelectTargetMode
 false;4254;%s - Unhandled use of confirmTrigger with no valid popupMode.
 false;4260;MemoryEntityGraph::CMemoryEntityGraph::ProcessCreateCommand(): Node type is invalid
 false;4273;Some code is modifying entity states while the network safe zone is fetching them. This may corrupt serialization and/or memory. Look down the callstack to find the code that is misbehaving
-false;4273;Turret was asked to deal with persistent setting %s that it cannot handle! This is a code issue, please contact whoever deals with IFCS.
+false;4276;Turret was asked to deal with persistent setting %s that it cannot handle! This is a code issue, please contact whoever deals with IFCS.
 false;427;Unexpected value in switch %d
 false;427;[CCurveEditingPopUpComponent::SetExponentCurvePointsData] Can't set curve as exponent points.
 false;428;Failed to spawn required object containers for the simulation
@@ -171354,7 +171365,7 @@ false;42;CreateHosted_AE only for PE_ACTOR
 false;42;Group size reached -- cannot add to group.  Consider why the group is so big or otherwise increasing MAX_GROUP_SIZE
 false;42;Implement me
 false;4305;Token requests should not be issued from a replicant
-false;4311;Turret was asked to return the bool value of persistent setting %s that is not owned by it! This is a code issue, please contact whoever deals with IFCS.
+false;4314;Turret was asked to return the bool value of persistent setting %s that is not owned by it! This is a code issue, please contact whoever deals with IFCS.
 false;4319;MemoryEntityGraph::CMemoryEntityGraph::ProcessCreateCommand(): Start InventoryNode does not have a valid inventory id
 false;431;Wrong tag %s while parsing VFX
 false;432;Failed to get/make dynamic destination interaction
@@ -173326,7 +173337,7 @@ foundIter->second.m_entityId == evt.m_directoryEntityId;1350;
 foundKey == 0 || time(foundKey - 1) < t;622;%s: Found key %d (%f), but previous key (%f) is larger (or equal) to target %f! (Unsorted list?)
 foundKey == num_keys() - 1 || time(foundKey + 1) > t;623;%s: Found key %d (%f), but next key (%f) is smaller (or equal) to target %f! (Unsorted list?)
 foundNode2.iTestVal == 88
-foundParent != m_superGUIDLookup.end();459;
+foundParent != m_superGUIDLookup.end();467;
 foundRemovalTarget;711;ScanTargetAcquisitioner:: Failed to find a passive scan entry to remove for Entry: %llu
 foundationPreviewParams
 fourSCU
@@ -174246,7 +174257,7 @@ gEnv->pSystem && gEnv->pSystem->GetISystemEventDispatcher();221;Unable to regist
 gEnv->pSystem->IsRunInDocker() || m_MaxTextureMemoryMB;461;m_MaxTextureMemoryMB is 0. Please implement CGPUDevice::GatherMetrics and report the correct number of memory in nVideoMemoryDedicatedMB.
 gEnv->pSystem->IsShaderCacheGenMode();1070;Precaching shaderslist not supported in Editor or Client. (Shadercachegen only)
 gEnv->pSystem->IsShaderCacheGenMode();724;
-gEnv->pSystem;1002;
+gEnv->pSystem;1003;
 gEnv->pSystem;249;Unable to register as system listener!
 gEnv->pZoneSystem == nullptr;455;
 gEnv->pZoneSystem->GetAnimatedVisAreaUpdateLock()
@@ -175903,6 +175914,7 @@ g_shield.use_reserve_pool
 g_shield.use_shield_stun_params
 g_shipSelector_debugProvider
 g_shipSelector_defaultSearch
+g_shipServicingCVar.debug_draw
 g_shop.get_quote
 g_shop.sell_prices
 g_shop.set_price
@@ -178018,7 +178030,7 @@ gt_now
 gt_show
 gtime != NULL
 guhiragana
-guid != CryGUID::Construct(0,0);417;
+guid != CryGUID::Construct(0,0);424;
 guidCrc != (TEntityClassCRC(0));114;Class GUID CRC matches INVALID_CLASS_CRC (Name="%s" GUID=%s CRC=%u)
 guidHashCrc
 guidHcdMapLock
@@ -180200,7 +180212,7 @@ idRangeUnstreamableFirst
 idRangeUnstreamableLast
 idRef
 idString
-idToChildXmlMap.find(node.GetEntityId()) == idToChildXmlMap.end();358;
+idToChildXmlMap.find(node.GetEntityId()) == idToChildXmlMap.end();361;
 idToIndexMap.find(node.GetEntityId()) == idToIndexMap.end();289;
 id[$$]
 id[$$], shardId[$$], batchName[$$], firstGEID[$$], entityCounts[$$], hasOCData[$$], batchSize[$$],  maxEntityCountsPerGraph[$$], maxGraphCountsPerCreateCommand[$$], maxCreateCommandCountsPerMutatation[$$], totalMutationCounts[$$]
@@ -187105,8 +187117,8 @@ m_freeCargoAmount
 m_friendlyKills
 m_from
 m_fromGameDirtyEntitiesBackBuffer.Empty();6992;
-m_fuelCommodityResourceType;829;[LandingArea]: fuel commodity entity was null!
-m_fuelCommodityResourceType;861;[ShipServicesProvider]: fuel commodity entity was null!
+m_fuelCommodityResourceType;831;[LandingArea]: fuel commodity entity was null!
+m_fuelCommodityResourceType;863;[ShipServicesProvider]: fuel commodity entity was null!
 m_fullAccessLock
 m_fullAccessLock.IsHoldingWriteLock();125;
 m_fullBodyMask
@@ -187237,8 +187249,8 @@ m_helperOffset
 m_helperStateSequence
 m_hiddenCursorCount >= 1;446;[InputFocus] %s : Hide Cursor count imbalance, Make sure you hide before Unhide the cursor
 m_hierarchicalStateLock.IsLocked();4214;
-m_hierarchyGraphs.find(hierarchyRoot->GetEntityId()) == m_hierarchyGraphs.end();380;
-m_hierarchyGraphs.size() < std::numeric_limits<TSaveGameChildrenCount>::max();1510;Number of graphs is higher than max
+m_hierarchyGraphs.find(hierarchyRoot->GetEntityId()) == m_hierarchyGraphs.end();386;
+m_hierarchyGraphs.size() < std::numeric_limits<TSaveGameChildrenCount>::max();1518;Number of graphs is higher than max
 m_highLimit
 m_highPrioritySlots < m_pool.size();49;
 m_highPriorityTickets.find(ticket) == m_highPriorityTickets.end();402;
@@ -187596,8 +187608,8 @@ m_localVirtualizationLock
 m_localizedNameParams
 m_location.location.IsValid();20;
 m_locationId
-m_locationIdLookup.empty();895;Location Id '%u' not found! This should never happen!
-m_locationIdLookup.find(pNode->GetLocationId()) == m_locationIdLookup.end();610;
+m_locationIdLookup.empty();903;Location Id '%u' not found! This should never happen!
+m_locationIdLookup.find(pNode->GetLocationId()) == m_locationIdLookup.end();618;
 m_locationIndex
 m_locationInventoryId
 m_locationMapRecord;457;
@@ -188190,7 +188202,7 @@ m_pCommonData->m_type != UniverseHierarchy::ENodeType::ObjectContainer;663;
 m_pConfig;288;Invalid jump configuration used when attempting to enter state fall, this is a code error and shouldn't happen
 m_pConnectingEntity
 m_pConsole == 0;301;
-m_pConsole;6406;
+m_pConsole;6409;
 m_pContextFSR && m_pDispatchDescFSR;728;FSR was not initialized properly
 m_pContextGroup != nullptr;35;[CSingleContextDockComponentProvider::ExecuteActivate] m_pContextGroup should have been initialized in Subclass LazyInit
 m_pContextGroup != nullptr;49;[CSingleContextDockComponentProvider::ExecuteDeactivate] m_pContextGroup should have been initialized in Subclass LazyInit
@@ -189040,7 +189052,7 @@ m_rendernodePSOLock
 m_rentalOptions
 m_rentalPrice
 m_repEntViewPtrList.empty();93;%s called while m_pReplicationModel is null but replicated entity view list isn't empty
-m_repairCommodityResourceType;403;[ShipServicesProvider]: repair commodity entity was null!
+m_repairCommodityResourceType;405;[ShipServicesProvider]: repair commodity entity was null!
 m_repairCost
 m_repairStock
 m_replicatedEntitiesNotRemoving > 0;792;
@@ -189509,7 +189521,7 @@ m_suitTemperature
 m_sunRotationLatitude
 m_sunRotationLongitude
 m_supectIndex
-m_superGUIDLookup.find(pNode->GetEntityId()) == m_superGUIDLookup.end();533;
+m_superGUIDLookup.find(pNode->GetEntityId()) == m_superGUIDLookup.end();541;
 m_supplierId
 m_supplierInventoryId
 m_surfaceEffectType
@@ -189772,7 +189784,7 @@ m_userId
 m_userLocation.location.IsValid();21;
 m_userPtr;148;ObjectDataBankMarkerProvider does not have a valid user!
 m_userRelativeLookDir
-m_usersInMissileMode > 0;987;[%s:%d] Number of users in MissileOperatorMode goes below 0
+m_usersInMissileMode > 0;990;[%s:%d] Number of users in MissileOperatorMode goes below 0
 m_uuid
 m_v4GroundCoverRequestQueue.m_resetLock
 m_v4TerrainRequestQueue.m_resetLock
@@ -196970,7 +196982,7 @@ pAreaZoneData;485;
 pAreaZonePartition->GetPartitionBBox().ContainsBox(aabb_zs) && "A ZoneSpace AABB must always be contained in its owning zone partition";1948;
 pAreaZonePartition->eType != SZonePartition::EResetPartition;1913;
 pArenaCommanderAPI;626;gEnv->pCIGServices->GetExternal()->GetArenaCommanderAPI() should never be null!
-pArgs->GetArgCount() > 0;1835;
+pArgs->GetArgCount() > 0;1836;
 pArgs;457;
 pArgs[1].IsConstStr();485;[UiControllerContextComponent::FlashCallback_RegisterView] Wrong argument type for argument 1 of RegisterView.
 pArgs[1].IsObject();895;FlashCallback_AddEntityClip : Invalid parameter 0
@@ -197046,7 +197058,7 @@ pAttachToEntity;301;
 pAttachable != nullptr;36;
 pAttachable && pAttachable->GetCurrentItemPort();519;
 pAttachable;1512;[ITEM RECOVERY] Restored entitlement item [%llu, %s] is not an attachable
-pAttachable;4041;
+pAttachable;4070;
 pAttachableComponent;162;Unable to find attached AttachableComponent on entity: %s
 pAttachedRadius->nHostState != CEntityAggregateRadius::EHostState::UNINITIALIZED;198;
 pAttachment->GetType() == AttachmentTypes::CA_SKIN;518;
@@ -197165,7 +197177,7 @@ pChaserEntity && pTargetEntity;27;
 pChatTab;1064;[CChatComponent::CreateFlashTabDataObject] invalid tab data
 pChatTab;892;[CChatComponent::FlashCreateTab] invalid chat tab
 pChild != nullptr;21;
-pChild != pNode;2023;[%s] Node '%s' is linked to itself, releasing the child will cause stack overflow. Check control setup of '%s' and any previous asserts!
+pChild != pNode;2029;[%s] Node '%s' is linked to itself, releasing the child will cause stack overflow. Check control setup of '%s' and any previous asserts!
 pChild != this;665;Trying to add gascloud %s as its own child
 pChild->GetHierarchyContextualData<SLocationContextData>() == nullptr;3635;Cannot have SLocationContextData on a location entity which also has a starmap object with location params
 pChild->IsChild();844;Gascloud %s is in the unlinked child list but is a parent
@@ -197210,7 +197222,7 @@ pClass;814;
 pClassNode;2405;pClassNode must be valid
 pClassToSpawn is NULL !
 pClientActor->IsPlayer();420;Effect shouldn't be spawned if not a player
-pClientPlayer;8482;
+pClientPlayer;8485;
 pClimateMap->DecompressToRGBA8((uint8*)pClimateData);1557;Unable to de-compress climate splat!
 pCloudShader != nullptr;120;
 pClusterBroken->reason == EventPhysClusterChange::Broken;2634;
@@ -197979,7 +197991,7 @@ pNode != 0;2068;
 pNode != nullptr;390;
 pNode->GetEntityId() == GetHierarchyGraphNodeEntityId();179;Assigned graph node should match GetHierarchyGraphNodeEntityId!
 pNode->GetGUID() != CryGUID::Construct(0,0) && pNode->GetOriginatingSocpakFilepathCRC() != 0u;1841;
-pNode->GetParent() != nullptr;1289;
+pNode->GetParent() != nullptr;1297;
 pNode->GetSequence()->IsActive();96;Animating trackview node after its sequence has already been deactivated. Possibly an issue with the multithreading. This can be a setup issue if a StartDynamicTrackview is being used to stop a previous sequence and has been set with the RequestedTrackview output. Node: %s, Sequence: %s
 pNode->HasAnyFlags(UniverseHierarchy::eRegistered | UniverseHierarchy::eDynamic);180;Assigned graph should either by registered to the solar system or dynamic.
 pNode->IsAttachNode();1195;Attach node list is stale, some nodes are no longer attach nodes
@@ -198449,7 +198461,7 @@ pSequenceName;522;
 pSerialized;68;
 pSerializedComponent != nullptr;429;
 pSerializedComponent.get();1032;
-pService->m_Type != EMaintenanceServiceFlags::INVALID_SERVICE;166;[CShipServicesProvider::TransitionToNextState] Invalid service type
+pService->m_Type != EMaintenanceServiceFlags::INVALID_SERVICE;168;[CShipServicesProvider::TransitionToNextState] Invalid service type
 pSet;357;Failed to allocate descriptor set! Layout: %s
 pShGen;1030;
 pShader != nullptr;116;
@@ -198467,7 +198479,7 @@ pSharedParams != nullptr;30;[CMobiGlasInstance_Light::Init] invalid mobiGlas Sha
 pShieldMaxHealthRecord;844;No record with name [%s] found! Crafted stat will not be enabled.
 pShipServicesProviderPtr->m_rwAccessLock
 pShooterEntity
-pShop != nullptr;315;
+pShop != nullptr;317;
 pShop;220;
 pShopComponent is no longer valid
 pShopEntity is no longer valid
@@ -198506,7 +198518,7 @@ pSolarSystemEntity;2927;Failed to find SolarSystem!
 pSolarSystemGrid;1684;
 pSolarSystemZone;1425;
 pSolarSystemZone;2329;[%s] Could not find a solar system whilst attempting to create a travel envelope
-pSource;1190;Gas transfer or mixing requires a valid source container, which should have been ensured before this step. Problem occurred processing propagation for container %s and connector %s
+pSource;1196;Gas transfer or mixing requires a valid source container, which should have been ensured before this step. Problem occurred processing propagation for container %s and connector %s
 pSource;51;
 pSourceClass;1663;
 pSourceEntity != nullptr;900;Must supply a valid source entity ptr for a queued operation
@@ -198634,7 +198646,7 @@ pTakeDownFragTagDef;1695;
 pTangentRecCVar;1231;
 pTarget
 pTarget->QueryComponent<IMovementSystemComponent>();207;Cannot chase and attack a target that does not have a MovementSystemCompoent
-pTarget;1209;Gas mixing requires a valid target container, which should have been ensured before this step. Problem occurred processing propagation for container %s and connector %s
+pTarget;1215;Gas mixing requires a valid target container, which should have been ensured before this step. Problem occurred processing propagation for container %s and connector %s
 pTarget;2836;
 pTarget;80;Could not resolve the geom link with brush index '%d' in spawn batch %s.
 pTargetActor != nullptr;156;Synced Melee should act upon an actor
@@ -198811,7 +198823,7 @@ pVehicle;984;Trying to impound an 'unattended vehicle' but vehicle component is 
 pVehicleEntity
 pVehicleEntity;573;
 pVehiclePartEntity
-pVehicleQuality;4031;
+pVehicleQuality;4032;
 pVehicleSystem;6787;
 pVendingMachine;485;
 pVertexInput != nullptr;222;GPUVertexInput is required for a draw packet
@@ -205544,7 +205556,7 @@ remainActive
 remainder
 remainder >= 0;572;%s - Error with Default composition logic, remainder was < 0, tihs means our calculations overflow
 remaining == 0
-remaining == 0;1504;
+remaining == 0;1512;
 remaining >= 0 && remaining < g.OpenPopupStack.Size
 remainingBoostRtpc
 remainingCooldownTime
@@ -210870,7 +210882,7 @@ serviceBeacons
 serviceConfig
 serviceData
 serviceDelayTime
-serviceEntry.m_serviceIndex < GetServices()->m_Services.size();2857;RmAuthorityRequestServices service index out of range
+serviceEntry.m_serviceIndex < GetServices()->m_Services.size();2886;RmAuthorityRequestServices service index out of range
 serviceId
 serviceLocator
 serviceName
