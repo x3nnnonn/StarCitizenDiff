@@ -376,8 +376,11 @@ message EntityPreCondition {
 }
 
 message ItemPort {
-  uint64 parent_geid = 1;
-  string item_port_name = 2;
+  oneof parent {
+    uint64 parent_geid = 1;
+    string parent_urn = 2;
+  }
+  string item_port_name = 3;
 }
 
 message ShardDestination {
@@ -460,6 +463,18 @@ enum AttachmentType {
   ATTACHMENT_TYPE_PERSISTENT_AREA = 4;
   ATTACHMENT_TYPE_ZONE = 5;
   ATTACHMENT_TYPE_SHARD = 6;
+}
+
+enum EntitySnapshotVariableFlags {
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_UNSPECIFIED = 0;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_NETWORK_SNAPSHOT = 2;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_PERSISTENCE = 4;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_GLOBAL_READ_ONLY = 8;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_GLOBAL_WRITE = 16;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_LTP_BACKED = 64;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_CREATION_SNAPSHOT = 2048;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_DIRTY_ON_REGISTRATION = 4096;
+  ENTITY_SNAPSHOT_VARIABLE_FLAGS_SET_IN_SNAPSHOT = 8192;
 }
 
 enum InventoryType {

@@ -2,17 +2,39 @@ syntax = "proto3";
 
 package sc.external.services.rental.v1;
 
+import "google/protobuf/timestamp.proto";
+
 message Rental {
   string id = 1;
   .sc.external.services.rental.v1.RentalStatus status = 2;
-  uint64 created_at = 3;
-  uint64 began_at = 4;
-  uint64 expire_at = 5;
+  .google.protobuf.Timestamp created_at = 3;
+  .google.protobuf.Timestamp began_at = 4;
+  .google.protobuf.Timestamp expire_at = 5;
   uint32 duration = 6;
   string account_urn = 7;
-  string player_urn = 8;
+  uint64 player_id = 8;
   string entitlement_urn = 9;
   uint32 renewals = 10;
+  string entity_class_guid = 11;
+}
+
+message RentalHistory {
+  string rental_id = 1;
+  string account_urn = 2;
+  uint64 player_id = 3;
+  string entitlement_urn = 4;
+  string name = 5;
+  string entity_class_guid = 6;
+  .google.protobuf.Timestamp created_at = 7;
+  .sc.external.services.rental.v1.RentalLogAction log_action = 8;
+  string log_message = 9;
+}
+
+message RentalFilter {
+  repeated .sc.external.services.rental.v1.RentalStatus statuses = 1;
+  repeated string ids = 2;
+  repeated string entity_class_guid = 3;
+  repeated string entitlement_urns = 4;
 }
 
 enum RentalStatus {
@@ -20,5 +42,15 @@ enum RentalStatus {
   RENTAL_STATUS_AVAILABLE = 1;
   RENTAL_STATUS_ACTIVE = 2;
   RENTAL_STATUS_FINISHED = 3;
+}
+
+enum RentalLogAction {
+  RENTAL_LOG_ACTION_UNSPECIFIED = 0;
+  RENTAL_LOG_ACTION_CREATED = 1;
+  RENTAL_LOG_ACTION_STARTED = 2;
+  RENTAL_LOG_ACTION_RENEWED = 3;
+  RENTAL_LOG_ACTION_CANCELLED = 4;
+  RENTAL_LOG_ACTION_EXPIRED = 5;
+  RENTAL_LOG_ACTION_REVERTED_START = 6;
 }
 
