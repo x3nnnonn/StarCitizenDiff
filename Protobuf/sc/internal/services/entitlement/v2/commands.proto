@@ -39,12 +39,12 @@ message CreateEntitlementPayload {
   .google.protobuf.Timestamp rental_expiry = 9;
   .sc.external.services.entitlement.v2.EntitlementMetadata metadata = 10;
   .sc.internal.services.entitlement.v2.CurrentStowContext current_stow_context = 11;
-  .sc.external.services.entitygraph.v1.EntitySnapshot persistent_variables = 12;
+  .sc.external.services.entitygraph.v1.PersistentEntityProperties persistent_properties = 12;
 }
 
 message UpdateEntitlementPayload {
   string urn = 1;
-  .sc.external.services.entitygraph.v1.EntitySnapshot upsert_persistent_variables = 2;
+  .sc.external.services.entitygraph.v1.PersistentEntityProperties persistent_properties = 2;
 }
 
 message CreateEntitlementCommand {
@@ -115,23 +115,26 @@ message RestoreEntitlementCommand {
   string shard_id = 5;
 }
 
-message SetPersistentVariablesCommand {
+message UpdateEntitlementCommand {
   uint64 player_id = 1;
-  repeated .sc.internal.services.entitlement.v2.SetPersistentVariablesCommand.Body updates = 2;
+  repeated .sc.internal.services.entitlement.v2.UpdateEntitlementCommand.Body updates = 2;
 
   message Body {
     string entitlement_urn = 1;
-    .sc.external.services.entitygraph.v1.EntitySnapshot persistent_variables = 2;
+    .sc.external.services.entitlement.v2.EntitlementStatus status = 2;
+    string entity_class_guid = 3;
+    uint64 entity_geid = 4;
+    .sc.internal.services.entitlement.v2.CurrentStowContext current_stow_context = 5;
   }
 }
 
-message ChangePersistentVariablesCommand {
+message SetPersistentPropertiesCommand {
   uint64 player_id = 1;
-  repeated .sc.internal.services.entitlement.v2.ChangePersistentVariablesCommand.Body updates = 2;
+  repeated .sc.internal.services.entitlement.v2.SetPersistentPropertiesCommand.Body updates = 2;
 
   message Body {
     string entitlement_urn = 1;
-    .sc.external.services.entitygraph.v1.EntitySnapshot persistent_variables = 2;
+    .sc.external.services.entitygraph.v1.PersistentEntityProperties persistent_properties = 2;
   }
 }
 

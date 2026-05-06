@@ -13,6 +13,7 @@ import "sc/external/services/entitygraph/v1/types.proto";
 
 service EntitlementService {
   rpc CreateEntitlement ( .sc.internal.services.entitlement.v2.CreateEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.CreateEntitlementResponse );
+  rpc UpdateEntitlement ( .sc.internal.services.entitlement.v2.UpdateEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.UpdateEntitlementResponse );
   rpc UpsertSnapshots ( .sc.internal.services.entitlement.v2.UpsertSnapshotsRequest ) returns ( .sc.internal.services.entitlement.v2.UpsertSnapshotsResponse );
   rpc RevokeAllPlayerEntitlements ( .sc.internal.services.entitlement.v2.RevokeAllPlayerEntitlementsRequest ) returns ( .sc.internal.services.entitlement.v2.RevokeAllPlayerEntitlementsResponse );
   rpc DeliverEntitlement ( .sc.internal.services.entitlement.v2.DeliverEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.DeliverEntitlementResponse );
@@ -29,9 +30,8 @@ service EntitlementService {
   rpc QueryEntitlementsByEntityClassStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityClassStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityClassStreamResponse );
   rpc QueryEntitlementsByEntityGeidsStream ( .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityGeidsStreamRequest ) returns (stream .sc.internal.services.entitlement.v2.QueryEntitlementsByEntityGeidsStreamResponse );
   rpc RestoreEntitlement ( .sc.internal.services.entitlement.v2.RestoreEntitlementRequest ) returns ( .sc.internal.services.entitlement.v2.RestoreEntitlementResponse );
-  rpc SetPersistentVariables ( .sc.internal.services.entitlement.v2.SetPersistentVariablesRequest ) returns ( .sc.internal.services.entitlement.v2.SetPersistentVariablesResponse );
-  rpc ChangePersistentVariables ( .sc.internal.services.entitlement.v2.ChangePersistentVariablesRequest ) returns ( .sc.internal.services.entitlement.v2.ChangePersistentVariablesResponse );
-  rpc QueryPersistentVariables ( .sc.internal.services.entitlement.v2.QueryPersistentVariablesRequest ) returns ( .sc.internal.services.entitlement.v2.QueryPersistentVariablesResponse );
+  rpc SetPersistentProperties ( .sc.internal.services.entitlement.v2.SetPersistentPropertiesRequest ) returns ( .sc.internal.services.entitlement.v2.SetPersistentPropertiesResponse );
+  rpc QueryPersistentProperties ( .sc.internal.services.entitlement.v2.QueryPersistentPropertiesRequest ) returns ( .sc.internal.services.entitlement.v2.QueryPersistentPropertiesResponse );
 }
 
 message QueryEntitlementsStreamRequest {
@@ -181,23 +181,23 @@ message RestoreEntitlementRequest {
 
 message RestoreEntitlementResponse {}
 
-message SetPersistentVariablesRequest {
-  .sc.internal.services.entitlement.v2.SetPersistentVariablesCommand command = 1;
+message UpdateEntitlementRequest {
+  .sc.internal.services.entitlement.v2.UpdateEntitlementCommand command = 1;
   .sc.external.common.command.v1.CommandArguments arguments = 2;
 }
 
-message SetPersistentVariablesResponse {}
+message UpdateEntitlementResponse {}
 
-message ChangePersistentVariablesRequest {
-  .sc.internal.services.entitlement.v2.ChangePersistentVariablesCommand command = 1;
+message SetPersistentPropertiesRequest {
+  .sc.internal.services.entitlement.v2.SetPersistentPropertiesCommand command = 1;
   .sc.external.common.command.v1.CommandArguments arguments = 2;
 }
 
-message ChangePersistentVariablesResponse {}
+message SetPersistentPropertiesResponse {}
 
-message QueryPersistentVariablesRequest {
+message QueryPersistentPropertiesRequest {
   uint64 player_id = 1;
-  repeated .sc.internal.services.entitlement.v2.QueryPersistentVariablesRequest.Query queries = 2;
+  repeated .sc.internal.services.entitlement.v2.QueryPersistentPropertiesRequest.Query queries = 2;
 
   message Query {
     string entitlement_urn = 1;
@@ -205,12 +205,12 @@ message QueryPersistentVariablesRequest {
   }
 }
 
-message QueryPersistentVariablesResponse {
-  repeated .sc.internal.services.entitlement.v2.QueryPersistentVariablesResponse.EntitySnapshotResults results = 1;
+message QueryPersistentPropertiesResponse {
+  repeated .sc.internal.services.entitlement.v2.QueryPersistentPropertiesResponse.PersistentEntityPropertiesResults results = 1;
 
-  message EntitySnapshotResults {
+  message PersistentEntityPropertiesResults {
     string entitlement_urn = 1;
-    .sc.external.services.entitygraph.v1.EntitySnapshot persistent_variables = 2;
+    .sc.external.services.entitygraph.v1.PersistentEntityProperties persistent_properties = 2;
   }
 }
 
