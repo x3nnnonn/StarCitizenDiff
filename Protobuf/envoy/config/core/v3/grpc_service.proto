@@ -12,7 +12,6 @@ import "udpa/annotations/sensitive.proto";
 import "udpa/annotations/status.proto";
 import "udpa/annotations/versioning.proto";
 import "validate/validate.proto";
-
 message GrpcService {
   oneof target_specifier {
     .envoy.config.core.v3.GrpcService.EnvoyGrpc envoy_grpc = 1;
@@ -25,6 +24,7 @@ message GrpcService {
     string cluster_name = 1;
     string authority = 2;
   }
+
   message GoogleGrpc {
     string target_uri = 1;
     .envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelCredentials channel_credentials = 2;
@@ -40,8 +40,10 @@ message GrpcService {
       .envoy.config.core.v3.DataSource private_key = 2;
       .envoy.config.core.v3.DataSource cert_chain = 3;
     }
+
     message GoogleLocalCredentials {
     }
+
     message ChannelCredentials {
       oneof credential_specifier {
         .envoy.config.core.v3.GrpcService.GoogleGrpc.SslCredentials ssl_credentials = 1;
@@ -49,6 +51,7 @@ message GrpcService {
         .envoy.config.core.v3.GrpcService.GoogleGrpc.GoogleLocalCredentials local_credentials = 3;
       }
     }
+
     message CallCredentials {
       oneof credential_specifier {
         string access_token = 1;
@@ -64,16 +67,19 @@ message GrpcService {
         string json_key = 1;
         uint64 token_lifetime_seconds = 2;
       }
+
       message GoogleIAMCredentials {
         string authorization_token = 1;
         string authority_selector = 2;
       }
+
       message MetadataCredentialsFromPlugin {
         string name = 1;
         oneof config_type {
           .google.protobuf.Any typed_config = 3;
         }
       }
+
       message StsService {
         string token_exchange_service_uri = 1;
         string resource = 2;
@@ -86,6 +92,7 @@ message GrpcService {
         string actor_token_type = 9;
       }
     }
+
     message ChannelArgs {
       map<string, .envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelArgs.Value> args = 1;
 

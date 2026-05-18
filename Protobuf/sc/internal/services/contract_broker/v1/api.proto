@@ -14,18 +14,18 @@ import "sc/external/common/command/v1/types.proto";
 import "sc/external/common/mission/v1/locations.proto";
 
 service ContractBrokerService {
-  rpc CreateContracts ( .sc.internal.services.contract_broker.v1.CreateContractsRequest ) returns ( .sc.internal.services.contract_broker.v1.CreateContractsResponse );
-  rpc DestroyContracts ( .sc.internal.services.contract_broker.v1.DestroyContractsRequest ) returns ( .sc.internal.services.contract_broker.v1.DestroyContractsResponse );
-  rpc DestroyContractsByDefinitionId ( .sc.internal.services.contract_broker.v1.DestroyContractsByDefinitionIdRequest ) returns ( .sc.internal.services.contract_broker.v1.DestroyContractsByDefinitionIdResponse );
-  rpc DestroyAllContracts ( .sc.internal.services.contract_broker.v1.DestroyAllContractsRequest ) returns ( .sc.internal.services.contract_broker.v1.DestroyAllContractsResponse );
-  rpc CreateContractFromMission ( .sc.internal.services.contract_broker.v1.CreateContractFromMissionRequest ) returns ( .sc.internal.services.contract_broker.v1.CreateContractFromMissionResponse );
-  rpc AcceptContract ( .sc.internal.services.contract_broker.v1.AcceptContractRequest ) returns ( .sc.internal.services.contract_broker.v1.AcceptContractResponse );
-  rpc QueryAllAvailableContracts ( .sc.internal.services.contract_broker.v1.QueryAllAvailableContractsRequest ) returns (stream .sc.internal.services.contract_broker.v1.QueryAllAvailableContractsResponse );
-  rpc QueryContracts ( .sc.internal.services.contract_broker.v1.QueryContractsRequest ) returns ( .sc.internal.services.contract_broker.v1.QueryContractsResponse );
-  rpc ActivateReconciliation ( .sc.internal.services.contract_broker.v1.ActivateReconciliationRequest ) returns ( .sc.internal.services.contract_broker.v1.ActivateReconciliationResponse );
-  rpc CancelContractsAtLocation ( .sc.internal.services.contract_broker.v1.CancelContractsAtLocationRequest ) returns ( .sc.internal.services.contract_broker.v1.CancelContractsAtLocationResponse );
-  rpc UpdateContractVariables ( .sc.internal.services.contract_broker.v1.UpdateContractVariablesRequest ) returns ( .sc.internal.services.contract_broker.v1.UpdateContractVariablesResponse );
-  rpc CheckContractPrerequisites ( .sc.internal.services.contract_broker.v1.CheckContractPrerequisitesRequest ) returns ( .sc.internal.services.contract_broker.v1.CheckContractPrerequisitesResponse );
+  rpc CreateContracts (.sc.internal.services.contract_broker.v1.CreateContractsRequest) returns (.sc.internal.services.contract_broker.v1.CreateContractsResponse);
+  rpc DestroyContracts (.sc.internal.services.contract_broker.v1.DestroyContractsRequest) returns (.sc.internal.services.contract_broker.v1.DestroyContractsResponse);
+  rpc DestroyContractsByDefinitionId (.sc.internal.services.contract_broker.v1.DestroyContractsByDefinitionIdRequest) returns (.sc.internal.services.contract_broker.v1.DestroyContractsByDefinitionIdResponse);
+  rpc DestroyAllContracts (.sc.internal.services.contract_broker.v1.DestroyAllContractsRequest) returns (.sc.internal.services.contract_broker.v1.DestroyAllContractsResponse);
+  rpc CreateContractFromMission (.sc.internal.services.contract_broker.v1.CreateContractFromMissionRequest) returns (.sc.internal.services.contract_broker.v1.CreateContractFromMissionResponse);
+  rpc AcceptContract (.sc.internal.services.contract_broker.v1.AcceptContractRequest) returns (.sc.internal.services.contract_broker.v1.AcceptContractResponse);
+  rpc QueryAllAvailableContracts (.sc.internal.services.contract_broker.v1.QueryAllAvailableContractsRequest) returns (stream .sc.internal.services.contract_broker.v1.QueryAllAvailableContractsResponse);
+  rpc QueryContracts (.sc.internal.services.contract_broker.v1.QueryContractsRequest) returns (.sc.internal.services.contract_broker.v1.QueryContractsResponse);
+  rpc ActivateReconciliation (.sc.internal.services.contract_broker.v1.ActivateReconciliationRequest) returns (.sc.internal.services.contract_broker.v1.ActivateReconciliationResponse);
+  rpc CancelContractsAtLocation (.sc.internal.services.contract_broker.v1.CancelContractsAtLocationRequest) returns (.sc.internal.services.contract_broker.v1.CancelContractsAtLocationResponse);
+  rpc UpdateContractVariables (.sc.internal.services.contract_broker.v1.UpdateContractVariablesRequest) returns (.sc.internal.services.contract_broker.v1.UpdateContractVariablesResponse);
+  rpc CheckContractPrerequisites (.sc.internal.services.contract_broker.v1.CheckContractPrerequisitesRequest) returns (.sc.internal.services.contract_broker.v1.CheckContractPrerequisitesResponse);
 }
 
 message CreateContractsRequest {
@@ -126,10 +126,12 @@ message QueryContractsResponse {
     bool eligible = 1;
     .sc.external.common.mission.v1.ContractPrerequisites prerequisites = 2;
   }
+
   message ContractsWithEligibility {
     .sc.external.common.mission.v1.MissionContract contract = 1;
     .sc.internal.services.contract_broker.v1.QueryContractsResponse.EligibilityInfo eligibility_info = 2;
   }
+
   message Body {
     oneof contracts {
       .sc.external.common.mission.v1.MissionContract contract = 1;
@@ -151,7 +153,7 @@ message CancelContractsAtLocationRequest {
 
   message Location {
     uint64 location_entity_id = 1;
-    string contract_slot_type = 2;
+    optional string contract_slot_type = 2;
     repeated string ignored_contract_slot_types = 3;
   }
 }

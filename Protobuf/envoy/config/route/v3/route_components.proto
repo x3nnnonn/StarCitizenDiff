@@ -22,7 +22,6 @@ import "udpa/annotations/migrate.proto";
 import "udpa/annotations/status.proto";
 import "udpa/annotations/versioning.proto";
 import "validate/validate.proto";
-
 message VirtualHost {
   string name = 1;
   repeated string domains = 2;
@@ -44,7 +43,6 @@ message VirtualHost {
   .envoy.config.route.v3.HedgePolicy hedge_policy = 17;
   .google.protobuf.UInt32Value per_request_buffer_limit_bytes = 18;
   repeated .envoy.config.route.v3.RouteAction.RequestMirrorPolicy request_mirror_policies = 22;
-
   enum TlsRequirementType {
     NONE = 0;
     EXTERNAL_ONLY = 1;
@@ -76,7 +74,6 @@ message Route {
   .envoy.config.route.v3.Tracing tracing = 15;
   .google.protobuf.UInt32Value per_request_buffer_limit_bytes = 16;
   string stat_prefix = 19;
-
 }
 
 message WeightedCluster {
@@ -100,7 +97,6 @@ message WeightedCluster {
     oneof host_rewrite_specifier {
       string host_rewrite_literal = 11;
     }
-
   }
 }
 
@@ -128,10 +124,12 @@ message RouteMatch {
 
   message GrpcRouteMatchOptions {
   }
+
   message TlsContextMatchOptions {
     .google.protobuf.BoolValue presented = 1;
     .google.protobuf.BoolValue validated = 2;
   }
+
   message ConnectMatcher {}
 }
 
@@ -209,17 +207,21 @@ message RouteAction {
       string header_name = 1;
       .envoy.type.matcher.v3.RegexMatchAndSubstitute regex_rewrite = 2;
     }
+
     message Cookie {
       string name = 1;
       .google.protobuf.Duration ttl = 2;
       string path = 3;
     }
+
     message ConnectionProperties {
       bool source_ip = 1;
     }
+
     message QueryParameter {
       string name = 1;
     }
+
     message FilterState {
       string key = 1;
     }
@@ -324,7 +326,6 @@ message RedirectAction {
   }
   .envoy.config.route.v3.RedirectAction.RedirectResponseCode response_code = 3;
   bool strip_query = 6;
-
   enum RedirectResponseCode {
     MOVED_PERMANENTLY = 0;
     FOUND = 1;
@@ -380,46 +381,54 @@ message RateLimit {
 
     message SourceCluster {
     }
+
     message DestinationCluster {
     }
+
     message RequestHeaders {
       string header_name = 1;
       string descriptor_key = 2;
       bool skip_if_absent = 3;
     }
+
     message RemoteAddress {
     }
+
     message MaskedRemoteAddress {
       .google.protobuf.UInt32Value v4_prefix_mask_len = 1;
       .google.protobuf.UInt32Value v6_prefix_mask_len = 2;
     }
+
     message GenericKey {
       string descriptor_value = 1;
       string descriptor_key = 2;
     }
+
     message HeaderValueMatch {
       string descriptor_key = 4;
       string descriptor_value = 1;
       .google.protobuf.BoolValue expect_match = 2;
       repeated .envoy.config.route.v3.HeaderMatcher headers = 3;
     }
+
     message DynamicMetaData {
       string descriptor_key = 1;
       .envoy.type.metadata.v3.MetadataKey metadata_key = 2;
       string default_value = 3;
     }
+
     message MetaData {
       string descriptor_key = 1;
       .envoy.type.metadata.v3.MetadataKey metadata_key = 2;
       string default_value = 3;
       .envoy.config.route.v3.RateLimit.Action.MetaData.Source source = 4;
-
       enum Source {
         DYNAMIC = 0;
         ROUTE_ENTRY = 1;
       }
     }
   }
+
   message Override {
     oneof override_specifier {
       .envoy.config.route.v3.RateLimit.Override.DynamicMetadata dynamic_metadata = 1;

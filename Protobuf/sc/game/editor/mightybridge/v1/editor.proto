@@ -5,7 +5,6 @@ package sc.game.editor.mightybridge.v1;
 import "sc/game/editor/mightybridge/v1/transforms.proto";
 import "sc/game/editor/mightybridge/v1/houdini.proto";
 import "google/protobuf/descriptor.proto";
-
 message MIGHTYBRIDGEVEDITORVERSIONPLACEHOLDER {
   string force_version_update = 4;
 }
@@ -246,13 +245,12 @@ message EditorSplinePoint {
   float length = 2;
   float pre_tension = 3;
   float post_tension = 4;
-  bool custom_tangent_rotation = 5;
+  optional bool custom_tangent_rotation = 5;
   .sc.game.editor.mightybridge.v1.EditorSplinePoint.RotationMode rotation_mode = 6;
   .sc.game.editor.mightybridge.v1.Quatf entity_rotation = 7;
-  float speed = 8;
-  string trigger_name = 9;
-  bool force_rotation = 10;
-
+  optional float speed = 8;
+  optional string trigger_name = 9;
+  optional bool force_rotation = 10;
   enum RotationMode {
     ROTATION_MODE_UNSPECIFIED = 0;
     ROTATION_MODE_USE_SPLINE = 1;
@@ -372,10 +370,12 @@ message EditorGetBiomeInstancesResult {
     string brush_path = 1;
     string material_override_path = 2;
   }
+
   message BrushInstance {
     uint32 model_index = 1;
     .sc.game.editor.mightybridge.v1.Transformf transform = 2;
   }
+
   message GroundCoverInstance {
     uint32 model_index = 1;
     .sc.game.editor.mightybridge.v1.Transformf transform = 2;
@@ -390,7 +390,7 @@ message EditorGetGeometryCommand {
   bool is_uvs_wanted = 5;
   bool is_materials_wanted = 6;
   bool is_sub_objects_wanted = 7;
-  bool apply_local_transforms_to_vertex = 8;
+  optional bool apply_local_transforms_to_vertex = 8;
 }
 
 message EditorGetGeometryResult {
@@ -438,7 +438,6 @@ message EditorPrefab {
 message EditorGetHierarchyCommand {
   .sc.game.editor.mightybridge.v1.EditorGuid object_guid = 1;
   .sc.game.editor.mightybridge.v1.EditorGetHierarchyCommand.LevelType level = 2;
-
   enum LevelType {
     LEVEL_TYPE_UNSPECIFIED = 0;
     LEVEL_TYPE_OBJECT = 1;
@@ -485,7 +484,6 @@ message EditorObjectAdditionalInfo {
 message EditorSelectObjectsByGUIDsCommand {
   repeated .sc.game.editor.mightybridge.v1.EditorGuid objects_guids = 1;
   .sc.game.editor.mightybridge.v1.EditorSelectObjectsByGUIDsCommand.Mode mode = 2;
-
   enum Mode {
     MODE_UNSPECIFIED = 0;
     MODE_APPEND = 1;
@@ -679,7 +677,6 @@ message EditorSetGeometryInstancerCommand {
   repeated .sc.game.editor.mightybridge.v1.Vec3f positions = 8;
   repeated .sc.game.editor.mightybridge.v1.Quatf rotations = 9;
   repeated float scales = 10;
-
   enum Rendering {
     RENDERING_UNSPECIFIED = 0;
     RENDERING_DEFAULT = 1;
@@ -709,7 +706,7 @@ message EditorGetGeometryInstancerResult {
 
 message EditorGetCGFInfoCommand {
   string cgf_path = 1;
-  bool apply_local_transforms_to_vertex = 2;
+  optional bool apply_local_transforms_to_vertex = 2;
 }
 
 message EditorGetCGFInfoResult {
@@ -834,7 +831,6 @@ message EditorHTOProperty {
     float float_value = 6;
     int32 int_value = 7;
   }
-
   enum HTOProperty {
     HTO_PROPERTY_UNSPECIFIED = 0;
     HTO_PROPERTY_PARENT_HTO = 1;
@@ -877,7 +873,6 @@ message EditorEntityLinksProperty {
   repeated .sc.game.editor.mightybridge.v1.EditorEnergyLink energy_links = 4;
   .sc.game.editor.mightybridge.v1.EditorEntityLinksProperty.EntityLinksPropertySetOption set_interaction_links_option = 5;
   repeated .sc.game.editor.mightybridge.v1.EditorInteractionLink interaction_links = 6;
-
   enum EntityLinksPropertySetOption {
     ENTITY_LINKS_PROPERTY_SET_OPTION_UNSPECIFIED = 0;
     ENTITY_LINKS_PROPERTY_SET_OPTION_IGNORE = 1;
@@ -893,7 +888,6 @@ message EditorPrefabProperty {
     string string_value = 3;
     bool bool_value = 4;
   }
-
   enum PrefabProperty {
     PREFAB_PROPERTY_UNSPECIFIED = 0;
     PREFAB_PROPERTY_PATH = 1;
@@ -997,7 +991,6 @@ message EditorShaderGenParams {
 message EditorMaterialSettings {
   .sc.game.editor.mightybridge.v1.EditorMaterialSettings.Setting name = 1;
   string property = 2;
-
   enum Setting {
     MATERIAL_PROPERTY_TEMPLATE_MATERIAL = 0;
     MATERIAL_PROPERTY_SHADER = 1;
@@ -1011,7 +1004,6 @@ message EditorMaterialOpacitySettings {
     float float_value = 2;
     bool bool_value = 3;
   }
-
   enum Setting {
     MATERIAL_PROPERTY_OPACITY = 0;
     MATERIAL_PROPERTY_ALPHA_TEST = 1;
@@ -1027,7 +1019,6 @@ message EditorMaterialLightingSettings {
     .sc.game.editor.mightybridge.v1.EditorRGBColor rgb_value = 2;
     float float_value = 3;
   }
-
   enum Setting {
     MATERIAL_PROPERTY_DIFFUSE_COLOR = 0;
     MATERIAL_PROPERTY_SPECULAR_COLOR = 1;
@@ -1043,7 +1034,6 @@ message EditorMaterialAdvanced {
     bool bool_value = 2;
     string string_value = 3;
   }
-
   enum Advanced {
     MATERIAL_PROPERTY_TWO_SIDED = 0;
     MATERIAL_PROPERTY_NO_SHADOW = 1;
@@ -1075,7 +1065,6 @@ message EditorMaterialProperty {
     .sc.game.editor.mightybridge.v1.EditorVertexDeformation vertex_deformation = 9;
     .sc.game.editor.mightybridge.v1.EditorShaderGenParams shade_generation_params = 10;
   }
-
   enum MaterialProperty {
     MATERIAL_PROPERTY_MATERIAL_SETTING = 0;
     MATERIAL_PROPERTY_LIGHTING_SETTING = 1;
@@ -1274,6 +1263,7 @@ message EditorUpdateTinyMachineGraphResult {
       TYPE_COMPILATION_ERROR = 3;
     }
   }
+
   message RuntimeReport {
     .sc.game.editor.mightybridge.v1.EditorGuid entity_guid = 1;
     repeated .sc.game.editor.mightybridge.v1.EditorUpdateTinyMachineGraphResult.RuntimeReport.RuntimeMessage messages = 2;
@@ -1283,7 +1273,7 @@ message EditorUpdateTinyMachineGraphResult {
     message RuntimeMessage {
       .sc.game.editor.mightybridge.v1.EditorUpdateTinyMachineGraphResult.RuntimeReport.Severity severity = 1;
       string message = 2;
-      string node_id = 3;
+      optional string node_id = 3;
     }
 
     message NodePerformance {
@@ -1432,7 +1422,6 @@ message EditorShowMessageBoxCommand {
   string text = 1;
   .sc.game.editor.mightybridge.v1.EditorShowMessageBoxCommand.MessageBoxIcon icon = 2;
   .sc.game.editor.mightybridge.v1.EditorShowMessageBoxCommand.MessageBoxButtons buttons = 3;
-
   enum MessageBoxIcon {
     MESSAGE_BOX_ICON_UNSPECIFIED = 0;
     MESSAGE_BOX_ICON_HAND = 1;
@@ -1454,7 +1443,6 @@ message EditorShowMessageBoxCommand {
 
 message EditorShowMessageBoxResult {
   .sc.game.editor.mightybridge.v1.EditorShowMessageBoxResult.MessageBoxResult result = 1;
-
   enum MessageBoxResult {
     MESSAGE_BOX_RESULT_UNSPECIFIED = 0;
     MESSAGE_BOX_RESULT_OK = 1;
@@ -1503,6 +1491,7 @@ message EditorGetMeshInfoResult {
     float geometric_mean_face = 17;
     int32 index = 18;
   }
+
   message SubObjectMeshFaces {
     repeated .sc.game.editor.mightybridge.v1.EditorGetMeshInfoResult.MeshInfo sub_object_mesh_faces = 14;
   }
@@ -1542,7 +1531,6 @@ message EditorPerforceMarkForAddCommand {
 
 message EditorPerforceMarkForAddResult {
   .sc.game.editor.mightybridge.v1.EditorPerforceMarkForAddResult.ResultType result_type = 1;
-
   enum ResultType {
     RESULT_TYPE_UNSPECIFIED = 0;
     RESULT_TYPE_SUCCESS = 1;
@@ -1562,7 +1550,7 @@ message EditorDebugQuad {
 message EditorDebugCircle {
   .sc.game.editor.mightybridge.v1.Vec3w pos = 1;
   float radius = 2;
-  uint32 axis = 3;
+  optional uint32 axis = 3;
 }
 
 message EditorDebugBox {
@@ -1579,7 +1567,7 @@ message EditorDebugCylinder {
   .sc.game.editor.mightybridge.v1.Vec3w pos = 1;
   .sc.game.editor.mightybridge.v1.Vec3w pos2 = 2;
   float radius = 3;
-  uint32 segment_count = 4;
+  optional uint32 segment_count = 4;
 }
 
 message EditorDebugLines {
@@ -1591,15 +1579,15 @@ message EditorDebugText {
   .sc.game.editor.mightybridge.v1.Vec3w pos = 1;
   float size = 2;
   string text = 3;
-  bool has_fixed_size = 4;
-  bool is_centered = 5;
+  optional bool has_fixed_size = 4;
+  optional bool is_centered = 5;
 }
 
 message EditorDebugShape {
   string id = 1;
-  .sc.game.editor.mightybridge.v1.EditorRGBColor color = 2;
-  float line_width = 3;
-  bool is_local = 4;
+  optional .sc.game.editor.mightybridge.v1.EditorRGBColor color = 2;
+  optional float line_width = 3;
+  optional bool is_local = 4;
   oneof shape {
     .sc.game.editor.mightybridge.v1.EditorDebugQuad debug_quad = 5;
     .sc.game.editor.mightybridge.v1.EditorDebugCircle debug_circle = 6;
@@ -1631,9 +1619,6 @@ enum EditorLogLevel {
   EDITOR_LOG_LEVEL_ERROR = 4;
 }
 
-
-// Extensions for .google.protobuf.MessageOptions
-
 extend .google.protobuf.MessageOptions {
-  string mightybridge_version = 51234;
+  optional string mightybridge_version = 51234;
 }

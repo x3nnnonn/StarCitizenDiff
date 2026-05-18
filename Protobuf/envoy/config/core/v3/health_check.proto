@@ -14,7 +14,6 @@ import "google/protobuf/wrappers.proto";
 import "udpa/annotations/status.proto";
 import "udpa/annotations/versioning.proto";
 import "validate/validate.proto";
-
 message HealthStatusSet {
   repeated .envoy.config.core.v3.HealthStatus statuses = 1;
 }
@@ -52,6 +51,7 @@ message HealthCheck {
       bytes binary = 2;
     }
   }
+
   message HttpHealthCheck {
     string host = 1;
     string path = 2;
@@ -64,24 +64,29 @@ message HealthCheck {
     .envoy.type.v3.CodecClientType codec_client_type = 10;
     .envoy.type.matcher.v3.StringMatcher service_name_matcher = 11;
   }
+
   message TcpHealthCheck {
     .envoy.config.core.v3.HealthCheck.Payload send = 1;
     repeated .envoy.config.core.v3.HealthCheck.Payload receive = 2;
   }
+
   message RedisHealthCheck {
     string key = 1;
   }
+
   message GrpcHealthCheck {
     string service_name = 1;
     string authority = 2;
     repeated .envoy.config.core.v3.HeaderValueOption initial_metadata = 3;
   }
+
   message CustomHealthCheck {
     string name = 1;
     oneof config_type {
       .google.protobuf.Any typed_config = 3;
     }
   }
+
   message TlsOptions {
     repeated string alpn_protocols = 1;
   }
