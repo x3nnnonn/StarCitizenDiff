@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<EntityClassDefinition.PU_Human_Enemy_GroundCombat_NPC_Ninetails_juggernaut RecordId="1ef9c6f4-5442-47e0-952d-7f6cc5fbd138" RecordCategory="Unknown" Type="EntityClassDefinition">
+<EntityClassDefinition.PU_Human_Enemy_GroundCombat_NPC_Ninetails_juggernaut RecordId="1ef9c6f4-5442-47e0-952d-7f6cc5fbd138" RecordCategory="SystemsDesign" Type="EntityClassDefinition">
   <Category>Actors</Category>
   <Icon>Default.bmp</Icon>
   <Invisible>False</Invisible>
@@ -57,6 +57,7 @@
       <ladderConfig ReferencedFile="file://./../../../../../libs/foundry/records/actor/actorladderconfig.xml" />
       <ladderConfigV2 ReferencedFile="file://./../../../../../libs/foundry/records/actor/actorladderconfig_v2.xml" />
       <proceduralAnimationRecord />
+      <headOverlayOffset />
       <movementModifiersRecord />
       <movementSetsRecord />
       <isMinimal>False</isMinimal>
@@ -69,7 +70,7 @@
       <takeDownConfig ReferencedFile="file://./../../../../../libs/foundry/records/closecombat/takedownconfig.aicharacter.xml" />
       <misfireFixConfig />
       <hitReactionsDefRecord ReferencedFile="file://./../../../../../libs/foundry/records/actor/externalforceresponse/standardexternalforceresponsedef.xml" />
-      <forceReactionsDefRecord ReferencedFile="file://./../../../../../libs/foundry/records/actor/externalforceresponse/aiforcereactionssetup.xml" />
+      <forceReactionsDefRecord ReferencedFile="file://./../../../../../libs/foundry/records/actor/externalforceresponse/aiforcereactionssetup_juggernaut.xml" />
       <shakeRecordFirstPerson />
       <shakeRecordThirdPerson />
       <actorAimLimits ReferencedFile="file://./../../../../../libs/foundry/records/actor/actorviewlimits/aimlimits/baseaimlimits_npc.xml" />
@@ -99,6 +100,7 @@
         <meleeItemPortName>utility_attach_2</meleeItemPortName>
         <gadgetItemPortName>utility_attach_1</gadgetItemPortName>
         <miningGadgetItemPortName>gadget_attach_1</miningGadgetItemPortName>
+        <backpackItemPortName>backpack</backpackItemPortName>
       </weaponPortsParams>
       <actorSpecies>@actor_species_human</actorSpecies>
       <swapOutfitInteraction PointsTo="ptr:1" />
@@ -494,11 +496,11 @@
       <mastergraphStateOverrides Type="SMastergraphStateOverride" Count="0" />
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="ActorStatusIncapacitatedUIData" Count="1">
+      <perceptionTypes Type="AbilityStatusCosts" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
       <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
-      <excludedSenses Type="ActorStatusUIWarningEntry" Count="0" />
+      <excludedSenses Type="StatusCost" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
         <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Head</helperName>
@@ -1270,7 +1272,6 @@
           <z>0</z>
         </inventoryOccupancyLocalBoundsMax>
         <inventoryOccupancyDimensionsUIOverride />
-        <inventoryOccupancyDimensionsUIOverrideV4 />
         <inventoryOccupancyFixedGridDimensionsUIV4 Type="Vec2">
           <x>1</x>
           <y>1</y>
@@ -2448,7 +2449,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <SubTypes Type="StatusEffectValue" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2646,7 +2647,29 @@
     </SInteractionStateMachineParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <targetPresets Type="GameplayTrigger_TargetPreset" Count="0" />
-      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="0" />
+      <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="1">
+        <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
+          <targetState PointsTo="ptr:28" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <TargetGameplayTrigger Type="TargetGameplayTrigger">
+              <targets Type="GameplayTrigger_TargetType_Base" Count="1">
+                <GameplayTrigger_TargetType_LinkedArea Type="GameplayTrigger_TargetType_LinkedArea">
+                  <optionalTarget>False</optionalTarget>
+                  <areaName />
+                  <useActionArea>True</useActionArea>
+                  <nextTarget />
+                </GameplayTrigger_TargetType_LinkedArea>
+              </targets>
+              <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+                <AssignmentDefendAreaGameplayTrigger Type="AssignmentDefendAreaGameplayTrigger">
+                  <directionalEntity />
+                  <defendArea />
+                </AssignmentDefendAreaGameplayTrigger>
+              </gameplayTriggers>
+            </TargetGameplayTrigger>
+          </gameplayTriggers>
+        </SOnInteractionStateChangeTriggers>
+      </onInteractionStateChangeTriggers>
       <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
         <SOnInteractionTriggers Type="SOnInteractionTriggers">
           <targetInteraction PointsTo="ptr:30" />
@@ -2662,7 +2685,7 @@
     </SubsumptionDataComponentParams>
     <SubsumptionAssignmentComponentParams Type="SubsumptionAssignmentComponentParams" />
     <SAISkillsComponentParams Type="SAISkillsComponentParams">
-      <skills ReferencedFile="file://./../../../../../libs/foundry/records/aiprofile/skills/defaultskillslist.xml" />
+      <skills ReferencedFile="file://./../../../../../libs/foundry/records/aiprofile/skills/juggernaut.xml" />
       <profile ReferencedFile="file://./../../../../../libs/foundry/records/aiprofile/baseaiprofile.xml" />
       <motiveList />
     </SAISkillsComponentParams>
@@ -2681,7 +2704,7 @@
     </SVisionComponentParams>
     <SRadarSenseComponentParams Type="SRadarSenseComponentParams" />
     <SHearingComponentParams Type="SHearingComponentParams">
-      <soundTypeFilter Type="SCActorShoppingAssistance" Count="0" />
+      <soundTypeFilter Type="AbilityComponentParams" Count="0" />
     </SHearingComponentParams>
     <AttentionTargetComponentParams Type="AttentionTargetComponentParams">
       <attackerScore>1</attackerScore>

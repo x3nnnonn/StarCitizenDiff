@@ -24,8 +24,8 @@
         <breakableParams />
         <gameCollisionClass />
         <spawnBoxScale>0.5</spawnBoxScale>
-        <PhysFlagsOverride Type="HealthIconData" Count="0" />
-        <PhysFlagsColliderOverride Type="HealthIconData" Count="0" />
+        <PhysFlagsOverride Type="ActorStatusLocalisation" Count="0" />
+        <PhysFlagsColliderOverride Type="ActorStatusLocalisation" Count="0" />
         <maxLoggedCollisions>1</maxLoggedCollisions>
         <Damping>0.01</Damping>
         <DampingZeroG>0.01</DampingZeroG>
@@ -77,6 +77,7 @@
               <maximum>1</maximum>
             </dissolvePercentageRange>
           </fireHazard>
+          <useParentRoomOccupant>False</useParentRoomOccupant>
         </temperature>
       </PhysType>
     </SEntityPhysicsControllerParams>
@@ -722,8 +723,8 @@
               <onEntityAttachedState PointsTo="ptr:19" />
               <onEntityDetachedState PointsTo="ptr:11" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStateValidation" Count="0" />
-              <itemSubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
+              <itemSubTypes Type="StatusEffectValue" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -896,8 +897,8 @@
               <onEntityAttachedState PointsTo="ptr:26" />
               <onEntityDetachedState PointsTo="ptr:20" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStateValidation" Count="0" />
-              <itemSubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
+              <itemSubTypes Type="StatusEffectValue" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -1070,8 +1071,8 @@
               <onEntityAttachedState PointsTo="ptr:33" />
               <onEntityDetachedState PointsTo="ptr:27" />
               <onPortDestroyedState />
-              <itemTypes Type="ActorStateValidation" Count="0" />
-              <itemSubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
+              <itemSubTypes Type="StatusEffectValue" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -3488,7 +3489,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>RemovableChip</Type>
-              <SubTypes Type="ActorStateData_ValidationParams" Count="1">
+              <SubTypes Type="StatusEffectValue" Count="1">
                 <EnumChoice>SystemAccess</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3584,7 +3585,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>RemovableChip</Type>
-              <SubTypes Type="ActorStateData_ValidationParams" Count="1">
+              <SubTypes Type="StatusEffectValue" Count="1">
                 <EnumChoice>SystemAccess</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3680,7 +3681,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>RemovableChip</Type>
-              <SubTypes Type="ActorStateData_ValidationParams" Count="1">
+              <SubTypes Type="StatusEffectValue" Count="1">
                 <EnumChoice>SystemAccess</EnumChoice>
               </SubTypes>
             </SItemPortDefTypes>
@@ -3797,8 +3798,8 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDestroyAttachedItemGameplayTrigger Type="SDestroyAttachedItemGameplayTrigger">
               <itemPort PointsTo="ptr:18" />
-              <itemTypes Type="ActorStateValidation" Count="0" />
-              <itemSubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
+              <itemSubTypes Type="StatusEffectValue" Count="0" />
               <damageAttachedItem>True</damageAttachedItem>
             </SDestroyAttachedItemGameplayTrigger>
           </gameplayTriggers>
@@ -3808,8 +3809,8 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDestroyAttachedItemGameplayTrigger Type="SDestroyAttachedItemGameplayTrigger">
               <itemPort PointsTo="ptr:25" />
-              <itemTypes Type="ActorStateValidation" Count="0" />
-              <itemSubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
+              <itemSubTypes Type="StatusEffectValue" Count="0" />
               <damageAttachedItem>True</damageAttachedItem>
             </SDestroyAttachedItemGameplayTrigger>
           </gameplayTriggers>
@@ -3819,8 +3820,8 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDestroyAttachedItemGameplayTrigger Type="SDestroyAttachedItemGameplayTrigger">
               <itemPort PointsTo="ptr:32" />
-              <itemTypes Type="ActorStateValidation" Count="0" />
-              <itemSubTypes Type="ActorStateData_ValidationParams" Count="0" />
+              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
+              <itemSubTypes Type="StatusEffectValue" Count="0" />
               <damageAttachedItem>True</damageAttachedItem>
             </SDestroyAttachedItemGameplayTrigger>
           </gameplayTriggers>
@@ -3830,11 +3831,17 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDetachItemGameplayTrigger Type="SDetachItemGameplayTrigger">
               <itemPort PointsTo="ptr:18" />
+              <ignoreParentCollision>False</ignoreParentCollision>
               <impulseDirection Type="Vec3">
                 <x>0</x>
                 <y>1</y>
                 <z>0</z>
               </impulseDirection>
+              <impulseOffset Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </impulseOffset>
               <impulseStrength>1</impulseStrength>
             </SDetachItemGameplayTrigger>
           </gameplayTriggers>
@@ -3844,11 +3851,17 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDetachItemGameplayTrigger Type="SDetachItemGameplayTrigger">
               <itemPort PointsTo="ptr:25" />
+              <ignoreParentCollision>False</ignoreParentCollision>
               <impulseDirection Type="Vec3">
                 <x>0</x>
                 <y>1</y>
                 <z>0</z>
               </impulseDirection>
+              <impulseOffset Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </impulseOffset>
               <impulseStrength>1</impulseStrength>
             </SDetachItemGameplayTrigger>
           </gameplayTriggers>
@@ -3858,11 +3871,17 @@
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDetachItemGameplayTrigger Type="SDetachItemGameplayTrigger">
               <itemPort PointsTo="ptr:32" />
+              <ignoreParentCollision>False</ignoreParentCollision>
               <impulseDirection Type="Vec3">
                 <x>0</x>
                 <y>1</y>
                 <z>0</z>
               </impulseDirection>
+              <impulseOffset Type="Vec3">
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </impulseOffset>
               <impulseStrength>1</impulseStrength>
             </SDetachItemGameplayTrigger>
           </gameplayTriggers>

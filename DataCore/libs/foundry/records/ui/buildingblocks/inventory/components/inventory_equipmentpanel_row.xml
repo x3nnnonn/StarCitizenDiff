@@ -409,7 +409,7 @@
       <enableHeldCursor>False</enableHeldCursor>
       <heldCursor>Auto</heldCursor>
     </BuildingBlocks_DisplayWidget>
-    <BuildingBlocks_WidgetCanvas Pointer="ptr:5" Type="BuildingBlocks_WidgetCanvas">
+    <BuildingBlocks_WidgetCanvas Pointer="ptr:6" Type="BuildingBlocks_WidgetCanvas">
       <name>canvas_MainSlot</name>
       <styleTags Type="Tag" Count="1">
         <Tag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.77a2161c-7716-41cb-ad70-f657bc96183b" RecordId="77a2161c-7716-41cb-ad70-f657bc96183b" />
@@ -1671,12 +1671,12 @@
       <selectOnHighlight>True</selectOnHighlight>
     </BuildingBlocks_WidgetList>
     <BuildingBlocks_DisplayWidget Type="BuildingBlocks_DisplayWidget">
-      <name>ContextMenu_InteractionLayer</name>
+      <name>ContextMenu_InteractionLayerAttach</name>
       <styleTags Type="Tag" Count="0" />
-      <rendererType>Flash</rendererType>
-      <rendererPolicy Type="BuildingBlocks_FlashRendererPolicy">
-        <useFlashRenderThreadUpdate>False</useFlashRenderThreadUpdate>
-        <transformFrom3D>False</transformFrom3D>
+      <rendererType>Primitive</rendererType>
+      <rendererPolicy Type="BuildingBlocks_PrimitiveRendererPolicy">
+        <sortViaPivot>False</sortViaPivot>
+        <includeInGroundingEffects>True</includeInGroundingEffects>
       </rendererPolicy>
       <primitiveSettings Type="BuildingBlocks_PrimitiveSettings">
         <primitiveMaterialPath />
@@ -1694,7 +1694,7 @@
         <visualState />
       </primitiveSettings>
       <parent PointsTo="ptr:4" />
-      <previewScene />
+      <previewScene PointsTo="ptr:2" />
       <previewSceneFlattened />
       <cullingLevel>Render</cullingLevel>
       <isActive>True</isActive>
@@ -1882,8 +1882,39 @@
       <layoutPolicy />
       <layoutPolicyItem />
       <layoutItemCommon />
-      <dropTargetPolicy />
-      <draggablePolicy />
+      <dropTargetPolicy Type="BuildingBlocks_DropTarget">
+        <IdVariable Type="BuildingBlocks_BindingsVariableInput">
+          <binding>id</binding>
+        </IdVariable>
+        <dragStamp />
+      </dropTargetPolicy>
+      <draggablePolicy Type="BuildingBlocks_DropTargetItem">
+        <onDragStart Type="BuildingBlocks_TriggerBase" Count="1">
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>OnStartDraggingLoot</name>
+          </BuildingBlocks_TriggerURL>
+        </onDragStart>
+        <onDragEnd Type="BuildingBlocks_TriggerBase" Count="1">
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>OnStopDraggingLoot</name>
+          </BuildingBlocks_TriggerURL>
+        </onDragEnd>
+        <dragStartSoundTag />
+        <dragEndSoundTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.37265f96-d2c3-4b3c-9f27-5f2a55d7d171" RecordId="37265f96-d2c3-4b3c-9f27-5f2a55d7d171" />
+        <cursorSpeedSoundTag />
+        <dragXPosURL />
+        <dragYPosURL />
+        <currentDropTargetIdVariable Type="BuildingBlocks_BindingsVariableInput">
+          <binding>/inventoryGrid/currentDragContainer</binding>
+        </currentDropTargetIdVariable>
+        <orderIndexVariable Type="BuildingBlocks_BindingsVariableInput">
+          <binding>/inventoryGrid/currentOrderIndex</binding>
+        </orderIndexVariable>
+        <reorderSoundTag />
+        <dragProxy PointsTo="ptr:5" />
+        <centerOnCursor>True</centerOnCursor>
+        <transformIsRelative>False</transformIsRelative>
+      </draggablePolicy>
       <tooltipPolicy />
       <contextMenuPolicy Type="BuildingBlocks_ContextMenuPolicy">
         <namespace>optionsMenu/contextMenu</namespace>
@@ -1932,7 +1963,7 @@
         <timescaleIndependent>False</timescaleIndependent>
       </animation>
       <interactions Type="BuildingBlocks_Interactions">
-        <canInteract>False</canInteract>
+        <canInteract>True</canInteract>
         <disabled>False</disabled>
         <selected>False</selected>
         <collideLeftClick>False</collideLeftClick>
@@ -1946,20 +1977,50 @@
         <inheritDisabledState>False</inheritDisabledState>
         <blocksCursor>False</blocksCursor>
         <blocksNavigation>False</blocksNavigation>
-        <onLeftClick Type="BuildingBlocks_TriggerBase" Count="0" />
+        <onLeftClick Type="BuildingBlocks_TriggerBase" Count="1">
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>lootSlotState/onLootPrimaryAction</name>
+          </BuildingBlocks_TriggerURL>
+        </onLeftClick>
         <onRightClick Type="BuildingBlocks_TriggerBase" Count="0" />
         <onLeftDown Type="BuildingBlocks_TriggerBase" Count="0" />
-        <onLeftDoubleClick Type="BuildingBlocks_TriggerBase" Count="0" />
-        <onRollOver Type="BuildingBlocks_TriggerBase" Count="0" />
-        <onRollOff Type="BuildingBlocks_TriggerBase" Count="0" />
+        <onLeftDoubleClick Type="BuildingBlocks_TriggerBase" Count="1">
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>lootSlotState/onlootdoubleclickaction</name>
+          </BuildingBlocks_TriggerURL>
+        </onLeftDoubleClick>
+        <onRollOver Type="BuildingBlocks_TriggerBase" Count="3">
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>onTooltipItemRollOn</name>
+          </BuildingBlocks_TriggerURL>
+          <BuildingBlocks_TriggerModifyInt Type="BuildingBlocks_TriggerModifyInt">
+            <variableName>/inventorygrid/tooltip/tooltipAlignment</variableName>
+            <value>1</value>
+          </BuildingBlocks_TriggerModifyInt>
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>lootSlotState/onLootItemRollOn</name>
+          </BuildingBlocks_TriggerURL>
+        </onRollOver>
+        <onRollOff Type="BuildingBlocks_TriggerBase" Count="2">
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>onTooltipItemRollOff</name>
+          </BuildingBlocks_TriggerURL>
+          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
+            <name>lootSlotState/onLootItemRollOff</name>
+          </BuildingBlocks_TriggerURL>
+        </onRollOff>
         <boundRestrictionShape />
-        <twoVariablePicker />
+        <twoVariablePicker Type="BuildingBlocks_TwoVariablePicker">
+          <variableXURL />
+          <variableYURL />
+          <markerNodeDef />
+        </twoVariablePicker>
         <buttonDownSoundTag />
         <rightButtonDownSoundTag />
-        <leftClickSoundTag />
-        <rightClickSoundTag />
+        <leftClickSoundTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.aa5d17f5-965f-412d-a70d-fe75cfbab4e8" RecordId="aa5d17f5-965f-412d-a70d-fe75cfbab4e8" />
+        <rightClickSoundTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.97f4c5d1-4f24-479b-aef0-067d7105fb0e" RecordId="97f4c5d1-4f24-479b-aef0-067d7105fb0e" />
         <leftDoubleClickSoundTag />
-        <rollOverSoundTag />
+        <rollOverSoundTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.e825dca3-9183-40e4-a6a4-86374abb3a80" RecordId="e825dca3-9183-40e4-a6a4-86374abb3a80" />
         <rollOffSoundTag />
         <movementStartSoundTag />
         <movementStopSoundTag />
@@ -1980,7 +2041,7 @@
       <heldCursor>Auto</heldCursor>
     </BuildingBlocks_DisplayWidget>
     <BuildingBlocks_DisplayWidget Type="BuildingBlocks_DisplayWidget">
-      <name>ContextMenu_InteractionLayer</name>
+      <name>ContextMenu_InteractionLayerMain</name>
       <styleTags Type="Tag" Count="0" />
       <rendererType>Primitive</rendererType>
       <rendererPolicy Type="BuildingBlocks_PrimitiveRendererPolicy">
@@ -2002,7 +2063,7 @@
         <isGrouped>True</isGrouped>
         <visualState />
       </primitiveSettings>
-      <parent PointsTo="ptr:5" />
+      <parent PointsTo="ptr:6" />
       <previewScene PointsTo="ptr:2" />
       <previewSceneFlattened />
       <cullingLevel>Render</cullingLevel>
@@ -2227,7 +2288,7 @@
           <binding>/inventoryGrid/currentOrderIndex</binding>
         </orderIndexVariable>
         <reorderSoundTag />
-        <dragProxy PointsTo="ptr:6" />
+        <dragProxy PointsTo="ptr:7" />
         <centerOnCursor>True</centerOnCursor>
         <transformIsRelative>False</transformIsRelative>
       </draggablePolicy>
@@ -2575,39 +2636,8 @@
       <layoutPolicy />
       <layoutPolicyItem />
       <layoutItemCommon />
-      <dropTargetPolicy Type="BuildingBlocks_DropTarget">
-        <IdVariable Type="BuildingBlocks_BindingsVariableInput">
-          <binding>id</binding>
-        </IdVariable>
-        <dragStamp />
-      </dropTargetPolicy>
-      <draggablePolicy Type="BuildingBlocks_DropTargetItem">
-        <onDragStart Type="BuildingBlocks_TriggerBase" Count="1">
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>OnStartDraggingLoot</name>
-          </BuildingBlocks_TriggerURL>
-        </onDragStart>
-        <onDragEnd Type="BuildingBlocks_TriggerBase" Count="1">
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>OnStopDraggingLoot</name>
-          </BuildingBlocks_TriggerURL>
-        </onDragEnd>
-        <dragStartSoundTag />
-        <dragEndSoundTag RecordReference="file://./../../../../../../../libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml" RecordName="Tag.37265f96-d2c3-4b3c-9f27-5f2a55d7d171" RecordId="37265f96-d2c3-4b3c-9f27-5f2a55d7d171" />
-        <cursorSpeedSoundTag />
-        <dragXPosURL />
-        <dragYPosURL />
-        <currentDropTargetIdVariable Type="BuildingBlocks_BindingsVariableInput">
-          <binding>/inventoryGrid/currentDragContainer</binding>
-        </currentDropTargetIdVariable>
-        <orderIndexVariable Type="BuildingBlocks_BindingsVariableInput">
-          <binding>/inventoryGrid/currentOrderIndex</binding>
-        </orderIndexVariable>
-        <reorderSoundTag />
-        <dragProxy PointsTo="ptr:7" />
-        <centerOnCursor>True</centerOnCursor>
-        <transformIsRelative>False</transformIsRelative>
-      </draggablePolicy>
+      <dropTargetPolicy />
+      <draggablePolicy />
       <tooltipPolicy />
       <contextMenuPolicy />
       <grabControlsPolicy />
@@ -2650,10 +2680,10 @@
         <timescaleIndependent>False</timescaleIndependent>
       </animation>
       <interactions Type="BuildingBlocks_Interactions">
-        <canInteract>True</canInteract>
+        <canInteract>False</canInteract>
         <disabled>False</disabled>
         <selected>False</selected>
-        <collideLeftClick>True</collideLeftClick>
+        <collideLeftClick>False</collideLeftClick>
         <collideRightClick>False</collideRightClick>
         <collideMouseWheel>False</collideMouseWheel>
         <hitDetectionOffset>1</hitDetectionOffset>
@@ -2664,38 +2694,12 @@
         <inheritDisabledState>False</inheritDisabledState>
         <blocksCursor>False</blocksCursor>
         <blocksNavigation>False</blocksNavigation>
-        <onLeftClick Type="BuildingBlocks_TriggerBase" Count="1">
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>lootSlotState/onLootPrimaryAction</name>
-          </BuildingBlocks_TriggerURL>
-        </onLeftClick>
+        <onLeftClick Type="BuildingBlocks_TriggerBase" Count="0" />
         <onRightClick Type="BuildingBlocks_TriggerBase" Count="0" />
         <onLeftDown Type="BuildingBlocks_TriggerBase" Count="0" />
-        <onLeftDoubleClick Type="BuildingBlocks_TriggerBase" Count="1">
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>lootSlotState/onlootdoubleclickaction</name>
-          </BuildingBlocks_TriggerURL>
-        </onLeftDoubleClick>
-        <onRollOver Type="BuildingBlocks_TriggerBase" Count="3">
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>onTooltipItemRollOn</name>
-          </BuildingBlocks_TriggerURL>
-          <BuildingBlocks_TriggerModifyInt Type="BuildingBlocks_TriggerModifyInt">
-            <variableName>/inventorygrid/tooltip/tooltipAlignment</variableName>
-            <value>1</value>
-          </BuildingBlocks_TriggerModifyInt>
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>lootSlotState/onLootItemRollOn</name>
-          </BuildingBlocks_TriggerURL>
-        </onRollOver>
-        <onRollOff Type="BuildingBlocks_TriggerBase" Count="2">
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>onTooltipItemRollOff</name>
-          </BuildingBlocks_TriggerURL>
-          <BuildingBlocks_TriggerURL Type="BuildingBlocks_TriggerURL">
-            <name>lootSlotState/onLootItemRollOff</name>
-          </BuildingBlocks_TriggerURL>
-        </onRollOff>
+        <onLeftDoubleClick Type="BuildingBlocks_TriggerBase" Count="0" />
+        <onRollOver Type="BuildingBlocks_TriggerBase" Count="0" />
+        <onRollOff Type="BuildingBlocks_TriggerBase" Count="0" />
         <boundRestrictionShape />
         <twoVariablePicker />
         <buttonDownSoundTag />
@@ -2730,7 +2734,7 @@
       <sizingMethod>Size</sizingMethod>
       <paramInputValues Type="BuildingBlocks_ComponentParameterInputBase" Count="0" />
     </BuildingBlocks_WidgetCanvas>
-    <BuildingBlocks_WidgetCanvas Pointer="ptr:7" Type="BuildingBlocks_WidgetCanvas">
+    <BuildingBlocks_WidgetCanvas Pointer="ptr:5" Type="BuildingBlocks_WidgetCanvas">
       <name>canvas_ListItemProxy_AttachmentSlot</name>
       <styleTags Type="Tag" Count="0" />
       <rendererType>Flash</rendererType>
@@ -3040,7 +3044,7 @@
       <sizingMethod>Size</sizingMethod>
       <paramInputValues Type="BuildingBlocks_ComponentParameterInputBase" Count="0" />
     </BuildingBlocks_WidgetCanvas>
-    <BuildingBlocks_WidgetCanvas Pointer="ptr:6" Type="BuildingBlocks_WidgetCanvas">
+    <BuildingBlocks_WidgetCanvas Pointer="ptr:7" Type="BuildingBlocks_WidgetCanvas">
       <name>canvas_ListItemProxy_MainSlot</name>
       <styleTags Type="Tag" Count="0" />
       <rendererType>Flash</rendererType>
@@ -3375,7 +3379,7 @@
       <defaultValue />
     </BuildingBlocks_BindingsStringComponentParameter>
     <BuildingBlocks_BindingsStringField Type="BuildingBlocks_BindingsStringField">
-      <widget PointsTo="ptr:5" />
+      <widget PointsTo="ptr:6" />
       <field>ParamInput0</field>
       <input PointsTo="ptr:10" />
     </BuildingBlocks_BindingsStringField>
@@ -3425,7 +3429,7 @@
       <defaultValue>-1</defaultValue>
     </BuildingBlocks_BindingsIntegerComponentParameter>
     <BuildingBlocks_BindingsIntegerField Type="BuildingBlocks_BindingsIntegerField">
-      <widget PointsTo="ptr:5" />
+      <widget PointsTo="ptr:6" />
       <field>ParamInput0</field>
       <input PointsTo="ptr:16" />
     </BuildingBlocks_BindingsIntegerField>
@@ -3465,7 +3469,7 @@
       <defaultValue>0.66</defaultValue>
     </BuildingBlocks_BindingsNumberComponentParameter>
     <BuildingBlocks_BindingsNumberField Type="BuildingBlocks_BindingsNumberField">
-      <widget PointsTo="ptr:5" />
+      <widget PointsTo="ptr:6" />
       <field>ParamInput0</field>
       <input PointsTo="ptr:20" />
     </BuildingBlocks_BindingsNumberField>
@@ -3496,7 +3500,7 @@
       <isWatched>False</isWatched>
     </BuildingBlocks_BindingsIntegerVariable>
     <BuildingBlocks_BindingsStringField Type="BuildingBlocks_BindingsStringField">
-      <widget PointsTo="ptr:5" />
+      <widget PointsTo="ptr:6" />
       <field>TertiaryStateTag</field>
       <input PointsTo="ptr:22" />
     </BuildingBlocks_BindingsStringField>
@@ -3542,7 +3546,7 @@
       <input PointsTo="ptr:25" />
     </BuildingBlocks_BindingsTagFromIntegerSwitch>
     <BuildingBlocks_BindingsIntegerField Type="BuildingBlocks_BindingsIntegerField">
-      <widget PointsTo="ptr:5" />
+      <widget PointsTo="ptr:6" />
       <field>ParamInput1</field>
       <input PointsTo="ptr:23" />
     </BuildingBlocks_BindingsIntegerField>
@@ -3557,7 +3561,7 @@
       <defaultValue>1</defaultValue>
     </BuildingBlocks_BindingsNumberComponentParameter>
     <BuildingBlocks_BindingsNumberField Type="BuildingBlocks_BindingsNumberField">
-      <widget PointsTo="ptr:5" />
+      <widget PointsTo="ptr:6" />
       <field>ParamInput1</field>
       <input PointsTo="ptr:26" />
     </BuildingBlocks_BindingsNumberField>
