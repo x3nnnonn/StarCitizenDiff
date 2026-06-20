@@ -40,7 +40,7 @@
   </StaticEntityClassData>
   <Components Type="DataForgeComponentParams" Count="81">
     <SActorComponentParams Type="SActorComponentParams">
-      <character />
+      <character ReferencedFile="file://./../../../../../../libs/foundry/records/character/pu/ninetails/ren.xml" />
       <isAIControlled>True</isAIControlled>
       <flyInGroundState>False</flyInGroundState>
       <aimFOV>200</aimFOV>
@@ -510,11 +510,11 @@
       <mastergraphStateOverrides Type="SMastergraphStateOverride" Count="0" />
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="AbilityStatusCosts" Count="1">
+      <perceptionTypes Type="ActorStatusBuffParams" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
       <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
-      <excludedSenses Type="StatusCost" Count="0" />
+      <excludedSenses Type="ActionStatusCosts" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
         <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Head</helperName>
@@ -550,7 +550,7 @@
     <SCommunicationUserComponentParams Type="SCommunicationUserComponentParams">
       <voiceBundle />
       <voiceSingle />
-      <communicationConfig />
+      <communicationConfig ReferencedFile="file://./../../../../../../libs/foundry/records/communicationconfig/communicationformissions/ninetails/mc_ninetails_mendoren.xml" />
       <contextualDialog />
     </SCommunicationUserComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
@@ -878,7 +878,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:46" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:47" Type="SSharedInteractionParams">
             <Name>ConsumeActor</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -973,7 +973,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:45" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:39" Type="SSharedInteractionParams">
             <Name>NextBar</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -2288,6 +2288,7 @@
     </SActorUsableParams>
     <SEntityLootableContainerParams Type="SEntityLootableContainerParams">
       <initialLocalPlayerAccess>False</initialLocalPlayerAccess>
+      <needsRootLocalPlayerAccess>True</needsRootLocalPlayerAccess>
       <radius>1.6</radius>
       <maxOffsetTranslation Type="Vec3">
         <x>0</x>
@@ -2539,7 +2540,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="StatusEffectValue" Count="0" />
+              <SubTypes Type="StatusEffectValueAbsolute" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -3044,8 +3045,8 @@
               <onEntityAttachedState PointsTo="ptr:37" />
               <onEntityDetachedState PointsTo="ptr:38" />
               <onPortDestroyedState PointsTo="ptr:38" />
-              <itemTypes Type="StatusEffectValueAbsolute" Count="0" />
-              <itemSubTypes Type="StatusEffectValue" Count="0" />
+              <itemTypes Type="StatusEffectValueLinear" Count="0" />
+              <itemSubTypes Type="StatusEffectValueAbsolute" Count="0" />
             </SItemPortStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -3055,7 +3056,7 @@
           <DefaultState />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
-          <States Type="SInteractionState" Count="5">
+          <States Type="SInteractionState" Count="3">
             <SInteractionState Type="SInteractionState">
               <StateName>Bar1</StateName>
               <EnterStateEffectGroup />
@@ -3067,7 +3068,12 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:39" />
+                  <NextState PointsTo="ptr:40" />
+                </SInteractionStateTransition>
+              </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <uiBindingsTag />
               <stateTags Type="TagList">
@@ -3078,7 +3084,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Type="SInteractionState">
+            <SInteractionState Pointer="ptr:40" Type="SInteractionState">
               <StateName>Bar2</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -3089,7 +3095,12 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <Interactions Type="SInteractionStateTransition" Count="1">
+                <SInteractionStateTransition Type="SInteractionStateTransition">
+                  <Interaction PointsTo="ptr:39" />
+                  <NextState PointsTo="ptr:41" />
+                </SInteractionStateTransition>
+              </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
               <uiBindingsTag />
               <stateTags Type="TagList">
@@ -3100,52 +3111,8 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Type="SInteractionState">
+            <SInteractionState Pointer="ptr:41" Type="SInteractionState">
               <StateName>Bar3</StateName>
-              <EnterStateEffectGroup />
-              <ExitStateEffectGroup />
-              <enterStateEffectTags Type="Tag" Count="0" />
-              <exitStateEffectTags Type="Tag" Count="0" />
-              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence />
-              <ExitStatePlaySequence />
-              <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
-              <interactionPoints Type="SInteractionPointParams" Count="0" />
-              <uiBindingsTag />
-              <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </stateTags>
-              <enterGeometryTags />
-              <entityTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </entityTags>
-            </SInteractionState>
-            <SInteractionState Type="SInteractionState">
-              <StateName>Bar4</StateName>
-              <EnterStateEffectGroup />
-              <ExitStateEffectGroup />
-              <enterStateEffectTags Type="Tag" Count="0" />
-              <exitStateEffectTags Type="Tag" Count="0" />
-              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
-              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence />
-              <ExitStatePlaySequence />
-              <StateAutoChange />
-              <Interactions Type="SInteractionStateTransition" Count="0" />
-              <interactionPoints Type="SInteractionPointParams" Count="0" />
-              <uiBindingsTag />
-              <stateTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </stateTags>
-              <enterGeometryTags />
-              <entityTags Type="TagList">
-                <tags Type="Tag" Count="0" />
-              </entityTags>
-            </SInteractionState>
-            <SInteractionState Pointer="ptr:39" Type="SInteractionState">
-              <StateName>Bar5</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
               <enterStateEffectTags Type="Tag" Count="0" />
@@ -3176,7 +3143,7 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:40" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:42" Type="SInteractionState">
               <StateName>NotKillable</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -3198,7 +3165,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:41" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:43" Type="SInteractionState">
               <StateName>Killable</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -3226,10 +3193,10 @@
               <aggregateStateParams Type="AggregateStateParams" Count="1">
                 <AggregateStateParams Type="AggregateStateParams">
                   <aggregateStates Type="SInteractionState" Count="2">
-                    <SInteractionState PointsTo="ptr:39" />
-                    <SInteractionState PointsTo="ptr:40" />
+                    <SInteractionState PointsTo="ptr:41" />
+                    <SInteractionState PointsTo="ptr:42" />
                   </aggregateStates>
-                  <state PointsTo="ptr:41" />
+                  <state PointsTo="ptr:43" />
                   <elseState />
                 </AggregateStateParams>
               </aggregateStateParams>
@@ -3243,7 +3210,7 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:42" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:44" Type="SInteractionState">
               <StateName>Alive</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -3265,7 +3232,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:43" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:45" Type="SInteractionState">
               <StateName>Death</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -3292,12 +3259,12 @@
             <SHealthStateModifier Type="SHealthStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:42" />
+                  <state PointsTo="ptr:44" />
                   <min>0.05</min>
                   <max>1</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:43" />
+                  <state PointsTo="ptr:45" />
                   <min>0</min>
                   <max>0.05</max>
                 </SRangeStateLevel>
@@ -3310,7 +3277,7 @@
     </SInteractionStateMachineParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <targetPresets Type="GameplayTrigger_TargetPreset" Count="1">
-        <GameplayTrigger_TargetPreset Pointer="ptr:44" Type="GameplayTrigger_TargetPreset">
+        <GameplayTrigger_TargetPreset Pointer="ptr:46" Type="GameplayTrigger_TargetPreset">
           <name>TeleportTargets</name>
           <targetTypes Type="GameplayTrigger_TargetType_Base" Count="1">
             <GameplayTrigger_TargetType_Random Type="GameplayTrigger_TargetType_Random">
@@ -3321,21 +3288,18 @@
                   <targetReference Type="EntityReferenceDef">
                     <superGUID />
                   </targetReference>
-                  <nextTarget />
                 </GameplayTrigger_TargetType_EntityReference>
                 <GameplayTrigger_TargetType_EntityReference Type="GameplayTrigger_TargetType_EntityReference">
                   <optionalTarget>False</optionalTarget>
                   <targetReference Type="EntityReferenceDef">
                     <superGUID />
                   </targetReference>
-                  <nextTarget />
                 </GameplayTrigger_TargetType_EntityReference>
                 <GameplayTrigger_TargetType_EntityReference Type="GameplayTrigger_TargetType_EntityReference">
                   <optionalTarget>False</optionalTarget>
                   <targetReference Type="EntityReferenceDef">
                     <superGUID />
                   </targetReference>
-                  <nextTarget />
                 </GameplayTrigger_TargetType_EntityReference>
               </targets>
               <randomTargetCount>3</randomTargetCount>
@@ -3347,7 +3311,7 @@
       </targetPresets>
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="7">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:40" />
+          <targetState PointsTo="ptr:42" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SetHealthVulnerabilityStateGameplayTrigger Type="SetHealthVulnerabilityStateGameplayTrigger">
               <vulnerabilityState Type="NotKillableState">
@@ -3357,7 +3321,7 @@
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:41" />
+          <targetState PointsTo="ptr:43" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SetHealthVulnerabilityStateGameplayTrigger Type="SetHealthVulnerabilityStateGameplayTrigger">
               <vulnerabilityState Type="NotKillableState">
@@ -3367,7 +3331,7 @@
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:43" />
+          <targetState PointsTo="ptr:45" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <ActivateInteractionGameplayTrigger Type="ActivateInteractionGameplayTrigger">
               <interactionToActivate Type="GameplayTrigger_Executor_ActivateInteraction_ByReference">
@@ -3403,6 +3367,7 @@
             <SDissolveSelfGameplayTrigger Type="SDissolveSelfGameplayTrigger">
               <enableDissolve>True</enableDissolve>
               <onlyAffectRendering>True</onlyAffectRendering>
+              <dissolveRange />
             </SDissolveSelfGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
@@ -3412,7 +3377,7 @@
             <TeleportGameplayTrigger Type="TeleportGameplayTrigger">
               <targetOption Type="GameplayTrigger_TargetType_PresetReference">
                 <optionalTarget>False</optionalTarget>
-                <targetPreset PointsTo="ptr:44" />
+                <targetPreset PointsTo="ptr:46" />
                 <nextTarget />
               </targetOption>
             </TeleportGameplayTrigger>
@@ -3420,14 +3385,15 @@
         </SOnInteractionStateChangeTriggers>
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
           <targetState PointsTo="ptr:34" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="3">
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="4">
             <SDissolveSelfGameplayTrigger Type="SDissolveSelfGameplayTrigger">
               <enableDissolve>False</enableDissolve>
               <onlyAffectRendering>False</onlyAffectRendering>
+              <dissolveRange />
             </SDissolveSelfGameplayTrigger>
             <ActivateInteractionGameplayTrigger Type="ActivateInteractionGameplayTrigger">
               <interactionToActivate Type="GameplayTrigger_Executor_ActivateInteraction_ByReference">
-                <interaction PointsTo="ptr:45" />
+                <interaction PointsTo="ptr:39" />
               </interactionToActivate>
             </ActivateInteractionGameplayTrigger>
             <SModifyHealthGameplayTrigger Type="SModifyHealthGameplayTrigger">
@@ -3435,12 +3401,17 @@
                 <healthRatio>1</healthRatio>
               </Health>
             </SModifyHealthGameplayTrigger>
+            <SetInteractionStateGameplayTrigger Type="SetInteractionStateGameplayTrigger">
+              <stateToSet Type="GameplayTrigger_Executor_SetInteractionState_ByReference">
+                <state PointsTo="ptr:44" />
+              </stateToSet>
+            </SetInteractionStateGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
       </onInteractionStateChangeTriggers>
       <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
         <SOnInteractionTriggers Type="SOnInteractionTriggers">
-          <targetInteraction PointsTo="ptr:46" />
+          <targetInteraction PointsTo="ptr:47" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDestroySelfGameplayTrigger Type="SDestroySelfGameplayTrigger" />
           </gameplayTriggers>
@@ -3472,7 +3443,7 @@
     </SVisionComponentParams>
     <SRadarSenseComponentParams Type="SRadarSenseComponentParams" />
     <SHearingComponentParams Type="SHearingComponentParams">
-      <soundTypeFilter Type="AbilityComponentParams" Count="0" />
+      <soundTypeFilter Type="SActorAnimationComponentParams" Count="0" />
     </SHearingComponentParams>
     <AttentionTargetComponentParams Type="AttentionTargetComponentParams">
       <attackerScore>1</attackerScore>
@@ -3514,7 +3485,7 @@
             <min>0.5</min>
             <max>0.5</max>
           </fullnessFactorRange>
-          <totalResultsLimit>0</totalResultsLimit>
+          <totalResultsLimit>12</totalResultsLimit>
           <chanceToGenerate>1</chanceToGenerate>
           <chanceToGenerateAdditionalAttachedInventories>1</chanceToGenerateAdditionalAttachedInventories>
           <advanced Type="AdvancedLootConstraints">
@@ -3523,7 +3494,7 @@
           </advanced>
         </lootConstraints>
         <lootTable />
-        <lootTableV3 />
+        <lootTableV3 ReferencedFile="file://./../../../../../../libs/foundry/records/lootgeneration/loottables/v3loottable_actor_soo_mendoren.xml" />
       </lootConfig>
     </LootGenerationComponentParams>
     <SCActorDNAComponentParams Type="SCActorDNAComponentParams">
@@ -3560,7 +3531,7 @@
       </prerequisite>
       <entitiesToSpawn Type="SSpawnEntity" Count="1">
         <SSpawnEntity Type="SSpawnEntity">
-          <entity />
+          <entity ReferencedFile="file://./../../../../../../libs/foundry/records/entities/fakesmokegrenade_oneshot.xml" />
           <spawnOffset Type="Vec3">
             <x>0</x>
             <y>0</y>

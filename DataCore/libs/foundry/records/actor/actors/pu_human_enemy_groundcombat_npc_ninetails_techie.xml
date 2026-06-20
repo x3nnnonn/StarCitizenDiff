@@ -496,11 +496,11 @@
       <mastergraphStateOverrides Type="SMastergraphStateOverride" Count="0" />
     </SubsumptionComponentParams>
     <SObservableComponentParams Type="SObservableComponentParams">
-      <perceptionTypes Type="AbilityStatusCosts" Count="1">
+      <perceptionTypes Type="ActorStatusBuffParams" Count="1">
         <EnumChoice>Agent</EnumChoice>
       </perceptionTypes>
       <defaultPerceptionStatus>Invalid</defaultPerceptionStatus>
-      <excludedSenses Type="StatusCost" Count="0" />
+      <excludedSenses Type="ActionStatusCosts" Count="0" />
       <observablePoints Type="SObservablePointDef" Count="2">
         <SObservablePointDef Pointer="ptr:2" Type="SObservablePointDef">
           <helperName>Head</helperName>
@@ -541,7 +541,7 @@
     </SCommunicationUserComponentParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="18">
+        <SharedInteractions Type="SSharedInteractionParams" Count="19">
           <SSharedInteractionParams Pointer="ptr:5" Type="SSharedInteractionParams">
             <Name>LookAt</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -864,7 +864,7 @@
             <conditionList />
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
-          <SSharedInteractionParams Pointer="ptr:30" Type="SSharedInteractionParams">
+          <SSharedInteractionParams Pointer="ptr:33" Type="SSharedInteractionParams">
             <Name>ConsumeActor</Name>
             <QueryTags Type="Tag" Count="0" />
             <RoomTag />
@@ -896,6 +896,25 @@
             <Sendable>True</Sendable>
             <Linkable>True</Linkable>
             <LockedByLinks>True</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:34" Type="SSharedInteractionParams">
+            <Name>AssignDefendArea</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@usable_use</DisplayName>
+            <DisplayType>Hide</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>False</Sendable>
+            <Linkable>False</Linkable>
+            <LockedByLinks>False</LockedByLinks>
             <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
             <available>True</available>
             <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
@@ -2198,6 +2217,7 @@
     </SActorUsableParams>
     <SEntityLootableContainerParams Type="SEntityLootableContainerParams">
       <initialLocalPlayerAccess>False</initialLocalPlayerAccess>
+      <needsRootLocalPlayerAccess>True</needsRootLocalPlayerAccess>
       <radius>1.6</radius>
       <maxOffsetTranslation Type="Vec3">
         <x>0</x>
@@ -2449,7 +2469,7 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>Char_Body</Type>
-              <SubTypes Type="StatusEffectValue" Count="0" />
+              <SubTypes Type="StatusEffectValueAbsolute" Count="0" />
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -2579,7 +2599,7 @@
       <unrestrainInteraction PointsTo="ptr:10" />
     </SCActorRestrainableParams>
     <SInteractionStateMachineParams Type="SInteractionStateMachineParams">
-      <StateTypes Type="SInteractionStateType" Count="1">
+      <StateTypes Type="SInteractionStateType" Count="2">
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>InteractionPointState</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
@@ -2643,38 +2663,153 @@
             </ActorInteractionPointStateModifier>
           </StateModifiers>
         </SInteractionStateType>
+        <SInteractionStateType Type="SInteractionStateType">
+          <StateTypeName>DefendAreaState</StateTypeName>
+          <bindingsMethod>None</bindingsMethod>
+          <DefaultState PointsTo="ptr:30" />
+          <asopReset>False</asopReset>
+          <networkAuthority>Server</networkAuthority>
+          <States Type="SInteractionState" Count="4">
+            <SInteractionState Type="SInteractionState">
+              <StateName>Unassigned</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <uiBindingsTag />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:30" Type="SInteractionState">
+              <StateName>WaitingToAssign</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange Type="SStateAutoChange">
+                <NextState PointsTo="ptr:31" />
+                <Delay>3.5</Delay>
+                <RunWhenStreamedOut>False</RunWhenStreamedOut>
+              </StateAutoChange>
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <uiBindingsTag />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:31" Type="SInteractionState">
+              <StateName>Assigning</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <uiBindingsTag />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+            <SInteractionState Pointer="ptr:32" Type="SInteractionState">
+              <StateName>Assigned</StateName>
+              <EnterStateEffectGroup />
+              <ExitStateEffectGroup />
+              <enterStateEffectTags Type="Tag" Count="0" />
+              <exitStateEffectTags Type="Tag" Count="0" />
+              <EnterEventDispatchers Type="EventDispatcher" Count="0" />
+              <ExitEventDispatchers Type="EventDispatcher" Count="0" />
+              <EnterStatePlaySequence />
+              <ExitStatePlaySequence />
+              <StateAutoChange />
+              <Interactions Type="SInteractionStateTransition" Count="0" />
+              <interactionPoints Type="SInteractionPointParams" Count="0" />
+              <uiBindingsTag />
+              <stateTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </stateTags>
+              <enterGeometryTags />
+              <entityTags Type="TagList">
+                <tags Type="Tag" Count="0" />
+              </entityTags>
+            </SInteractionState>
+          </States>
+          <StateModifiers Type="SStateModifier" Count="0" />
+        </SInteractionStateType>
       </StateTypes>
     </SInteractionStateMachineParams>
     <SCInteractionStateGameplayTriggerComponentParams Type="SCInteractionStateGameplayTriggerComponentParams">
       <targetPresets Type="GameplayTrigger_TargetPreset" Count="0" />
       <onInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers" Count="1">
         <SOnInteractionStateChangeTriggers Type="SOnInteractionStateChangeTriggers">
-          <targetState PointsTo="ptr:28" />
-          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
-            <TargetGameplayTrigger Type="TargetGameplayTrigger">
-              <targets Type="GameplayTrigger_TargetType_Base" Count="1">
-                <GameplayTrigger_TargetType_LinkedArea Type="GameplayTrigger_TargetType_LinkedArea">
-                  <optionalTarget>False</optionalTarget>
-                  <areaName />
-                  <useActionArea>True</useActionArea>
-                  <nextTarget />
-                </GameplayTrigger_TargetType_LinkedArea>
-              </targets>
-              <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
-                <AssignmentDefendAreaGameplayTrigger Type="AssignmentDefendAreaGameplayTrigger">
-                  <directionalEntity />
-                  <defendArea />
-                </AssignmentDefendAreaGameplayTrigger>
-              </gameplayTriggers>
-            </TargetGameplayTrigger>
+          <targetState PointsTo="ptr:31" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="2">
+            <AssignmentDefendAreaGameplayTrigger Type="AssignmentDefendAreaGameplayTrigger">
+              <directionalEntity Type="GameplayTrigger_TargetType_EntityReference">
+                <optionalTarget>True</optionalTarget>
+                <targetReference Type="EntityReferenceDef">
+                  <superGUID />
+                </targetReference>
+              </directionalEntity>
+              <defendArea Type="GameplayTrigger_TargetType_EntityReference">
+                <optionalTarget>True</optionalTarget>
+                <targetReference Type="EntityReferenceDef">
+                  <superGUID />
+                </targetReference>
+              </defendArea>
+            </AssignmentDefendAreaGameplayTrigger>
+            <SetInteractionStateGameplayTrigger Type="SetInteractionStateGameplayTrigger">
+              <stateToSet Type="GameplayTrigger_Executor_SetInteractionState_ByReference">
+                <state PointsTo="ptr:32" />
+              </stateToSet>
+            </SetInteractionStateGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionStateChangeTriggers>
       </onInteractionStateChangeTriggers>
-      <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="1">
+      <onInteractionSuccessTriggers Type="SOnInteractionTriggers" Count="2">
         <SOnInteractionTriggers Type="SOnInteractionTriggers">
-          <targetInteraction PointsTo="ptr:30" />
+          <targetInteraction PointsTo="ptr:33" />
           <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
             <SDestroySelfGameplayTrigger Type="SDestroySelfGameplayTrigger" />
+          </gameplayTriggers>
+        </SOnInteractionTriggers>
+        <SOnInteractionTriggers Type="SOnInteractionTriggers">
+          <targetInteraction PointsTo="ptr:34" />
+          <gameplayTriggers Type="SBaseInteractionGameplayTrigger" Count="1">
+            <SetInteractionStateGameplayTrigger Type="SetInteractionStateGameplayTrigger">
+              <stateToSet Type="GameplayTrigger_Executor_SetInteractionState_ByReference">
+                <state PointsTo="ptr:31" />
+              </stateToSet>
+            </SetInteractionStateGameplayTrigger>
           </gameplayTriggers>
         </SOnInteractionTriggers>
       </onInteractionSuccessTriggers>
@@ -2704,7 +2839,7 @@
     </SVisionComponentParams>
     <SRadarSenseComponentParams Type="SRadarSenseComponentParams" />
     <SHearingComponentParams Type="SHearingComponentParams">
-      <soundTypeFilter Type="AbilityComponentParams" Count="0" />
+      <soundTypeFilter Type="SActorAnimationComponentParams" Count="0" />
     </SHearingComponentParams>
     <AttentionTargetComponentParams Type="AttentionTargetComponentParams">
       <attackerScore>1</attackerScore>
@@ -2755,7 +2890,7 @@
           </advanced>
         </lootConstraints>
         <lootTable />
-        <lootTableV3 />
+        <lootTableV3 ReferencedFile="file://./../../../../../libs/foundry/records/lootgeneration/loottables/v3loottable_actor_techie_councilscrip.xml" />
       </lootConfig>
     </LootGenerationComponentParams>
     <SCActorDNAComponentParams Type="SCActorDNAComponentParams">
