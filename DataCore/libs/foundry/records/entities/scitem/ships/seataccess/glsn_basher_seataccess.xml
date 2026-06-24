@@ -88,7 +88,7 @@
     </SAttachableComponentParams>
     <SEntityComponentSequencerParams Type="SEntityComponentSequencerParams">
       <sequences Type="SSequencerDefSequenceParams" Count="1">
-        <SReplicatedSequencerDefSequenceParams Pointer="ptr:15" Type="SReplicatedSequencerDefSequenceParams">
+        <SReplicatedSequencerDefSequenceParams Pointer="ptr:17" Type="SReplicatedSequencerDefSequenceParams">
           <name>SEQ_StorageClose</name>
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
@@ -374,7 +374,7 @@
     </SCItemSeatAccessParams>
     <SEntityInteractableParams Type="SEntityInteractableParams">
       <Interactable Type="SInteractableParams">
-        <SharedInteractions Type="SSharedInteractionParams" Count="12">
+        <SharedInteractions Type="SSharedInteractionParams" Count="14">
           <SSharedInteractionParams Pointer="ptr:2" Type="SSharedInteractionParams">
             <Name>CanopyOpen</Name>
             <QueryTags Type="Tag" Count="0" />
@@ -546,7 +546,7 @@
             <RoomTag />
             <UsableTag />
             <LinkingTag />
-            <DisplayName>@interaction_open_storage</DisplayName>
+            <DisplayName>@interaction_open</DisplayName>
             <DisplayType>Show</DisplayType>
             <GenericCursor>SingleAction</GenericCursor>
             <FocusModeOnly>False</FocusModeOnly>
@@ -620,6 +620,50 @@
             <available>True</available>
             <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
             <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:15" Type="SSharedInteractionParams">
+            <Name>OpenInventory</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_open_storage</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>True</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList />
+            <playerAnimatedInteractionBase />
+          </SSharedInteractionParams>
+          <SSharedInteractionParams Pointer="ptr:16" Type="SSharedInteractionParams">
+            <Name>Loot</Name>
+            <QueryTags Type="Tag" Count="0" />
+            <RoomTag />
+            <UsableTag />
+            <LinkingTag />
+            <DisplayName>@interaction_loot</DisplayName>
+            <DisplayType>Show</DisplayType>
+            <GenericCursor>SingleAction</GenericCursor>
+            <FocusModeOnly>False</FocusModeOnly>
+            <Sendable>True</Sendable>
+            <Linkable>True</Linkable>
+            <LockedByLinks>False</LockedByLinks>
+            <RequiresAuthorizedUser>False</RequiresAuthorizedUser>
+            <available>True</available>
+            <InheritsConditionDisplaysThroughLinks>False</InheritsConditionDisplaysThroughLinks>
+            <conditionList Type="InteractionConditionList">
+              <presetList Type="InteractionConditionPreset" Count="1">
+                <InteractionConditionPreset ReferencedFile="file://./../../../../../../../libs/foundry/records/interactionconditions/presets/personalinventory/canopenexternalinventory.xml" />
+              </presetList>
+              <conditionParams Type="InteractionConditionParams" Count="0" />
+              <conditionToHideParams Type="InteractionConditionParams" Count="0" />
+            </conditionList>
             <playerAnimatedInteractionBase />
           </SSharedInteractionParams>
         </SharedInteractions>
@@ -1078,7 +1122,17 @@
             </AngleConstraint>
           </SInteractionPointParams>
           <SInteractionPointParams Type="SInteractionPointParams">
-            <Interactions Type="SInteractionParams" Count="2">
+            <Interactions Type="SInteractionParams" Count="4">
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:15" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
+              <SInteractionParams Type="SInteractionParams">
+                <Interaction PointsTo="ptr:16" />
+                <DisplayName>@LOC_EMPTY</DisplayName>
+                <IsPrimary>False</IsPrimary>
+              </SInteractionParams>
               <SInteractionParams Type="SInteractionParams">
                 <Interaction PointsTo="ptr:6" />
                 <DisplayName>@LOC_EMPTY</DisplayName>
@@ -1423,8 +1477,8 @@
       <masterModeExclusionsOverride />
     </ItemControlComponentParams>
     <SCItemInventoryContainerComponentParams Type="SCItemInventoryContainerComponentParams">
-      <openInventoryInteraction PointsTo="ptr:6" />
-      <openLootingInteraction />
+      <openInventoryInteraction PointsTo="ptr:15" />
+      <openLootingInteraction PointsTo="ptr:16" />
       <containerParams ReferencedFile="file://./../../../../../../../libs/foundry/records/inventorycontainers/ships/personalstorage_glsn_basher.xml" />
       <canAutoStoreRestrictedItems>False</canAutoStoreRestrictedItems>
     </SCItemInventoryContainerComponentParams>
@@ -1437,7 +1491,7 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:17" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
               <StateName>Closed</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1445,13 +1499,13 @@
               <exitStateEffectTags Type="Tag" Count="0" />
               <EnterEventDispatchers Type="EventDispatcher" Count="0" />
               <ExitEventDispatchers Type="EventDispatcher" Count="0" />
-              <EnterStatePlaySequence PointsTo="ptr:15" />
+              <EnterStatePlaySequence PointsTo="ptr:17" />
               <ExitStatePlaySequence />
               <StateAutoChange />
               <Interactions Type="SInteractionStateTransition" Count="1">
                 <SInteractionStateTransition Type="SInteractionStateTransition">
                   <Interaction PointsTo="ptr:6" />
-                  <NextState PointsTo="ptr:16" />
+                  <NextState PointsTo="ptr:18" />
                 </SInteractionStateTransition>
               </Interactions>
               <interactionPoints Type="SInteractionPointParams" Count="0" />
@@ -1464,7 +1518,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:16" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
               <StateName>Open</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1475,7 +1529,7 @@
               <EnterStatePlaySequence />
               <ExitStatePlaySequence />
               <StateAutoChange Type="SStateAutoChange">
-                <NextState PointsTo="ptr:17" />
+                <NextState PointsTo="ptr:19" />
                 <Delay>3</Delay>
                 <RunWhenStreamedOut>False</RunWhenStreamedOut>
               </StateAutoChange>
