@@ -12,15 +12,15 @@
   <entityDensityClass />
   <tags Type="Tag" Count="0" />
   <StaticEntityClassData Type="EntityClassStaticDataParams" Count="0" />
-  <Components Type="DataForgeComponentParams" Count="16">
+  <Components Type="DataForgeComponentParams" Count="21">
     <SAttachableComponentParams Type="SAttachableComponentParams">
       <AttachDef Type="SItemDefinition">
         <Type>Door</Type>
         <SubType>AirlockPart</SubType>
         <Size>1</Size>
         <Grade>1</Grade>
-        <Manufacturer />
-        <inheritParentManufacturer>False</inheritParentManufacturer>
+        <Manufacturer ReferencedFile="file://./../../../../../../libs/foundry/records/scitemmanufacturer/crus_env.xml" />
+        <inheritParentManufacturer>True</inheritParentManufacturer>
         <Tags />
         <RequiredTags />
         <DisplayType />
@@ -87,24 +87,33 @@
       </audioAttachParams>
     </SAttachableComponentParams>
     <SEntityComponentDefaultLoadoutParams Type="SEntityComponentDefaultLoadoutParams">
-      <loadout Type="SItemPortLoadoutXMLParams">
+      <loadout Type="SItemPortLoadoutManualParams">
         <WearRange />
         <DirtRange />
         <SkipInventoryItemsOnMissionEntities>False</SkipInventoryItemsOnMissionEntities>
         <InventoryItems Type="SLoadoutInventoryItem" Count="0" />
-        <loadoutPath>Scripts/Loadouts/Objects/Doors/AirlockDoorUtilitarianBlkheadLoadout.xml</loadoutPath>
+        <entries Type="SItemPortLoadoutEntryParams" Count="1">
+          <SItemPortLoadoutEntryParams Type="SItemPortLoadoutEntryParams">
+            <itemPortName>control_panel_a</itemPortName>
+            <entityClassName />
+            <entityClassReference ReferencedFile="file://./../../../../../../libs/foundry/records/entities/scitem/doors/util_a_airlockinteractionpanel.xml" />
+            <inventoryContainer />
+            <loadout />
+          </SItemPortLoadoutEntryParams>
+        </entries>
       </loadout>
     </SEntityComponentDefaultLoadoutParams>
     <SCItemDoorParams Type="SCItemDoorParams">
       <UseAutoCloseDelay>True</UseAutoCloseDelay>
       <AutoCloseDelay>3</AutoCloseDelay>
-      <DoorAnimationSpeed>1</DoorAnimationSpeed>
+      <DoorAnimationSpeed>2</DoorAnimationSpeed>
       <BreachingDoorAnimationSpeed>1</BreachingDoorAnimationSpeed>
       <BreachedDoorAnimationSpeed>1</BreachedDoorAnimationSpeed>
       <BreachedDoorOpenAmount>0.15</BreachedDoorOpenAmount>
       <IsOpened>False</IsOpened>
       <IsLocked>False</IsLocked>
       <IsIgnoredByDoorController>False</IsIgnoredByDoorController>
+      <ForceZoneTransitionProximitySensor>False</ForceZoneTransitionProximitySensor>
       <CollisionReaction Type="SDoorCollisionReactionNoneParams" />
       <FragName>SCItemDoor</FragName>
       <AnimationParams Type="SCItemDoorSimpleOpenCloseParams">
@@ -311,7 +320,7 @@
           <EnableDecalProjection>False</EnableDecalProjection>
           <BBoxJoint />
           <BBoxRadius>0</BBoxRadius>
-          <Wear>1</Wear>
+          <Wear>0.2</Wear>
           <Dirt>0</Dirt>
           <Interference>0</Interference>
           <Damage>0</Damage>
@@ -330,9 +339,13 @@
           <path />
         </Material>
         <Palette Type="TintPaletteRef">
-          <RootRecord />
+          <RootRecord ReferencedFile="file://./../../../../../../libs/foundry/records/tintpalettes/brand/crusaderindustries/crusaderindustries_default.xml" />
           <ChildPath />
-          <SwizzleOverride />
+          <SwizzleOverride Type="TintPaletteSwizzle">
+            <primary>1</primary>
+            <secondary>1</secondary>
+            <tertiary>2</tertiary>
+          </SwizzleOverride>
         </Palette>
         <materialVariants Type="SMaterialNodeParams" Count="0" />
       </Material>
@@ -648,14 +661,14 @@
     </SEntityEffectCoreParams>
     <SEntityComponentRoomConnectorParams Type="SEntityComponentRoomConnectorParams">
       <defaultAreaBounds Type="Vec3">
-        <x>2</x>
-        <y>1</y>
-        <z>2</z>
+        <x>8</x>
+        <y>0.5</y>
+        <z>3</z>
       </defaultAreaBounds>
       <boundsOffset Type="Vec3">
         <x>0</x>
         <y>0</y>
-        <z>0</z>
+        <z>1.5</z>
       </boundsOffset>
       <orientationMode>AutoDetectWidest</orientationMode>
       <enableConnectorBridging>True</enableConnectorBridging>
@@ -717,34 +730,11 @@
             </SItemPortDefTypes>
           </Types>
           <Extension />
-          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationEntity">
-            <usePhysicalAttachment>False</usePhysicalAttachment>
-            <useEntityAttachment>True</useEntityAttachment>
-            <useExteriorAttachment>False</useExteriorAttachment>
-            <usePhysicalParent>False</usePhysicalParent>
-            <useLogicalAttachment>False</useLogicalAttachment>
-            <constraintParams Type="SAttachmentConstraintParams">
-              <damping>0</damping>
-              <noSelfCollisions>True</noSelfCollisions>
-              <maxPullForce>0</maxPullForce>
-              <maxBendTorque>0</maxBendTorque>
-              <constrainToLine>False</constrainToLine>
-              <constrainToPlane>False</constrainToPlane>
-              <constrainFully>True</constrainFully>
-              <useWorldConstraintPosition>False</useWorldConstraintPosition>
-              <noRotation>True</noRotation>
-              <xMin>0</xMin>
-              <xMax>0</xMax>
-              <yzMax>0</yzMax>
-              <constraintHelper />
-              <constraintMaintainOrientation>False</constraintMaintainOrientation>
-            </constraintParams>
-            <hangarPort>False</hangarPort>
-            <createExteriorShadowPhysicalEntity>False</createExteriorShadowPhysicalEntity>
+          <AttachmentImplementation Type="SItemPortDefAttachmentImplementationBone">
             <Helper Type="SItemPortDefHelperNode">
               <Tags />
               <Helper Type="SItemPortDefHelper">
-                <Name />
+                <Name>$slot_control_panel_a</Name>
                 <Offset Type="QuatT">
                   <Rotation Type="Ang3">
                     <x>0</x>
@@ -752,9 +742,9 @@
                     <z>0</z>
                   </Rotation>
                   <Position Type="Vec3">
-                    <x>0.5</x>
-                    <y>-0.25</y>
-                    <z>1.5</z>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
                   </Position>
                 </Offset>
                 <ItemOffsetHelperName />
@@ -1005,5 +995,73 @@
     <SAudioProxyParams Type="SAudioProxyParams">
       <tagActions Type="AudioTagActionList" Count="0" />
     </SAudioProxyParams>
+    <UIBindingsVendorEntityComponentParams Type="UIBindingsVendorEntityComponentParams">
+      <namespace />
+    </UIBindingsVendorEntityComponentParams>
+    <UIBindingsConsumerEntityComponentParams Type="UIBindingsConsumerEntityComponentParams">
+      <linkToPort>False</linkToPort>
+    </UIBindingsConsumerEntityComponentParams>
+    <UIRenderToTextureEntityComponentParams Type="UIRenderToTextureEntityComponentParams">
+      <directRenderStage>None</directRenderStage>
+      <compositeMaterialName />
+      <hideRenderNodeOnUnload>False</hideRenderNodeOnUnload>
+      <aspectRatioOverride>0</aspectRatioOverride>
+      <interactionDistance>2</interactionDistance>
+      <transparentListDepthBias>0</transparentListDepthBias>
+      <renderFlashBeforeCamera>False</renderFlashBeforeCamera>
+      <fieldOfView>90</fieldOfView>
+      <nearClip>0.02</nearClip>
+      <farClip>65536</farClip>
+      <renderType>FORWARD</renderType>
+      <fallbackTextureOnOnload />
+      <secondaryTarget />
+      <grabCameraControlParams />
+      <pickableCollision>Opaque</pickableCollision>
+      <pickableTag />
+      <runtimeImageSource>UserInterface</runtimeImageSource>
+      <runtimeImageToAggregate>False</runtimeImageToAggregate>
+    </UIRenderToTextureEntityComponentParams>
+    <UIOwnerEntityComponentParams Type="UIOwnerEntityComponentParams">
+      <startOpen>True</startOpen>
+      <areScreens3D>False</areScreens3D>
+      <areSounds3D>False</areSounds3D>
+      <hasActions>False</hasActions>
+      <element />
+      <domainName>global</domainName>
+      <loadDistance>8</loadDistance>
+      <moviePath />
+      <variantName />
+      <invariantName />
+      <movieAutoPlay>False</movieAutoPlay>
+      <loopMovie>False</loopMovie>
+      <forceFlashColourCorrection>False</forceFlashColourCorrection>
+      <ignoreTrackviewUnloadRequests>False</ignoreTrackviewUnloadRequests>
+      <reflectLocalStateMachine>False</reflectLocalStateMachine>
+      <reflectLinkedStateMachines>False</reflectLinkedStateMachines>
+      <visibiltyTags Type="Tag" Count="0" />
+      <graph />
+    </UIOwnerEntityComponentParams>
+    <UIBuildingBlocksEntityComponentParams Type="UIBuildingBlocksEntityComponentParams">
+      <layers Type="BuildingBlocksLayer" Count="1">
+        <BuildingBlocksLayer Type="BuildingBlocksLayer">
+          <layerName>screenstate</layerName>
+          <renderTarget>All</renderTarget>
+          <defaultView PointsTo="ptr:4" />
+          <views Type="BuildingBlocksView" Count="1">
+            <BuildingBlocksView Pointer="ptr:4" Type="BuildingBlocksView">
+              <name>canvas</name>
+              <component Type="UIGraph_BuildingBlocksContextComponent">
+                <canvas ReferencedFile="file://./../../../../../../libs/foundry/records/ui/buildingblocks/i_interactivescreens/door/i_door_standard_airlock.xml" />
+                <isSystemViewInstance>False</isSystemViewInstance>
+                <canvasInstantiationMode>RootDeferred</canvasInstantiationMode>
+              </component>
+            </BuildingBlocksView>
+          </views>
+        </BuildingBlocksLayer>
+      </layers>
+      <enableFullScreenMouse>False</enableFullScreenMouse>
+      <defaultStyle />
+      <defaultPreviewScene />
+    </UIBuildingBlocksEntityComponentParams>
   </Components>
 </EntityClassDefinition.Util_Airlock_Door_Ext>
