@@ -1364,6 +1364,38 @@
         <gForceResistance>@dfm_ui_ifcs_gforce_resistance</gForceResistance>
         <gForceResistanceTime>6</gForceResistanceTime>
       </hudMessages>
+      <thrusterEfficiencyParams Type="SIFCSThrusterEfficiencyParams">
+        <atmosphericEfficiencyCurve Type="BezierCurve">
+          <points Type="Vec2" Count="6">
+            <Vec2 Type="Vec2">
+              <x>0.016</x>
+              <y>1.046</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.283</x>
+              <y>0.999</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.259</x>
+              <y>0.245</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1</x>
+              <y>0.25</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1.472729</x>
+              <y>0.2161875</y>
+            </Vec2>
+          </points>
+          <useLUT>False</useLUT>
+        </atmosphericEfficiencyCurve>
+        <maxSupportedAtmosphericEfficiency>1.5</maxSupportedAtmosphericEfficiency>
+      </thrusterEfficiencyParams>
       <torqueDistanceThreshold>1.5</torqueDistanceThreshold>
       <thrusterTypesForAngularControl Type="ActivityBehaviorRequestCondition" Count="3">
         <Boolean>True</Boolean>
@@ -1399,6 +1431,77 @@
         <angularAccelerationModifier>0.1</angularAccelerationModifier>
         <angularVelocityModifier>0.1</angularVelocityModifier>
       </noFuelParamsLegacy>
+      <fuelUsageParams Type="SIFCSFuelUsageParams">
+        <idleCost Type="SStandardResourceUnit">
+          <standardResourceUnits>0</standardResourceUnits>
+        </idleCost>
+        <fuelCostPer10KNewton Type="SStandardResourceUnit">
+          <standardResourceUnits>0</standardResourceUnits>
+        </fuelCostPer10KNewton>
+        <atmosphericModifier Type="BezierCurve">
+          <points Type="Vec2" Count="6">
+            <Vec2 Type="Vec2">
+              <x>-0.05598667</x>
+              <y>-0.0878134</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0</x>
+              <y>0</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.101</x>
+              <y>0.051</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.231</x>
+              <y>0.881</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1.614995</x>
+              <y>-0.1810048</y>
+            </Vec2>
+          </points>
+          <useLUT>False</useLUT>
+        </atmosphericModifier>
+        <atmosphericCurveMultiplier>1</atmosphericCurveMultiplier>
+        <noFuelThresholdRatio>0.1</noFuelThresholdRatio>
+      </fuelUsageParams>
+      <legacyThrusterEfficiencyParams Type="SIFCSThrusterEfficiencyParams">
+        <atmosphericEfficiencyCurve Type="BezierCurve">
+          <points Type="Vec2" Count="6">
+            <Vec2 Type="Vec2">
+              <x>0</x>
+              <y>1.316415</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0</x>
+              <y>1</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0</x>
+              <y>0.6710847</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>0.526459</x>
+              <y>0.5914381</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1</x>
+              <y>0.5633129</y>
+            </Vec2>
+            <Vec2 Type="Vec2">
+              <x>1.473913</x>
+              <y>0.216875</y>
+            </Vec2>
+          </points>
+          <useLUT>False</useLUT>
+        </atmosphericEfficiencyCurve>
+        <maxSupportedAtmosphericEfficiency>1.5</maxSupportedAtmosphericEfficiency>
+      </legacyThrusterEfficiencyParams>
       <scmSpeed>180</scmSpeed>
       <boostSpeedForward>370</boostSpeedForward>
       <boostSpeedBackward>170</boostSpeedBackward>
@@ -1935,7 +2038,7 @@
       <states Type="ItemResourceState" Count="1">
         <ItemResourceState Type="ItemResourceState">
           <name>Online</name>
-          <deltas Type="ItemResourceDeltaBase" Count="1">
+          <deltas Type="ItemResourceDeltaBase" Count="2">
             <ItemResourceDeltaConsumption Type="ItemResourceDeltaConsumption">
               <minimumConsumptionFraction>0.25</minimumConsumptionFraction>
               <consumption Type="ItemResourceDeltaAmount">
@@ -1948,6 +2051,19 @@
                 <values Type="ItemResourceCompositionValue" Count="0" />
               </consumptionComposition>
               <dynamicAmountOverride />
+            </ItemResourceDeltaConsumption>
+            <ItemResourceDeltaConsumption Type="ItemResourceDeltaConsumption">
+              <minimumConsumptionFraction>0</minimumConsumptionFraction>
+              <consumption Type="ItemResourceDeltaAmount">
+                <resource>Fuel</resource>
+                <resourceAmountPerSecond Type="SStandardResourceUnit">
+                  <standardResourceUnits>0</standardResourceUnits>
+                </resourceAmountPerSecond>
+              </consumption>
+              <consumptionComposition Type="ItemResourceComposition">
+                <values Type="ItemResourceCompositionValue" Count="0" />
+              </consumptionComposition>
+              <dynamicAmountOverride Type="ItemResourceDynamicAmountThrusterFuel" />
             </ItemResourceDeltaConsumption>
           </deltas>
           <linkedInteractionStates Type="ResourceLinkedInteractionState" Count="0" />

@@ -181,12 +181,12 @@
             <z>-1</z>
           </detachDirection>
         </SItemPortDef>
-        <SItemPortDef Type="SItemPortDef">
+        <SItemPortDef Pointer="ptr:9" Type="SItemPortDef">
           <Name>itemport_nozzle</Name>
-          <DisplayName>@LOC_EMPTY</DisplayName>
+          <DisplayName>@NameNozzle</DisplayName>
           <PortTags />
           <RequiredPortTags />
-          <Flags>dockingport2 $editable swaponly </Flags>
+          <Flags>dockingport2 $editable</Flags>
           <Tags Type="Tag" Count="0" />
           <OnAttachTags Type="Tag" Count="0" />
           <PropagateOnAttachTagsToHierarchy>False</PropagateOnAttachTagsToHierarchy>
@@ -227,7 +227,9 @@
           <Types Type="SItemPortDefTypes" Count="1">
             <SItemPortDefTypes Type="SItemPortDefTypes">
               <Type>DockingCollar</Type>
-              <SubTypes Type="StatusEffectDamage" Count="0" />
+              <SubTypes Type="StatusEffectDamage" Count="1">
+                <EnumChoice>Fuel</EnumChoice>
+              </SubTypes>
             </SItemPortDefTypes>
           </Types>
           <Extension />
@@ -271,8 +273,8 @@
           <itemPortRules Type="SItemPortRuleDef" Count="0" />
           <detachDirection Type="Vec3">
             <x>0</x>
-            <y>0</y>
-            <z>-1</z>
+            <y>1</y>
+            <z>0</z>
           </detachDirection>
         </SItemPortDef>
       </Ports>
@@ -653,12 +655,12 @@
       <AnimationJointControls />
       <AnimationControlActorIKs Type="AnimationControlActorIK" Count="0" />
       <AnimationTasks Type="SSequencerAnimationTaskParamsBase" Count="2">
-        <SSequencerAnimationTaskParams Pointer="ptr:23" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:24" Type="SSequencerAnimationTaskParams">
           <fragmentId>CollarState</fragmentId>
           <fragTag>Retract</fragTag>
           <looping>False</looping>
         </SSequencerAnimationTaskParams>
-        <SSequencerAnimationTaskParams Pointer="ptr:22" Type="SSequencerAnimationTaskParams">
+        <SSequencerAnimationTaskParams Pointer="ptr:23" Type="SSequencerAnimationTaskParams">
           <fragmentId>CollarState</fragmentId>
           <fragTag>Deploy</fragTag>
           <looping>False</looping>
@@ -1244,7 +1246,7 @@
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
               <StateName>Empty</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1275,7 +1277,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:9" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:10" Type="SInteractionState">
               <StateName>Docked</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1305,10 +1307,10 @@
           </States>
           <StateModifiers Type="SStateModifier" Count="1">
             <SItemPortStateModifier Type="SItemPortStateModifier">
-              <itemPort />
-              <onEntityAttachedState PointsTo="ptr:9" />
-              <onEntityDetachedState PointsTo="ptr:10" />
-              <onPortDestroyedState PointsTo="ptr:10" />
+              <itemPort PointsTo="ptr:9" />
+              <onEntityAttachedState PointsTo="ptr:10" />
+              <onEntityDetachedState PointsTo="ptr:11" />
+              <onPortDestroyedState PointsTo="ptr:11" />
               <itemTypes Type="StatusEffectDamageNonLinear" Count="0" />
               <itemSubTypes Type="StatusEffectDamage" Count="0" />
             </SItemPortStateModifier>
@@ -1317,11 +1319,11 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Attachment</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:11" />
+          <DefaultState PointsTo="ptr:12" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
               <StateName>Attached</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1343,7 +1345,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:11" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:12" Type="SInteractionState">
               <StateName>Detached</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1369,19 +1371,19 @@
           <StateModifiers Type="SStateModifier" Count="1">
             <SAttachableStateModifier Type="SAttachableStateModifier">
               <portTag />
-              <onSetItemPortState PointsTo="ptr:12" />
-              <onClearItemPortState PointsTo="ptr:11" />
+              <onSetItemPortState PointsTo="ptr:13" />
+              <onClearItemPortState PointsTo="ptr:12" />
             </SAttachableStateModifier>
           </StateModifiers>
         </SInteractionStateType>
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Health</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:13" />
+          <DefaultState PointsTo="ptr:14" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="4">
-            <SInteractionState Pointer="ptr:13" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:14" Type="SInteractionState">
               <StateName>Healthy</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1403,7 +1405,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:14" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
               <StateName>Damaged</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1427,7 +1429,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:15" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:16" Type="SInteractionState">
               <StateName>VeryDamaged</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1451,7 +1453,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:16" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:17" Type="SInteractionState">
               <StateName>Dead</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1481,22 +1483,22 @@
             <SHealthStateModifier Type="SHealthStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="4">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:14" />
+                  <state PointsTo="ptr:15" />
                   <min>0.25</min>
                   <max>0.9</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:15" />
+                  <state PointsTo="ptr:16" />
                   <min>0.001</min>
                   <max>0.25</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:16" />
+                  <state PointsTo="ptr:17" />
                   <min>0</min>
                   <max>0.001</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:13" />
+                  <state PointsTo="ptr:14" />
                   <min>0.9</min>
                   <max>1</max>
                 </SRangeStateLevel>
@@ -1508,11 +1510,11 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>Power</StateTypeName>
           <bindingsMethod>States</bindingsMethod>
-          <DefaultState PointsTo="ptr:17" />
+          <DefaultState PointsTo="ptr:18" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="2">
-            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
               <StateName>On</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1534,7 +1536,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:17" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:18" Type="SInteractionState">
               <StateName>Off</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1561,12 +1563,12 @@
             <ItemResourceStateModifier Type="ItemResourceStateModifier">
               <stateRanges Type="SRangeStateLevel" Count="2">
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:18" />
+                  <state PointsTo="ptr:19" />
                   <min>0</min>
                   <max>1</max>
                 </SRangeStateLevel>
                 <SRangeStateLevel Type="SRangeStateLevel">
-                  <state PointsTo="ptr:17" />
+                  <state PointsTo="ptr:18" />
                   <min>0</min>
                   <max>0.1</max>
                 </SRangeStateLevel>
@@ -1578,11 +1580,11 @@
         <SInteractionStateType Type="SInteractionStateType">
           <StateTypeName>OperatorMode</StateTypeName>
           <bindingsMethod>None</bindingsMethod>
-          <DefaultState PointsTo="ptr:19" />
+          <DefaultState PointsTo="ptr:20" />
           <asopReset>False</asopReset>
           <networkAuthority>Server</networkAuthority>
           <States Type="SInteractionState" Count="3">
-            <SInteractionState Pointer="ptr:19" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
               <StateName>None</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1604,7 +1606,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:20" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:21" Type="SInteractionState">
               <StateName>NotRefuel</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1626,7 +1628,7 @@
                 <tags Type="Tag" Count="0" />
               </entityTags>
             </SInteractionState>
-            <SInteractionState Pointer="ptr:21" Type="SInteractionState">
+            <SInteractionState Pointer="ptr:22" Type="SInteractionState">
               <StateName>Refuel</StateName>
               <EnterStateEffectGroup />
               <ExitStateEffectGroup />
@@ -1652,13 +1654,13 @@
           <StateModifiers Type="SStateModifier" Count="1">
             <OperatorModeStateModifier Type="OperatorModeStateModifier">
               <context Type="AttachableStateModifierContext_Self" />
-              <inactive PointsTo="ptr:19" />
-              <combat PointsTo="ptr:20" />
-              <turret PointsTo="ptr:20" />
-              <scanning PointsTo="ptr:20" />
-              <mining PointsTo="ptr:20" />
-              <quantumNavigation PointsTo="ptr:20" />
-              <refuel PointsTo="ptr:21" />
+              <inactive PointsTo="ptr:20" />
+              <combat PointsTo="ptr:21" />
+              <turret PointsTo="ptr:21" />
+              <scanning PointsTo="ptr:21" />
+              <mining PointsTo="ptr:21" />
+              <quantumNavigation PointsTo="ptr:21" />
+              <refuel PointsTo="ptr:22" />
             </OperatorModeStateModifier>
           </StateModifiers>
         </SInteractionStateType>
@@ -1723,7 +1725,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:22" />
+              <task PointsTo="ptr:23" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
@@ -1735,7 +1737,7 @@
           <interaction />
           <taskEntries Type="SSequencerSequenceTaskEntryParams" Count="1">
             <SSequencerSequenceTaskEntryParams Type="SSequencerSequenceTaskEntryParams">
-              <task PointsTo="ptr:23" />
+              <task PointsTo="ptr:24" />
               <postDelay>0</postDelay>
               <dependentTasks Type="SSequencerDefTaskParams" Count="0" />
               <haltOnFailure>True</haltOnFailure>
